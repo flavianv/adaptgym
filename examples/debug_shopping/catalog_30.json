@@ -1,0 +1,818 @@
+{
+  "catalog_id": "debug-sports-shoes-30",
+  "vertical_id": "footwear",
+  "schema_version": "1",
+  "synthetic": true,
+  "products": [
+    {
+      "id": "DBG-SHOE-001",
+      "name": "Nike Pegasus 42",
+      "description": "Nike Pegasus 42: Daily running. Upper: Mesh. Surface: road. Versatile, responsive. Cushioning (fixture taxonomy): medium_high. Synthetic offer: size 42 EU; unisex; black; 140 EUR.",
+      "attributes": {
+        "brand": "Nike",
+        "price": 140,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "Pegasus 42",
+        "sport": "road_running",
+        "primary_use": "Daily running",
+        "cushioning": "medium_high",
+        "upper_material": "Mesh",
+        "surface": "road",
+        "key_characteristics": "Versatile, responsive",
+        "category": "road running",
+        "style": "performance",
+        "closure": "unspecified"
+      },
+      "provenance": {
+        "basis": "user_supplied_sports_shortlist",
+        "manufacturer_properties_verified": false,
+        "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+      }
+    },
+    {
+      "id": "DBG-SHOE-002",
+      "name": "ASICS GEL-NIMBUS 28",
+      "description": "ASICS GEL-NIMBUS 28: Long-distance running. Upper: Knit / mesh. Surface: road. Plush, comfortable. Cushioning (fixture taxonomy): very_high. Synthetic offer: size 42 EU; unisex; black; 200 EUR.",
+      "attributes": {
+        "brand": "ASICS",
+        "price": 200,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "GEL-NIMBUS 28",
+        "sport": "road_running",
+        "primary_use": "Long-distance running",
+        "cushioning": "very_high",
+        "upper_material": "Knit / mesh",
+        "surface": "road",
+        "key_characteristics": "Plush, comfortable",
+        "category": "road running",
+        "style": "performance",
+        "closure": "unspecified"
+      },
+      "provenance": {
+        "basis": "user_supplied_sports_shortlist",
+        "manufacturer_properties_verified": false,
+        "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+      }
+    },
+    {
+      "id": "DBG-SHOE-003",
+      "name": "Adidas Adizero Adios Pro 5",
+      "description": "Adidas Adizero Adios Pro 5: Marathon racing. Upper: Lightweight textile. Surface: road. Race-focused, fast. Cushioning (fixture taxonomy): high. Synthetic offer: size 42 EU; unisex; black; 250 EUR.",
+      "attributes": {
+        "brand": "Adidas",
+        "price": 250,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "Adizero Adios Pro 5",
+        "sport": "road_running",
+        "primary_use": "Marathon racing",
+        "cushioning": "high",
+        "upper_material": "Lightweight textile",
+        "surface": "road",
+        "key_characteristics": "Race-focused, fast",
+        "category": "road running",
+        "style": "performance",
+        "closure": "unspecified"
+      },
+      "provenance": {
+        "basis": "user_supplied_sports_shortlist",
+        "manufacturer_properties_verified": false,
+        "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+      }
+    },
+    {
+      "id": "DBG-SHOE-004",
+      "name": "HOKA Clifton 10",
+      "description": "HOKA Clifton 10: Daily running. Upper: Mesh. Surface: road. Lightweight, smooth ride. Cushioning (fixture taxonomy): high. Synthetic offer: size 42 EU; unisex; black; 160 EUR.",
+      "attributes": {
+        "brand": "HOKA",
+        "price": 160,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "Clifton 10",
+        "sport": "road_running",
+        "primary_use": "Daily running",
+        "cushioning": "high",
+        "upper_material": "Mesh",
+        "surface": "road",
+        "key_characteristics": "Lightweight, smooth ride",
+        "category": "road running",
+        "style": "performance",
+        "closure": "unspecified"
+      },
+      "provenance": {
+        "basis": "user_supplied_sports_shortlist",
+        "manufacturer_properties_verified": false,
+        "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+      }
+    },
+    {
+      "id": "DBG-SHOE-005",
+      "name": "Brooks Ghost 17",
+      "description": "Brooks Ghost 17: Daily running. Upper: Mesh. Surface: road. Balanced, neutral. Cushioning (fixture taxonomy): high. Synthetic offer: size 42 EU; unisex; black; 150 EUR.",
+      "attributes": {
+        "brand": "Brooks",
+        "price": 150,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "Ghost 17",
+        "sport": "road_running",
+        "primary_use": "Daily running",
+        "cushioning": "high",
+        "upper_material": "Mesh",
+        "surface": "road",
+        "key_characteristics": "Balanced, neutral",
+        "category": "road running",
+        "style": "performance",
+        "closure": "unspecified"
+      },
+      "provenance": {
+        "basis": "user_supplied_sports_shortlist",
+        "manufacturer_properties_verified": false,
+        "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+      }
+    },
+    {
+      "id": "DBG-SHOE-006",
+      "name": "New Balance 1080v15",
+      "description": "New Balance 1080v15: Easy runs. Upper: Engineered mesh. Surface: road. Soft, cushioned. Cushioning (fixture taxonomy): very_high. Synthetic offer: size 42 EU; unisex; black; 190 EUR.",
+      "attributes": {
+        "brand": "New Balance",
+        "price": 190,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "1080v15",
+        "sport": "road_running",
+        "primary_use": "Easy runs",
+        "cushioning": "very_high",
+        "upper_material": "Engineered mesh",
+        "surface": "road",
+        "key_characteristics": "Soft, cushioned",
+        "category": "road running",
+        "style": "performance",
+        "closure": "unspecified"
+      },
+      "provenance": {
+        "basis": "user_supplied_sports_shortlist",
+        "manufacturer_properties_verified": false,
+        "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+      }
+    },
+    {
+      "id": "DBG-SHOE-007",
+      "name": "Saucony Endorphin Speed 5",
+      "description": "Saucony Endorphin Speed 5: Tempo running. Upper: Mesh. Surface: road. Propulsive, fast workouts. Cushioning (fixture taxonomy): high. Synthetic offer: size 42 EU; unisex; black; 190 EUR.",
+      "attributes": {
+        "brand": "Saucony",
+        "price": 190,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "Endorphin Speed 5",
+        "sport": "road_running",
+        "primary_use": "Tempo running",
+        "cushioning": "high",
+        "upper_material": "Mesh",
+        "surface": "road",
+        "key_characteristics": "Propulsive, fast workouts",
+        "category": "road running",
+        "style": "performance",
+        "closure": "unspecified"
+      },
+      "provenance": {
+        "basis": "user_supplied_sports_shortlist",
+        "manufacturer_properties_verified": false,
+        "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+      }
+    },
+    {
+      "id": "DBG-SHOE-008",
+      "name": "On Cloudmonster 3",
+      "description": "On Cloudmonster 3: Road running. Upper: Mesh. Surface: road. Rockered, distinctive sole. Cushioning (fixture taxonomy): high. Synthetic offer: size 42 EU; unisex; black; 200 EUR.",
+      "attributes": {
+        "brand": "On",
+        "price": 200,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "Cloudmonster 3",
+        "sport": "road_running",
+        "primary_use": "Road running",
+        "cushioning": "high",
+        "upper_material": "Mesh",
+        "surface": "road",
+        "key_characteristics": "Rockered, distinctive sole",
+        "category": "road running",
+        "style": "performance",
+        "closure": "unspecified"
+      },
+      "provenance": {
+        "basis": "user_supplied_sports_shortlist",
+        "manufacturer_properties_verified": false,
+        "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+      }
+    },
+    {
+      "id": "DBG-SHOE-009",
+      "name": "Salomon Speedcross 6",
+      "description": "Salomon Speedcross 6: Trail running. Upper: Synthetic textile. Surface: mud_trails. Aggressive grip. Cushioning (fixture taxonomy): medium. Synthetic offer: size 42 EU; unisex; black; 150 EUR.",
+      "attributes": {
+        "brand": "Salomon",
+        "price": 150,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "Speedcross 6",
+        "sport": "trail_running",
+        "primary_use": "Trail running",
+        "cushioning": "medium",
+        "upper_material": "Synthetic textile",
+        "surface": "mud_trails",
+        "key_characteristics": "Aggressive grip",
+        "category": "trail running",
+        "style": "performance",
+        "closure": "unspecified"
+      },
+      "provenance": {
+        "basis": "user_supplied_sports_shortlist",
+        "manufacturer_properties_verified": false,
+        "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+      }
+    },
+    {
+      "id": "DBG-SHOE-010",
+      "name": "HOKA Speedgoat 6",
+      "description": "HOKA Speedgoat 6: Technical trail running. Upper: Mesh. Surface: rocky_trails. Grippy, protective. Cushioning (fixture taxonomy): high. Synthetic offer: size 42 EU; unisex; black; 160 EUR.",
+      "attributes": {
+        "brand": "HOKA",
+        "price": 160,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "Speedgoat 6",
+        "sport": "trail_running",
+        "primary_use": "Technical trail running",
+        "cushioning": "high",
+        "upper_material": "Mesh",
+        "surface": "rocky_trails",
+        "key_characteristics": "Grippy, protective",
+        "category": "trail running",
+        "style": "performance",
+        "closure": "unspecified"
+      },
+      "provenance": {
+        "basis": "user_supplied_sports_shortlist",
+        "manufacturer_properties_verified": false,
+        "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+      }
+    },
+    {
+      "id": "DBG-SHOE-011",
+      "name": "Nike Metcon 10",
+      "description": "Nike Metcon 10: CrossFit, lifting. Upper: Mesh / synthetic. Surface: gym. Stable base, durable. Cushioning (fixture taxonomy): low_medium. Synthetic offer: size 42 EU; unisex; black; 150 EUR.",
+      "attributes": {
+        "brand": "Nike",
+        "price": 150,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "Metcon 10",
+        "sport": "gym_training",
+        "primary_use": "CrossFit, lifting",
+        "cushioning": "low_medium",
+        "upper_material": "Mesh / synthetic",
+        "surface": "gym",
+        "key_characteristics": "Stable base, durable",
+        "category": "gym training",
+        "style": "performance",
+        "closure": "unspecified"
+      },
+      "provenance": {
+        "basis": "user_supplied_sports_shortlist",
+        "manufacturer_properties_verified": false,
+        "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+      }
+    },
+    {
+      "id": "DBG-SHOE-012",
+      "name": "Reebok Nano X5",
+      "description": "Reebok Nano X5: Functional training. Upper: Mesh. Surface: gym. Versatile, lateral support. Cushioning (fixture taxonomy): medium. Synthetic offer: size 42 EU; unisex; black; 140 EUR.",
+      "attributes": {
+        "brand": "Reebok",
+        "price": 140,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "Nano X5",
+        "sport": "gym_training",
+        "primary_use": "Functional training",
+        "cushioning": "medium",
+        "upper_material": "Mesh",
+        "surface": "gym",
+        "key_characteristics": "Versatile, lateral support",
+        "category": "gym training",
+        "style": "performance",
+        "closure": "unspecified"
+      },
+      "provenance": {
+        "basis": "user_supplied_sports_shortlist",
+        "manufacturer_properties_verified": false,
+        "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+      }
+    },
+    {
+      "id": "DBG-SHOE-013",
+      "name": "Adidas Dropset 3",
+      "description": "Adidas Dropset 3: Weightlifting. Upper: Textile / synthetic. Surface: gym. Firm heel, stability. Cushioning (fixture taxonomy): low. Synthetic offer: size 42 EU; unisex; black; 130 EUR.",
+      "attributes": {
+        "brand": "Adidas",
+        "price": 130,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "Dropset 3",
+        "sport": "gym_training",
+        "primary_use": "Weightlifting",
+        "cushioning": "low",
+        "upper_material": "Textile / synthetic",
+        "surface": "gym",
+        "key_characteristics": "Firm heel, stability",
+        "category": "gym training",
+        "style": "performance",
+        "closure": "unspecified"
+      },
+      "provenance": {
+        "basis": "user_supplied_sports_shortlist",
+        "manufacturer_properties_verified": false,
+        "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+      }
+    },
+    {
+      "id": "DBG-SHOE-014",
+      "name": "Under Armour TriBase Reign 6",
+      "description": "Under Armour TriBase Reign 6: Strength training. Upper: Mesh. Surface: gym. Ground contact, grip. Cushioning (fixture taxonomy): low. Synthetic offer: size 42 EU; unisex; black; 140 EUR.",
+      "attributes": {
+        "brand": "Under Armour",
+        "price": 140,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "TriBase Reign 6",
+        "sport": "gym_training",
+        "primary_use": "Strength training",
+        "cushioning": "low",
+        "upper_material": "Mesh",
+        "surface": "gym",
+        "key_characteristics": "Ground contact, grip",
+        "category": "gym training",
+        "style": "performance",
+        "closure": "unspecified"
+      },
+      "provenance": {
+        "basis": "user_supplied_sports_shortlist",
+        "manufacturer_properties_verified": false,
+        "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+      }
+    },
+    {
+      "id": "DBG-SHOE-015",
+      "name": "Nike Free Metcon 6",
+      "description": "Nike Free Metcon 6: HIIT, mixed training. Upper: Mesh. Surface: gym. Flexible forefoot, supportive heel. Cushioning (fixture taxonomy): medium. Synthetic offer: size 42 EU; unisex; black; 130 EUR.",
+      "attributes": {
+        "brand": "Nike",
+        "price": 130,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "Free Metcon 6",
+        "sport": "gym_training",
+        "primary_use": "HIIT, mixed training",
+        "cushioning": "medium",
+        "upper_material": "Mesh",
+        "surface": "gym",
+        "key_characteristics": "Flexible forefoot, supportive heel",
+        "category": "gym training",
+        "style": "performance",
+        "closure": "unspecified"
+      },
+      "provenance": {
+        "basis": "user_supplied_sports_shortlist",
+        "manufacturer_properties_verified": false,
+        "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+      }
+    },
+    {
+      "id": "DBG-SHOE-016",
+      "name": "Nike LeBron 22",
+      "description": "Nike LeBron 22: Basketball. Upper: Textile / synthetic. Surface: indoor_court. Impact protection, support. Cushioning (fixture taxonomy): high. Synthetic offer: size 42 EU; unisex; black; 180 EUR.",
+      "attributes": {
+        "brand": "Nike",
+        "price": 180,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "LeBron 22",
+        "sport": "basketball",
+        "primary_use": "Basketball",
+        "cushioning": "high",
+        "upper_material": "Textile / synthetic",
+        "surface": "indoor_court",
+        "key_characteristics": "Impact protection, support",
+        "category": "basketball",
+        "style": "performance",
+        "closure": "unspecified"
+      },
+      "provenance": {
+        "basis": "user_supplied_sports_shortlist",
+        "manufacturer_properties_verified": false,
+        "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+      }
+    },
+    {
+      "id": "DBG-SHOE-017",
+      "name": "Nike Sabrina 2",
+      "description": "Nike Sabrina 2: Basketball. Upper: Mesh / synthetic. Surface: indoor_court. Lightweight, agile. Cushioning (fixture taxonomy): medium. Synthetic offer: size 42 EU; unisex; black; 130 EUR.",
+      "attributes": {
+        "brand": "Nike",
+        "price": 130,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "Sabrina 2",
+        "sport": "basketball",
+        "primary_use": "Basketball",
+        "cushioning": "medium",
+        "upper_material": "Mesh / synthetic",
+        "surface": "indoor_court",
+        "key_characteristics": "Lightweight, agile",
+        "category": "basketball",
+        "style": "performance",
+        "closure": "unspecified"
+      },
+      "provenance": {
+        "basis": "user_supplied_sports_shortlist",
+        "manufacturer_properties_verified": false,
+        "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+      }
+    },
+    {
+      "id": "DBG-SHOE-018",
+      "name": "Adidas AE 1",
+      "description": "Adidas AE 1: Basketball. Upper: Mesh / synthetic. Surface: indoor_court. Supportive, bold design. Cushioning (fixture taxonomy): high. Synthetic offer: size 42 EU; unisex; black; 120 EUR.",
+      "attributes": {
+        "brand": "Adidas",
+        "price": 120,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "AE 1",
+        "sport": "basketball",
+        "primary_use": "Basketball",
+        "cushioning": "high",
+        "upper_material": "Mesh / synthetic",
+        "surface": "indoor_court",
+        "key_characteristics": "Supportive, bold design",
+        "category": "basketball",
+        "style": "performance",
+        "closure": "unspecified"
+      },
+      "provenance": {
+        "basis": "user_supplied_sports_shortlist",
+        "manufacturer_properties_verified": false,
+        "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+      }
+    },
+    {
+      "id": "DBG-SHOE-019",
+      "name": "Under Armour Curry 12",
+      "description": "Under Armour Curry 12: Basketball. Upper: Textile / synthetic. Surface: indoor_court. Traction, quick movements. Cushioning (fixture taxonomy): medium. Synthetic offer: size 42 EU; unisex; black; 150 EUR.",
+      "attributes": {
+        "brand": "Under Armour",
+        "price": 150,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "Curry 12",
+        "sport": "basketball",
+        "primary_use": "Basketball",
+        "cushioning": "medium",
+        "upper_material": "Textile / synthetic",
+        "surface": "indoor_court",
+        "key_characteristics": "Traction, quick movements",
+        "category": "basketball",
+        "style": "performance",
+        "closure": "unspecified"
+      },
+      "provenance": {
+        "basis": "user_supplied_sports_shortlist",
+        "manufacturer_properties_verified": false,
+        "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+      }
+    },
+    {
+      "id": "DBG-SHOE-020",
+      "name": "Puma MB.04",
+      "description": "Puma MB.04: Basketball. Upper: Engineered mesh. Surface: indoor_court. Statement design, cushioning. Cushioning (fixture taxonomy): high. Synthetic offer: size 42 EU; unisex; black; 130 EUR.",
+      "attributes": {
+        "brand": "Puma",
+        "price": 130,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "MB.04",
+        "sport": "basketball",
+        "primary_use": "Basketball",
+        "cushioning": "high",
+        "upper_material": "Engineered mesh",
+        "surface": "indoor_court",
+        "key_characteristics": "Statement design, cushioning",
+        "category": "basketball",
+        "style": "performance",
+        "closure": "unspecified"
+      },
+      "provenance": {
+        "basis": "user_supplied_sports_shortlist",
+        "manufacturer_properties_verified": false,
+        "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+      }
+    },
+    {
+      "id": "DBG-SHOE-021",
+      "name": "Nike Mercurial Vapor 16 Elite",
+      "description": "Nike Mercurial Vapor 16 Elite: Football. Upper: Synthetic. Surface: firm_grass. Speed, close fit. Synthetic offer: size 42 EU; unisex; black; 270 EUR.",
+      "attributes": {
+        "brand": "Nike",
+        "price": 270,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "Mercurial Vapor 16 Elite",
+        "sport": "football",
+        "primary_use": "Football",
+        "cushioning": "unspecified",
+        "upper_material": "Synthetic",
+        "surface": "firm_grass",
+        "key_characteristics": "Speed, close fit",
+        "category": "football",
+        "style": "performance",
+        "closure": "unspecified"
+      },
+      "provenance": {
+        "basis": "user_supplied_sports_shortlist",
+        "manufacturer_properties_verified": false,
+        "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+      }
+    },
+    {
+      "id": "DBG-SHOE-022",
+      "name": "Adidas Predator Elite FG",
+      "description": "Adidas Predator Elite FG: Football. Upper: Synthetic. Surface: firm_grass. Ball control, striking. Synthetic offer: size 42 EU; unisex; black; 260 EUR.",
+      "attributes": {
+        "brand": "Adidas",
+        "price": 260,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "Predator Elite FG",
+        "sport": "football",
+        "primary_use": "Football",
+        "cushioning": "unspecified",
+        "upper_material": "Synthetic",
+        "surface": "firm_grass",
+        "key_characteristics": "Ball control, striking",
+        "category": "football",
+        "style": "performance",
+        "closure": "unspecified"
+      },
+      "provenance": {
+        "basis": "user_supplied_sports_shortlist",
+        "manufacturer_properties_verified": false,
+        "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+      }
+    },
+    {
+      "id": "DBG-SHOE-023",
+      "name": "Puma Future 8 Ultimate FG",
+      "description": "Puma Future 8 Ultimate FG: Football. Upper: Synthetic / knit. Surface: firm_grass. Adaptive fit, agility. Synthetic offer: size 42 EU; unisex; black; 230 EUR.",
+      "attributes": {
+        "brand": "Puma",
+        "price": 230,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "Future 8 Ultimate FG",
+        "sport": "football",
+        "primary_use": "Football",
+        "cushioning": "unspecified",
+        "upper_material": "Synthetic / knit",
+        "surface": "firm_grass",
+        "key_characteristics": "Adaptive fit, agility",
+        "category": "football",
+        "style": "performance",
+        "closure": "unspecified"
+      },
+      "provenance": {
+        "basis": "user_supplied_sports_shortlist",
+        "manufacturer_properties_verified": false,
+        "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+      }
+    },
+    {
+      "id": "DBG-SHOE-024",
+      "name": "ASICS GEL-RESOLUTION X",
+      "description": "ASICS GEL-RESOLUTION X: Tennis. Upper: Mesh / synthetic. Surface: hard_court. Stability, lateral support. Synthetic offer: size 42 EU; unisex; black; 160 EUR.",
+      "attributes": {
+        "brand": "ASICS",
+        "price": 160,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "GEL-RESOLUTION X",
+        "sport": "tennis",
+        "primary_use": "Tennis",
+        "cushioning": "unspecified",
+        "upper_material": "Mesh / synthetic",
+        "surface": "hard_court",
+        "key_characteristics": "Stability, lateral support",
+        "category": "tennis",
+        "style": "performance",
+        "closure": "unspecified"
+      },
+      "provenance": {
+        "basis": "user_supplied_sports_shortlist",
+        "manufacturer_properties_verified": false,
+        "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+      }
+    },
+    {
+      "id": "DBG-SHOE-025",
+      "name": "Adidas Barricade 13",
+      "description": "Adidas Barricade 13: Tennis. Upper: Mesh / synthetic. Surface: hard_court. Durability, secure fit. Synthetic offer: size 42 EU; unisex; black; 150 EUR.",
+      "attributes": {
+        "brand": "Adidas",
+        "price": 150,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "Barricade 13",
+        "sport": "tennis",
+        "primary_use": "Tennis",
+        "cushioning": "unspecified",
+        "upper_material": "Mesh / synthetic",
+        "surface": "hard_court",
+        "key_characteristics": "Durability, secure fit",
+        "category": "tennis",
+        "style": "performance",
+        "closure": "unspecified"
+      },
+      "provenance": {
+        "basis": "user_supplied_sports_shortlist",
+        "manufacturer_properties_verified": false,
+        "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+      }
+    },
+    {
+      "id": "DBG-SHOE-026",
+      "name": "Mizuno Wave Lightning Z8",
+      "description": "Mizuno Wave Lightning Z8: Volleyball. Upper: Mesh / synthetic. Surface: indoor_court. Jumping, responsiveness. Synthetic offer: size 42 EU; unisex; black; 150 EUR.",
+      "attributes": {
+        "brand": "Mizuno",
+        "price": 150,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "Wave Lightning Z8",
+        "sport": "volleyball",
+        "primary_use": "Volleyball",
+        "cushioning": "unspecified",
+        "upper_material": "Mesh / synthetic",
+        "surface": "indoor_court",
+        "key_characteristics": "Jumping, responsiveness",
+        "category": "volleyball",
+        "style": "performance",
+        "closure": "unspecified"
+      },
+      "provenance": {
+        "basis": "user_supplied_sports_shortlist",
+        "manufacturer_properties_verified": false,
+        "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+      }
+    },
+    {
+      "id": "DBG-SHOE-027",
+      "name": "ASICS Sky Elite FF 3",
+      "description": "ASICS Sky Elite FF 3: Volleyball. Upper: Mesh / synthetic. Surface: indoor_court. Jump support, cushioning. Synthetic offer: size 42 EU; unisex; black; 160 EUR.",
+      "attributes": {
+        "brand": "ASICS",
+        "price": 160,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "Sky Elite FF 3",
+        "sport": "volleyball",
+        "primary_use": "Volleyball",
+        "cushioning": "unspecified",
+        "upper_material": "Mesh / synthetic",
+        "surface": "indoor_court",
+        "key_characteristics": "Jump support, cushioning",
+        "category": "volleyball",
+        "style": "performance",
+        "closure": "unspecified"
+      },
+      "provenance": {
+        "basis": "user_supplied_sports_shortlist",
+        "manufacturer_properties_verified": false,
+        "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+      }
+    },
+    {
+      "id": "DBG-SHOE-028",
+      "name": "Nike Zoom Rival Sprint",
+      "description": "Nike Zoom Rival Sprint: Sprinting. Upper: Synthetic textile. Surface: track. Spike plate, acceleration. Synthetic offer: size 42 EU; unisex; black; 75 EUR.",
+      "attributes": {
+        "brand": "Nike",
+        "price": 75,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "Zoom Rival Sprint",
+        "sport": "sprinting",
+        "primary_use": "Sprinting",
+        "cushioning": "unspecified",
+        "upper_material": "Synthetic textile",
+        "surface": "track",
+        "key_characteristics": "Spike plate, acceleration",
+        "category": "sprinting",
+        "style": "performance",
+        "closure": "unspecified"
+      },
+      "provenance": {
+        "basis": "user_supplied_sports_shortlist",
+        "manufacturer_properties_verified": false,
+        "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+      }
+    },
+    {
+      "id": "DBG-SHOE-029",
+      "name": "Adidas Adizero Prime SP 3",
+      "description": "Adidas Adizero Prime SP 3: Sprinting. Upper: Lightweight textile. Surface: track. Explosive, rigid plate. Synthetic offer: size 42 EU; unisex; black; 180 EUR.",
+      "attributes": {
+        "brand": "Adidas",
+        "price": 180,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "Adizero Prime SP 3",
+        "sport": "sprinting",
+        "primary_use": "Sprinting",
+        "cushioning": "unspecified",
+        "upper_material": "Lightweight textile",
+        "surface": "track",
+        "key_characteristics": "Explosive, rigid plate",
+        "category": "sprinting",
+        "style": "performance",
+        "closure": "unspecified"
+      },
+      "provenance": {
+        "basis": "user_supplied_sports_shortlist",
+        "manufacturer_properties_verified": false,
+        "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+      }
+    },
+    {
+      "id": "DBG-SHOE-030",
+      "name": "Five Ten Hiangle",
+      "description": "Five Ten Hiangle: Rock climbing. Upper: Synthetic / microfiber. Surface: rock_climbing. Precision, sticky rubber. Synthetic offer: size 42 EU; unisex; black; 150 EUR.",
+      "attributes": {
+        "brand": "Five Ten",
+        "price": 150,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "Hiangle",
+        "sport": "climbing",
+        "primary_use": "Rock climbing",
+        "cushioning": "unspecified",
+        "upper_material": "Synthetic / microfiber",
+        "surface": "rock_climbing",
+        "key_characteristics": "Precision, sticky rubber",
+        "category": "climbing",
+        "style": "performance",
+        "closure": "unspecified"
+      },
+      "provenance": {
+        "basis": "user_supplied_sports_shortlist",
+        "manufacturer_properties_verified": false,
+        "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+      }
+    }
+  ]
+}

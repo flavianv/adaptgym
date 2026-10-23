@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: adaptgym
+    runtime: python
+    plan: free
+    branch: main
+    buildCommand: python -m pip install .
+    startCommand: python scripts/debug_session_scenarios.py --serve --host 0.0.0.0 --port $PORT --no-browser
+    healthCheckPath: /healthz
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.13.5
+      - key: PYTHONUNBUFFERED
+        value: "1"
+      - key: OPENAI_MODEL
+        value: gpt-4.1-mini
+      - key: OPENAI_API_KEY
+        sync: false

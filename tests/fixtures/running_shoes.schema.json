@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "adaptgym.vertical.running_shoes.v1",
+  "title": "Running shoes",
+  "description": "Illustrative simulator vocabulary, not a live retailer catalog.",
+  "type": "object",
+  "additionalProperties": false,
+  "x-adaptgym": {"vertical_id": "running_shoes", "version": "1"},
+  "properties": {
+    "brand": {
+      "type": "string", "enum": ["Nike", "Adidas", "Asics", "Brooks"],
+      "x-adaptgym": {"operators": ["eq", "in"]}
+    },
+    "price": {
+      "type": "number", "minimum": 20, "maximum": 400, "multipleOf": 0.5,
+      "x-adaptgym": {"operators": ["eq", "lt", "lte", "gt", "gte"], "unit": "EUR"}
+    },
+    "size": {
+      "type": "number", "enum": [38, 38.5, 39, 39.5, 40, 40.5, 41, 41.5, 42, 42.5, 43, 43.5, 44],
+      "x-adaptgym": {"operators": ["eq", "in"], "unit": "EU"}
+    },
+    "cushioning": {
+      "type": "string", "enum": ["minimal", "moderate", "maximum"],
+      "x-adaptgym": {"operators": ["eq", "in"]}
+    }
+  }
+}

@@ -1,0 +1,556 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "adaptgym.vertical.footwear.v1",
+  "title": "Footwear: sports and optional distractors",
+  "description": "Fixed model descriptions from user-supplied shortlists; normalized simulator taxonomy. Availability, size, price, colour and gender are synthetic offers. Unspecified is not a verified product property.",
+  "type": "object",
+  "additionalProperties": false,
+  "x-adaptgym": {
+    "vertical_id": "footwear",
+    "version": "1"
+  },
+  "properties": {
+    "brand": {
+      "type": "string",
+      "enum": [
+        "Nike",
+        "ASICS",
+        "Adidas",
+        "HOKA",
+        "Brooks",
+        "New Balance",
+        "Saucony",
+        "On",
+        "Salomon",
+        "Reebok",
+        "Under Armour",
+        "Puma",
+        "Mizuno",
+        "Five Ten",
+        "Vans",
+        "Converse",
+        "Merrell",
+        "Dr. Martens",
+        "Timberland",
+        "Ariat",
+        "Clarks",
+        "Generic",
+        "Gucci",
+        "Sperry",
+        "Castañer",
+        "Repetto",
+        "Birkenstock",
+        "Crocs",
+        "Havaianas"
+      ],
+      "x-adaptgym": {
+        "operators": [
+          "eq",
+          "in"
+        ]
+      }
+    },
+    "price": {
+      "type": "number",
+      "minimum": 10,
+      "maximum": 2000,
+      "multipleOf": 0.5,
+      "x-adaptgym": {
+        "operators": [
+          "eq",
+          "lt",
+          "lte",
+          "gt",
+          "gte"
+        ],
+        "unit": "EUR"
+      }
+    },
+    "size": {
+      "type": "number",
+      "enum": [
+        35.0,
+        35.5,
+        36.0,
+        36.5,
+        37.0,
+        37.5,
+        38.0,
+        38.5,
+        39.0,
+        39.5,
+        40.0,
+        40.5,
+        41.0,
+        41.5,
+        42.0,
+        42.5,
+        43.0,
+        43.5,
+        44.0,
+        44.5,
+        45.0,
+        45.5,
+        46.0,
+        46.5,
+        47.0,
+        47.5,
+        48.0
+      ],
+      "x-adaptgym": {
+        "operators": [
+          "eq",
+          "in"
+        ],
+        "unit": "EU"
+      }
+    },
+    "colour": {
+      "type": "string",
+      "enum": [
+        "black",
+        "white",
+        "blue",
+        "red",
+        "green",
+        "brown",
+        "beige",
+        "grey"
+      ],
+      "x-adaptgym": {
+        "operators": [
+          "eq",
+          "in"
+        ]
+      }
+    },
+    "gender": {
+      "type": "string",
+      "enum": [
+        "unisex",
+        "men",
+        "women"
+      ],
+      "x-adaptgym": {
+        "operators": [
+          "eq",
+          "in"
+        ]
+      }
+    },
+    "model": {
+      "type": "string",
+      "enum": [
+        "Pegasus 42",
+        "GEL-NIMBUS 28",
+        "Adizero Adios Pro 5",
+        "Clifton 10",
+        "Ghost 17",
+        "1080v15",
+        "Endorphin Speed 5",
+        "Cloudmonster 3",
+        "Speedcross 6",
+        "Speedgoat 6",
+        "Metcon 10",
+        "Nano X5",
+        "Dropset 3",
+        "TriBase Reign 6",
+        "Free Metcon 6",
+        "LeBron 22",
+        "Sabrina 2",
+        "AE 1",
+        "Curry 12",
+        "MB.04",
+        "Mercurial Vapor 16 Elite",
+        "Predator Elite FG",
+        "Future 8 Ultimate FG",
+        "GEL-RESOLUTION X",
+        "Barricade 13",
+        "Wave Lightning Z8",
+        "Sky Elite FF 3",
+        "Zoom Rival Sprint",
+        "Adizero Prime SP 3",
+        "Hiangle",
+        "Stan Smith",
+        "Air Jordan 1",
+        "Pegasus",
+        "9060",
+        "Samba",
+        "Old Skool",
+        "Chuck Taylor",
+        "Speedcross",
+        "Moab",
+        "2976",
+        "1460",
+        "Premium 6-Inch",
+        "Western Boots",
+        "Desert Boot",
+        "Black Oxfords",
+        "Brown Derbies",
+        "Horsebit Loafers",
+        "Double Monk-Strap Shoes",
+        "Wingtip Brogues",
+        "Top-Sider",
+        "Espadrilles",
+        "Cendrillon",
+        "Leather Mary Janes",
+        "Pointed-Toe Pumps",
+        "High-Heeled Stilettos",
+        "Chunky Platform Heels",
+        "Arizona",
+        "Adilette",
+        "Classic Clog",
+        "Brasil"
+      ],
+      "x-adaptgym": {
+        "operators": [
+          "eq",
+          "in"
+        ]
+      }
+    },
+    "sport": {
+      "type": "string",
+      "enum": [
+        "road_running",
+        "trail_running",
+        "gym_training",
+        "basketball",
+        "football",
+        "tennis",
+        "volleyball",
+        "sprinting",
+        "climbing",
+        "lifestyle",
+        "hiking"
+      ],
+      "x-adaptgym": {
+        "operators": [
+          "eq",
+          "in"
+        ]
+      }
+    },
+    "primary_use": {
+      "type": "string",
+      "enum": [
+        "Daily running",
+        "Long-distance running",
+        "Marathon racing",
+        "Easy runs",
+        "Tempo running",
+        "Road running",
+        "Trail running",
+        "Technical trail running",
+        "CrossFit, lifting",
+        "Functional training",
+        "Weightlifting",
+        "Strength training",
+        "HIIT, mixed training",
+        "Basketball",
+        "Football",
+        "Tennis",
+        "Volleyball",
+        "Sprinting",
+        "Rock climbing",
+        "Everyday casual",
+        "Fashion, casual",
+        "Lifestyle",
+        "Skateboarding, casual",
+        "Hiking",
+        "Casual, smart casual",
+        "Everyday, fashion",
+        "Casual, cold weather",
+        "Western wear",
+        "Business, formal events",
+        "Business, smart casual",
+        "Smart casual, dressy",
+        "Business, occasions",
+        "Smart casual, formal",
+        "Summer casual",
+        "Everyday, smart casual",
+        "Casual, dressy",
+        "Business, formal",
+        "Evening, formal",
+        "Fashion, nightlife",
+        "Everyday, warm weather",
+        "Pool, casual",
+        "Everyday comfort",
+        "Beach, pool"
+      ],
+      "x-adaptgym": {
+        "operators": [
+          "eq",
+          "in"
+        ]
+      }
+    },
+    "cushioning": {
+      "type": "string",
+      "enum": [
+        "medium_high",
+        "very_high",
+        "high",
+        "medium",
+        "low_medium",
+        "low",
+        "unspecified"
+      ],
+      "x-adaptgym": {
+        "operators": [
+          "eq",
+          "in"
+        ]
+      }
+    },
+    "upper_material": {
+      "type": "string",
+      "enum": [
+        "Mesh",
+        "Knit / mesh",
+        "Lightweight textile",
+        "Engineered mesh",
+        "Synthetic textile",
+        "Mesh / synthetic",
+        "Textile / synthetic",
+        "Synthetic",
+        "Synthetic / knit",
+        "Synthetic / microfiber",
+        "Leather or synthetic leather",
+        "Leather, synthetic panels",
+        "Mesh and suede",
+        "Leather and suede",
+        "Canvas and suede",
+        "Canvas",
+        "Mesh and leather/suede",
+        "Leather",
+        "Nubuck leather",
+        "Suede or leather",
+        "Smooth leather",
+        "Leather or textile",
+        "Canvas or textile",
+        "Leather or synthetic",
+        "Suede, leather or synthetic",
+        "Molded Croslite foam",
+        "Rubber"
+      ],
+      "x-adaptgym": {
+        "operators": [
+          "eq",
+          "in"
+        ]
+      }
+    },
+    "surface": {
+      "type": "string",
+      "enum": [
+        "road",
+        "mud_trails",
+        "rocky_trails",
+        "gym",
+        "indoor_court",
+        "firm_grass",
+        "hard_court",
+        "track",
+        "rock_climbing",
+        "unspecified",
+        "trails"
+      ],
+      "x-adaptgym": {
+        "operators": [
+          "eq",
+          "in"
+        ]
+      }
+    },
+    "key_characteristics": {
+      "type": "string",
+      "enum": [
+        "Versatile, responsive",
+        "Plush, comfortable",
+        "Race-focused, fast",
+        "Lightweight, smooth ride",
+        "Balanced, neutral",
+        "Soft, cushioned",
+        "Propulsive, fast workouts",
+        "Rockered, distinctive sole",
+        "Aggressive grip",
+        "Grippy, protective",
+        "Stable base, durable",
+        "Versatile, lateral support",
+        "Firm heel, stability",
+        "Ground contact, grip",
+        "Flexible forefoot, supportive heel",
+        "Impact protection, support",
+        "Lightweight, agile",
+        "Supportive, bold design",
+        "Traction, quick movements",
+        "Statement design, cushioning",
+        "Speed, close fit",
+        "Ball control, striking",
+        "Adaptive fit, agility",
+        "Stability, lateral support",
+        "Durability, secure fit",
+        "Jumping, responsiveness",
+        "Jump support, cushioning",
+        "Spike plate, acceleration",
+        "Explosive, rigid plate",
+        "Precision, sticky rubber",
+        "Minimalist, classic",
+        "Retro, streetwear",
+        "Sporty, performance",
+        "Futuristic, Y2K",
+        "Vintage, terrace",
+        "Skate, streetwear",
+        "Retro, minimalist",
+        "Technical, outdoors",
+        "Outdoor, functional",
+        "Urban, alternative",
+        "Punk, grunge",
+        "Rugged, streetwear",
+        "Western, country",
+        "Heritage, smart casual",
+        "Elegant, classic",
+        "Classic, versatile",
+        "Preppy, luxury",
+        "Refined, distinctive",
+        "Heritage, classic",
+        "Nautical, preppy",
+        "Mediterranean, summer",
+        "Elegant",
+        "Retro, preppy",
+        "Glamorous, dressy",
+        "Bold, retro, party",
+        "Casual, comfort",
+        "Sporty, minimalist",
+        "Casual, playful",
+        "Beach, casual"
+      ],
+      "x-adaptgym": {
+        "operators": [
+          "eq",
+          "in"
+        ]
+      }
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "road running",
+        "trail running",
+        "gym training",
+        "basketball",
+        "football",
+        "tennis",
+        "volleyball",
+        "sprinting",
+        "climbing",
+        "Lifestyle sneakers",
+        "Basketball-inspired sneakers",
+        "Running shoes",
+        "Chunky sneakers",
+        "Retro sneakers",
+        "Skate sneakers",
+        "Canvas sneakers",
+        "Trail running shoes",
+        "Hiking shoes/boots",
+        "Chelsea boots",
+        "Combat-style boots",
+        "Workwear-style boots",
+        "Cowboy boots",
+        "Desert boots",
+        "Formal dress shoes",
+        "Dress shoes",
+        "Luxury loafers",
+        "Formal shoes",
+        "Brogue shoes",
+        "Boat shoes",
+        "Espadrilles",
+        "Ballet flats",
+        "Mary Jane flats",
+        "Pumps",
+        "Stilettos",
+        "Platform heels",
+        "Sandals",
+        "Slides",
+        "Clogs",
+        "Flip-flops"
+      ],
+      "x-adaptgym": {
+        "operators": [
+          "eq",
+          "in"
+        ]
+      }
+    },
+    "style": {
+      "type": "string",
+      "enum": [
+        "performance",
+        "Minimalist, classic",
+        "Retro, streetwear",
+        "Sporty, performance",
+        "Futuristic, Y2K",
+        "Vintage, terrace",
+        "Skate, streetwear",
+        "Retro, minimalist",
+        "Technical, outdoors",
+        "Outdoor, functional",
+        "Urban, alternative",
+        "Punk, grunge",
+        "Rugged, streetwear",
+        "Western, country",
+        "Heritage, smart casual",
+        "Elegant, classic",
+        "Classic, versatile",
+        "Preppy, luxury",
+        "Refined, distinctive",
+        "Heritage, classic",
+        "Nautical, preppy",
+        "Mediterranean, summer",
+        "Elegant",
+        "Retro, preppy",
+        "Glamorous, dressy",
+        "Bold, retro, party",
+        "Casual, comfort",
+        "Sporty, minimalist",
+        "Casual, playful",
+        "Beach, casual"
+      ],
+      "x-adaptgym": {
+        "operators": [
+          "eq",
+          "in"
+        ]
+      }
+    },
+    "closure": {
+      "type": "string",
+      "enum": [
+        "unspecified",
+        "Laces",
+        "Quicklace",
+        "Elastic sides",
+        "Pull-on",
+        "Closed lacing",
+        "Open lacing",
+        "Slip-on",
+        "Buckles",
+        "Moccasin-style lacing",
+        "Slip-on / ankle tie",
+        "Strap and buckle",
+        "Slip-on / straps",
+        "Buckles / straps",
+        "Adjustable buckles",
+        "Pivoting heel strap",
+        "Toe-post"
+      ],
+      "x-adaptgym": {
+        "operators": [
+          "eq",
+          "in"
+        ]
+      }
+    }
+  }
+}

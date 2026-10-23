@@ -1,0 +1,818 @@
+{
+  "catalog_id": "optional-footwear-distractors-30",
+  "vertical_id": "footwear",
+  "schema_version": "1",
+  "synthetic": true,
+  "products": [
+    {
+      "id": "DIST-SHOE-001",
+      "name": "Adidas Stan Smith",
+      "description": "Adidas Stan Smith: Lifestyle sneakers; Minimalist, classic. Upper: Leather or synthetic leather. Closure: Laces. Use: Everyday casual. Synthetic offer: size 42 EU; unisex; black; 100 EUR.",
+      "attributes": {
+        "brand": "Adidas",
+        "price": 100,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "Stan Smith",
+        "sport": "lifestyle",
+        "primary_use": "Everyday casual",
+        "cushioning": "unspecified",
+        "upper_material": "Leather or synthetic leather",
+        "surface": "unspecified",
+        "key_characteristics": "Minimalist, classic",
+        "category": "Lifestyle sneakers",
+        "style": "Minimalist, classic",
+        "closure": "Laces"
+      },
+      "provenance": {
+        "basis": "user_supplied_footwear_shortlist",
+        "identity": "model_family",
+        "manufacturer_properties_verified": false
+      }
+    },
+    {
+      "id": "DIST-SHOE-002",
+      "name": "Nike Air Jordan 1",
+      "description": "Nike Air Jordan 1: Basketball-inspired sneakers; Retro, streetwear. Upper: Leather, synthetic panels. Closure: Laces. Use: Fashion, casual. Synthetic offer: size 42 EU; unisex; black; 150 EUR.",
+      "attributes": {
+        "brand": "Nike",
+        "price": 150,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "Air Jordan 1",
+        "sport": "lifestyle",
+        "primary_use": "Fashion, casual",
+        "cushioning": "unspecified",
+        "upper_material": "Leather, synthetic panels",
+        "surface": "unspecified",
+        "key_characteristics": "Retro, streetwear",
+        "category": "Basketball-inspired sneakers",
+        "style": "Retro, streetwear",
+        "closure": "Laces"
+      },
+      "provenance": {
+        "basis": "user_supplied_footwear_shortlist",
+        "identity": "model_family",
+        "manufacturer_properties_verified": false
+      }
+    },
+    {
+      "id": "DIST-SHOE-003",
+      "name": "Nike Pegasus",
+      "description": "Nike Pegasus: Running shoes; Sporty, performance. Upper: Engineered mesh. Closure: Laces. Use: Road running. Synthetic offer: size 42 EU; unisex; black; 130 EUR.",
+      "attributes": {
+        "brand": "Nike",
+        "price": 130,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "Pegasus",
+        "sport": "road_running",
+        "primary_use": "Road running",
+        "cushioning": "unspecified",
+        "upper_material": "Engineered mesh",
+        "surface": "road",
+        "key_characteristics": "Sporty, performance",
+        "category": "Running shoes",
+        "style": "Sporty, performance",
+        "closure": "Laces"
+      },
+      "provenance": {
+        "basis": "user_supplied_footwear_shortlist",
+        "identity": "model_family",
+        "manufacturer_properties_verified": false
+      }
+    },
+    {
+      "id": "DIST-SHOE-004",
+      "name": "New Balance 9060",
+      "description": "New Balance 9060: Chunky sneakers; Futuristic, Y2K. Upper: Mesh and suede. Closure: Laces. Use: Lifestyle. Synthetic offer: size 42 EU; unisex; black; 180 EUR.",
+      "attributes": {
+        "brand": "New Balance",
+        "price": 180,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "9060",
+        "sport": "lifestyle",
+        "primary_use": "Lifestyle",
+        "cushioning": "unspecified",
+        "upper_material": "Mesh and suede",
+        "surface": "unspecified",
+        "key_characteristics": "Futuristic, Y2K",
+        "category": "Chunky sneakers",
+        "style": "Futuristic, Y2K",
+        "closure": "Laces"
+      },
+      "provenance": {
+        "basis": "user_supplied_footwear_shortlist",
+        "identity": "model_family",
+        "manufacturer_properties_verified": false
+      }
+    },
+    {
+      "id": "DIST-SHOE-005",
+      "name": "Adidas Samba",
+      "description": "Adidas Samba: Retro sneakers; Vintage, terrace. Upper: Leather and suede. Closure: Laces. Use: Everyday casual. Synthetic offer: size 42 EU; unisex; black; 110 EUR.",
+      "attributes": {
+        "brand": "Adidas",
+        "price": 110,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "Samba",
+        "sport": "lifestyle",
+        "primary_use": "Everyday casual",
+        "cushioning": "unspecified",
+        "upper_material": "Leather and suede",
+        "surface": "unspecified",
+        "key_characteristics": "Vintage, terrace",
+        "category": "Retro sneakers",
+        "style": "Vintage, terrace",
+        "closure": "Laces"
+      },
+      "provenance": {
+        "basis": "user_supplied_footwear_shortlist",
+        "identity": "model_family",
+        "manufacturer_properties_verified": false
+      }
+    },
+    {
+      "id": "DIST-SHOE-006",
+      "name": "Vans Old Skool",
+      "description": "Vans Old Skool: Skate sneakers; Skate, streetwear. Upper: Canvas and suede. Closure: Laces. Use: Skateboarding, casual. Synthetic offer: size 42 EU; unisex; black; 80 EUR.",
+      "attributes": {
+        "brand": "Vans",
+        "price": 80,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "Old Skool",
+        "sport": "lifestyle",
+        "primary_use": "Skateboarding, casual",
+        "cushioning": "unspecified",
+        "upper_material": "Canvas and suede",
+        "surface": "unspecified",
+        "key_characteristics": "Skate, streetwear",
+        "category": "Skate sneakers",
+        "style": "Skate, streetwear",
+        "closure": "Laces"
+      },
+      "provenance": {
+        "basis": "user_supplied_footwear_shortlist",
+        "identity": "model_family",
+        "manufacturer_properties_verified": false
+      }
+    },
+    {
+      "id": "DIST-SHOE-007",
+      "name": "Converse Chuck Taylor",
+      "description": "Converse Chuck Taylor: Canvas sneakers; Retro, minimalist. Upper: Canvas. Closure: Laces. Use: Everyday casual. Synthetic offer: size 42 EU; unisex; black; 75 EUR.",
+      "attributes": {
+        "brand": "Converse",
+        "price": 75,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "Chuck Taylor",
+        "sport": "lifestyle",
+        "primary_use": "Everyday casual",
+        "cushioning": "unspecified",
+        "upper_material": "Canvas",
+        "surface": "unspecified",
+        "key_characteristics": "Retro, minimalist",
+        "category": "Canvas sneakers",
+        "style": "Retro, minimalist",
+        "closure": "Laces"
+      },
+      "provenance": {
+        "basis": "user_supplied_footwear_shortlist",
+        "identity": "model_family",
+        "manufacturer_properties_verified": false
+      }
+    },
+    {
+      "id": "DIST-SHOE-008",
+      "name": "Salomon Speedcross",
+      "description": "Salomon Speedcross: Trail running shoes; Technical, outdoors. Upper: Synthetic textile. Closure: Quicklace. Use: Trail running. Synthetic offer: size 42 EU; unisex; black; 140 EUR.",
+      "attributes": {
+        "brand": "Salomon",
+        "price": 140,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "Speedcross",
+        "sport": "trail_running",
+        "primary_use": "Trail running",
+        "cushioning": "unspecified",
+        "upper_material": "Synthetic textile",
+        "surface": "trails",
+        "key_characteristics": "Technical, outdoors",
+        "category": "Trail running shoes",
+        "style": "Technical, outdoors",
+        "closure": "Quicklace"
+      },
+      "provenance": {
+        "basis": "user_supplied_footwear_shortlist",
+        "identity": "model_family",
+        "manufacturer_properties_verified": false
+      }
+    },
+    {
+      "id": "DIST-SHOE-009",
+      "name": "Merrell Moab",
+      "description": "Merrell Moab: Hiking shoes/boots; Outdoor, functional. Upper: Mesh and leather/suede. Closure: Laces. Use: Hiking. Synthetic offer: size 42 EU; unisex; black; 140 EUR.",
+      "attributes": {
+        "brand": "Merrell",
+        "price": 140,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "Moab",
+        "sport": "hiking",
+        "primary_use": "Hiking",
+        "cushioning": "unspecified",
+        "upper_material": "Mesh and leather/suede",
+        "surface": "unspecified",
+        "key_characteristics": "Outdoor, functional",
+        "category": "Hiking shoes/boots",
+        "style": "Outdoor, functional",
+        "closure": "Laces"
+      },
+      "provenance": {
+        "basis": "user_supplied_footwear_shortlist",
+        "identity": "model_family",
+        "manufacturer_properties_verified": false
+      }
+    },
+    {
+      "id": "DIST-SHOE-010",
+      "name": "Dr. Martens 2976",
+      "description": "Dr. Martens 2976: Chelsea boots; Urban, alternative. Upper: Leather. Closure: Elastic sides. Use: Casual, smart casual. Synthetic offer: size 42 EU; unisex; black; 200 EUR.",
+      "attributes": {
+        "brand": "Dr. Martens",
+        "price": 200,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "2976",
+        "sport": "lifestyle",
+        "primary_use": "Casual, smart casual",
+        "cushioning": "unspecified",
+        "upper_material": "Leather",
+        "surface": "unspecified",
+        "key_characteristics": "Urban, alternative",
+        "category": "Chelsea boots",
+        "style": "Urban, alternative",
+        "closure": "Elastic sides"
+      },
+      "provenance": {
+        "basis": "user_supplied_footwear_shortlist",
+        "identity": "model_family",
+        "manufacturer_properties_verified": false
+      }
+    },
+    {
+      "id": "DIST-SHOE-011",
+      "name": "Dr. Martens 1460",
+      "description": "Dr. Martens 1460: Combat-style boots; Punk, grunge. Upper: Leather. Closure: Laces. Use: Everyday, fashion. Synthetic offer: size 42 EU; unisex; black; 200 EUR.",
+      "attributes": {
+        "brand": "Dr. Martens",
+        "price": 200,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "1460",
+        "sport": "lifestyle",
+        "primary_use": "Everyday, fashion",
+        "cushioning": "unspecified",
+        "upper_material": "Leather",
+        "surface": "unspecified",
+        "key_characteristics": "Punk, grunge",
+        "category": "Combat-style boots",
+        "style": "Punk, grunge",
+        "closure": "Laces"
+      },
+      "provenance": {
+        "basis": "user_supplied_footwear_shortlist",
+        "identity": "model_family",
+        "manufacturer_properties_verified": false
+      }
+    },
+    {
+      "id": "DIST-SHOE-012",
+      "name": "Timberland Premium 6-Inch",
+      "description": "Timberland Premium 6-Inch: Workwear-style boots; Rugged, streetwear. Upper: Nubuck leather. Closure: Laces. Use: Casual, cold weather. Synthetic offer: size 42 EU; unisex; black; 220 EUR.",
+      "attributes": {
+        "brand": "Timberland",
+        "price": 220,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "Premium 6-Inch",
+        "sport": "lifestyle",
+        "primary_use": "Casual, cold weather",
+        "cushioning": "unspecified",
+        "upper_material": "Nubuck leather",
+        "surface": "unspecified",
+        "key_characteristics": "Rugged, streetwear",
+        "category": "Workwear-style boots",
+        "style": "Rugged, streetwear",
+        "closure": "Laces"
+      },
+      "provenance": {
+        "basis": "user_supplied_footwear_shortlist",
+        "identity": "model_family",
+        "manufacturer_properties_verified": false
+      }
+    },
+    {
+      "id": "DIST-SHOE-013",
+      "name": "Ariat Western Boots",
+      "description": "Ariat Western Boots: Cowboy boots; Western, country. Upper: Leather. Closure: Pull-on. Use: Western wear. Synthetic offer: size 42 EU; unisex; black; 250 EUR.",
+      "attributes": {
+        "brand": "Ariat",
+        "price": 250,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "Western Boots",
+        "sport": "lifestyle",
+        "primary_use": "Western wear",
+        "cushioning": "unspecified",
+        "upper_material": "Leather",
+        "surface": "unspecified",
+        "key_characteristics": "Western, country",
+        "category": "Cowboy boots",
+        "style": "Western, country",
+        "closure": "Pull-on"
+      },
+      "provenance": {
+        "basis": "user_supplied_footwear_shortlist",
+        "identity": "category_archetype",
+        "manufacturer_properties_verified": false
+      }
+    },
+    {
+      "id": "DIST-SHOE-014",
+      "name": "Clarks Desert Boot",
+      "description": "Clarks Desert Boot: Desert boots; Heritage, smart casual. Upper: Suede or leather. Closure: Laces. Use: Everyday casual. Synthetic offer: size 42 EU; unisex; black; 140 EUR.",
+      "attributes": {
+        "brand": "Clarks",
+        "price": 140,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "Desert Boot",
+        "sport": "lifestyle",
+        "primary_use": "Everyday casual",
+        "cushioning": "unspecified",
+        "upper_material": "Suede or leather",
+        "surface": "unspecified",
+        "key_characteristics": "Heritage, smart casual",
+        "category": "Desert boots",
+        "style": "Heritage, smart casual",
+        "closure": "Laces"
+      },
+      "provenance": {
+        "basis": "user_supplied_footwear_shortlist",
+        "identity": "model_family",
+        "manufacturer_properties_verified": false
+      }
+    },
+    {
+      "id": "DIST-SHOE-015",
+      "name": "Generic Black Oxfords",
+      "description": "Generic Black Oxfords: Formal dress shoes; Elegant, classic. Upper: Smooth leather. Closure: Closed lacing. Use: Business, formal events. Synthetic offer: size 42 EU; unisex; black; 150 EUR.",
+      "attributes": {
+        "brand": "Generic",
+        "price": 150,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "Black Oxfords",
+        "sport": "lifestyle",
+        "primary_use": "Business, formal events",
+        "cushioning": "unspecified",
+        "upper_material": "Smooth leather",
+        "surface": "unspecified",
+        "key_characteristics": "Elegant, classic",
+        "category": "Formal dress shoes",
+        "style": "Elegant, classic",
+        "closure": "Closed lacing"
+      },
+      "provenance": {
+        "basis": "user_supplied_footwear_shortlist",
+        "identity": "category_archetype",
+        "manufacturer_properties_verified": false
+      }
+    },
+    {
+      "id": "DIST-SHOE-016",
+      "name": "Generic Brown Derbies",
+      "description": "Generic Brown Derbies: Dress shoes; Classic, versatile. Upper: Leather. Closure: Open lacing. Use: Business, smart casual. Synthetic offer: size 42 EU; unisex; black; 150 EUR.",
+      "attributes": {
+        "brand": "Generic",
+        "price": 150,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "Brown Derbies",
+        "sport": "lifestyle",
+        "primary_use": "Business, smart casual",
+        "cushioning": "unspecified",
+        "upper_material": "Leather",
+        "surface": "unspecified",
+        "key_characteristics": "Classic, versatile",
+        "category": "Dress shoes",
+        "style": "Classic, versatile",
+        "closure": "Open lacing"
+      },
+      "provenance": {
+        "basis": "user_supplied_footwear_shortlist",
+        "identity": "category_archetype",
+        "manufacturer_properties_verified": false
+      }
+    },
+    {
+      "id": "DIST-SHOE-017",
+      "name": "Gucci Horsebit Loafers",
+      "description": "Gucci Horsebit Loafers: Luxury loafers; Preppy, luxury. Upper: Leather. Closure: Slip-on. Use: Smart casual, dressy. Synthetic offer: size 42 EU; unisex; black; 950 EUR.",
+      "attributes": {
+        "brand": "Gucci",
+        "price": 950,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "Horsebit Loafers",
+        "sport": "lifestyle",
+        "primary_use": "Smart casual, dressy",
+        "cushioning": "unspecified",
+        "upper_material": "Leather",
+        "surface": "unspecified",
+        "key_characteristics": "Preppy, luxury",
+        "category": "Luxury loafers",
+        "style": "Preppy, luxury",
+        "closure": "Slip-on"
+      },
+      "provenance": {
+        "basis": "user_supplied_footwear_shortlist",
+        "identity": "model_family",
+        "manufacturer_properties_verified": false
+      }
+    },
+    {
+      "id": "DIST-SHOE-018",
+      "name": "Generic Double Monk-Strap Shoes",
+      "description": "Generic Double Monk-Strap Shoes: Formal shoes; Refined, distinctive. Upper: Leather. Closure: Buckles. Use: Business, occasions. Synthetic offer: size 42 EU; unisex; black; 200 EUR.",
+      "attributes": {
+        "brand": "Generic",
+        "price": 200,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "Double Monk-Strap Shoes",
+        "sport": "lifestyle",
+        "primary_use": "Business, occasions",
+        "cushioning": "unspecified",
+        "upper_material": "Leather",
+        "surface": "unspecified",
+        "key_characteristics": "Refined, distinctive",
+        "category": "Formal shoes",
+        "style": "Refined, distinctive",
+        "closure": "Buckles"
+      },
+      "provenance": {
+        "basis": "user_supplied_footwear_shortlist",
+        "identity": "category_archetype",
+        "manufacturer_properties_verified": false
+      }
+    },
+    {
+      "id": "DIST-SHOE-019",
+      "name": "Generic Wingtip Brogues",
+      "description": "Generic Wingtip Brogues: Brogue shoes; Heritage, classic. Upper: Leather. Closure: Laces. Use: Smart casual, formal. Synthetic offer: size 42 EU; unisex; black; 200 EUR.",
+      "attributes": {
+        "brand": "Generic",
+        "price": 200,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "Wingtip Brogues",
+        "sport": "lifestyle",
+        "primary_use": "Smart casual, formal",
+        "cushioning": "unspecified",
+        "upper_material": "Leather",
+        "surface": "unspecified",
+        "key_characteristics": "Heritage, classic",
+        "category": "Brogue shoes",
+        "style": "Heritage, classic",
+        "closure": "Laces"
+      },
+      "provenance": {
+        "basis": "user_supplied_footwear_shortlist",
+        "identity": "category_archetype",
+        "manufacturer_properties_verified": false
+      }
+    },
+    {
+      "id": "DIST-SHOE-020",
+      "name": "Sperry Top-Sider",
+      "description": "Sperry Top-Sider: Boat shoes; Nautical, preppy. Upper: Leather or textile. Closure: Moccasin-style lacing. Use: Summer casual. Synthetic offer: size 42 EU; unisex; black; 110 EUR.",
+      "attributes": {
+        "brand": "Sperry",
+        "price": 110,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "Top-Sider",
+        "sport": "lifestyle",
+        "primary_use": "Summer casual",
+        "cushioning": "unspecified",
+        "upper_material": "Leather or textile",
+        "surface": "unspecified",
+        "key_characteristics": "Nautical, preppy",
+        "category": "Boat shoes",
+        "style": "Nautical, preppy",
+        "closure": "Moccasin-style lacing"
+      },
+      "provenance": {
+        "basis": "user_supplied_footwear_shortlist",
+        "identity": "model_family",
+        "manufacturer_properties_verified": false
+      }
+    },
+    {
+      "id": "DIST-SHOE-021",
+      "name": "Castañer Espadrilles",
+      "description": "Castañer Espadrilles: Espadrilles; Mediterranean, summer. Upper: Canvas or textile. Closure: Slip-on / ankle tie. Use: Summer casual. Synthetic offer: size 42 EU; unisex; black; 140 EUR.",
+      "attributes": {
+        "brand": "Castañer",
+        "price": 140,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "Espadrilles",
+        "sport": "lifestyle",
+        "primary_use": "Summer casual",
+        "cushioning": "unspecified",
+        "upper_material": "Canvas or textile",
+        "surface": "unspecified",
+        "key_characteristics": "Mediterranean, summer",
+        "category": "Espadrilles",
+        "style": "Mediterranean, summer",
+        "closure": "Slip-on / ankle tie"
+      },
+      "provenance": {
+        "basis": "user_supplied_footwear_shortlist",
+        "identity": "category_archetype",
+        "manufacturer_properties_verified": false
+      }
+    },
+    {
+      "id": "DIST-SHOE-022",
+      "name": "Repetto Cendrillon",
+      "description": "Repetto Cendrillon: Ballet flats; Elegant. Upper: Leather. Closure: Slip-on. Use: Everyday, smart casual. Synthetic offer: size 42 EU; unisex; black; 280 EUR.",
+      "attributes": {
+        "brand": "Repetto",
+        "price": 280,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "Cendrillon",
+        "sport": "lifestyle",
+        "primary_use": "Everyday, smart casual",
+        "cushioning": "unspecified",
+        "upper_material": "Leather",
+        "surface": "unspecified",
+        "key_characteristics": "Elegant",
+        "category": "Ballet flats",
+        "style": "Elegant",
+        "closure": "Slip-on"
+      },
+      "provenance": {
+        "basis": "user_supplied_footwear_shortlist",
+        "identity": "model_family",
+        "manufacturer_properties_verified": false
+      }
+    },
+    {
+      "id": "DIST-SHOE-023",
+      "name": "Generic Leather Mary Janes",
+      "description": "Generic Leather Mary Janes: Mary Jane flats; Retro, preppy. Upper: Leather. Closure: Strap and buckle. Use: Casual, dressy. Synthetic offer: size 42 EU; unisex; black; 110 EUR.",
+      "attributes": {
+        "brand": "Generic",
+        "price": 110,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "Leather Mary Janes",
+        "sport": "lifestyle",
+        "primary_use": "Casual, dressy",
+        "cushioning": "unspecified",
+        "upper_material": "Leather",
+        "surface": "unspecified",
+        "key_characteristics": "Retro, preppy",
+        "category": "Mary Jane flats",
+        "style": "Retro, preppy",
+        "closure": "Strap and buckle"
+      },
+      "provenance": {
+        "basis": "user_supplied_footwear_shortlist",
+        "identity": "category_archetype",
+        "manufacturer_properties_verified": false
+      }
+    },
+    {
+      "id": "DIST-SHOE-024",
+      "name": "Generic Pointed-Toe Pumps",
+      "description": "Generic Pointed-Toe Pumps: Pumps; Elegant, classic. Upper: Leather or synthetic. Closure: Slip-on. Use: Business, formal. Synthetic offer: size 42 EU; unisex; black; 120 EUR.",
+      "attributes": {
+        "brand": "Generic",
+        "price": 120,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "Pointed-Toe Pumps",
+        "sport": "lifestyle",
+        "primary_use": "Business, formal",
+        "cushioning": "unspecified",
+        "upper_material": "Leather or synthetic",
+        "surface": "unspecified",
+        "key_characteristics": "Elegant, classic",
+        "category": "Pumps",
+        "style": "Elegant, classic",
+        "closure": "Slip-on"
+      },
+      "provenance": {
+        "basis": "user_supplied_footwear_shortlist",
+        "identity": "category_archetype",
+        "manufacturer_properties_verified": false
+      }
+    },
+    {
+      "id": "DIST-SHOE-025",
+      "name": "Generic High-Heeled Stilettos",
+      "description": "Generic High-Heeled Stilettos: Stilettos; Glamorous, dressy. Upper: Leather or synthetic. Closure: Slip-on / straps. Use: Evening, formal. Synthetic offer: size 42 EU; unisex; black; 160 EUR.",
+      "attributes": {
+        "brand": "Generic",
+        "price": 160,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "High-Heeled Stilettos",
+        "sport": "lifestyle",
+        "primary_use": "Evening, formal",
+        "cushioning": "unspecified",
+        "upper_material": "Leather or synthetic",
+        "surface": "unspecified",
+        "key_characteristics": "Glamorous, dressy",
+        "category": "Stilettos",
+        "style": "Glamorous, dressy",
+        "closure": "Slip-on / straps"
+      },
+      "provenance": {
+        "basis": "user_supplied_footwear_shortlist",
+        "identity": "category_archetype",
+        "manufacturer_properties_verified": false
+      }
+    },
+    {
+      "id": "DIST-SHOE-026",
+      "name": "Generic Chunky Platform Heels",
+      "description": "Generic Chunky Platform Heels: Platform heels; Bold, retro, party. Upper: Leather or synthetic. Closure: Buckles / straps. Use: Fashion, nightlife. Synthetic offer: size 42 EU; unisex; black; 120 EUR.",
+      "attributes": {
+        "brand": "Generic",
+        "price": 120,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "Chunky Platform Heels",
+        "sport": "lifestyle",
+        "primary_use": "Fashion, nightlife",
+        "cushioning": "unspecified",
+        "upper_material": "Leather or synthetic",
+        "surface": "unspecified",
+        "key_characteristics": "Bold, retro, party",
+        "category": "Platform heels",
+        "style": "Bold, retro, party",
+        "closure": "Buckles / straps"
+      },
+      "provenance": {
+        "basis": "user_supplied_footwear_shortlist",
+        "identity": "category_archetype",
+        "manufacturer_properties_verified": false
+      }
+    },
+    {
+      "id": "DIST-SHOE-027",
+      "name": "Birkenstock Arizona",
+      "description": "Birkenstock Arizona: Sandals; Casual, comfort. Upper: Suede, leather or synthetic. Closure: Adjustable buckles. Use: Everyday, warm weather. Synthetic offer: size 42 EU; unisex; black; 110 EUR.",
+      "attributes": {
+        "brand": "Birkenstock",
+        "price": 110,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "Arizona",
+        "sport": "lifestyle",
+        "primary_use": "Everyday, warm weather",
+        "cushioning": "unspecified",
+        "upper_material": "Suede, leather or synthetic",
+        "surface": "unspecified",
+        "key_characteristics": "Casual, comfort",
+        "category": "Sandals",
+        "style": "Casual, comfort",
+        "closure": "Adjustable buckles"
+      },
+      "provenance": {
+        "basis": "user_supplied_footwear_shortlist",
+        "identity": "model_family",
+        "manufacturer_properties_verified": false
+      }
+    },
+    {
+      "id": "DIST-SHOE-028",
+      "name": "Adidas Adilette",
+      "description": "Adidas Adilette: Slides; Sporty, minimalist. Upper: Synthetic. Closure: Slip-on. Use: Pool, casual. Synthetic offer: size 42 EU; unisex; black; 40 EUR.",
+      "attributes": {
+        "brand": "Adidas",
+        "price": 40,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "Adilette",
+        "sport": "lifestyle",
+        "primary_use": "Pool, casual",
+        "cushioning": "unspecified",
+        "upper_material": "Synthetic",
+        "surface": "unspecified",
+        "key_characteristics": "Sporty, minimalist",
+        "category": "Slides",
+        "style": "Sporty, minimalist",
+        "closure": "Slip-on"
+      },
+      "provenance": {
+        "basis": "user_supplied_footwear_shortlist",
+        "identity": "model_family",
+        "manufacturer_properties_verified": false
+      }
+    },
+    {
+      "id": "DIST-SHOE-029",
+      "name": "Crocs Classic Clog",
+      "description": "Crocs Classic Clog: Clogs; Casual, playful. Upper: Molded Croslite foam. Closure: Pivoting heel strap. Use: Everyday comfort. Synthetic offer: size 42 EU; unisex; black; 55 EUR.",
+      "attributes": {
+        "brand": "Crocs",
+        "price": 55,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "Classic Clog",
+        "sport": "lifestyle",
+        "primary_use": "Everyday comfort",
+        "cushioning": "unspecified",
+        "upper_material": "Molded Croslite foam",
+        "surface": "unspecified",
+        "key_characteristics": "Casual, playful",
+        "category": "Clogs",
+        "style": "Casual, playful",
+        "closure": "Pivoting heel strap"
+      },
+      "provenance": {
+        "basis": "user_supplied_footwear_shortlist",
+        "identity": "model_family",
+        "manufacturer_properties_verified": false
+      }
+    },
+    {
+      "id": "DIST-SHOE-030",
+      "name": "Havaianas Brasil",
+      "description": "Havaianas Brasil: Flip-flops; Beach, casual. Upper: Rubber. Closure: Toe-post. Use: Beach, pool. Synthetic offer: size 42 EU; unisex; black; 28 EUR.",
+      "attributes": {
+        "brand": "Havaianas",
+        "price": 28,
+        "size": 42,
+        "colour": "black",
+        "gender": "unisex",
+        "model": "Brasil",
+        "sport": "lifestyle",
+        "primary_use": "Beach, pool",
+        "cushioning": "unspecified",
+        "upper_material": "Rubber",
+        "surface": "unspecified",
+        "key_characteristics": "Beach, casual",
+        "category": "Flip-flops",
+        "style": "Beach, casual",
+        "closure": "Toe-post"
+      },
+      "provenance": {
+        "basis": "user_supplied_footwear_shortlist",
+        "identity": "model_family",
+        "manufacturer_properties_verified": false
+      }
+    }
+  ]
+}

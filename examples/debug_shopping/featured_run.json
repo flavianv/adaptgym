@@ -1,0 +1,4023 @@
+{
+  "plan": {
+    "schema_version": "adaptgym.session-plan.v2",
+    "id": "select_product-7-explicit-t3-positive",
+    "turn_count": 3,
+    "core_turn_count": 2,
+    "finisher": {
+      "type": "positive",
+      "outcome": "success",
+      "trigger": "user_confirmation",
+      "message_id": "u3",
+      "after_message_id": "a3",
+      "native_completion": false,
+      "target_product": "DBG-SHOE-027",
+      "terminal_profile": {
+        "active_task_id": null,
+        "entries": []
+      },
+      "lifecycle_expirations": []
+    },
+    "current_need": {
+      "shoe_type": {
+        "vertical_id": "footwear",
+        "schema_version": "1",
+        "attribute": "sport",
+        "operator": "eq",
+        "value": "volleyball"
+      },
+      "feature_count": 2,
+      "requested_feature_count": 2,
+      "requirements": [
+        {
+          "vertical_id": "footwear",
+          "schema_version": "1",
+          "attribute": "sport",
+          "operator": "eq",
+          "value": "volleyball"
+        },
+        {
+          "vertical_id": "footwear",
+          "schema_version": "1",
+          "attribute": "style",
+          "operator": "eq",
+          "value": "performance"
+        },
+        {
+          "vertical_id": "footwear",
+          "schema_version": "1",
+          "attribute": "surface",
+          "operator": "eq",
+          "value": "indoor_court"
+        }
+      ],
+      "matching_product_ids": [
+        "DBG-SHOE-026",
+        "DBG-SHOE-027"
+      ],
+      "seed": 1390851128
+    },
+    "mode": "assistant_reactive",
+    "scenario_type": "select_product",
+    "seed": 7,
+    "scenario_subtype": "context_dependent",
+    "expression": "explicit",
+    "recommendation_count": 5,
+    "vertical_id": "footwear",
+    "vertical_schema": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "$id": "adaptgym.vertical.footwear.v1",
+      "title": "Footwear: sports and optional distractors",
+      "description": "Fixed model descriptions from user-supplied shortlists; normalized simulator taxonomy. Availability, size, price, colour and gender are synthetic offers. Unspecified is not a verified product property.",
+      "type": "object",
+      "additionalProperties": false,
+      "x-adaptgym": {
+        "vertical_id": "footwear",
+        "version": "1"
+      },
+      "properties": {
+        "brand": {
+          "type": "string",
+          "enum": [
+            "Nike",
+            "ASICS",
+            "Adidas",
+            "HOKA",
+            "Brooks",
+            "New Balance",
+            "Saucony",
+            "On",
+            "Salomon",
+            "Reebok",
+            "Under Armour",
+            "Puma",
+            "Mizuno",
+            "Five Ten",
+            "Vans",
+            "Converse",
+            "Merrell",
+            "Dr. Martens",
+            "Timberland",
+            "Ariat",
+            "Clarks",
+            "Generic",
+            "Gucci",
+            "Sperry",
+            "Castañer",
+            "Repetto",
+            "Birkenstock",
+            "Crocs",
+            "Havaianas"
+          ],
+          "x-adaptgym": {
+            "operators": [
+              "eq",
+              "in"
+            ]
+          }
+        },
+        "price": {
+          "type": "number",
+          "minimum": 10,
+          "maximum": 2000,
+          "multipleOf": 0.5,
+          "x-adaptgym": {
+            "operators": [
+              "eq",
+              "lt",
+              "lte",
+              "gt",
+              "gte"
+            ],
+            "unit": "EUR"
+          }
+        },
+        "size": {
+          "type": "number",
+          "enum": [
+            35.0,
+            35.5,
+            36.0,
+            36.5,
+            37.0,
+            37.5,
+            38.0,
+            38.5,
+            39.0,
+            39.5,
+            40.0,
+            40.5,
+            41.0,
+            41.5,
+            42.0,
+            42.5,
+            43.0,
+            43.5,
+            44.0,
+            44.5,
+            45.0,
+            45.5,
+            46.0,
+            46.5,
+            47.0,
+            47.5,
+            48.0
+          ],
+          "x-adaptgym": {
+            "operators": [
+              "eq",
+              "in"
+            ],
+            "unit": "EU"
+          }
+        },
+        "colour": {
+          "type": "string",
+          "enum": [
+            "black",
+            "white",
+            "blue",
+            "red",
+            "green",
+            "brown",
+            "beige",
+            "grey"
+          ],
+          "x-adaptgym": {
+            "operators": [
+              "eq",
+              "in"
+            ]
+          }
+        },
+        "gender": {
+          "type": "string",
+          "enum": [
+            "unisex",
+            "men",
+            "women"
+          ],
+          "x-adaptgym": {
+            "operators": [
+              "eq",
+              "in"
+            ]
+          }
+        },
+        "model": {
+          "type": "string",
+          "enum": [
+            "Pegasus 42",
+            "GEL-NIMBUS 28",
+            "Adizero Adios Pro 5",
+            "Clifton 10",
+            "Ghost 17",
+            "1080v15",
+            "Endorphin Speed 5",
+            "Cloudmonster 3",
+            "Speedcross 6",
+            "Speedgoat 6",
+            "Metcon 10",
+            "Nano X5",
+            "Dropset 3",
+            "TriBase Reign 6",
+            "Free Metcon 6",
+            "LeBron 22",
+            "Sabrina 2",
+            "AE 1",
+            "Curry 12",
+            "MB.04",
+            "Mercurial Vapor 16 Elite",
+            "Predator Elite FG",
+            "Future 8 Ultimate FG",
+            "GEL-RESOLUTION X",
+            "Barricade 13",
+            "Wave Lightning Z8",
+            "Sky Elite FF 3",
+            "Zoom Rival Sprint",
+            "Adizero Prime SP 3",
+            "Hiangle",
+            "Stan Smith",
+            "Air Jordan 1",
+            "Pegasus",
+            "9060",
+            "Samba",
+            "Old Skool",
+            "Chuck Taylor",
+            "Speedcross",
+            "Moab",
+            "2976",
+            "1460",
+            "Premium 6-Inch",
+            "Western Boots",
+            "Desert Boot",
+            "Black Oxfords",
+            "Brown Derbies",
+            "Horsebit Loafers",
+            "Double Monk-Strap Shoes",
+            "Wingtip Brogues",
+            "Top-Sider",
+            "Espadrilles",
+            "Cendrillon",
+            "Leather Mary Janes",
+            "Pointed-Toe Pumps",
+            "High-Heeled Stilettos",
+            "Chunky Platform Heels",
+            "Arizona",
+            "Adilette",
+            "Classic Clog",
+            "Brasil"
+          ],
+          "x-adaptgym": {
+            "operators": [
+              "eq",
+              "in"
+            ]
+          }
+        },
+        "sport": {
+          "type": "string",
+          "enum": [
+            "road_running",
+            "trail_running",
+            "gym_training",
+            "basketball",
+            "football",
+            "tennis",
+            "volleyball",
+            "sprinting",
+            "climbing",
+            "lifestyle",
+            "hiking"
+          ],
+          "x-adaptgym": {
+            "operators": [
+              "eq",
+              "in"
+            ]
+          }
+        },
+        "primary_use": {
+          "type": "string",
+          "enum": [
+            "Daily running",
+            "Long-distance running",
+            "Marathon racing",
+            "Easy runs",
+            "Tempo running",
+            "Road running",
+            "Trail running",
+            "Technical trail running",
+            "CrossFit, lifting",
+            "Functional training",
+            "Weightlifting",
+            "Strength training",
+            "HIIT, mixed training",
+            "Basketball",
+            "Football",
+            "Tennis",
+            "Volleyball",
+            "Sprinting",
+            "Rock climbing",
+            "Everyday casual",
+            "Fashion, casual",
+            "Lifestyle",
+            "Skateboarding, casual",
+            "Hiking",
+            "Casual, smart casual",
+            "Everyday, fashion",
+            "Casual, cold weather",
+            "Western wear",
+            "Business, formal events",
+            "Business, smart casual",
+            "Smart casual, dressy",
+            "Business, occasions",
+            "Smart casual, formal",
+            "Summer casual",
+            "Everyday, smart casual",
+            "Casual, dressy",
+            "Business, formal",
+            "Evening, formal",
+            "Fashion, nightlife",
+            "Everyday, warm weather",
+            "Pool, casual",
+            "Everyday comfort",
+            "Beach, pool"
+          ],
+          "x-adaptgym": {
+            "operators": [
+              "eq",
+              "in"
+            ]
+          }
+        },
+        "cushioning": {
+          "type": "string",
+          "enum": [
+            "medium_high",
+            "very_high",
+            "high",
+            "medium",
+            "low_medium",
+            "low",
+            "unspecified"
+          ],
+          "x-adaptgym": {
+            "operators": [
+              "eq",
+              "in"
+            ]
+          }
+        },
+        "upper_material": {
+          "type": "string",
+          "enum": [
+            "Mesh",
+            "Knit / mesh",
+            "Lightweight textile",
+            "Engineered mesh",
+            "Synthetic textile",
+            "Mesh / synthetic",
+            "Textile / synthetic",
+            "Synthetic",
+            "Synthetic / knit",
+            "Synthetic / microfiber",
+            "Leather or synthetic leather",
+            "Leather, synthetic panels",
+            "Mesh and suede",
+            "Leather and suede",
+            "Canvas and suede",
+            "Canvas",
+            "Mesh and leather/suede",
+            "Leather",
+            "Nubuck leather",
+            "Suede or leather",
+            "Smooth leather",
+            "Leather or textile",
+            "Canvas or textile",
+            "Leather or synthetic",
+            "Suede, leather or synthetic",
+            "Molded Croslite foam",
+            "Rubber"
+          ],
+          "x-adaptgym": {
+            "operators": [
+              "eq",
+              "in"
+            ]
+          }
+        },
+        "surface": {
+          "type": "string",
+          "enum": [
+            "road",
+            "mud_trails",
+            "rocky_trails",
+            "gym",
+            "indoor_court",
+            "firm_grass",
+            "hard_court",
+            "track",
+            "rock_climbing",
+            "unspecified",
+            "trails"
+          ],
+          "x-adaptgym": {
+            "operators": [
+              "eq",
+              "in"
+            ]
+          }
+        },
+        "key_characteristics": {
+          "type": "string",
+          "enum": [
+            "Versatile, responsive",
+            "Plush, comfortable",
+            "Race-focused, fast",
+            "Lightweight, smooth ride",
+            "Balanced, neutral",
+            "Soft, cushioned",
+            "Propulsive, fast workouts",
+            "Rockered, distinctive sole",
+            "Aggressive grip",
+            "Grippy, protective",
+            "Stable base, durable",
+            "Versatile, lateral support",
+            "Firm heel, stability",
+            "Ground contact, grip",
+            "Flexible forefoot, supportive heel",
+            "Impact protection, support",
+            "Lightweight, agile",
+            "Supportive, bold design",
+            "Traction, quick movements",
+            "Statement design, cushioning",
+            "Speed, close fit",
+            "Ball control, striking",
+            "Adaptive fit, agility",
+            "Stability, lateral support",
+            "Durability, secure fit",
+            "Jumping, responsiveness",
+            "Jump support, cushioning",
+            "Spike plate, acceleration",
+            "Explosive, rigid plate",
+            "Precision, sticky rubber",
+            "Minimalist, classic",
+            "Retro, streetwear",
+            "Sporty, performance",
+            "Futuristic, Y2K",
+            "Vintage, terrace",
+            "Skate, streetwear",
+            "Retro, minimalist",
+            "Technical, outdoors",
+            "Outdoor, functional",
+            "Urban, alternative",
+            "Punk, grunge",
+            "Rugged, streetwear",
+            "Western, country",
+            "Heritage, smart casual",
+            "Elegant, classic",
+            "Classic, versatile",
+            "Preppy, luxury",
+            "Refined, distinctive",
+            "Heritage, classic",
+            "Nautical, preppy",
+            "Mediterranean, summer",
+            "Elegant",
+            "Retro, preppy",
+            "Glamorous, dressy",
+            "Bold, retro, party",
+            "Casual, comfort",
+            "Sporty, minimalist",
+            "Casual, playful",
+            "Beach, casual"
+          ],
+          "x-adaptgym": {
+            "operators": [
+              "eq",
+              "in"
+            ]
+          }
+        },
+        "category": {
+          "type": "string",
+          "enum": [
+            "road running",
+            "trail running",
+            "gym training",
+            "basketball",
+            "football",
+            "tennis",
+            "volleyball",
+            "sprinting",
+            "climbing",
+            "Lifestyle sneakers",
+            "Basketball-inspired sneakers",
+            "Running shoes",
+            "Chunky sneakers",
+            "Retro sneakers",
+            "Skate sneakers",
+            "Canvas sneakers",
+            "Trail running shoes",
+            "Hiking shoes/boots",
+            "Chelsea boots",
+            "Combat-style boots",
+            "Workwear-style boots",
+            "Cowboy boots",
+            "Desert boots",
+            "Formal dress shoes",
+            "Dress shoes",
+            "Luxury loafers",
+            "Formal shoes",
+            "Brogue shoes",
+            "Boat shoes",
+            "Espadrilles",
+            "Ballet flats",
+            "Mary Jane flats",
+            "Pumps",
+            "Stilettos",
+            "Platform heels",
+            "Sandals",
+            "Slides",
+            "Clogs",
+            "Flip-flops"
+          ],
+          "x-adaptgym": {
+            "operators": [
+              "eq",
+              "in"
+            ]
+          }
+        },
+        "style": {
+          "type": "string",
+          "enum": [
+            "performance",
+            "Minimalist, classic",
+            "Retro, streetwear",
+            "Sporty, performance",
+            "Futuristic, Y2K",
+            "Vintage, terrace",
+            "Skate, streetwear",
+            "Retro, minimalist",
+            "Technical, outdoors",
+            "Outdoor, functional",
+            "Urban, alternative",
+            "Punk, grunge",
+            "Rugged, streetwear",
+            "Western, country",
+            "Heritage, smart casual",
+            "Elegant, classic",
+            "Classic, versatile",
+            "Preppy, luxury",
+            "Refined, distinctive",
+            "Heritage, classic",
+            "Nautical, preppy",
+            "Mediterranean, summer",
+            "Elegant",
+            "Retro, preppy",
+            "Glamorous, dressy",
+            "Bold, retro, party",
+            "Casual, comfort",
+            "Sporty, minimalist",
+            "Casual, playful",
+            "Beach, casual"
+          ],
+          "x-adaptgym": {
+            "operators": [
+              "eq",
+              "in"
+            ]
+          }
+        },
+        "closure": {
+          "type": "string",
+          "enum": [
+            "unspecified",
+            "Laces",
+            "Quicklace",
+            "Elastic sides",
+            "Pull-on",
+            "Closed lacing",
+            "Open lacing",
+            "Slip-on",
+            "Buckles",
+            "Moccasin-style lacing",
+            "Slip-on / ankle tie",
+            "Strap and buckle",
+            "Slip-on / straps",
+            "Buckles / straps",
+            "Adjustable buckles",
+            "Pivoting heel strap",
+            "Toe-post"
+          ],
+          "x-adaptgym": {
+            "operators": [
+              "eq",
+              "in"
+            ]
+          }
+        }
+      }
+    },
+    "catalog": {
+      "catalog_id": "debug-sports-shoes-30",
+      "vertical_id": "footwear",
+      "schema_version": "1",
+      "synthetic": true,
+      "products": [
+        {
+          "id": "DBG-SHOE-001",
+          "name": "Nike Pegasus 42",
+          "description": "Nike Pegasus 42: Daily running. Upper: Mesh. Surface: road. Versatile, responsive. Cushioning (fixture taxonomy): medium_high. Synthetic offer: size 42 EU; unisex; black; 140 EUR.",
+          "attributes": {
+            "brand": "Nike",
+            "price": 140,
+            "size": 42,
+            "colour": "black",
+            "gender": "unisex",
+            "model": "Pegasus 42",
+            "sport": "road_running",
+            "primary_use": "Daily running",
+            "cushioning": "medium_high",
+            "upper_material": "Mesh",
+            "surface": "road",
+            "key_characteristics": "Versatile, responsive",
+            "category": "road running",
+            "style": "performance",
+            "closure": "unspecified"
+          },
+          "provenance": {
+            "basis": "user_supplied_sports_shortlist",
+            "manufacturer_properties_verified": false,
+            "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+          }
+        },
+        {
+          "id": "DBG-SHOE-002",
+          "name": "ASICS GEL-NIMBUS 28",
+          "description": "ASICS GEL-NIMBUS 28: Long-distance running. Upper: Knit / mesh. Surface: road. Plush, comfortable. Cushioning (fixture taxonomy): very_high. Synthetic offer: size 42 EU; unisex; black; 200 EUR.",
+          "attributes": {
+            "brand": "ASICS",
+            "price": 200,
+            "size": 42,
+            "colour": "black",
+            "gender": "unisex",
+            "model": "GEL-NIMBUS 28",
+            "sport": "road_running",
+            "primary_use": "Long-distance running",
+            "cushioning": "very_high",
+            "upper_material": "Knit / mesh",
+            "surface": "road",
+            "key_characteristics": "Plush, comfortable",
+            "category": "road running",
+            "style": "performance",
+            "closure": "unspecified"
+          },
+          "provenance": {
+            "basis": "user_supplied_sports_shortlist",
+            "manufacturer_properties_verified": false,
+            "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+          }
+        },
+        {
+          "id": "DBG-SHOE-003",
+          "name": "Adidas Adizero Adios Pro 5",
+          "description": "Adidas Adizero Adios Pro 5: Marathon racing. Upper: Lightweight textile. Surface: road. Race-focused, fast. Cushioning (fixture taxonomy): high. Synthetic offer: size 42 EU; unisex; black; 250 EUR.",
+          "attributes": {
+            "brand": "Adidas",
+            "price": 250,
+            "size": 42,
+            "colour": "black",
+            "gender": "unisex",
+            "model": "Adizero Adios Pro 5",
+            "sport": "road_running",
+            "primary_use": "Marathon racing",
+            "cushioning": "high",
+            "upper_material": "Lightweight textile",
+            "surface": "road",
+            "key_characteristics": "Race-focused, fast",
+            "category": "road running",
+            "style": "performance",
+            "closure": "unspecified"
+          },
+          "provenance": {
+            "basis": "user_supplied_sports_shortlist",
+            "manufacturer_properties_verified": false,
+            "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+          }
+        },
+        {
+          "id": "DBG-SHOE-004",
+          "name": "HOKA Clifton 10",
+          "description": "HOKA Clifton 10: Daily running. Upper: Mesh. Surface: road. Lightweight, smooth ride. Cushioning (fixture taxonomy): high. Synthetic offer: size 42 EU; unisex; black; 160 EUR.",
+          "attributes": {
+            "brand": "HOKA",
+            "price": 160,
+            "size": 42,
+            "colour": "black",
+            "gender": "unisex",
+            "model": "Clifton 10",
+            "sport": "road_running",
+            "primary_use": "Daily running",
+            "cushioning": "high",
+            "upper_material": "Mesh",
+            "surface": "road",
+            "key_characteristics": "Lightweight, smooth ride",
+            "category": "road running",
+            "style": "performance",
+            "closure": "unspecified"
+          },
+          "provenance": {
+            "basis": "user_supplied_sports_shortlist",
+            "manufacturer_properties_verified": false,
+            "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+          }
+        },
+        {
+          "id": "DBG-SHOE-005",
+          "name": "Brooks Ghost 17",
+          "description": "Brooks Ghost 17: Daily running. Upper: Mesh. Surface: road. Balanced, neutral. Cushioning (fixture taxonomy): high. Synthetic offer: size 42 EU; unisex; black; 150 EUR.",
+          "attributes": {
+            "brand": "Brooks",
+            "price": 150,
+            "size": 42,
+            "colour": "black",
+            "gender": "unisex",
+            "model": "Ghost 17",
+            "sport": "road_running",
+            "primary_use": "Daily running",
+            "cushioning": "high",
+            "upper_material": "Mesh",
+            "surface": "road",
+            "key_characteristics": "Balanced, neutral",
+            "category": "road running",
+            "style": "performance",
+            "closure": "unspecified"
+          },
+          "provenance": {
+            "basis": "user_supplied_sports_shortlist",
+            "manufacturer_properties_verified": false,
+            "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+          }
+        },
+        {
+          "id": "DBG-SHOE-006",
+          "name": "New Balance 1080v15",
+          "description": "New Balance 1080v15: Easy runs. Upper: Engineered mesh. Surface: road. Soft, cushioned. Cushioning (fixture taxonomy): very_high. Synthetic offer: size 42 EU; unisex; black; 190 EUR.",
+          "attributes": {
+            "brand": "New Balance",
+            "price": 190,
+            "size": 42,
+            "colour": "black",
+            "gender": "unisex",
+            "model": "1080v15",
+            "sport": "road_running",
+            "primary_use": "Easy runs",
+            "cushioning": "very_high",
+            "upper_material": "Engineered mesh",
+            "surface": "road",
+            "key_characteristics": "Soft, cushioned",
+            "category": "road running",
+            "style": "performance",
+            "closure": "unspecified"
+          },
+          "provenance": {
+            "basis": "user_supplied_sports_shortlist",
+            "manufacturer_properties_verified": false,
+            "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+          }
+        },
+        {
+          "id": "DBG-SHOE-007",
+          "name": "Saucony Endorphin Speed 5",
+          "description": "Saucony Endorphin Speed 5: Tempo running. Upper: Mesh. Surface: road. Propulsive, fast workouts. Cushioning (fixture taxonomy): high. Synthetic offer: size 42 EU; unisex; black; 190 EUR.",
+          "attributes": {
+            "brand": "Saucony",
+            "price": 190,
+            "size": 42,
+            "colour": "black",
+            "gender": "unisex",
+            "model": "Endorphin Speed 5",
+            "sport": "road_running",
+            "primary_use": "Tempo running",
+            "cushioning": "high",
+            "upper_material": "Mesh",
+            "surface": "road",
+            "key_characteristics": "Propulsive, fast workouts",
+            "category": "road running",
+            "style": "performance",
+            "closure": "unspecified"
+          },
+          "provenance": {
+            "basis": "user_supplied_sports_shortlist",
+            "manufacturer_properties_verified": false,
+            "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+          }
+        },
+        {
+          "id": "DBG-SHOE-008",
+          "name": "On Cloudmonster 3",
+          "description": "On Cloudmonster 3: Road running. Upper: Mesh. Surface: road. Rockered, distinctive sole. Cushioning (fixture taxonomy): high. Synthetic offer: size 42 EU; unisex; black; 200 EUR.",
+          "attributes": {
+            "brand": "On",
+            "price": 200,
+            "size": 42,
+            "colour": "black",
+            "gender": "unisex",
+            "model": "Cloudmonster 3",
+            "sport": "road_running",
+            "primary_use": "Road running",
+            "cushioning": "high",
+            "upper_material": "Mesh",
+            "surface": "road",
+            "key_characteristics": "Rockered, distinctive sole",
+            "category": "road running",
+            "style": "performance",
+            "closure": "unspecified"
+          },
+          "provenance": {
+            "basis": "user_supplied_sports_shortlist",
+            "manufacturer_properties_verified": false,
+            "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+          }
+        },
+        {
+          "id": "DBG-SHOE-009",
+          "name": "Salomon Speedcross 6",
+          "description": "Salomon Speedcross 6: Trail running. Upper: Synthetic textile. Surface: mud_trails. Aggressive grip. Cushioning (fixture taxonomy): medium. Synthetic offer: size 42 EU; unisex; black; 150 EUR.",
+          "attributes": {
+            "brand": "Salomon",
+            "price": 150,
+            "size": 42,
+            "colour": "black",
+            "gender": "unisex",
+            "model": "Speedcross 6",
+            "sport": "trail_running",
+            "primary_use": "Trail running",
+            "cushioning": "medium",
+            "upper_material": "Synthetic textile",
+            "surface": "mud_trails",
+            "key_characteristics": "Aggressive grip",
+            "category": "trail running",
+            "style": "performance",
+            "closure": "unspecified"
+          },
+          "provenance": {
+            "basis": "user_supplied_sports_shortlist",
+            "manufacturer_properties_verified": false,
+            "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+          }
+        },
+        {
+          "id": "DBG-SHOE-010",
+          "name": "HOKA Speedgoat 6",
+          "description": "HOKA Speedgoat 6: Technical trail running. Upper: Mesh. Surface: rocky_trails. Grippy, protective. Cushioning (fixture taxonomy): high. Synthetic offer: size 42 EU; unisex; black; 160 EUR.",
+          "attributes": {
+            "brand": "HOKA",
+            "price": 160,
+            "size": 42,
+            "colour": "black",
+            "gender": "unisex",
+            "model": "Speedgoat 6",
+            "sport": "trail_running",
+            "primary_use": "Technical trail running",
+            "cushioning": "high",
+            "upper_material": "Mesh",
+            "surface": "rocky_trails",
+            "key_characteristics": "Grippy, protective",
+            "category": "trail running",
+            "style": "performance",
+            "closure": "unspecified"
+          },
+          "provenance": {
+            "basis": "user_supplied_sports_shortlist",
+            "manufacturer_properties_verified": false,
+            "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+          }
+        },
+        {
+          "id": "DBG-SHOE-011",
+          "name": "Nike Metcon 10",
+          "description": "Nike Metcon 10: CrossFit, lifting. Upper: Mesh / synthetic. Surface: gym. Stable base, durable. Cushioning (fixture taxonomy): low_medium. Synthetic offer: size 42 EU; unisex; black; 150 EUR.",
+          "attributes": {
+            "brand": "Nike",
+            "price": 150,
+            "size": 42,
+            "colour": "black",
+            "gender": "unisex",
+            "model": "Metcon 10",
+            "sport": "gym_training",
+            "primary_use": "CrossFit, lifting",
+            "cushioning": "low_medium",
+            "upper_material": "Mesh / synthetic",
+            "surface": "gym",
+            "key_characteristics": "Stable base, durable",
+            "category": "gym training",
+            "style": "performance",
+            "closure": "unspecified"
+          },
+          "provenance": {
+            "basis": "user_supplied_sports_shortlist",
+            "manufacturer_properties_verified": false,
+            "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+          }
+        },
+        {
+          "id": "DBG-SHOE-012",
+          "name": "Reebok Nano X5",
+          "description": "Reebok Nano X5: Functional training. Upper: Mesh. Surface: gym. Versatile, lateral support. Cushioning (fixture taxonomy): medium. Synthetic offer: size 42 EU; unisex; black; 140 EUR.",
+          "attributes": {
+            "brand": "Reebok",
+            "price": 140,
+            "size": 42,
+            "colour": "black",
+            "gender": "unisex",
+            "model": "Nano X5",
+            "sport": "gym_training",
+            "primary_use": "Functional training",
+            "cushioning": "medium",
+            "upper_material": "Mesh",
+            "surface": "gym",
+            "key_characteristics": "Versatile, lateral support",
+            "category": "gym training",
+            "style": "performance",
+            "closure": "unspecified"
+          },
+          "provenance": {
+            "basis": "user_supplied_sports_shortlist",
+            "manufacturer_properties_verified": false,
+            "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+          }
+        },
+        {
+          "id": "DBG-SHOE-013",
+          "name": "Adidas Dropset 3",
+          "description": "Adidas Dropset 3: Weightlifting. Upper: Textile / synthetic. Surface: gym. Firm heel, stability. Cushioning (fixture taxonomy): low. Synthetic offer: size 42 EU; unisex; black; 130 EUR.",
+          "attributes": {
+            "brand": "Adidas",
+            "price": 130,
+            "size": 42,
+            "colour": "black",
+            "gender": "unisex",
+            "model": "Dropset 3",
+            "sport": "gym_training",
+            "primary_use": "Weightlifting",
+            "cushioning": "low",
+            "upper_material": "Textile / synthetic",
+            "surface": "gym",
+            "key_characteristics": "Firm heel, stability",
+            "category": "gym training",
+            "style": "performance",
+            "closure": "unspecified"
+          },
+          "provenance": {
+            "basis": "user_supplied_sports_shortlist",
+            "manufacturer_properties_verified": false,
+            "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+          }
+        },
+        {
+          "id": "DBG-SHOE-014",
+          "name": "Under Armour TriBase Reign 6",
+          "description": "Under Armour TriBase Reign 6: Strength training. Upper: Mesh. Surface: gym. Ground contact, grip. Cushioning (fixture taxonomy): low. Synthetic offer: size 42 EU; unisex; black; 140 EUR.",
+          "attributes": {
+            "brand": "Under Armour",
+            "price": 140,
+            "size": 42,
+            "colour": "black",
+            "gender": "unisex",
+            "model": "TriBase Reign 6",
+            "sport": "gym_training",
+            "primary_use": "Strength training",
+            "cushioning": "low",
+            "upper_material": "Mesh",
+            "surface": "gym",
+            "key_characteristics": "Ground contact, grip",
+            "category": "gym training",
+            "style": "performance",
+            "closure": "unspecified"
+          },
+          "provenance": {
+            "basis": "user_supplied_sports_shortlist",
+            "manufacturer_properties_verified": false,
+            "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+          }
+        },
+        {
+          "id": "DBG-SHOE-015",
+          "name": "Nike Free Metcon 6",
+          "description": "Nike Free Metcon 6: HIIT, mixed training. Upper: Mesh. Surface: gym. Flexible forefoot, supportive heel. Cushioning (fixture taxonomy): medium. Synthetic offer: size 42 EU; unisex; black; 130 EUR.",
+          "attributes": {
+            "brand": "Nike",
+            "price": 130,
+            "size": 42,
+            "colour": "black",
+            "gender": "unisex",
+            "model": "Free Metcon 6",
+            "sport": "gym_training",
+            "primary_use": "HIIT, mixed training",
+            "cushioning": "medium",
+            "upper_material": "Mesh",
+            "surface": "gym",
+            "key_characteristics": "Flexible forefoot, supportive heel",
+            "category": "gym training",
+            "style": "performance",
+            "closure": "unspecified"
+          },
+          "provenance": {
+            "basis": "user_supplied_sports_shortlist",
+            "manufacturer_properties_verified": false,
+            "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+          }
+        },
+        {
+          "id": "DBG-SHOE-016",
+          "name": "Nike LeBron 22",
+          "description": "Nike LeBron 22: Basketball. Upper: Textile / synthetic. Surface: indoor_court. Impact protection, support. Cushioning (fixture taxonomy): high. Synthetic offer: size 42 EU; unisex; black; 180 EUR.",
+          "attributes": {
+            "brand": "Nike",
+            "price": 180,
+            "size": 42,
+            "colour": "black",
+            "gender": "unisex",
+            "model": "LeBron 22",
+            "sport": "basketball",
+            "primary_use": "Basketball",
+            "cushioning": "high",
+            "upper_material": "Textile / synthetic",
+            "surface": "indoor_court",
+            "key_characteristics": "Impact protection, support",
+            "category": "basketball",
+            "style": "performance",
+            "closure": "unspecified"
+          },
+          "provenance": {
+            "basis": "user_supplied_sports_shortlist",
+            "manufacturer_properties_verified": false,
+            "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+          }
+        },
+        {
+          "id": "DBG-SHOE-017",
+          "name": "Nike Sabrina 2",
+          "description": "Nike Sabrina 2: Basketball. Upper: Mesh / synthetic. Surface: indoor_court. Lightweight, agile. Cushioning (fixture taxonomy): medium. Synthetic offer: size 42 EU; unisex; black; 130 EUR.",
+          "attributes": {
+            "brand": "Nike",
+            "price": 130,
+            "size": 42,
+            "colour": "black",
+            "gender": "unisex",
+            "model": "Sabrina 2",
+            "sport": "basketball",
+            "primary_use": "Basketball",
+            "cushioning": "medium",
+            "upper_material": "Mesh / synthetic",
+            "surface": "indoor_court",
+            "key_characteristics": "Lightweight, agile",
+            "category": "basketball",
+            "style": "performance",
+            "closure": "unspecified"
+          },
+          "provenance": {
+            "basis": "user_supplied_sports_shortlist",
+            "manufacturer_properties_verified": false,
+            "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+          }
+        },
+        {
+          "id": "DBG-SHOE-018",
+          "name": "Adidas AE 1",
+          "description": "Adidas AE 1: Basketball. Upper: Mesh / synthetic. Surface: indoor_court. Supportive, bold design. Cushioning (fixture taxonomy): high. Synthetic offer: size 42 EU; unisex; black; 120 EUR.",
+          "attributes": {
+            "brand": "Adidas",
+            "price": 120,
+            "size": 42,
+            "colour": "black",
+            "gender": "unisex",
+            "model": "AE 1",
+            "sport": "basketball",
+            "primary_use": "Basketball",
+            "cushioning": "high",
+            "upper_material": "Mesh / synthetic",
+            "surface": "indoor_court",
+            "key_characteristics": "Supportive, bold design",
+            "category": "basketball",
+            "style": "performance",
+            "closure": "unspecified"
+          },
+          "provenance": {
+            "basis": "user_supplied_sports_shortlist",
+            "manufacturer_properties_verified": false,
+            "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+          }
+        },
+        {
+          "id": "DBG-SHOE-019",
+          "name": "Under Armour Curry 12",
+          "description": "Under Armour Curry 12: Basketball. Upper: Textile / synthetic. Surface: indoor_court. Traction, quick movements. Cushioning (fixture taxonomy): medium. Synthetic offer: size 42 EU; unisex; black; 150 EUR.",
+          "attributes": {
+            "brand": "Under Armour",
+            "price": 150,
+            "size": 42,
+            "colour": "black",
+            "gender": "unisex",
+            "model": "Curry 12",
+            "sport": "basketball",
+            "primary_use": "Basketball",
+            "cushioning": "medium",
+            "upper_material": "Textile / synthetic",
+            "surface": "indoor_court",
+            "key_characteristics": "Traction, quick movements",
+            "category": "basketball",
+            "style": "performance",
+            "closure": "unspecified"
+          },
+          "provenance": {
+            "basis": "user_supplied_sports_shortlist",
+            "manufacturer_properties_verified": false,
+            "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+          }
+        },
+        {
+          "id": "DBG-SHOE-020",
+          "name": "Puma MB.04",
+          "description": "Puma MB.04: Basketball. Upper: Engineered mesh. Surface: indoor_court. Statement design, cushioning. Cushioning (fixture taxonomy): high. Synthetic offer: size 42 EU; unisex; black; 130 EUR.",
+          "attributes": {
+            "brand": "Puma",
+            "price": 130,
+            "size": 42,
+            "colour": "black",
+            "gender": "unisex",
+            "model": "MB.04",
+            "sport": "basketball",
+            "primary_use": "Basketball",
+            "cushioning": "high",
+            "upper_material": "Engineered mesh",
+            "surface": "indoor_court",
+            "key_characteristics": "Statement design, cushioning",
+            "category": "basketball",
+            "style": "performance",
+            "closure": "unspecified"
+          },
+          "provenance": {
+            "basis": "user_supplied_sports_shortlist",
+            "manufacturer_properties_verified": false,
+            "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+          }
+        },
+        {
+          "id": "DBG-SHOE-021",
+          "name": "Nike Mercurial Vapor 16 Elite",
+          "description": "Nike Mercurial Vapor 16 Elite: Football. Upper: Synthetic. Surface: firm_grass. Speed, close fit. Synthetic offer: size 42 EU; unisex; black; 270 EUR.",
+          "attributes": {
+            "brand": "Nike",
+            "price": 270,
+            "size": 42,
+            "colour": "black",
+            "gender": "unisex",
+            "model": "Mercurial Vapor 16 Elite",
+            "sport": "football",
+            "primary_use": "Football",
+            "cushioning": "unspecified",
+            "upper_material": "Synthetic",
+            "surface": "firm_grass",
+            "key_characteristics": "Speed, close fit",
+            "category": "football",
+            "style": "performance",
+            "closure": "unspecified"
+          },
+          "provenance": {
+            "basis": "user_supplied_sports_shortlist",
+            "manufacturer_properties_verified": false,
+            "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+          }
+        },
+        {
+          "id": "DBG-SHOE-022",
+          "name": "Adidas Predator Elite FG",
+          "description": "Adidas Predator Elite FG: Football. Upper: Synthetic. Surface: firm_grass. Ball control, striking. Synthetic offer: size 42 EU; unisex; black; 260 EUR.",
+          "attributes": {
+            "brand": "Adidas",
+            "price": 260,
+            "size": 42,
+            "colour": "black",
+            "gender": "unisex",
+            "model": "Predator Elite FG",
+            "sport": "football",
+            "primary_use": "Football",
+            "cushioning": "unspecified",
+            "upper_material": "Synthetic",
+            "surface": "firm_grass",
+            "key_characteristics": "Ball control, striking",
+            "category": "football",
+            "style": "performance",
+            "closure": "unspecified"
+          },
+          "provenance": {
+            "basis": "user_supplied_sports_shortlist",
+            "manufacturer_properties_verified": false,
+            "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+          }
+        },
+        {
+          "id": "DBG-SHOE-023",
+          "name": "Puma Future 8 Ultimate FG",
+          "description": "Puma Future 8 Ultimate FG: Football. Upper: Synthetic / knit. Surface: firm_grass. Adaptive fit, agility. Synthetic offer: size 42 EU; unisex; black; 230 EUR.",
+          "attributes": {
+            "brand": "Puma",
+            "price": 230,
+            "size": 42,
+            "colour": "black",
+            "gender": "unisex",
+            "model": "Future 8 Ultimate FG",
+            "sport": "football",
+            "primary_use": "Football",
+            "cushioning": "unspecified",
+            "upper_material": "Synthetic / knit",
+            "surface": "firm_grass",
+            "key_characteristics": "Adaptive fit, agility",
+            "category": "football",
+            "style": "performance",
+            "closure": "unspecified"
+          },
+          "provenance": {
+            "basis": "user_supplied_sports_shortlist",
+            "manufacturer_properties_verified": false,
+            "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+          }
+        },
+        {
+          "id": "DBG-SHOE-024",
+          "name": "ASICS GEL-RESOLUTION X",
+          "description": "ASICS GEL-RESOLUTION X: Tennis. Upper: Mesh / synthetic. Surface: hard_court. Stability, lateral support. Synthetic offer: size 42 EU; unisex; black; 160 EUR.",
+          "attributes": {
+            "brand": "ASICS",
+            "price": 160,
+            "size": 42,
+            "colour": "black",
+            "gender": "unisex",
+            "model": "GEL-RESOLUTION X",
+            "sport": "tennis",
+            "primary_use": "Tennis",
+            "cushioning": "unspecified",
+            "upper_material": "Mesh / synthetic",
+            "surface": "hard_court",
+            "key_characteristics": "Stability, lateral support",
+            "category": "tennis",
+            "style": "performance",
+            "closure": "unspecified"
+          },
+          "provenance": {
+            "basis": "user_supplied_sports_shortlist",
+            "manufacturer_properties_verified": false,
+            "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+          }
+        },
+        {
+          "id": "DBG-SHOE-025",
+          "name": "Adidas Barricade 13",
+          "description": "Adidas Barricade 13: Tennis. Upper: Mesh / synthetic. Surface: hard_court. Durability, secure fit. Synthetic offer: size 42 EU; unisex; black; 150 EUR.",
+          "attributes": {
+            "brand": "Adidas",
+            "price": 150,
+            "size": 42,
+            "colour": "black",
+            "gender": "unisex",
+            "model": "Barricade 13",
+            "sport": "tennis",
+            "primary_use": "Tennis",
+            "cushioning": "unspecified",
+            "upper_material": "Mesh / synthetic",
+            "surface": "hard_court",
+            "key_characteristics": "Durability, secure fit",
+            "category": "tennis",
+            "style": "performance",
+            "closure": "unspecified"
+          },
+          "provenance": {
+            "basis": "user_supplied_sports_shortlist",
+            "manufacturer_properties_verified": false,
+            "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+          }
+        },
+        {
+          "id": "DBG-SHOE-026",
+          "name": "Mizuno Wave Lightning Z8",
+          "description": "Mizuno Wave Lightning Z8: Volleyball. Upper: Mesh / synthetic. Surface: indoor_court. Jumping, responsiveness. Synthetic offer: size 42 EU; unisex; black; 150 EUR.",
+          "attributes": {
+            "brand": "Mizuno",
+            "price": 150,
+            "size": 42,
+            "colour": "black",
+            "gender": "unisex",
+            "model": "Wave Lightning Z8",
+            "sport": "volleyball",
+            "primary_use": "Volleyball",
+            "cushioning": "unspecified",
+            "upper_material": "Mesh / synthetic",
+            "surface": "indoor_court",
+            "key_characteristics": "Jumping, responsiveness",
+            "category": "volleyball",
+            "style": "performance",
+            "closure": "unspecified"
+          },
+          "provenance": {
+            "basis": "user_supplied_sports_shortlist",
+            "manufacturer_properties_verified": false,
+            "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+          }
+        },
+        {
+          "id": "DBG-SHOE-027",
+          "name": "ASICS Sky Elite FF 3",
+          "description": "ASICS Sky Elite FF 3: Volleyball. Upper: Mesh / synthetic. Surface: indoor_court. Jump support, cushioning. Synthetic offer: size 42 EU; unisex; black; 160 EUR.",
+          "attributes": {
+            "brand": "ASICS",
+            "price": 160,
+            "size": 42,
+            "colour": "black",
+            "gender": "unisex",
+            "model": "Sky Elite FF 3",
+            "sport": "volleyball",
+            "primary_use": "Volleyball",
+            "cushioning": "unspecified",
+            "upper_material": "Mesh / synthetic",
+            "surface": "indoor_court",
+            "key_characteristics": "Jump support, cushioning",
+            "category": "volleyball",
+            "style": "performance",
+            "closure": "unspecified"
+          },
+          "provenance": {
+            "basis": "user_supplied_sports_shortlist",
+            "manufacturer_properties_verified": false,
+            "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+          }
+        },
+        {
+          "id": "DBG-SHOE-028",
+          "name": "Nike Zoom Rival Sprint",
+          "description": "Nike Zoom Rival Sprint: Sprinting. Upper: Synthetic textile. Surface: track. Spike plate, acceleration. Synthetic offer: size 42 EU; unisex; black; 75 EUR.",
+          "attributes": {
+            "brand": "Nike",
+            "price": 75,
+            "size": 42,
+            "colour": "black",
+            "gender": "unisex",
+            "model": "Zoom Rival Sprint",
+            "sport": "sprinting",
+            "primary_use": "Sprinting",
+            "cushioning": "unspecified",
+            "upper_material": "Synthetic textile",
+            "surface": "track",
+            "key_characteristics": "Spike plate, acceleration",
+            "category": "sprinting",
+            "style": "performance",
+            "closure": "unspecified"
+          },
+          "provenance": {
+            "basis": "user_supplied_sports_shortlist",
+            "manufacturer_properties_verified": false,
+            "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+          }
+        },
+        {
+          "id": "DBG-SHOE-029",
+          "name": "Adidas Adizero Prime SP 3",
+          "description": "Adidas Adizero Prime SP 3: Sprinting. Upper: Lightweight textile. Surface: track. Explosive, rigid plate. Synthetic offer: size 42 EU; unisex; black; 180 EUR.",
+          "attributes": {
+            "brand": "Adidas",
+            "price": 180,
+            "size": 42,
+            "colour": "black",
+            "gender": "unisex",
+            "model": "Adizero Prime SP 3",
+            "sport": "sprinting",
+            "primary_use": "Sprinting",
+            "cushioning": "unspecified",
+            "upper_material": "Lightweight textile",
+            "surface": "track",
+            "key_characteristics": "Explosive, rigid plate",
+            "category": "sprinting",
+            "style": "performance",
+            "closure": "unspecified"
+          },
+          "provenance": {
+            "basis": "user_supplied_sports_shortlist",
+            "manufacturer_properties_verified": false,
+            "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+          }
+        },
+        {
+          "id": "DBG-SHOE-030",
+          "name": "Five Ten Hiangle",
+          "description": "Five Ten Hiangle: Rock climbing. Upper: Synthetic / microfiber. Surface: rock_climbing. Precision, sticky rubber. Synthetic offer: size 42 EU; unisex; black; 150 EUR.",
+          "attributes": {
+            "brand": "Five Ten",
+            "price": 150,
+            "size": 42,
+            "colour": "black",
+            "gender": "unisex",
+            "model": "Hiangle",
+            "sport": "climbing",
+            "primary_use": "Rock climbing",
+            "cushioning": "unspecified",
+            "upper_material": "Synthetic / microfiber",
+            "surface": "rock_climbing",
+            "key_characteristics": "Precision, sticky rubber",
+            "category": "climbing",
+            "style": "performance",
+            "closure": "unspecified"
+          },
+          "provenance": {
+            "basis": "user_supplied_sports_shortlist",
+            "manufacturer_properties_verified": false,
+            "note": "Normalized reference description; not a live retail offer. Unspecified fields are unknown."
+          }
+        }
+      ]
+    },
+    "exchanges": [
+      {
+        "exchange": 1,
+        "shopper_message_id": "u1",
+        "shopper_instruction": "Start this purchase and ask naturally for sport eq volleyball, style eq performance, surface eq indoor_court. Combine these requirements in one shopper-led request.",
+        "reaction_to": null,
+        "expected_events": [
+          {
+            "operation": "begin_task",
+            "task_id": "task-1",
+            "evidence": [
+              {
+                "source_type": "conversation",
+                "mode": "explicit",
+                "message_ids": [
+                  "u1"
+                ],
+                "justification": "Planned change; verify generated language before accepting labels."
+              }
+            ]
+          },
+          {
+            "operation": "set",
+            "assignment": {
+              "vertical_id": "footwear",
+              "schema_version": "1",
+              "attribute": "sport",
+              "operator": "eq",
+              "value": "volleyball"
+            },
+            "scope": "task",
+            "strength": "hard",
+            "evidence": [
+              {
+                "source_type": "conversation",
+                "mode": "explicit",
+                "message_ids": [
+                  "u1"
+                ],
+                "justification": "Planned evidence; semantic verification is required."
+              }
+            ]
+          },
+          {
+            "operation": "set",
+            "assignment": {
+              "vertical_id": "footwear",
+              "schema_version": "1",
+              "attribute": "style",
+              "operator": "eq",
+              "value": "performance"
+            },
+            "scope": "task",
+            "strength": "hard",
+            "evidence": [
+              {
+                "source_type": "conversation",
+                "mode": "explicit",
+                "message_ids": [
+                  "u1"
+                ],
+                "justification": "Planned evidence; semantic verification is required."
+              }
+            ]
+          },
+          {
+            "operation": "set",
+            "assignment": {
+              "vertical_id": "footwear",
+              "schema_version": "1",
+              "attribute": "surface",
+              "operator": "eq",
+              "value": "indoor_court"
+            },
+            "scope": "task",
+            "strength": "hard",
+            "evidence": [
+              {
+                "source_type": "conversation",
+                "mode": "explicit",
+                "message_ids": [
+                  "u1"
+                ],
+                "justification": "Planned evidence; semantic verification is required."
+              }
+            ]
+          }
+        ],
+        "turn_subtype": null,
+        "planned_state": {
+          "active_task_id": "task-1",
+          "entries": [
+            {
+              "assignment": {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              },
+              "scope": "task",
+              "task_id": "task-1",
+              "strength": "hard",
+              "evidence_mode": "explicit",
+              "evidence": [
+                {
+                  "source_type": "conversation",
+                  "mode": "explicit",
+                  "message_ids": [
+                    "u1"
+                  ],
+                  "justification": "Planned evidence; semantic verification is required."
+                }
+              ]
+            },
+            {
+              "assignment": {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "style",
+                "operator": "eq",
+                "value": "performance"
+              },
+              "scope": "task",
+              "task_id": "task-1",
+              "strength": "hard",
+              "evidence_mode": "explicit",
+              "evidence": [
+                {
+                  "source_type": "conversation",
+                  "mode": "explicit",
+                  "message_ids": [
+                    "u1"
+                  ],
+                  "justification": "Planned evidence; semantic verification is required."
+                }
+              ]
+            },
+            {
+              "assignment": {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "surface",
+                "operator": "eq",
+                "value": "indoor_court"
+              },
+              "scope": "task",
+              "task_id": "task-1",
+              "strength": "hard",
+              "evidence_mode": "explicit",
+              "evidence": [
+                {
+                  "source_type": "conversation",
+                  "mode": "explicit",
+                  "message_ids": [
+                    "u1"
+                  ],
+                  "justification": "Planned evidence; semantic verification is required."
+                }
+              ]
+            }
+          ],
+          "history": []
+        },
+        "target_product": null,
+        "assistant": {
+          "message_id": "a1",
+          "kind": "recommend",
+          "attribute": null,
+          "product_ids": [
+            "DBG-SHOE-026",
+            "DBG-SHOE-027"
+          ],
+          "text": "Here are the catalog options:\n1. Mizuno Wave Lightning Z8 [DBG-SHOE-026]: Mizuno Wave Lightning Z8: Volleyball. Upper: Mesh / synthetic. Surface: indoor_court. Jumping, responsiveness. Synthetic offer: size 42 EU; unisex; black; 150 EUR.\n2. ASICS Sky Elite FF 3 [DBG-SHOE-027]: ASICS Sky Elite FF 3: Volleyball. Upper: Mesh / synthetic. Surface: indoor_court. Jump support, cushioning. Synthetic offer: size 42 EU; unisex; black; 160 EUR.",
+          "matching_product_ids": [
+            "DBG-SHOE-026",
+            "DBG-SHOE-027"
+          ],
+          "deliberate_error": false,
+          "violating_product_ids": []
+        },
+        "product_roles": {
+          "DBG-SHOE-001": {
+            "role": "hard_mismatch",
+            "failed_hard": [
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              },
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "surface",
+                "operator": "eq",
+                "value": "indoor_court"
+              }
+            ],
+            "missed_soft": []
+          },
+          "DBG-SHOE-002": {
+            "role": "hard_mismatch",
+            "failed_hard": [
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              },
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "surface",
+                "operator": "eq",
+                "value": "indoor_court"
+              }
+            ],
+            "missed_soft": []
+          },
+          "DBG-SHOE-003": {
+            "role": "hard_mismatch",
+            "failed_hard": [
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              },
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "surface",
+                "operator": "eq",
+                "value": "indoor_court"
+              }
+            ],
+            "missed_soft": []
+          },
+          "DBG-SHOE-004": {
+            "role": "hard_mismatch",
+            "failed_hard": [
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              },
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "surface",
+                "operator": "eq",
+                "value": "indoor_court"
+              }
+            ],
+            "missed_soft": []
+          },
+          "DBG-SHOE-005": {
+            "role": "hard_mismatch",
+            "failed_hard": [
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              },
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "surface",
+                "operator": "eq",
+                "value": "indoor_court"
+              }
+            ],
+            "missed_soft": []
+          },
+          "DBG-SHOE-006": {
+            "role": "hard_mismatch",
+            "failed_hard": [
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              },
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "surface",
+                "operator": "eq",
+                "value": "indoor_court"
+              }
+            ],
+            "missed_soft": []
+          },
+          "DBG-SHOE-007": {
+            "role": "hard_mismatch",
+            "failed_hard": [
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              },
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "surface",
+                "operator": "eq",
+                "value": "indoor_court"
+              }
+            ],
+            "missed_soft": []
+          },
+          "DBG-SHOE-008": {
+            "role": "hard_mismatch",
+            "failed_hard": [
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              },
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "surface",
+                "operator": "eq",
+                "value": "indoor_court"
+              }
+            ],
+            "missed_soft": []
+          },
+          "DBG-SHOE-009": {
+            "role": "hard_mismatch",
+            "failed_hard": [
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              },
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "surface",
+                "operator": "eq",
+                "value": "indoor_court"
+              }
+            ],
+            "missed_soft": []
+          },
+          "DBG-SHOE-010": {
+            "role": "hard_mismatch",
+            "failed_hard": [
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              },
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "surface",
+                "operator": "eq",
+                "value": "indoor_court"
+              }
+            ],
+            "missed_soft": []
+          },
+          "DBG-SHOE-011": {
+            "role": "hard_mismatch",
+            "failed_hard": [
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              },
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "surface",
+                "operator": "eq",
+                "value": "indoor_court"
+              }
+            ],
+            "missed_soft": []
+          },
+          "DBG-SHOE-012": {
+            "role": "hard_mismatch",
+            "failed_hard": [
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              },
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "surface",
+                "operator": "eq",
+                "value": "indoor_court"
+              }
+            ],
+            "missed_soft": []
+          },
+          "DBG-SHOE-013": {
+            "role": "hard_mismatch",
+            "failed_hard": [
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              },
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "surface",
+                "operator": "eq",
+                "value": "indoor_court"
+              }
+            ],
+            "missed_soft": []
+          },
+          "DBG-SHOE-014": {
+            "role": "hard_mismatch",
+            "failed_hard": [
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              },
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "surface",
+                "operator": "eq",
+                "value": "indoor_court"
+              }
+            ],
+            "missed_soft": []
+          },
+          "DBG-SHOE-015": {
+            "role": "hard_mismatch",
+            "failed_hard": [
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              },
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "surface",
+                "operator": "eq",
+                "value": "indoor_court"
+              }
+            ],
+            "missed_soft": []
+          },
+          "DBG-SHOE-016": {
+            "role": "hard_mismatch",
+            "failed_hard": [
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              }
+            ],
+            "missed_soft": []
+          },
+          "DBG-SHOE-017": {
+            "role": "hard_mismatch",
+            "failed_hard": [
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              }
+            ],
+            "missed_soft": []
+          },
+          "DBG-SHOE-018": {
+            "role": "hard_mismatch",
+            "failed_hard": [
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              }
+            ],
+            "missed_soft": []
+          },
+          "DBG-SHOE-019": {
+            "role": "hard_mismatch",
+            "failed_hard": [
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              }
+            ],
+            "missed_soft": []
+          },
+          "DBG-SHOE-020": {
+            "role": "hard_mismatch",
+            "failed_hard": [
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              }
+            ],
+            "missed_soft": []
+          },
+          "DBG-SHOE-021": {
+            "role": "hard_mismatch",
+            "failed_hard": [
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              },
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "surface",
+                "operator": "eq",
+                "value": "indoor_court"
+              }
+            ],
+            "missed_soft": []
+          },
+          "DBG-SHOE-022": {
+            "role": "hard_mismatch",
+            "failed_hard": [
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              },
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "surface",
+                "operator": "eq",
+                "value": "indoor_court"
+              }
+            ],
+            "missed_soft": []
+          },
+          "DBG-SHOE-023": {
+            "role": "hard_mismatch",
+            "failed_hard": [
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              },
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "surface",
+                "operator": "eq",
+                "value": "indoor_court"
+              }
+            ],
+            "missed_soft": []
+          },
+          "DBG-SHOE-024": {
+            "role": "hard_mismatch",
+            "failed_hard": [
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              },
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "surface",
+                "operator": "eq",
+                "value": "indoor_court"
+              }
+            ],
+            "missed_soft": []
+          },
+          "DBG-SHOE-025": {
+            "role": "hard_mismatch",
+            "failed_hard": [
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              },
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "surface",
+                "operator": "eq",
+                "value": "indoor_court"
+              }
+            ],
+            "missed_soft": []
+          },
+          "DBG-SHOE-026": {
+            "role": "suitable",
+            "failed_hard": [],
+            "missed_soft": []
+          },
+          "DBG-SHOE-027": {
+            "role": "suitable",
+            "failed_hard": [],
+            "missed_soft": []
+          },
+          "DBG-SHOE-028": {
+            "role": "hard_mismatch",
+            "failed_hard": [
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              },
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "surface",
+                "operator": "eq",
+                "value": "indoor_court"
+              }
+            ],
+            "missed_soft": []
+          },
+          "DBG-SHOE-029": {
+            "role": "hard_mismatch",
+            "failed_hard": [
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              },
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "surface",
+                "operator": "eq",
+                "value": "indoor_court"
+              }
+            ],
+            "missed_soft": []
+          },
+          "DBG-SHOE-030": {
+            "role": "hard_mismatch",
+            "failed_hard": [
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              },
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "surface",
+                "operator": "eq",
+                "value": "indoor_court"
+              }
+            ],
+            "missed_soft": []
+          }
+        }
+      },
+      {
+        "exchange": 2,
+        "shopper_message_id": "u2",
+        "shopper_instruction": "Select the second displayed product by its list position. Do not assert durable preferences for its attributes.",
+        "reaction_to": "a1",
+        "expected_events": [],
+        "turn_subtype": "context_dependent",
+        "planned_state": {
+          "active_task_id": "task-1",
+          "entries": [
+            {
+              "assignment": {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              },
+              "scope": "task",
+              "task_id": "task-1",
+              "strength": "hard",
+              "evidence_mode": "explicit",
+              "evidence": [
+                {
+                  "source_type": "conversation",
+                  "mode": "explicit",
+                  "message_ids": [
+                    "u1"
+                  ],
+                  "justification": "Planned evidence; semantic verification is required."
+                }
+              ]
+            },
+            {
+              "assignment": {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "style",
+                "operator": "eq",
+                "value": "performance"
+              },
+              "scope": "task",
+              "task_id": "task-1",
+              "strength": "hard",
+              "evidence_mode": "explicit",
+              "evidence": [
+                {
+                  "source_type": "conversation",
+                  "mode": "explicit",
+                  "message_ids": [
+                    "u1"
+                  ],
+                  "justification": "Planned evidence; semantic verification is required."
+                }
+              ]
+            },
+            {
+              "assignment": {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "surface",
+                "operator": "eq",
+                "value": "indoor_court"
+              },
+              "scope": "task",
+              "task_id": "task-1",
+              "strength": "hard",
+              "evidence_mode": "explicit",
+              "evidence": [
+                {
+                  "source_type": "conversation",
+                  "mode": "explicit",
+                  "message_ids": [
+                    "u1"
+                  ],
+                  "justification": "Planned evidence; semantic verification is required."
+                }
+              ]
+            }
+          ],
+          "history": []
+        },
+        "target_product": "DBG-SHOE-027",
+        "assistant": {
+          "message_id": "a2",
+          "kind": "confirm_selection",
+          "attribute": null,
+          "product_ids": [
+            "DBG-SHOE-027"
+          ],
+          "text": "You selected DBG-SHOE-027.\n1. ASICS Sky Elite FF 3 [DBG-SHOE-027]: ASICS Sky Elite FF 3: Volleyball. Upper: Mesh / synthetic. Surface: indoor_court. Jump support, cushioning. Synthetic offer: size 42 EU; unisex; black; 160 EUR.",
+          "matching_product_ids": [
+            "DBG-SHOE-026",
+            "DBG-SHOE-027"
+          ],
+          "deliberate_error": false,
+          "violating_product_ids": []
+        },
+        "product_roles": {
+          "DBG-SHOE-001": {
+            "role": "hard_mismatch",
+            "failed_hard": [
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              },
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "surface",
+                "operator": "eq",
+                "value": "indoor_court"
+              }
+            ],
+            "missed_soft": []
+          },
+          "DBG-SHOE-002": {
+            "role": "hard_mismatch",
+            "failed_hard": [
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              },
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "surface",
+                "operator": "eq",
+                "value": "indoor_court"
+              }
+            ],
+            "missed_soft": []
+          },
+          "DBG-SHOE-003": {
+            "role": "hard_mismatch",
+            "failed_hard": [
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              },
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "surface",
+                "operator": "eq",
+                "value": "indoor_court"
+              }
+            ],
+            "missed_soft": []
+          },
+          "DBG-SHOE-004": {
+            "role": "hard_mismatch",
+            "failed_hard": [
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              },
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "surface",
+                "operator": "eq",
+                "value": "indoor_court"
+              }
+            ],
+            "missed_soft": []
+          },
+          "DBG-SHOE-005": {
+            "role": "hard_mismatch",
+            "failed_hard": [
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              },
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "surface",
+                "operator": "eq",
+                "value": "indoor_court"
+              }
+            ],
+            "missed_soft": []
+          },
+          "DBG-SHOE-006": {
+            "role": "hard_mismatch",
+            "failed_hard": [
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              },
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "surface",
+                "operator": "eq",
+                "value": "indoor_court"
+              }
+            ],
+            "missed_soft": []
+          },
+          "DBG-SHOE-007": {
+            "role": "hard_mismatch",
+            "failed_hard": [
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              },
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "surface",
+                "operator": "eq",
+                "value": "indoor_court"
+              }
+            ],
+            "missed_soft": []
+          },
+          "DBG-SHOE-008": {
+            "role": "hard_mismatch",
+            "failed_hard": [
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              },
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "surface",
+                "operator": "eq",
+                "value": "indoor_court"
+              }
+            ],
+            "missed_soft": []
+          },
+          "DBG-SHOE-009": {
+            "role": "hard_mismatch",
+            "failed_hard": [
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              },
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "surface",
+                "operator": "eq",
+                "value": "indoor_court"
+              }
+            ],
+            "missed_soft": []
+          },
+          "DBG-SHOE-010": {
+            "role": "hard_mismatch",
+            "failed_hard": [
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              },
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "surface",
+                "operator": "eq",
+                "value": "indoor_court"
+              }
+            ],
+            "missed_soft": []
+          },
+          "DBG-SHOE-011": {
+            "role": "hard_mismatch",
+            "failed_hard": [
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              },
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "surface",
+                "operator": "eq",
+                "value": "indoor_court"
+              }
+            ],
+            "missed_soft": []
+          },
+          "DBG-SHOE-012": {
+            "role": "hard_mismatch",
+            "failed_hard": [
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              },
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "surface",
+                "operator": "eq",
+                "value": "indoor_court"
+              }
+            ],
+            "missed_soft": []
+          },
+          "DBG-SHOE-013": {
+            "role": "hard_mismatch",
+            "failed_hard": [
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              },
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "surface",
+                "operator": "eq",
+                "value": "indoor_court"
+              }
+            ],
+            "missed_soft": []
+          },
+          "DBG-SHOE-014": {
+            "role": "hard_mismatch",
+            "failed_hard": [
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              },
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "surface",
+                "operator": "eq",
+                "value": "indoor_court"
+              }
+            ],
+            "missed_soft": []
+          },
+          "DBG-SHOE-015": {
+            "role": "hard_mismatch",
+            "failed_hard": [
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              },
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "surface",
+                "operator": "eq",
+                "value": "indoor_court"
+              }
+            ],
+            "missed_soft": []
+          },
+          "DBG-SHOE-016": {
+            "role": "hard_mismatch",
+            "failed_hard": [
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              }
+            ],
+            "missed_soft": []
+          },
+          "DBG-SHOE-017": {
+            "role": "hard_mismatch",
+            "failed_hard": [
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              }
+            ],
+            "missed_soft": []
+          },
+          "DBG-SHOE-018": {
+            "role": "hard_mismatch",
+            "failed_hard": [
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              }
+            ],
+            "missed_soft": []
+          },
+          "DBG-SHOE-019": {
+            "role": "hard_mismatch",
+            "failed_hard": [
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              }
+            ],
+            "missed_soft": []
+          },
+          "DBG-SHOE-020": {
+            "role": "hard_mismatch",
+            "failed_hard": [
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              }
+            ],
+            "missed_soft": []
+          },
+          "DBG-SHOE-021": {
+            "role": "hard_mismatch",
+            "failed_hard": [
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              },
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "surface",
+                "operator": "eq",
+                "value": "indoor_court"
+              }
+            ],
+            "missed_soft": []
+          },
+          "DBG-SHOE-022": {
+            "role": "hard_mismatch",
+            "failed_hard": [
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              },
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "surface",
+                "operator": "eq",
+                "value": "indoor_court"
+              }
+            ],
+            "missed_soft": []
+          },
+          "DBG-SHOE-023": {
+            "role": "hard_mismatch",
+            "failed_hard": [
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              },
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "surface",
+                "operator": "eq",
+                "value": "indoor_court"
+              }
+            ],
+            "missed_soft": []
+          },
+          "DBG-SHOE-024": {
+            "role": "hard_mismatch",
+            "failed_hard": [
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              },
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "surface",
+                "operator": "eq",
+                "value": "indoor_court"
+              }
+            ],
+            "missed_soft": []
+          },
+          "DBG-SHOE-025": {
+            "role": "hard_mismatch",
+            "failed_hard": [
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              },
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "surface",
+                "operator": "eq",
+                "value": "indoor_court"
+              }
+            ],
+            "missed_soft": []
+          },
+          "DBG-SHOE-026": {
+            "role": "suitable",
+            "failed_hard": [],
+            "missed_soft": []
+          },
+          "DBG-SHOE-027": {
+            "role": "suitable",
+            "failed_hard": [],
+            "missed_soft": []
+          },
+          "DBG-SHOE-028": {
+            "role": "hard_mismatch",
+            "failed_hard": [
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              },
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "surface",
+                "operator": "eq",
+                "value": "indoor_court"
+              }
+            ],
+            "missed_soft": []
+          },
+          "DBG-SHOE-029": {
+            "role": "hard_mismatch",
+            "failed_hard": [
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              },
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "surface",
+                "operator": "eq",
+                "value": "indoor_court"
+              }
+            ],
+            "missed_soft": []
+          },
+          "DBG-SHOE-030": {
+            "role": "hard_mismatch",
+            "failed_hard": [
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "sport",
+                "operator": "eq",
+                "value": "volleyball"
+              },
+              {
+                "vertical_id": "footwear",
+                "schema_version": "1",
+                "attribute": "surface",
+                "operator": "eq",
+                "value": "indoor_court"
+              }
+            ],
+            "missed_soft": []
+          }
+        }
+      },
+      {
+        "exchange": 3,
+        "shopper_message_id": "u3",
+        "shopper_instruction": "Say you found what you wanted and explicitly finish shopping successfully. Do not name a product unless a product was already selected.",
+        "reaction_to": null,
+        "expected_events": [
+          {
+            "operation": "end_task",
+            "task_id": "task-1",
+            "evidence": [
+              {
+                "source_type": "conversation",
+                "mode": "explicit",
+                "message_ids": [
+                  "u3"
+                ],
+                "justification": "Planned change; verify generated language before accepting labels."
+              }
+            ]
+          }
+        ],
+        "turn_subtype": null,
+        "planned_state": {
+          "active_task_id": null,
+          "entries": [],
+          "history": [
+            {
+              "entry": {
+                "assignment": {
+                  "vertical_id": "footwear",
+                  "schema_version": "1",
+                  "attribute": "sport",
+                  "operator": "eq",
+                  "value": "volleyball"
+                },
+                "scope": "task",
+                "task_id": "task-1",
+                "strength": "hard",
+                "evidence_mode": "explicit",
+                "evidence": [
+                  {
+                    "source_type": "conversation",
+                    "mode": "explicit",
+                    "message_ids": [
+                      "u1"
+                    ],
+                    "justification": "Planned evidence; semantic verification is required."
+                  }
+                ]
+              },
+              "status": "expired",
+              "changed_by": [
+                {
+                  "source_type": "conversation",
+                  "mode": "explicit",
+                  "message_ids": [
+                    "u3"
+                  ],
+                  "justification": "Planned change; verify generated language before accepting labels."
+                }
+              ]
+            },
+            {
+              "entry": {
+                "assignment": {
+                  "vertical_id": "footwear",
+                  "schema_version": "1",
+                  "attribute": "style",
+                  "operator": "eq",
+                  "value": "performance"
+                },
+                "scope": "task",
+                "task_id": "task-1",
+                "strength": "hard",
+                "evidence_mode": "explicit",
+                "evidence": [
+                  {
+                    "source_type": "conversation",
+                    "mode": "explicit",
+                    "message_ids": [
+                      "u1"
+                    ],
+                    "justification": "Planned evidence; semantic verification is required."
+                  }
+                ]
+              },
+              "status": "expired",
+              "changed_by": [
+                {
+                  "source_type": "conversation",
+                  "mode": "explicit",
+                  "message_ids": [
+                    "u3"
+                  ],
+                  "justification": "Planned change; verify generated language before accepting labels."
+                }
+              ]
+            },
+            {
+              "entry": {
+                "assignment": {
+                  "vertical_id": "footwear",
+                  "schema_version": "1",
+                  "attribute": "surface",
+                  "operator": "eq",
+                  "value": "indoor_court"
+                },
+                "scope": "task",
+                "task_id": "task-1",
+                "strength": "hard",
+                "evidence_mode": "explicit",
+                "evidence": [
+                  {
+                    "source_type": "conversation",
+                    "mode": "explicit",
+                    "message_ids": [
+                      "u1"
+                    ],
+                    "justification": "Planned evidence; semantic verification is required."
+                  }
+                ]
+              },
+              "status": "expired",
+              "changed_by": [
+                {
+                  "source_type": "conversation",
+                  "mode": "explicit",
+                  "message_ids": [
+                    "u3"
+                  ],
+                  "justification": "Planned change; verify generated language before accepting labels."
+                }
+              ]
+            }
+          ]
+        },
+        "target_product": "DBG-SHOE-027",
+        "assistant": {
+          "message_id": "a3",
+          "kind": "acknowledge",
+          "attribute": null,
+          "product_ids": [],
+          "text": "Glad you found what you needed. This shopping task is complete.",
+          "matching_product_ids": [
+            "DBG-SHOE-001",
+            "DBG-SHOE-002",
+            "DBG-SHOE-003",
+            "DBG-SHOE-004",
+            "DBG-SHOE-005",
+            "DBG-SHOE-006",
+            "DBG-SHOE-007",
+            "DBG-SHOE-008",
+            "DBG-SHOE-009",
+            "DBG-SHOE-010",
+            "DBG-SHOE-011",
+            "DBG-SHOE-012",
+            "DBG-SHOE-013",
+            "DBG-SHOE-014",
+            "DBG-SHOE-015",
+            "DBG-SHOE-016",
+            "DBG-SHOE-017",
+            "DBG-SHOE-018",
+            "DBG-SHOE-019",
+            "DBG-SHOE-020",
+            "DBG-SHOE-021",
+            "DBG-SHOE-022",
+            "DBG-SHOE-023",
+            "DBG-SHOE-024",
+            "DBG-SHOE-025",
+            "DBG-SHOE-026",
+            "DBG-SHOE-027",
+            "DBG-SHOE-028",
+            "DBG-SHOE-029",
+            "DBG-SHOE-030"
+          ],
+          "deliberate_error": false,
+          "violating_product_ids": []
+        },
+        "product_roles": {
+          "DBG-SHOE-001": {
+            "role": "suitable",
+            "failed_hard": [],
+            "missed_soft": []
+          },
+          "DBG-SHOE-002": {
+            "role": "suitable",
+            "failed_hard": [],
+            "missed_soft": []
+          },
+          "DBG-SHOE-003": {
+            "role": "suitable",
+            "failed_hard": [],
+            "missed_soft": []
+          },
+          "DBG-SHOE-004": {
+            "role": "suitable",
+            "failed_hard": [],
+            "missed_soft": []
+          },
+          "DBG-SHOE-005": {
+            "role": "suitable",
+            "failed_hard": [],
+            "missed_soft": []
+          },
+          "DBG-SHOE-006": {
+            "role": "suitable",
+            "failed_hard": [],
+            "missed_soft": []
+          },
+          "DBG-SHOE-007": {
+            "role": "suitable",
+            "failed_hard": [],
+            "missed_soft": []
+          },
+          "DBG-SHOE-008": {
+            "role": "suitable",
+            "failed_hard": [],
+            "missed_soft": []
+          },
+          "DBG-SHOE-009": {
+            "role": "suitable",
+            "failed_hard": [],
+            "missed_soft": []
+          },
+          "DBG-SHOE-010": {
+            "role": "suitable",
+            "failed_hard": [],
+            "missed_soft": []
+          },
+          "DBG-SHOE-011": {
+            "role": "suitable",
+            "failed_hard": [],
+            "missed_soft": []
+          },
+          "DBG-SHOE-012": {
+            "role": "suitable",
+            "failed_hard": [],
+            "missed_soft": []
+          },
+          "DBG-SHOE-013": {
+            "role": "suitable",
+            "failed_hard": [],
+            "missed_soft": []
+          },
+          "DBG-SHOE-014": {
+            "role": "suitable",
+            "failed_hard": [],
+            "missed_soft": []
+          },
+          "DBG-SHOE-015": {
+            "role": "suitable",
+            "failed_hard": [],
+            "missed_soft": []
+          },
+          "DBG-SHOE-016": {
+            "role": "suitable",
+            "failed_hard": [],
+            "missed_soft": []
+          },
+          "DBG-SHOE-017": {
+            "role": "suitable",
+            "failed_hard": [],
+            "missed_soft": []
+          },
+          "DBG-SHOE-018": {
+            "role": "suitable",
+            "failed_hard": [],
+            "missed_soft": []
+          },
+          "DBG-SHOE-019": {
+            "role": "suitable",
+            "failed_hard": [],
+            "missed_soft": []
+          },
+          "DBG-SHOE-020": {
+            "role": "suitable",
+            "failed_hard": [],
+            "missed_soft": []
+          },
+          "DBG-SHOE-021": {
+            "role": "suitable",
+            "failed_hard": [],
+            "missed_soft": []
+          },
+          "DBG-SHOE-022": {
+            "role": "suitable",
+            "failed_hard": [],
+            "missed_soft": []
+          },
+          "DBG-SHOE-023": {
+            "role": "suitable",
+            "failed_hard": [],
+            "missed_soft": []
+          },
+          "DBG-SHOE-024": {
+            "role": "suitable",
+            "failed_hard": [],
+            "missed_soft": []
+          },
+          "DBG-SHOE-025": {
+            "role": "suitable",
+            "failed_hard": [],
+            "missed_soft": []
+          },
+          "DBG-SHOE-026": {
+            "role": "suitable",
+            "failed_hard": [],
+            "missed_soft": []
+          },
+          "DBG-SHOE-027": {
+            "role": "suitable",
+            "failed_hard": [],
+            "missed_soft": []
+          },
+          "DBG-SHOE-028": {
+            "role": "suitable",
+            "failed_hard": [],
+            "missed_soft": []
+          },
+          "DBG-SHOE-029": {
+            "role": "suitable",
+            "failed_hard": [],
+            "missed_soft": []
+          },
+          "DBG-SHOE-030": {
+            "role": "suitable",
+            "failed_hard": [],
+            "missed_soft": []
+          }
+        },
+        "finisher": "positive"
+      }
+    ],
+    "status": "private_plan_requires_language_verification",
+    "instructions": [
+      "Generate only shopper messages. Assistant messages are fixed by code.",
+      "React to actual displayed products and preserve list order.",
+      "Do not reveal later instructions or invent requirements.",
+      "A product choice does not imply durable preferences for all its attributes.",
+      "Implicit preferences use repeated-choice evidence, without directly stating a preference."
+    ]
+  },
+  "result": {
+    "plan_id": "select_product-7-explicit-t3-positive",
+    "status": "completed",
+    "conversation": [
+      {
+        "id": "u1",
+        "role": "user",
+        "text": "I'm looking for performance volleyball shoes for indoor courts, please."
+      },
+      {
+        "id": "a1",
+        "role": "assistant",
+        "text": "Here are the catalog options:\n1. Mizuno Wave Lightning Z8 [DBG-SHOE-026]: Mizuno Wave Lightning Z8: Volleyball. Upper: Mesh / synthetic. Surface: indoor_court. Jumping, responsiveness. Synthetic offer: size 42 EU; unisex; black; 150 EUR.\n2. ASICS Sky Elite FF 3 [DBG-SHOE-027]: ASICS Sky Elite FF 3: Volleyball. Upper: Mesh / synthetic. Surface: indoor_court. Jump support, cushioning. Synthetic offer: size 42 EU; unisex; black; 160 EUR."
+      },
+      {
+        "id": "u2",
+        "role": "user",
+        "text": "I'll take the second option, the ASICS Sky Elite FF 3."
+      },
+      {
+        "id": "a2",
+        "role": "assistant",
+        "text": "You selected DBG-SHOE-027.\n1. ASICS Sky Elite FF 3 [DBG-SHOE-027]: ASICS Sky Elite FF 3: Volleyball. Upper: Mesh / synthetic. Surface: indoor_court. Jump support, cushioning. Synthetic offer: size 42 EU; unisex; black; 160 EUR."
+      },
+      {
+        "id": "u3",
+        "role": "user",
+        "text": "Great, this is exactly what I was looking for—I'm done shopping now."
+      },
+      {
+        "id": "a3",
+        "role": "assistant",
+        "text": "Glad you found what you needed. This shopping task is complete."
+      }
+    ],
+    "finisher": {
+      "type": "positive",
+      "outcome": "success",
+      "trigger": "user_confirmation",
+      "message_id": "u3",
+      "after_message_id": "a3",
+      "native_completion": false,
+      "target_product": "DBG-SHOE-027",
+      "terminal_profile": {
+        "active_task_id": null,
+        "entries": []
+      },
+      "lifecycle_expirations": []
+    },
+    "checkpoints": [
+      {
+        "turn": 1,
+        "prediction": {
+          "intent": "Find performance volleyball shoes for indoor courts.",
+          "satisfied": "unk",
+          "target_product": null,
+          "active_task_id": "task-1",
+          "claims": [
+            {
+              "attribute": "category",
+              "operator": "eq",
+              "value": "volleyball",
+              "scope": "task",
+              "task_id": "task-1",
+              "strength": "hard",
+              "evidence": [
+                {
+                  "source_type": "conversation",
+                  "mode": "explicit",
+                  "message_ids": [
+                    "u1"
+                  ],
+                  "justification": "User requested volleyball shoes."
+                }
+              ]
+            },
+            {
+              "attribute": "style",
+              "operator": "eq",
+              "value": "performance",
+              "scope": "task",
+              "task_id": "task-1",
+              "strength": "hard",
+              "evidence": [
+                {
+                  "source_type": "conversation",
+                  "mode": "explicit",
+                  "message_ids": [
+                    "u1"
+                  ],
+                  "justification": "User requested 'performance' shoes."
+                }
+              ]
+            },
+            {
+              "attribute": "surface",
+              "operator": "eq",
+              "value": "indoor_court",
+              "scope": "task",
+              "task_id": "task-1",
+              "strength": "hard",
+              "evidence": [
+                {
+                  "source_type": "conversation",
+                  "mode": "explicit",
+                  "message_ids": [
+                    "u1"
+                  ],
+                  "justification": "User specified indoor courts."
+                }
+              ]
+            }
+          ],
+          "search_request": {
+            "query": "performance volleyball shoes for indoor courts",
+            "filters": [
+              {
+                "attribute": "category",
+                "operator": "eq",
+                "value": "volleyball"
+              },
+              {
+                "attribute": "style",
+                "operator": "eq",
+                "value": "performance"
+              },
+              {
+                "attribute": "surface",
+                "operator": "eq",
+                "value": "indoor_court"
+              }
+            ],
+            "preferences": []
+          }
+        },
+        "score": {
+          "valid": true,
+          "exact_state": false,
+          "outcome_correct": true,
+          "correct_claims": 2,
+          "predicted_claims": 3,
+          "expected_claims": 3,
+          "evidence_mode_correct": 2,
+          "active_task_correct": true,
+          "target_product_correct": true,
+          "search_constraints_correct": false,
+          "search_consistent_with_intent": true,
+          "query_text_evaluation": "supported",
+          "semantic_evidence_support": "model_audit_supported",
+          "label_evidence_support": "model_audit_supported",
+          "intent_judgment": "right_intent"
+        },
+        "previous_prediction": null,
+        "expected_outcome": {
+          "satisfied": "unk",
+          "target_product": null
+        },
+        "expected_intent": "Find footwear for this purchase: sport is volleyball; style is performance; surface is indoor court.",
+        "expected_search_request": {
+          "query": "footwear volleyball performance indoor court",
+          "filters": [
+            {
+              "attribute": "sport",
+              "operator": "eq",
+              "value": "volleyball"
+            },
+            {
+              "attribute": "style",
+              "operator": "eq",
+              "value": "performance"
+            },
+            {
+              "attribute": "surface",
+              "operator": "eq",
+              "value": "indoor_court"
+            }
+          ],
+          "preferences": []
+        },
+        "verification": {
+          "status": "completed",
+          "accepted": true,
+          "verdict": "supported",
+          "method": "independent_model_pass",
+          "claim_checks": [
+            {
+              "claim_index": 0,
+              "verdict": "supported",
+              "message_ids": [
+                "u1"
+              ],
+              "reason": "The user requests 'performance volleyball shoes for indoor courts.' This explicitly supports sport=volleyball with hard, task scope, and the evidence from u1 directly justifies the claim."
+            },
+            {
+              "claim_index": 1,
+              "verdict": "supported",
+              "message_ids": [
+                "u1"
+              ],
+              "reason": "The request for 'performance volleyball shoes' clearly implicates a desire for the 'performance' style; this matches the schema's available style enums and is an explicit, hard requirement for the current task, cited in u1."
+            },
+            {
+              "claim_index": 2,
+              "verdict": "supported",
+              "message_ids": [
+                "u1"
+              ],
+              "reason": "The user specifically asks for shoes 'for indoor courts,' which directly and explicitly supports surface=indoor_court with hard, task scope, as referenced in u1."
+            }
+          ],
+          "active_task": {
+            "observed_value": "task-1",
+            "certainty": "resolved",
+            "message_ids": [
+              "u1"
+            ],
+            "reason": "The user has started a task by stating their requirements for volleyball shoes.",
+            "expected_value": "task-1",
+            "verdict": "supported"
+          },
+          "additional_intent": [],
+          "satisfied": {
+            "observed_value": "unk",
+            "certainty": "resolved",
+            "message_ids": [
+              "u1"
+            ],
+            "reason": "No success or failure outcome is expressed yet; the user is still presenting their request.",
+            "expected_value": "unk",
+            "verdict": "supported"
+          },
+          "target_product": {
+            "observed_value": null,
+            "certainty": "resolved",
+            "message_ids": [
+              "u1"
+            ],
+            "reason": "The user has not chosen or referenced any specific product yet.",
+            "expected_value": null,
+            "verdict": "supported"
+          },
+          "intent": {
+            "verdict": "supported",
+            "message_ids": [
+              "u1"
+            ],
+            "reason": "The free-form intent accurately summarizes the user's explicit request as sport=volleyball, style=performance, and surface=indoor_court for footwear as a purchase."
+          },
+          "search_request": {
+            "verdict": "supported",
+            "message_ids": [
+              "u1"
+            ],
+            "reason": "The search query and filters correctly represent all explicit hard requirements from the user: sport=volleyball, style=performance, surface=indoor_court. Query context and category matches the user request for footwear (sports shoes)."
+          },
+          "summary": "All candidate claims and structured intent elements are directly supported by the user's explicit request for 'performance volleyball shoes for indoor courts.' There are no missing or invented requirements, and the search request filters are correctly derived from the user's stated needs."
+        },
+        "intent_judgment": {
+          "status": "completed",
+          "accepted": true,
+          "verdict": "supported",
+          "method": "independent_model_pass",
+          "claim_checks": [
+            {
+              "claim_index": 0,
+              "verdict": "supported",
+              "message_ids": [
+                "u1"
+              ],
+              "reason": "The user explicitly requested 'volleyball shoes,' which supports the claim of category=volleyball in task scope, hard strength."
+            },
+            {
+              "claim_index": 1,
+              "verdict": "supported",
+              "message_ids": [
+                "u1"
+              ],
+              "reason": "The user requested 'performance volleyball shoes,' which explicitly supports style=performance."
+            },
+            {
+              "claim_index": 2,
+              "verdict": "supported",
+              "message_ids": [
+                "u1"
+              ],
+              "reason": "The user specified 'for indoor courts,' which directly supports surface=indoor_court."
+            }
+          ],
+          "active_task": {
+            "observed_value": "task-1",
+            "certainty": "resolved",
+            "message_ids": [
+              "u1"
+            ],
+            "reason": "A new shopping request was made, creating an active task.",
+            "expected_value": "task-1",
+            "verdict": "supported"
+          },
+          "additional_intent": [],
+          "satisfied": {
+            "observed_value": "unk",
+            "certainty": "resolved",
+            "message_ids": [
+              "u1"
+            ],
+            "reason": "The user has not expressed any satisfaction or dissatisfaction yet.",
+            "expected_value": "unk",
+            "verdict": "supported"
+          },
+          "target_product": {
+            "observed_value": null,
+            "certainty": "resolved",
+            "message_ids": [
+              "u1"
+            ],
+            "reason": "No product has been selected or referenced by the user.",
+            "expected_value": null,
+            "verdict": "supported"
+          },
+          "intent": {
+            "verdict": "supported",
+            "message_ids": [
+              "u1"
+            ],
+            "reason": "The intent string accurately summarizes the user's request for performance volleyball shoes for indoor courts."
+          },
+          "search_request": {
+            "verdict": "supported",
+            "message_ids": [
+              "u1"
+            ],
+            "reason": "The search_request query and filters faithfully capture the user's specified needs as hard constraints: performance volleyball shoes for indoor courts."
+          },
+          "summary": "All task-scoped claims are explicitly supported by the user's statement. No attributes are missing or misrepresented. The intent string and search request accurately correspond to the user's request. The active task is correct, and there has been no outcome expressed nor product selected yet."
+        }
+      },
+      {
+        "turn": 2,
+        "prediction": {
+          "intent": "Find performance volleyball shoes for indoor courts.",
+          "satisfied": "unk",
+          "target_product": "DBG-SHOE-027",
+          "active_task_id": "task-1",
+          "claims": [
+            {
+              "attribute": "category",
+              "operator": "eq",
+              "value": "volleyball",
+              "scope": "task",
+              "task_id": "task-1",
+              "strength": "hard",
+              "evidence": [
+                {
+                  "source_type": "conversation",
+                  "mode": "explicit",
+                  "message_ids": [
+                    "u1"
+                  ],
+                  "justification": "User requested volleyball shoes."
+                }
+              ]
+            },
+            {
+              "attribute": "style",
+              "operator": "eq",
+              "value": "performance",
+              "scope": "task",
+              "task_id": "task-1",
+              "strength": "hard",
+              "evidence": [
+                {
+                  "source_type": "conversation",
+                  "mode": "explicit",
+                  "message_ids": [
+                    "u1"
+                  ],
+                  "justification": "User requested 'performance' shoes."
+                }
+              ]
+            },
+            {
+              "attribute": "surface",
+              "operator": "eq",
+              "value": "indoor_court",
+              "scope": "task",
+              "task_id": "task-1",
+              "strength": "hard",
+              "evidence": [
+                {
+                  "source_type": "conversation",
+                  "mode": "explicit",
+                  "message_ids": [
+                    "u1"
+                  ],
+                  "justification": "User specified indoor courts."
+                }
+              ]
+            }
+          ],
+          "search_request": null
+        },
+        "score": {
+          "valid": true,
+          "exact_state": false,
+          "outcome_correct": true,
+          "correct_claims": 2,
+          "predicted_claims": 3,
+          "expected_claims": 3,
+          "evidence_mode_correct": 2,
+          "active_task_correct": true,
+          "target_product_correct": true,
+          "search_constraints_correct": true,
+          "search_consistent_with_intent": true,
+          "query_text_evaluation": "supported",
+          "semantic_evidence_support": "model_audit_supported",
+          "label_evidence_support": "model_audit_supported",
+          "intent_judgment": "right_intent"
+        },
+        "previous_prediction": {
+          "intent": "Find performance volleyball shoes for indoor courts.",
+          "satisfied": "unk",
+          "target_product": null,
+          "active_task_id": "task-1",
+          "claims": [
+            {
+              "attribute": "category",
+              "operator": "eq",
+              "value": "volleyball",
+              "scope": "task",
+              "task_id": "task-1",
+              "strength": "hard",
+              "evidence": [
+                {
+                  "source_type": "conversation",
+                  "mode": "explicit",
+                  "message_ids": [
+                    "u1"
+                  ],
+                  "justification": "User requested volleyball shoes."
+                }
+              ]
+            },
+            {
+              "attribute": "style",
+              "operator": "eq",
+              "value": "performance",
+              "scope": "task",
+              "task_id": "task-1",
+              "strength": "hard",
+              "evidence": [
+                {
+                  "source_type": "conversation",
+                  "mode": "explicit",
+                  "message_ids": [
+                    "u1"
+                  ],
+                  "justification": "User requested 'performance' shoes."
+                }
+              ]
+            },
+            {
+              "attribute": "surface",
+              "operator": "eq",
+              "value": "indoor_court",
+              "scope": "task",
+              "task_id": "task-1",
+              "strength": "hard",
+              "evidence": [
+                {
+                  "source_type": "conversation",
+                  "mode": "explicit",
+                  "message_ids": [
+                    "u1"
+                  ],
+                  "justification": "User specified indoor courts."
+                }
+              ]
+            }
+          ],
+          "search_request": {
+            "query": "performance volleyball shoes for indoor courts",
+            "filters": [
+              {
+                "attribute": "category",
+                "operator": "eq",
+                "value": "volleyball"
+              },
+              {
+                "attribute": "style",
+                "operator": "eq",
+                "value": "performance"
+              },
+              {
+                "attribute": "surface",
+                "operator": "eq",
+                "value": "indoor_court"
+              }
+            ],
+            "preferences": []
+          }
+        },
+        "expected_outcome": {
+          "satisfied": "unk",
+          "target_product": "DBG-SHOE-027"
+        },
+        "expected_intent": "Product DBG-SHOE-027 selected for the current purchase.",
+        "expected_search_request": null,
+        "verification": {
+          "status": "completed",
+          "accepted": true,
+          "verdict": "supported",
+          "method": "independent_model_pass",
+          "claim_checks": [
+            {
+              "claim_index": 0,
+              "verdict": "supported",
+              "message_ids": [
+                "u1"
+              ],
+              "reason": "The user requests 'performance volleyball shoes,' which semantically requires the sport to be volleyball. This is explicit in the natural language request."
+            },
+            {
+              "claim_index": 1,
+              "verdict": "supported",
+              "message_ids": [
+                "u1"
+              ],
+              "reason": "The explicit phrase 'performance volleyball shoes' directly refers to 'performance' style as defined in the schema. This supports style=performance."
+            },
+            {
+              "claim_index": 2,
+              "verdict": "supported",
+              "message_ids": [
+                "u1"
+              ],
+              "reason": "The user asks for shoes for 'indoor courts,' which corresponds exactly to the surface value 'indoor_court' in the schema."
+            }
+          ],
+          "active_task": {
+            "observed_value": "task-1",
+            "certainty": "resolved",
+            "message_ids": [
+              "u1",
+              "u2"
+            ],
+            "reason": "The user has made a specific product selection following a request, indicating the currently active footwear shopping task (task-1) is ongoing pending outcome or completion confirmation.",
+            "expected_value": "task-1",
+            "verdict": "supported"
+          },
+          "additional_intent": [],
+          "satisfied": {
+            "observed_value": "unk",
+            "certainty": "resolved",
+            "message_ids": [
+              "u2"
+            ],
+            "reason": "The user selected a product (ASICS Sky Elite FF 3), but did not express completion or satisfaction such as 'I'll proceed' or 'that's all'. Satisfaction cannot be inferred from selection alone.",
+            "expected_value": "unk",
+            "verdict": "supported"
+          },
+          "target_product": {
+            "observed_value": "DBG-SHOE-027",
+            "certainty": "resolved",
+            "message_ids": [
+              "u2"
+            ],
+            "reason": "The user explicitly chose 'the second option, the ASICS Sky Elite FF 3', matching product DBG-SHOE-027.",
+            "expected_value": "DBG-SHOE-027",
+            "verdict": "supported"
+          },
+          "intent": {
+            "verdict": "supported",
+            "message_ids": [
+              "u2"
+            ],
+            "reason": "The summarized intent faithfully captures the shopper's action and goal: selecting ASICS Sky Elite FF 3 for the current purchase after reviewing the options."
+          },
+          "search_request": {
+            "verdict": "supported",
+            "message_ids": [
+              "u2"
+            ],
+            "reason": "No search request is needed after a product has been explicitly selected."
+          },
+          "summary": "All attribute claims are explicitly and semantically supported by the user's request for performance volleyball shoes for indoor courts. The product selection is clear, but there is no explicit statement of satisfaction or task completion."
+        },
+        "intent_judgment": {
+          "status": "completed",
+          "accepted": true,
+          "verdict": "supported",
+          "method": "independent_model_pass",
+          "claim_checks": [
+            {
+              "claim_index": 0,
+              "verdict": "supported",
+              "message_ids": [
+                "u1"
+              ],
+              "reason": "The user explicitly requests 'volleyball shoes,' which supports category=volleyball with hard strength and task scope."
+            },
+            {
+              "claim_index": 1,
+              "verdict": "supported",
+              "message_ids": [
+                "u1"
+              ],
+              "reason": "The user asks for 'performance volleyball shoes,' which supports a preference for style=performance, with explicit wording."
+            },
+            {
+              "claim_index": 2,
+              "verdict": "supported",
+              "message_ids": [
+                "u1"
+              ],
+              "reason": "The user mentions 'for indoor courts,' directly supporting surface=indoor_court."
+            }
+          ],
+          "active_task": {
+            "observed_value": "task-1",
+            "certainty": "resolved",
+            "message_ids": [
+              "u1"
+            ],
+            "reason": "A shopping task for volleyball shoes was started and not explicitly completed or abandoned.",
+            "expected_value": "task-1",
+            "verdict": "supported"
+          },
+          "additional_intent": [],
+          "satisfied": {
+            "observed_value": "unk",
+            "certainty": "resolved",
+            "message_ids": [
+              "u2"
+            ],
+            "reason": "The user picked a product, but has not stated whether their needs were met or that they are proceeding to purchase.",
+            "expected_value": "unk",
+            "verdict": "supported"
+          },
+          "target_product": {
+            "observed_value": "DBG-SHOE-027",
+            "certainty": "resolved",
+            "message_ids": [
+              "u2"
+            ],
+            "reason": "The user specified 'the second option', which refers to ASICS Sky Elite FF 3 (DBG-SHOE-027) in the assistant's presented catalog.",
+            "expected_value": "DBG-SHOE-027",
+            "verdict": "supported"
+          },
+          "intent": {
+            "verdict": "supported",
+            "message_ids": [
+              "u1"
+            ],
+            "reason": "The candidate intent 'Find performance volleyball shoes for indoor courts.' succinctly and correctly summarizes the user's request and aligns with the claims."
+          },
+          "search_request": {
+            "verdict": "supported",
+            "message_ids": [
+              "u2"
+            ],
+            "reason": "No further product search is required at this point, as the user has already selected a product. Null is supported."
+          },
+          "summary": "All candidate claims—category (volleyball), style (performance), surface (indoor_court)—are supported by explicit user request. The intent string accurately summarizes the request. The user has selected a target product (DBG-SHOE-027), the active task remains, and satisfaction is unknown but unresolved, as there is no clear statement of fulfillment or completion. No additional current requirements are missing."
+        }
+      },
+      {
+        "turn": 3,
+        "prediction": {
+          "intent": "Find performance volleyball shoes for indoor courts.",
+          "satisfied": true,
+          "target_product": "DBG-SHOE-027",
+          "active_task_id": null,
+          "claims": [],
+          "search_request": null
+        },
+        "score": {
+          "valid": true,
+          "exact_state": true,
+          "outcome_correct": true,
+          "correct_claims": 0,
+          "predicted_claims": 0,
+          "expected_claims": 0,
+          "evidence_mode_correct": 0,
+          "active_task_correct": true,
+          "target_product_correct": true,
+          "search_constraints_correct": true,
+          "search_consistent_with_intent": true,
+          "query_text_evaluation": "supported",
+          "semantic_evidence_support": "model_audit_supported",
+          "label_evidence_support": "model_audit_supported",
+          "intent_judgment": "right_intent"
+        },
+        "previous_prediction": {
+          "intent": "Find performance volleyball shoes for indoor courts.",
+          "satisfied": "unk",
+          "target_product": "DBG-SHOE-027",
+          "active_task_id": "task-1",
+          "claims": [
+            {
+              "attribute": "category",
+              "operator": "eq",
+              "value": "volleyball",
+              "scope": "task",
+              "task_id": "task-1",
+              "strength": "hard",
+              "evidence": [
+                {
+                  "source_type": "conversation",
+                  "mode": "explicit",
+                  "message_ids": [
+                    "u1"
+                  ],
+                  "justification": "User requested volleyball shoes."
+                }
+              ]
+            },
+            {
+              "attribute": "style",
+              "operator": "eq",
+              "value": "performance",
+              "scope": "task",
+              "task_id": "task-1",
+              "strength": "hard",
+              "evidence": [
+                {
+                  "source_type": "conversation",
+                  "mode": "explicit",
+                  "message_ids": [
+                    "u1"
+                  ],
+                  "justification": "User requested 'performance' shoes."
+                }
+              ]
+            },
+            {
+              "attribute": "surface",
+              "operator": "eq",
+              "value": "indoor_court",
+              "scope": "task",
+              "task_id": "task-1",
+              "strength": "hard",
+              "evidence": [
+                {
+                  "source_type": "conversation",
+                  "mode": "explicit",
+                  "message_ids": [
+                    "u1"
+                  ],
+                  "justification": "User specified indoor courts."
+                }
+              ]
+            }
+          ],
+          "search_request": null
+        },
+        "expected_outcome": {
+          "satisfied": true,
+          "target_product": "DBG-SHOE-027"
+        },
+        "expected_intent": "No active shopping task.",
+        "expected_search_request": null,
+        "verification": {
+          "status": "completed",
+          "accepted": true,
+          "verdict": "supported",
+          "method": "independent_model_pass",
+          "claim_checks": [],
+          "active_task": {
+            "observed_value": null,
+            "certainty": "resolved",
+            "message_ids": [
+              "u3"
+            ],
+            "reason": "The user stated they are done shopping, which indicates task completion; no active shopping task remains.",
+            "expected_value": null,
+            "verdict": "supported"
+          },
+          "additional_intent": [],
+          "satisfied": {
+            "observed_value": true,
+            "certainty": "resolved",
+            "message_ids": [
+              "u3"
+            ],
+            "reason": "The user explicitly stated that what they found was exactly what they wanted and that they are done shopping.",
+            "expected_value": true,
+            "verdict": "supported"
+          },
+          "target_product": {
+            "observed_value": "DBG-SHOE-027",
+            "certainty": "resolved",
+            "message_ids": [
+              "u2",
+              "u3"
+            ],
+            "reason": "The user selected the second option (DBG-SHOE-027) and later confirmed satisfaction with this specific product.",
+            "expected_value": "DBG-SHOE-027",
+            "verdict": "supported"
+          },
+          "intent": {
+            "verdict": "supported",
+            "message_ids": [
+              "u3"
+            ],
+            "reason": "The candidate intent string 'No active shopping task.' matches the user’s explicit statement that they are finished shopping with no active requirements."
+          },
+          "search_request": {
+            "verdict": "supported",
+            "message_ids": [
+              "u3"
+            ],
+            "reason": "There is no need for a search request after the user declared being done shopping and satisfied with their product."
+          },
+          "summary": "The candidate intent accurately reflects the completed state: no active task, the user is satisfied, and DBG-SHOE-027 was chosen as the target product. No additional intent or search request is needed."
+        },
+        "intent_judgment": {
+          "status": "completed",
+          "accepted": true,
+          "verdict": "supported",
+          "method": "independent_model_pass",
+          "claim_checks": [],
+          "active_task": {
+            "observed_value": null,
+            "certainty": "resolved",
+            "message_ids": [
+              "u3"
+            ],
+            "reason": "The user expresses satisfaction and states they are done shopping, indicating the active task has concluded.",
+            "expected_value": null,
+            "verdict": "supported"
+          },
+          "additional_intent": [],
+          "satisfied": {
+            "observed_value": true,
+            "certainty": "resolved",
+            "message_ids": [
+              "u3"
+            ],
+            "reason": "The user explicitly says the product is exactly what they were looking for and states they are done shopping, indicating success and satisfaction.",
+            "expected_value": true,
+            "verdict": "supported"
+          },
+          "target_product": {
+            "observed_value": "DBG-SHOE-027",
+            "certainty": "resolved",
+            "message_ids": [
+              "u2",
+              "a2"
+            ],
+            "reason": "The user makes an explicit selection of 'the second option, ASICS Sky Elite FF 3,' confirmed by the assistant with product ID.",
+            "expected_value": "DBG-SHOE-027",
+            "verdict": "supported"
+          },
+          "intent": {
+            "verdict": "supported",
+            "message_ids": [
+              "u1"
+            ],
+            "reason": "The intent string accurately summarizes the user's initial explicit request for 'performance volleyball shoes for indoor courts.'"
+          },
+          "search_request": {
+            "verdict": "supported",
+            "message_ids": [
+              "u3"
+            ],
+            "reason": "No new search request is needed, as the user explicitly confirmed satisfaction and completion of their shopping."
+          },
+          "summary": "The candidate intent and all its fields are fully supported: the user requested performance volleyball shoes for indoor courts, selected ASICS Sky Elite FF 3, expressed clear satisfaction, and ended the task."
+        }
+      }
+    ],
+    "exact_checkpoints": 1,
+    "total_checkpoints": 3,
+    "label_status": "model_verified",
+    "verified_checkpoints": 3,
+    "interpretation": "Disagreement may reflect either shopper-generation drift or extractor error; inspect traces."
+  },
+  "model": "gpt-4.1",
+  "prompt_version": "debug-target-product-v5",
+  "same_model_roles": true,
+  "featured_example": {
+    "title": "Choose a volleyball shoe",
+    "description": "Request indoor-court shoes → select the second product → confirm satisfied completion.",
+    "model": "gpt-4.1"
+  }
+}
