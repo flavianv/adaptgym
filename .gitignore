@@ -12,3 +12,12 @@ runs/
 !.env.example
 *.pem
 *.key
+.DS_Store
+.netrc
+*.p12
+*.pfx
+secrets/
+private/
+
+# Detailed notes and figures stay local.
+/docs/

@@ -1,0 +1,5 @@
+#!/bin/sh
+set -eu
+cd "$(git rev-parse --show-toplevel)"
+python3 scripts/check_public_content.py --staged
+python3 scripts/check_repository_secrets.py
