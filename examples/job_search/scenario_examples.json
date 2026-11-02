@@ -1,0 +1,455 @@
+{
+  "initial_need": {
+    "conversation": [
+      {
+        "role": "user",
+        "text": "I’m looking for temporary jobs in Tokyo paying at least ¥2,000 an hour."
+      }
+    ],
+    "expected_result": "Start task-1 with temporary staffing, Tokyo, and a minimum hourly salary of ¥2,000. Do not invent a lasting preference."
+  },
+  "add_requirement": {
+    "conversation": [
+      {
+        "role": "user",
+        "text": "I’m looking for temporary jobs in Tokyo paying at least ¥2,000 an hour."
+      },
+      {
+        "role": "user",
+        "text": "For this search, public holidays must be off."
+      }
+    ],
+    "expected_result": "Add only the new task constraint; retain the original numeric limit and other requirements."
+  },
+  "clarify_requirement": {
+    "conversation": [
+      {
+        "role": "user",
+        "text": "I’m looking for temporary jobs in Tokyo paying at least ¥2,000 an hour."
+      },
+      {
+        "role": "user",
+        "text": "For this search specifically, I need public holidays off."
+      }
+    ],
+    "expected_result": "Record the clarified requirement for this task, not as a lasting preference."
+  },
+  "reinforce_preference": {
+    "conversation": [
+      {
+        "role": "user",
+        "text": "I’m looking for temporary jobs in Tokyo paying at least ¥2,000 an hour. I generally prefer remote work, if possible."
+      },
+      {
+        "role": "user",
+        "text": "Remote work is still my usual preference; it is not mandatory."
+      }
+    ],
+    "expected_result": "Retain one durable soft preference; reinforcement does not make it mandatory.",
+    "implicit_variant": {
+      "user_reply": "For my last few roles I chose remote work, and that arrangement worked well for me.",
+      "explanation": "This describes repeated choices with positive outcomes rather than directly stating a preference. The preference is inferred; the initial task constraints can still be explicit."
+    }
+  },
+  "revise_value": {
+    "conversation": [
+      {
+        "role": "user",
+        "text": "I’m looking for temporary jobs in Tokyo paying at least ¥2,000 an hour. For this search, I need on-site work."
+      },
+      {
+        "role": "user",
+        "text": "Actually, make that remote work for this search."
+      }
+    ],
+    "expected_result": "Replace the task value on the revised attribute and preserve the other constraints."
+  },
+  "retract_requirement": {
+    "conversation": [
+      {
+        "role": "user",
+        "text": "I’m looking for temporary jobs in Tokyo paying at least ¥2,000 an hour. For this search, I need on-site work."
+      },
+      {
+        "role": "user",
+        "text": "Remove the on-site requirement; keep the location and pay limit."
+      }
+    ],
+    "expected_result": "Remove just that task constraint; the search and other requirements stay active."
+  },
+  "restore_value": {
+    "conversation": [
+      {
+        "role": "user",
+        "text": "I’m looking for temporary jobs in Tokyo paying at least ¥2,000 an hour. For this search, I need on-site work."
+      },
+      {
+        "role": "user",
+        "text": "Actually, make that remote work for this search."
+      },
+      {
+        "role": "user",
+        "text": "Go back to the original on-site requirement."
+      }
+    ],
+    "expected_result": "Restore the original attribute value, replacing the intermediate value."
+  },
+  "finish_task": {
+    "conversation": [
+      {
+        "role": "user",
+        "text": "I’m looking for temporary jobs in Tokyo paying at least ¥2,000 an hour. I generally prefer remote work, if possible."
+      },
+      {
+        "role": "user",
+        "text": "I found what I needed. I’m finished with this search."
+      }
+    ],
+    "expected_result": "Close the task, retain the durable preference, and record expressed success without inventing an item ID."
+  },
+  "start_another_task": {
+    "conversation": [
+      {
+        "role": "user",
+        "text": "I’m looking for temporary jobs in Tokyo paying at least ¥2,000 an hour. I generally prefer remote work, if possible."
+      },
+      {
+        "role": "user",
+        "text": "Now start a separate search for jobs in Kyoto."
+      }
+    ],
+    "expected_result": "Begin a new task, retire old temporary requirements, preserve the general preference, and reset selection/outcome."
+  },
+  "irrelevant_information": {
+    "conversation": [
+      {
+        "role": "user",
+        "text": "I’m looking for temporary jobs in Tokyo paying at least ¥2,000 an hour."
+      },
+      {
+        "role": "user",
+        "text": "My friend only wants on-site work, but that is not my preference."
+      }
+    ],
+    "expected_result": "Keep the user’s current profile unchanged; do not adopt the friend’s preference."
+  },
+  "clarification_question": {
+    "conversation": [
+      {
+        "role": "user",
+        "text": "I’m looking for suitable options."
+      },
+      {
+        "role": "assistant",
+        "text": "Which region should I search?"
+      },
+      {
+        "role": "user",
+        "text": "Tokyo."
+      }
+    ],
+    "expected_result": "Use the assistant’s question to assign the short answer to the correct task attribute. This is not a durable preference."
+  },
+  "select_product": {
+    "conversation": [
+      {
+        "role": "user",
+        "text": "I’m looking for temporary jobs in Tokyo paying at least ¥2,000 an hour."
+      },
+      {
+        "role": "assistant",
+        "text": "1. Option A: on-site, ¥2,400/hour.\n2. Option B: remote, ¥2,000/hour."
+      },
+      {
+        "role": "user",
+        "text": "I’ll take the second one."
+      }
+    ],
+    "expected_result": "Set target_product to Option B. Keep task requirements; selection alone neither closes the task nor creates lasting preferences."
+  },
+  "compare_products": {
+    "conversation": [
+      {
+        "role": "user",
+        "text": "I’m looking for temporary jobs in Tokyo paying at least ¥2,000 an hour."
+      },
+      {
+        "role": "assistant",
+        "text": "1. Option A: on-site, ¥2,400/hour.\n2. Option B: remote, ¥2,000/hour."
+      },
+      {
+        "role": "user",
+        "text": "Can you compare the first and second options?"
+      }
+    ],
+    "expected_result": "Compare A and B; do not select either or alter the existing constraints."
+  },
+  "soft_preference_missed": {
+    "conversation": [
+      {
+        "role": "user",
+        "text": "I’m looking for temporary jobs in Tokyo paying at least ¥2,000 an hour. I generally prefer remote work, if possible."
+      },
+      {
+        "role": "assistant",
+        "text": "Here are on-site jobs."
+      },
+      {
+        "role": "user",
+        "text": "These are all on-site. Remote work is still my general preference, not a requirement."
+      }
+    ],
+    "expected_result": "Reinforce the durable soft preference; keep it separate from hard constraints.",
+    "implicit_variant": {
+      "user_reply": "For my last few roles I chose remote work, and that arrangement worked well for me.",
+      "explanation": "This describes repeated choices with positive outcomes rather than directly stating a preference. The preference is inferred; the initial task constraints can still be explicit."
+    }
+  },
+  "hard_constraint_violated": {
+    "conversation": [
+      {
+        "role": "user",
+        "text": "I’m looking for temporary jobs in Tokyo paying at least ¥2,000 an hour. Remote work is mandatory for this search."
+      },
+      {
+        "role": "assistant",
+        "text": "Here are on-site jobs."
+      },
+      {
+        "role": "user",
+        "text": "I still require remote work for this search."
+      }
+    ],
+    "expected_result": "Retain and reinforce the original hard requirement; the assistant’s suggestion does not change user intent."
+  },
+  "no_match_relax": {
+    "conversation": [
+      {
+        "role": "user",
+        "text": "I need at least ¥3,000 an hour in this search."
+      },
+      {
+        "role": "assistant",
+        "text": "No matches at that minimum. Would you lower it to ¥2,000/hour?"
+      },
+      {
+        "role": "user",
+        "text": "Yes, lower the minimum to ¥2,000/hour; keep the other requirements."
+      }
+    ],
+    "expected_result": "Update only the accepted threshold in the correct direction; the relaxed threshold remains a hard constraint."
+  },
+  "no_match_refuse": {
+    "conversation": [
+      {
+        "role": "user",
+        "text": "I need at least ¥3,000 an hour in this search."
+      },
+      {
+        "role": "assistant",
+        "text": "No matches at that minimum. Would you lower it to ¥2,000/hour?"
+      },
+      {
+        "role": "user",
+        "text": "No, keep the ¥3,000/hour minimum. I still want to keep looking."
+      }
+    ],
+    "expected_result": "Keep the original threshold and active task, even if the result remains empty."
+  },
+  "tradeoff_accept": {
+    "conversation": [
+      {
+        "role": "user",
+        "text": "I’m looking for temporary jobs in Tokyo paying at least ¥2,000 an hour. I generally prefer remote work, if possible."
+      },
+      {
+        "role": "assistant",
+        "text": "1. Option A: on-site, ¥2,400/hour.\n2. Option B: remote, ¥2,000/hour."
+      },
+      {
+        "role": "user",
+        "text": "I’ll take the first option for this search, despite my usual preference."
+      }
+    ],
+    "expected_result": "Select A as a one-off trade-off. Keep the durable preference unchanged."
+  },
+  "tradeoff_reject": {
+    "conversation": [
+      {
+        "role": "user",
+        "text": "I’m looking for temporary jobs in Tokyo paying at least ¥2,000 an hour. I generally prefer remote work, if possible."
+      },
+      {
+        "role": "assistant",
+        "text": "1. Option A: on-site, ¥2,400/hour.\n2. Option B: remote, ¥2,000/hour."
+      },
+      {
+        "role": "user",
+        "text": "I’ll take the second option; that preference matters more to me here."
+      }
+    ],
+    "expected_result": "Select B. The soft preference remains soft; the numeric constraint is unchanged."
+  },
+  "misunderstanding": {
+    "conversation": [
+      {
+        "role": "user",
+        "text": "I’m looking for temporary jobs in Tokyo paying at least ¥2,000 an hour. Remote work is mandatory for this search."
+      },
+      {
+        "role": "assistant",
+        "text": "I understood that you require on-site work."
+      },
+      {
+        "role": "user",
+        "text": "I still require remote work for this search."
+      }
+    ],
+    "expected_result": "Keep the user’s original requirement; treat the assistant statement as a misunderstanding, not a user revision."
+  },
+  "suggestion_confirm": {
+    "conversation": [
+      {
+        "role": "user",
+        "text": "I’m looking for temporary jobs in Tokyo paying at least ¥2,000 an hour."
+      },
+      {
+        "role": "assistant",
+        "text": "1. Option A: on-site, ¥2,400/hour.\n2. Option B: remote, ¥2,000/hour.\nDo you generally prefer the work arrangement of the second option?"
+      },
+      {
+        "role": "user",
+        "text": "Yes, generally, if possible."
+      }
+    ],
+    "expected_result": "Infer the suggested value from Option B and record a durable soft preference. Do not select B or close the task.",
+    "implicit_variant": {
+      "user_reply": "I’ve repeatedly chosen options with the same work arrangement as the second one, and those choices have worked well for me.",
+      "explanation": "This describes repeated choices with positive outcomes rather than directly stating a preference. The preference is inferred; the initial task constraints can still be explicit."
+    }
+  },
+  "suggestion_reject": {
+    "conversation": [
+      {
+        "role": "user",
+        "text": "I’m looking for temporary jobs in Tokyo paying at least ¥2,000 an hour."
+      },
+      {
+        "role": "assistant",
+        "text": "1. Option A: on-site, ¥2,400/hour.\n2. Option B: remote, ¥2,000/hour.\nDo you generally prefer the work arrangement of the second option?"
+      },
+      {
+        "role": "user",
+        "text": "No."
+      }
+    ],
+    "expected_result": "Add no preference. A bare rejection does not establish the opposite value or a new hard constraint."
+  },
+  "product_reference_refinement": {
+    "conversation": [
+      {
+        "role": "user",
+        "text": "I’m looking for temporary jobs in Tokyo paying at least ¥2,000 an hour."
+      },
+      {
+        "role": "assistant",
+        "text": "1. Option A: on-site, ¥2,400/hour.\n2. Option B: remote, ¥2,000/hour."
+      },
+      {
+        "role": "user",
+        "text": "For this search, I need the same work arrangement as the second listing."
+      }
+    ],
+    "expected_result": "Add only the referenced attribute as a task requirement. This does not select Option B or copy all its attributes."
+  },
+  "completion_confirm": {
+    "conversation": [
+      {
+        "role": "user",
+        "text": "I’m looking for temporary jobs in Tokyo paying at least ¥2,000 an hour."
+      },
+      {
+        "role": "assistant",
+        "text": "Have you found what you need and finished looking?"
+      },
+      {
+        "role": "user",
+        "text": "Yes, I found what I needed and I’m done."
+      }
+    ],
+    "expected_result": "Close the task with satisfied=true. Keep the selected item only if one was actually identified."
+  },
+  "completion_continue": {
+    "conversation": [
+      {
+        "role": "user",
+        "text": "I’m looking for temporary jobs in Tokyo paying at least ¥2,000 an hour."
+      },
+      {
+        "role": "assistant",
+        "text": "Would you like to finish, or keep looking?"
+      },
+      {
+        "role": "user",
+        "text": "Keep looking with the same requirements."
+      }
+    ],
+    "expected_result": "Keep the task and requirements active. Satisfaction remains unknown; no preference evidence is added."
+  },
+  "poor_results_positive_framing": {
+    "conversation": [
+      {
+        "role": "user",
+        "text": "I’m looking for temporary jobs in Tokyo paying at least ¥2,000 an hour. Remote work is mandatory for this search."
+      },
+      {
+        "role": "assistant",
+        "text": "Great news! These are perfect matches: Here are on-site jobs."
+      },
+      {
+        "role": "user",
+        "text": "Those are not what I asked for. Keep looking."
+      }
+    ],
+    "expected_result": "Keep the original constraints and active task. Do not infer success from the assistant’s upbeat framing or invent a new rejection reason."
+  },
+  "finish_task_positive": {
+    "conversation": [
+      {
+        "role": "user",
+        "text": "I’m looking for temporary jobs in Tokyo paying at least ¥2,000 an hour."
+      },
+      {
+        "role": "user",
+        "text": "I found what I wanted. I’m done."
+      }
+    ],
+    "expected_result": "Set satisfied=true, close the task, and retire temporary requirements; do not invent a selection."
+  },
+  "finish_task_negative": {
+    "conversation": [
+      {
+        "role": "user",
+        "text": "I’m looking for temporary jobs in Tokyo paying at least ¥2,000 an hour."
+      },
+      {
+        "role": "user",
+        "text": "I haven’t found anything suitable. Stop the search."
+      }
+    ],
+    "expected_result": "Set satisfied=false and close the task; preserve durable preferences."
+  },
+  "finish_task_ambiguous": {
+    "conversation": [
+      {
+        "role": "user",
+        "text": "I’m looking for temporary jobs in Tokyo paying at least ¥2,000 an hour."
+      },
+      {
+        "role": "environment",
+        "text": "The user leaves; no further message is observed."
+      }
+    ],
+    "expected_result": "Outcome stays unknown. The environment retires task state after departure without inventing a user completion message."
+  }
+}

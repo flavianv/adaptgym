@@ -1,0 +1,263 @@
+{
+  "initial_need": {
+    "title": "Initial request",
+    "description": "The user establishes what they want for a new task. The profile builder should capture the stated category and constraints, without borrowing extra requirements from the persona or catalog. This is the baseline against which later adaptations are measured.",
+    "expected_behavior": [
+      "Start a new task and record supported hard requirements.",
+      "Leave preferences, selected item, and satisfaction unknown unless the user establishes them."
+    ],
+    "common_mistake": "Treating background facts as search constraints, or assuming a recommendation means success."
+  },
+  "add_requirement": {
+    "title": "Add a requirement",
+    "description": "The user introduces a new constraint while keeping the current task. The new requirement is combined with the existing ones; it does not replace the whole profile. Recommendations must satisfy the expanded set of hard requirements.",
+    "expected_behavior": [
+      "Add the new attribute to the current task.",
+      "Preserve every unrelated requirement and durable preference."
+    ],
+    "common_mistake": "Forgetting an earlier budget, location, or size when a new field is added."
+  },
+  "clarify_requirement": {
+    "title": "Clarify a requirement",
+    "description": "A later message makes a previously missing or underspecified requirement concrete. The user also makes clear that it applies to this task. The benchmark tests whether the builder records the clarification at the right scope rather than promoting it into a permanent preference.",
+    "expected_behavior": [
+      "Record the clarified value with task scope.",
+      "Retain other requirements; do not assume a lasting preference."
+    ],
+    "common_mistake": "Turning “for this search” into “always,” or inventing a requirement before it is stated."
+  },
+  "reinforce_preference": {
+    "title": "Reinforce a preference",
+    "description": "The user expresses a general soft preference and then provides further support for the same preference. Explicit evidence states the preference directly; implicit evidence describes repeated choices and good outcomes. Reinforcement must preserve the value, durable scope, and soft strength.",
+    "expected_behavior": [
+      "Keep one durable soft preference with the same value.",
+      "Recognize the requested evidence mode without making the preference mandatory."
+    ],
+    "common_mistake": "Duplicating the preference, replacing its value, or strengthening “prefer” into a hard filter."
+  },
+  "revise_value": {
+    "title": "Revise a value",
+    "description": "The user changes one task requirement. The new value supersedes the previous task value for that attribute, while the rest of the search stays intact. The builder needs to distinguish a correction from adding another allowed value.",
+    "expected_behavior": [
+      "Replace only the revised attribute in the current task.",
+      "Retain unrelated constraints and their original scopes."
+    ],
+    "common_mistake": "Keeping both old and new values as simultaneous requirements."
+  },
+  "retract_requirement": {
+    "title": "Retract a requirement",
+    "description": "The user withdraws a single task constraint without abandoning the task. That constraint should stop restricting search, while all other requirements remain active. Withdrawal is not a new preference for the opposite value.",
+    "expected_behavior": [
+      "Remove the named task requirement.",
+      "Keep the task active and retain all unrelated state."
+    ],
+    "common_mistake": "Clearing the entire profile or interpreting “no preference” as a negative preference."
+  },
+  "restore_value": {
+    "title": "Restore an earlier value",
+    "description": "After a revision, the user returns to an earlier requirement. Resolving the request requires conversation memory rather than copying only the most recent value. The restored value becomes current; the intervening value is superseded.",
+    "expected_behavior": [
+      "Recover the original value from earlier user evidence.",
+      "Replace the intermediate task value without duplicating it."
+    ],
+    "common_mistake": "Treating “the original one” as unknown despite accessible history, or retaining the revised value too."
+  },
+  "finish_task": {
+    "title": "Finish the current task",
+    "description": "The user explicitly closes the current task after establishing task needs and a lasting preference. Task-scoped requirements are retired, while durable preferences survive. Satisfaction and selection are separate fields and should follow the actual finishing language.",
+    "expected_behavior": [
+      "Close the active task and retire temporary requirements.",
+      "Retain durable preferences and any explicitly identified selection."
+    ],
+    "common_mistake": "Deleting lasting preferences or continuing to emit a search request after task completion."
+  },
+  "start_another_task": {
+    "title": "Start a different task",
+    "description": "The user switches to a separate task. Earlier temporary constraints belong to the old task and must not leak into the new search. Durable preferences can carry forward, while the previous selection and outcome are reset.",
+    "expected_behavior": [
+      "Start a new task with its own task ID and constraints.",
+      "Preserve durable preferences; reset task-specific selection and outcome."
+    ],
+    "common_mistake": "Carrying the previous task’s budget or location into the new task without user support."
+  },
+  "irrelevant_information": {
+    "title": "Ignore irrelevant information",
+    "description": "The user mentions another person’s preference or an unrelated fact without endorsing it. The current search continues unchanged. This tests attribution: a statement appearing in the conversation is not automatically the user’s intent.",
+    "expected_behavior": [
+      "Keep existing user requirements and preferences unchanged.",
+      "Attribute third-party information to the other person."
+    ],
+    "common_mistake": "Adopting a friend’s preference as the user’s preference."
+  },
+  "clarification_question": {
+    "title": "Answer a clarification question",
+    "description": "The assistant asks about a missing attribute, and the user answers with a value without repeating the attribute name. The reply needs the assistant’s question to determine what is being constrained. This is context dependence, not automatically implicit preference evidence.",
+    "expected_behavior": [
+      "Resolve the answer against the actual preceding question.",
+      "Add the corresponding task requirement with appropriate evidence references."
+    ],
+    "common_mistake": "Mapping a short answer to the wrong attribute, or treating a task answer as a durable preference."
+  },
+  "select_product": {
+    "title": "Select a displayed item",
+    "description": "The user selects an item by its position in the assistant’s actual list. The selection must bind to the correct catalog ID and preserve list order. Selecting an item does not establish durable preferences for all its attributes or necessarily close the task.",
+    "expected_behavior": [
+      "Set target_product to the referenced displayed item.",
+      "Keep existing task requirements until the user explicitly finishes."
+    ],
+    "common_mistake": "Selecting the wrong ID, ending the task prematurely, or learning every selected attribute as a preference."
+  },
+  "compare_products": {
+    "title": "Compare displayed alternatives",
+    "description": "The user asks to compare two items from the preceding shortlist. The assistant context identifies the alternatives, but the request alone does not choose one or change requirements. The builder should preserve the current search while tracking only supported intent.",
+    "expected_behavior": [
+      "Resolve which displayed alternatives are being compared.",
+      "Do not invent a selection or a new requirement."
+    ],
+    "common_mistake": "Treating interest in an item as a selection or preference."
+  },
+  "soft_preference_missed": {
+    "title": "Respond to a missed soft preference",
+    "description": "The assistant recommends items that meet hard constraints but overlook a stated soft preference. The user reacts by reinforcing that preference. The distinction between suitability and preference satisfaction matters: a soft miss is not automatically a hard violation.",
+    "expected_behavior": [
+      "Retain the durable soft preference and its evidence.",
+      "Keep hard requirements unchanged and do not promote the preference to mandatory."
+    ],
+    "common_mistake": "Calling all nonpreferred options invalid, or treating the user’s reminder as a different preference."
+  },
+  "hard_constraint_violated": {
+    "title": "Correct a hard-constraint violation",
+    "description": "The assistant deliberately recommends items that violate a user requirement. The user points out the violation and restates the original constraint. The assistant’s bad recommendation is evidence about assistant behavior, not a valid replacement for the user’s intent.",
+    "expected_behavior": [
+      "Reinforce the original hard requirement.",
+      "Preserve unrelated constraints and mark the recommendation mismatch separately."
+    ],
+    "common_mistake": "Updating the user profile to match the assistant’s incorrect shortlist."
+  },
+  "no_match_relax": {
+    "title": "Relax a constraint after no matches",
+    "description": "The assistant reports that the current hard constraints have no matches and proposes a concrete numeric relaxation. The user accepts it. Relaxation follows the vertical’s numeric direction: a price ceiling increases, while a minimum salary decreases.",
+    "expected_behavior": [
+      "Change only the accepted numeric threshold.",
+      "Keep the relaxed constraint hard and preserve all other requirements."
+    ],
+    "common_mistake": "Relaxing in the wrong direction, changing unrelated fields, or treating acceptance as removing the constraint entirely."
+  },
+  "no_match_refuse": {
+    "title": "Keep a constraint despite no matches",
+    "description": "The user rejects a proposed relaxation after an empty result. The absence of matching items does not authorize the assistant or builder to weaken the user’s request. The search can remain active with no feasible results.",
+    "expected_behavior": [
+      "Preserve the original numeric threshold and other requirements.",
+      "Allow an empty result instead of inventing suitable items."
+    ],
+    "common_mistake": "Silently relaxing the limit or interpreting refusal as task completion."
+  },
+  "tradeoff_accept": {
+    "title": "Accept a one-off trade-off",
+    "description": "The assistant presents a numerically better alternative that misses a soft preference, alongside an option matching that preference. The user chooses the numerically better option. This is a task-level selection, not a reversal of the lasting preference.",
+    "expected_behavior": [
+      "Select the displayed alternative chosen after the trade-off.",
+      "Keep the durable soft preference unchanged."
+    ],
+    "common_mistake": "Learning a new permanent preference from a one-off compromise."
+  },
+  "tradeoff_reject": {
+    "title": "Reject a proposed trade-off",
+    "description": "The user chooses the option matching their soft preference instead of the numerically better alternative. The assistant list supplies the identities and trade-off details. The choice does not by itself turn the soft preference into a hard constraint.",
+    "expected_behavior": [
+      "Bind the selection to the preferred displayed option.",
+      "Preserve the existing preference strength and all hard constraints."
+    ],
+    "common_mistake": "Strengthening a soft preference or inventing a new numeric limit from the selected item’s attributes."
+  },
+  "misunderstanding": {
+    "title": "Correct an assistant misunderstanding",
+    "description": "The assistant paraphrases the user’s requirement incorrectly and recommends accordingly. The user corrects the assistant without changing their actual requirement. The builder should trust the user’s supported statements over the assistant’s mistaken interpretation.",
+    "expected_behavior": [
+      "Keep and reinforce the originally requested value.",
+      "Do not treat the correction as evidence that the user changed their mind."
+    ],
+    "common_mistake": "Replacing user evidence with the assistant’s incorrect paraphrase."
+  },
+  "suggestion_confirm": {
+    "title": "Confirm a contextual preference suggestion",
+    "description": "The assistant asks whether the user generally prefers an attribute of the second displayed item. A short confirmation refers to that question and item; an implicit variant instead describes repeated positive experiences with that attribute. The result is a durable soft preference, not an item selection.",
+    "expected_behavior": [
+      "Resolve the suggested value from the actual second item.",
+      "Record a supported durable soft preference without selecting the item."
+    ],
+    "common_mistake": "Confusing “yes” to a preference question with choosing an item or finishing the task."
+  },
+  "suggestion_reject": {
+    "title": "Reject a preference suggestion",
+    "description": "The user says no to the assistant’s preference suggestion. That rejects the proposed inference; it does not automatically establish an opposite preference, especially when several alternatives exist. The task and other requirements stay active.",
+    "expected_behavior": [
+      "Do not add the assistant’s suggested preference.",
+      "Do not invent an opposite or negative constraint from a bare rejection."
+    ],
+    "common_mistake": "Recording “avoid this value,” choosing an alternative, or ending the task without supporting user language."
+  },
+  "product_reference_refinement": {
+    "title": "Refine a requirement through an item reference",
+    "description": "The user asks for the same value of a named attribute as a previously displayed item. The assistant list supplies the value, but only the referenced attribute becomes a task constraint. This is different from selecting that item outright.",
+    "expected_behavior": [
+      "Resolve and add the named attribute value to the current task.",
+      "Leave unrelated attributes and target_product unchanged."
+    ],
+    "common_mistake": "Copying every item attribute or treating a reference-based refinement as an item selection."
+  },
+  "completion_confirm": {
+    "title": "Confirm completion after an assistant check",
+    "description": "The assistant asks whether the task is finished and the user confirms completion. The conversation context determines what is being confirmed. Temporary requirements are retired, while durable information and any identified selection are retained.",
+    "expected_behavior": [
+      "Close the active task and stop issuing search requests.",
+      "Use the user’s actual language to determine satisfaction and retain any selected ID."
+    ],
+    "common_mistake": "Treating a completion confirmation as a preference update or leaving old task requirements active."
+  },
+  "completion_continue": {
+    "title": "Continue after a completion check",
+    "description": "The assistant offers to end the task, but the user asks to keep looking with the same requirements. This is a task-lifecycle decision rather than a new preference. Declining completion does not by itself establish an unsuccessful final outcome.",
+    "expected_behavior": [
+      "Keep the same task and requirements active.",
+      "Leave satisfaction unknown until the user expresses an outcome."
+    ],
+    "common_mistake": "Ending the task, clearing requirements, or claiming there is implicit preference evidence in this scenario."
+  },
+  "poor_results_positive_framing": {
+    "title": "Reject poor results despite positive framing",
+    "description": "The assistant confidently presents actual mismatches as excellent recommendations. The user rejects their relevance without introducing a new requirement. The test separates the assistant’s upbeat framing from the user’s supported intent and outcome.",
+    "expected_behavior": [
+      "Retain the existing hard requirements despite the assistant’s claims.",
+      "Treat dissatisfaction with the shortlist as distinct from ending the whole task."
+    ],
+    "common_mistake": "Trusting the assistant’s positive tone as success, or inventing a reason for rejection that the user never stated."
+  },
+  "finish_task_positive": {
+    "title": "Positive finisher",
+    "description": "The user explicitly says they found what they wanted and ends the task. Success is supported by that message, not merely by a recommendation or item choice. A user can express success without naming a catalog item.",
+    "expected_behavior": [
+      "Set satisfied=true and close the task.",
+      "Retire task-scoped requirements, retain durable preferences, and keep any supported selection."
+    ],
+    "common_mistake": "Inventing a selected item because the user says “found it,” or keeping an active search after completion."
+  },
+  "finish_task_negative": {
+    "title": "Negative finisher",
+    "description": "The user explicitly stops without finding a suitable result. This is a known unsuccessful outcome and a real task boundary. It is different from disliking one shortlist while continuing to search.",
+    "expected_behavior": [
+      "Set satisfied=false and close the task.",
+      "Retire temporary constraints while retaining durable preferences and any previously identified item."
+    ],
+    "common_mistake": "Keeping the search active or deleting lasting preferences because the task failed."
+  },
+  "finish_task_ambiguous": {
+    "title": "Ambiguous finisher",
+    "description": "The user leaves without a finishing message. The environment observes departure, but the conversation contains no success, failure, or explicit completion evidence. Lifecycle cleanup retires temporary state separately from what the user actually said.",
+    "expected_behavior": [
+      "Keep satisfaction unknown; never fabricate a finishing user message.",
+      "Distinguish the last conversation-supported profile from environment-level task cleanup."
+    ],
+    "common_mistake": "Treating silence as satisfaction, rejection, or a user-stated completion."
+  }
+}

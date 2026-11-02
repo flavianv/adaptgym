@@ -47,6 +47,7 @@ CASE_SUBTYPES = {name: 'context_dependent' if name in CONTEXT_DEPENDENT_CASES el
                  for name in CASE_MODES}
 MIDDLE_CASES = tuple(name for name in CASE_MODES
                      if name not in FINISHER_CASES and name not in ('initial_need', 'finish_task', 'completion_confirm'))
+PREFERENCE_CASES = frozenset({'reinforce_preference', 'soft_preference_missed', 'suggestion_confirm'})
 
 
 def terminal_record(steps: list[dict], kind: str, *, native: bool = False) -> dict:

@@ -122,6 +122,8 @@ def test_vertical_selection_routes_data_plans_and_saved_runs_independently(serve
         data = json.loads(body)
         assert status == 200 and data['domain_schema']['x-adaptgym']['vertical_id'] == vertical
         assert len(data['catalog']['products']) == count
+        assert len(data['scenario_guide']) == len(demo.CASE_MODES)
+        assert all(entry['example'] for entry in data['scenario_guide'])
         status, _, body = request(base, '/api/plan', headers={'Content-Type': 'application/json'},
                                  payload={'vertical': vertical, 'case': 'no_match_relax'})
         assert status == 200 and json.loads(body)['vertical_id'] == vertical

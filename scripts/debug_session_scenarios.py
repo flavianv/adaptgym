@@ -21,6 +21,7 @@ sys.path.insert(0, str(ROOT / 'src'))
 
 from adaptgym.catalog import build_catalog, validate_catalog
 from adaptgym.bundles import VerticalBundle
+from adaptgym.scenario_guide import load_scenario_guide
 from adaptgym.openai_session_test import ResponsesClient, render_and_test, prompts_for
 from adaptgym.session_plans import CASE_MIN_TURNS, CASE_MODES, CASE_SUBTYPES, MIDDLE_CASES, generate_plan, validate_plan
 
@@ -195,6 +196,7 @@ def create_server(port=8768, directory=FIXTURES, *, host='127.0.0.1'):
                     'cases': CASE_MODES, 'case_min_turns': CASE_MIN_TURNS,
                     'case_subtypes': CASE_SUBTYPES,
                     'middle_cases': list(MIDDLE_CASES),
+                    'scenario_guide': load_scenario_guide(bundle_directory),
                     'prompts': prompts_for(vertical),
                     'api_configured': bool(os.environ.get('OPENAI_API_KEY')),
                     'default_model': os.environ.get('OPENAI_MODEL', '')})
