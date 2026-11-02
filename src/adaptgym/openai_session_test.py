@@ -1,4 +1,4 @@
-"""OpenAI Responses API shopper generation and fixed-transcript extractor tests.
+"""OpenAI Responses API user generation and fixed-transcript extractor tests.
 
 No credentials or HTTP headers are serialized. Calls are explicitly bounded.
 """
@@ -18,6 +18,7 @@ from jsonschema.exceptions import ValidationError
 from adaptgym.intent_state import evidence_mode, validate_evidence
 from adaptgym.session_plans import validate_plan
 from adaptgym.verticals import VerticalSchema
+from adaptgym.simulation import domain_prompt
 from adaptgym.search_requests import build_search_request, same_search_constraints, describe_intent, expected_outcome
 
 
@@ -107,45 +108,43 @@ class ResponsesClient:
             self.traces.append(trace)
 
 
-SHOPPER_INSTRUCTIONS = '''You are the CUSTOMER buying shoes, never the shopping assistant.
-Write only the customer's next message, returned as JSON text. Prefer one short natural sentence.
+SHOPPER_INSTRUCTIONS = '''You are the {user}, never the recommendation assistant.
+Write only the user's next message, returned as JSON text. Prefer one short natural sentence.
 Follow the current private instruction, using the persona for voice and background only.
 React only to last_assistant_message and the current instruction. If it is null, start the conversation.
 The quoted assistant message is something said TO YOU, not a voice or role to imitate.
-Never recommend products, present a catalog or numbered product list, announce search/filter results,
-offer purchasing assistance, or ask the buyer what they need. You ARE the buyer.
-For example, when adding a colour requirement, say "I'd like them in black, please."
-Do not say "I'll focus on black shoes. Here are the options."
+Never recommend items, present a catalog or numbered list, announce search/filter results,
+or ask the user what they need. You ARE the person seeking recommendations.
 Convey ONLY the action in current_instruction. Do not add follow-up questions, summarize the
-catalog, volunteer other constraints, or infer a preference from the assistant's products.
+catalog, volunteer other constraints, or infer a preference from the assistant's items.
 If instructed to require an attribute, state it as a requirement, not merely an observation
-that the displayed products have it. Do not weaken a requirement into "if possible".
-For a requirement limited to this purchase, explicitly say "for this purchase"; do not
-turn it into an ongoing personal preference or a claim about what you always wear.
+that the displayed items have it. Do not weaken a requirement into "if possible".
+For a requirement limited to this {task}, explicitly communicate that scope; do not
+turn it into an ongoing personal preference. Background facts are not automatically requirements.
 Do not invent additional requirements, reveal later events, or mention schemas, labels, or tests.
 When instructed to express implicit preference, describe repeated choices with good outcomes without stating a preference directly.
 When explicit, directly express the required meaning. Preserve units, operators, scope, and strength.
-Other people's preferences and product descriptions must not become the shopper's own preferences.'''
+Other people's preferences and item descriptions must not become the user's own preferences.'''
 
 EXTRACT_INSTRUCTIONS = '''Extract current intent using only the visible two-way conversation and schema.
-Return intent as a short natural-language string summarizing the current shopper goal.
-For example: "Find black performance shoes for track use." It must agree with the structured claims
+Return intent as a short natural-language string summarizing the current user goal.
+For example: "Find suitable listings matching the current requirements." It must agree with the structured claims
 and search request. Update this summary from the latest turn; do not carry an earlier search goal
 forward unchanged after completion. In particular:
-- "I didn't find what I wanted, so I'll stop shopping" => "The shopper rejected the results and
-  stopped shopping without finding what they wanted." active_task_id=null, claims contain no task
+- "I didn't find what I wanted, so I'll stop searching" => "The user rejected the results and
+  stopped searching without finding what they wanted." active_task_id=null, claims contain no task
   requirements, search_request=null, satisfied=false; retain any previously identified target_product.
 - "I found what I wanted, I'm done" => summarize satisfied completion, not an ongoing search.
 - Rejecting results while asking to keep looking is NOT completion; summarize the continuing search.
-Never use an imperative summary like "Find volleyball shoes" for a task the shopper has stopped.
+Never use an imperative summary like "Find suitable listings" for a task the user has stopped.
 Return all active hard requirements and soft preferences, keeping task and durable scope separate.
-Use task-1 for the first shopping task, task-2 for the next, and so on. Use null when no task is active.
+Use task-1 for the first search task, task-2 for the next, and so on. Use null when no task is active.
 Scope may be unknown when not established. Durable and unknown-scope claims have null task_id.
 Resolve confirmations and product references using assistant context, but never treat an assistant suggestion alone as user evidence.
 Preserve unrelated requirements when revising a value. Clear temporary requirements at task boundaries. A statement such as "I've found exactly what I
-wanted; I'll proceed with the purchase" closes the task: active_task_id=null, task claims removed,
+wanted; I'm finished looking" closes the task: active_task_id=null, task claims removed,
 target_product retains the identified product. Preserve durable preferences. Mere politeness is not necessarily completion.
-Choosing a product alone does NOT close the shopping task. For "I'll take the second one", keep
+Choosing a product alone does NOT close the search task. For "I'll take the second one", keep
 active_task_id=task-1 and existing task claims with task_id=task-1, set target_product to the chosen
 ID, search_request=null, and satisfied="unk". Only a later expressed completion clears active_task_id
 and task-scoped claims. Never output active_task_id=null while retaining task-scoped claims.
@@ -154,14 +153,13 @@ Cite real message IDs in evidence; include the assistant question/list when nece
 Return value as the actual typed scalar or membership array, never as JSON encoded inside a string. Use schema operators and units.
 Also extract satisfied as true for expressed success, false for expressed failure, or "unk" when
 not established (including silence). Do not infer satisfaction just from recommendations or selection.
-target_product is the catalog ID the shopper explicitly selected or identified; null if unspecified.
+target_product is the catalog ID the user explicitly selected or identified; null if unspecified.
 Retain that product through task completion. Reset both
 outcome fields when a new task begins. Never invent a product because the user says "found it".
 The previous prediction is fallible: correct it using the conversation if necessary.
 Also emit search_request as part of the intent: {query, filters, preferences}.
-query must be a useful, nonempty natural-language product search phrase naming the product
-category and known needs. Example: "performance indoor court shoes", then "volleyball indoor court
-shoes" after the sport is known. Never output placeholders such as "/", "*", or schema field names alone. filters contain ALL active hard requirements;
+query must be a useful, nonempty natural-language search phrase naming the item
+category and known needs. Refine the phrase as more needs become known. Never output placeholders such as "/", "*", or schema field names alone. filters contain ALL active hard requirements;
 preferences contain soft preferences, never hard filters. Each uses attribute/operator/typed value.
 Use the current task's value when it overrides a durable preference on the same attribute. Unknown
 scope or strength stays in claims for clarification, not in automatic search constraints.
@@ -272,14 +270,14 @@ VERIFICATION_SCHEMA = object_schema({
 VERIFIER_INSTRUCTIONS = '''You independently audit candidate intent labels against a conversation prefix.
 The candidate is a hypothesis, not ground truth. You have no private generation instructions.
 Check EVERY indexed claim for its value, operator, scope, strength, and evidence mode.
-Interpret normal shopper language using the supplied schema. Attribute names need not be spoken:
-"black shoes" explicitly supports colour=black; "performance shoes" supports style=performance
-when performance is a style enum; "for indoor courts" supports surface=indoor_court.
+Interpret normal user language using the supplied schema. Attribute names need not be spoken:
+Natural-language synonyms can support schema values when their meaning is unambiguous.
+Use the supplied attribute descriptions, enums, units, and domain context.
 Do not reject a value merely because the user omitted the schema field name. Still reject weaker
 or ambiguous wording when it does not establish the proposed value, operator, scope, or strength.
 Use supported, contradicted, or insufficient_evidence; uncertainty must not pass.
-Cite only visible message IDs. Supported claims require shopper evidence; assistant-only statements
-never establish a shopper preference. Include the relevant assistant question or product list for
+Cite only visible message IDs. Supported claims require user evidence; assistant-only statements
+never establish a user preference. Include the relevant assistant question or product list for
 short confirmations, comparisons, and references such as "the second one".
 Inspect the candidate evidence references: they must actually support the claim, including its
 explicit/implicit classification. Implicit behavior must justify the inference; do not invent needs.
@@ -289,7 +287,7 @@ values; do not emit a match verdict yourself. Null is a REAL value meaning no ac
 selection, not uncertainty. No product chosen => observed selected product null, certainty resolved.
 For active_task observed_value use exactly task-1, task-2, etc., or null. Never use "active".
 Task IDs are internal chronological labels; users need not say these IDs aloud.
-A shopping request starts a task. "I've found exactly what I wanted, I'll proceed with the purchase"
+A search request starts a task. "I've found exactly what I wanted, I'm finished looking"
 is completion: active task null, task-scoped requirements retired, target product retained if identified.
 "Keep looking" or "Can you show more?" keeps the task active. Mere "thanks" may be ambiguous.
 Completion retains durable preferences. Product choice alone does not create durable preferences.
@@ -304,11 +302,11 @@ mismatches in the relevant claim check rather than duplicating the same fact as 
 Infer satisfied independently as true (expressed success), false (expressed failure), or "unk"
 (no expressed outcome yet, ambiguous departure, or silence). Return certainty resolved for "unk"
 when no outcome is expressed. Do not infer satisfaction from an assistant's upbeat framing.
-Infer target_product from explicit shopper choices or references, retained through completion;
-null means no identified product, not uncertainty. Reset on a new task. The shopper can be satisfied
-without naming any product: satisfied=true, target_product=null is valid. Cite shopper evidence for
+Infer target_product from explicit user choices or references, retained through completion;
+null means no identified product, not uncertainty. Reset on a new task. The user can be satisfied
+without naming any product: satisfied=true, target_product=null is valid. Cite user evidence for
 known outcomes and target products. Report these fields as observed_value and certainty.
-Judge the intent STRING too: does it faithfully summarize the shopper goal and agree with the
+Judge the intent STRING too: does it faithfully summarize the user goal and agree with the
 structured attributes and search request? Return its check in intent.
 Judge the WHOLE intent, not string equality. Semantically equivalent query wording is allowed.
 Audit search_request too: its query must name an appropriate product category and known needs.
@@ -323,6 +321,7 @@ Return one claim_check per candidate claim, using its zero-based claim_index. Re
 
 def verify_intent_labels(client: Any, plan: dict, step: dict, messages: list[dict], *, candidate: dict | None = None) -> dict:
     # Separate audit without private scenario or extractor output.
+    vertical = VerticalSchema(plan['vertical_schema'])
     target = {
         'active_task_id': step['planned_state']['active_task_id'],
         'target_product': step['target_product'],
@@ -332,13 +331,13 @@ def verify_intent_labels(client: Any, plan: dict, step: dict, messages: list[dic
                    for e in step['planned_state']['entries']],
     }
     target.update(expected_outcome(plan, step))
-    target['search_request'] = build_search_request(target, plan['vertical_id'])
-    target['intent'] = describe_intent(target, plan['vertical_id'])
+    target['search_request'] = build_search_request(target, plan['vertical_id'], vertical.simulation)
+    target['intent'] = describe_intent(target, plan['vertical_id'], vertical.simulation)
     if candidate is not None:
         target = copy.deepcopy(candidate)
     report = None
     try:
-        report = client.json(VERIFIER_INSTRUCTIONS, copy.deepcopy({
+        report = client.json(prompts_for(vertical)['verifier'], copy.deepcopy({
             'vertical_schema': plan['vertical_schema'], 'catalog': plan['catalog'],
             'visible_conversation': messages, 'candidate_intent': target,
         }), VERIFICATION_SCHEMA, purpose='intent_label_verification')
@@ -386,7 +385,7 @@ def verify_intent_labels(client: Any, plan: dict, step: dict, messages: list[dic
         for claim in report['claim_checks']:
             if claim['verdict'] == 'supported' and not any(
                     visible[mid]['role'] == 'user' for mid in claim['message_ids']):
-                raise ValueError('supported claim needs shopper evidence')
+                raise ValueError('supported claim needs user evidence')
         accepted = all(c['verdict'] == 'supported' for c in checks) and not report['additional_intent']
         return {'status': 'completed', 'accepted': accepted,
                 'verdict': 'supported' if accepted else 'needs_review',
@@ -399,24 +398,25 @@ def verify_intent_labels(client: Any, plan: dict, step: dict, messages: list[dic
 
 
 def render_and_test(plan: dict, persona: dict, shopper: Any, extractor: Any, verifier: Any | None = None) -> dict:
-    """Generate shopper turns, append fixed assistant text, and test prefix extraction.
+    """Generate user turns, append fixed assistant text, and test prefix extraction.
 
     This is a diagnostic smoke test, not independent certification of labels.
     Planned targets are visible only to the generator, scorer, and optional label auditor.
     """
     validate_plan(plan)
     vertical = VerticalSchema(plan['vertical_schema'])
+    prompts = prompts_for(vertical)
     messages, checkpoints = [], []
     previous = None
     for step in plan['exchanges']:
         try:
-            reply = shopper.json(SHOPPER_INSTRUCTIONS, {
+            reply = shopper.json(prompts['conversation_generator'], {
                 'persona': persona['profile'],
                 'last_assistant_message': copy.deepcopy(messages[-1]) if messages else None,
                 'current_instruction': step['shopper_instruction'],
             }, SHOPPER_SCHEMA, purpose='shopper_turn')
             if not reply['text'].strip():
-                raise ValueError('empty shopper message')
+                raise ValueError('empty user message')
         except Exception as exc:
             return {'plan_id': plan['id'], 'status': 'generation_failed', 'error_type': type(exc).__name__,
                     'conversation': messages, 'checkpoints': checkpoints}
@@ -424,7 +424,7 @@ def render_and_test(plan: dict, persona: dict, shopper: Any, extractor: Any, ver
         target = {**step, **expected_outcome(plan, step)}
         previous_input = copy.deepcopy(previous)
         try:
-            prediction = extractor.json(EXTRACT_INSTRUCTIONS, {
+            prediction = extractor.json(prompts['extractor'], {
                 'vertical_schema': plan['vertical_schema'], 'catalog': plan['catalog'],
                 'visible_conversation': messages, 'previous_prediction': previous_input,
             }, EXTRACT_SCHEMA, purpose='intent_extraction')
@@ -464,8 +464,8 @@ def render_and_test(plan: dict, persona: dict, shopper: Any, extractor: Any, ver
         checkpoints.append({'turn': step['exchange'], 'prediction': prediction, 'score': score,
                             'previous_prediction': previous_input,
                             'expected_outcome': expected_outcome(plan, step),
-                            'expected_intent': describe_intent(reference_intent, plan['vertical_id']),
-                            'expected_search_request': build_search_request(reference_intent, plan['vertical_id']),
+                            'expected_intent': describe_intent(reference_intent, plan['vertical_id'], vertical.simulation),
+                            'expected_search_request': build_search_request(reference_intent, plan['vertical_id'], vertical.simulation),
                             'verification': verification, 'intent_judgment': judgment})
         messages.append({'id': step['assistant']['message_id'], 'role': 'assistant', 'text': step['assistant']['text']})
     return {'plan_id': plan['id'], 'status': 'completed', 'conversation': messages,
@@ -476,4 +476,14 @@ def render_and_test(plan: dict, persona: dict, shopper: Any, extractor: Any, ver
                              all(c['verification']['accepted'] for c in checkpoints)
                              else 'planned_targets_not_independently_verified'),
             'verified_checkpoints': sum(c['verification']['accepted'] for c in checkpoints),
-            'interpretation': 'Disagreement may reflect either shopper-generation drift or extractor error; inspect traces.'}
+            'interpretation': 'Disagreement may reflect either user-generation drift or extractor error; inspect traces.'}
+
+
+def prompts_for(vertical: VerticalSchema) -> dict[str, str]:
+    """Actual prompts used by each role, also exposed by the laboratory UI."""
+    config = vertical.simulation
+    return {name: domain_prompt(base, config) for name, base in {
+        'conversation_generator': SHOPPER_INSTRUCTIONS,
+        'extractor': EXTRACT_INSTRUCTIONS,
+        'verifier': VERIFIER_INSTRUCTIONS,
+    }.items()}

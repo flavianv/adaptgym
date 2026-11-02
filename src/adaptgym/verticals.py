@@ -62,7 +62,21 @@ class VerticalSchema:
 
     @classmethod
     def load(cls, path: str | Path) -> "VerticalSchema":
-        return cls(json.loads(Path(path).read_text(encoding="utf-8")))
+        path = Path(path)
+        schema = json.loads(path.read_text(encoding="utf-8"))
+        config_path = path.with_name('simulation.json')
+        if config_path.exists():
+            schema.setdefault('x-adaptgym', {})['simulation'] = json.loads(config_path.read_text(encoding='utf-8'))
+        vertical = cls(schema)
+        # Store resolved configuration in the schema so saved plans are portable.
+        if config_path.exists():
+            vertical._schema['x-adaptgym']['simulation'] = vertical.simulation
+        return vertical
+
+    @property
+    def simulation(self) -> dict[str, Any]:
+        from adaptgym.simulation import simulation_config
+        return simulation_config(self._schema)
 
     @property
     def schema(self) -> dict[str, Any]:

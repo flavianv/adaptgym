@@ -104,8 +104,9 @@ def test_judge_tab_receives_the_actual_backend_prompts(server_factory):
     status, _, body = request(base, '/api/fixtures')
     assert status == 200
     prompts = json.loads(body)['prompts']
-    assert prompts['conversation_generator'] == demo.SHOPPER_INSTRUCTIONS
-    assert prompts['verifier'] == demo.VERIFIER_INSTRUCTIONS
+    vertical, _, _ = demo.load_fixtures()
+    assert prompts['conversation_generator'] == demo.prompts_for(vertical)['conversation_generator']
+    assert prompts['verifier'] == demo.prompts_for(vertical)['verifier']
     assert 'search_request' in prompts['verifier']
     assert b'LLM-Judge' in request(base)[2]
 

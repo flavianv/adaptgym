@@ -18,10 +18,9 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'src'))
 
 from adaptgym.catalog import build_catalog, validate_catalog
-from adaptgym.persona import GENERAL_PERSONA_SCHEMA, validate_persona
-from adaptgym.openai_session_test import ResponsesClient, render_and_test, SHOPPER_INSTRUCTIONS, VERIFIER_INSTRUCTIONS
+from adaptgym.bundles import VerticalBundle
+from adaptgym.openai_session_test import ResponsesClient, render_and_test, prompts_for
 from adaptgym.session_plans import CASE_MIN_TURNS, CASE_MODES, CASE_SUBTYPES, MIDDLE_CASES, generate_plan, validate_plan
-from adaptgym.verticals import VerticalSchema
 
 FIXTURES = ROOT / 'examples/debug_shopping'
 
@@ -44,14 +43,8 @@ def load_env_file(path):
 
 
 def load_fixtures(directory=FIXTURES):
-    directory = Path(directory)
-    vertical = VerticalSchema.load(directory / 'domain_schema.json')
-    persona = json.loads((directory / 'user_persona.json').read_text())
-    errors = validate_persona(persona['profile'], schema=GENERAL_PERSONA_SCHEMA)
-    if errors:
-        raise ValueError('debug persona failed schema validation')
-    template = json.loads((directory / 'catalog_template.json').read_text())
-    return vertical, persona, template
+    bundle = VerticalBundle.load(directory)
+    return bundle.vertical, bundle.persona, bundle.template
 
 
 def make_plan(payload, directory=FIXTURES):
@@ -61,8 +54,9 @@ def make_plan(payload, directory=FIXTURES):
         raise ValueError('group_overrides must be an object')
     catalog = build_catalog(template, vertical, overrides)
     if payload.get('include_distractors', False):
-        pool = json.loads((Path(directory) / 'distractor_pool.json').read_text())
-        validate_catalog(pool, vertical)
+        pool = VerticalBundle.load(directory).distractors
+        if not pool['products']:
+            raise ValueError('this vertical has no distractor pool')
         catalog['products'].extend(pool['products'])
         catalog['catalog_id'] += '-with-distractor-pool'
         validate_catalog(catalog, vertical)
@@ -96,7 +90,7 @@ def run_live(payload, directory=FIXTURES):
     client = ResponsesClient(model, max_calls=4 * len(plan['exchanges']), max_output_tokens=2400)
     result = render_and_test(plan, persona, client, client, verifier=client)
     return {'plan': plan, 'result': result, 'api_traces': client.traces,
-            'model': model, 'prompt_version': 'debug-target-product-v5',
+            'model': model, 'prompt_version': 'modular-vertical-v1',
             'same_model_roles': True}
 
 
@@ -139,7 +133,7 @@ def create_server(port=8768, directory=FIXTURES, *, host='127.0.0.1'):
             if self.path == '/healthz':
                 return self.send_json(200, {'status': 'ok'})
             if self.path == '/':
-                body = (ROOT / 'examples/debug_shopping/viewer.html').read_bytes()
+                body = (ROOT / 'src/adaptgym/viewer.html').read_bytes()
                 self.send_response(200)
                 self.send_header('Content-Type', 'text/html; charset=utf-8')
                 self.send_header('Content-Length', str(len(body)))
@@ -153,11 +147,12 @@ def create_server(port=8768, directory=FIXTURES, *, host='127.0.0.1'):
                 vertical, persona, template = load_fixtures(directory)
                 self.send_json(200, {'persona': persona, 'domain_schema': vertical.schema,
                     'catalog_template': template, 'catalog': build_catalog(template, vertical),
-                    'distractor_pool': json.loads((Path(directory) / 'distractor_pool.json').read_text()),
+                    'distractor_pool': VerticalBundle.load(directory).distractors,
+                    'simulation': vertical.simulation,
                     'cases': CASE_MODES, 'case_min_turns': CASE_MIN_TURNS,
                     'case_subtypes': CASE_SUBTYPES,
                     'middle_cases': list(MIDDLE_CASES),
-                    'prompts': {'conversation_generator': SHOPPER_INSTRUCTIONS, 'verifier': VERIFIER_INSTRUCTIONS},
+                    'prompts': prompts_for(vertical),
                     'api_configured': bool(os.environ.get('OPENAI_API_KEY')),
                     'default_model': os.environ.get('OPENAI_MODEL', '')})
             else:
@@ -216,14 +211,15 @@ def serve(port=8768, directory=FIXTURES, *, open_browser=True, host='127.0.0.1')
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--fixtures', type=Path, default=FIXTURES)
+    parser.add_argument('--vertical', '--fixtures', dest='fixtures', type=Path, default=FIXTURES,
+                        help='directory containing a vertical bundle (schema, simulation, persona, catalog)')
     parser.add_argument('--case', choices=['all', *CASE_MODES], default='all')
     parser.add_argument('--seed', type=int, default=7)
     parser.add_argument('--turns', type=int, choices=range(1, 8), help='shopper/assistant exchanges, preserving required core events')
     parser.add_argument('--finisher', choices=['auto', 'positive', 'negative', 'ambiguous'], default='auto')
     parser.add_argument('--expression', choices=['explicit', 'implicit', 'mixed'], default='explicit')
     parser.add_argument('--group-overrides', type=Path, help='JSON group name to attribute overrides')
-    parser.add_argument('--include-distractors', action='store_true', help='add the optional 30-item footwear pool')
+    parser.add_argument('--include-distractors', action='store_true', help="add this vertical's optional distractor pool")
     parser.add_argument('--output', type=Path, default=ROOT / 'runs/debug_session_plans.json')
     parser.add_argument('--env-file', type=Path, help='explicit dotenv file containing OPENAI_API_KEY / OPENAI_MODEL')
     parser.add_argument('--model', default='')

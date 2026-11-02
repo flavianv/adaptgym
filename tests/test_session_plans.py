@@ -367,7 +367,7 @@ def test_contextual_yes_no_resolve_against_actual_second_product():
         first, second = yes['exchanges']
         assert len(first['assistant']['product_ids']) == min(5, len(first['assistant']['matching_product_ids']))
         assert len(first['assistant']['product_ids']) >= 2
-        assert 'second pair' in first['assistant']['text']
+        assert 'second item' in first['assistant']['text']
         anchor = next(p for p in catalog['products'] if p['id'] == first['assistant']['product_ids'][1])
         durable = [e for e in second['planned_state']['entries'] if e['scope'] == 'durable']
         assert len(durable) == 1
@@ -376,7 +376,7 @@ def test_contextual_yes_no_resolve_against_actual_second_product():
         assert durable[0]['evidence'][0]['message_ids'] == ['a1', 'u2']
     no = generate_plan(vertical, catalog, 'suggestion_reject')
     assert no['exchanges'][0]['planned_state'] == no['exchanges'][1]['planned_state']
-    assert 'end the shopping task' in no['exchanges'][1]['shopper_instruction']
+    assert 'end the purchase task' in no['exchanges'][1]['shopper_instruction']
 
 
 def test_context_subtype_rejects_inconsistent_plan_or_turn_tags():
@@ -396,7 +396,7 @@ def test_current_need_varies_type_feature_count_and_budget_and_is_reproducible()
     from adaptgym.current_need import generate_current_need
     vertical, _, catalog = fixtures()
     needs = [generate_current_need(vertical, catalog, seed=seed) for seed in range(60)]
-    assert len({n['shoe_type']['value'] for n in needs}) >= 6
+    assert len({n['context']['value'] for n in needs}) >= 6
     assert {n['feature_count'] for n in needs} == {1, 2, 3, 4}
     budgets = {a['value'] for n in needs for a in n['requirements'] if a['attribute'] == 'price'}
     assert len(budgets) >= 3
@@ -734,7 +734,7 @@ def test_new_task_resets_product_and_satisfaction_instead_of_carrying_old_choice
 def test_negative_completion_summary_describes_stopping_not_an_active_search():
     state = {'active_task_id': None, 'target_product': None, 'claims': [], 'satisfied': False}
     summary = describe_intent(state, 'footwear')
-    assert summary == 'The shopper stopped shopping without finding what they wanted.'
+    assert summary == 'The user stopped searching without finding what they wanted.'
     assert not summary.startswith('Find')
     assert build_search_request(state, 'footwear') is None
-    assert describe_intent({**state, 'satisfied': True}, 'footwear') == 'The shopper found what they wanted and finished shopping.'
+    assert describe_intent({**state, 'satisfied': True}, 'footwear') == 'The user found what they wanted and finished searching.'

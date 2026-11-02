@@ -13,6 +13,7 @@ from adaptgym.catalog import classify_products, matching_ids, matches, validate_
 from adaptgym.intent_state import IntentState, evidence
 from adaptgym.current_need import generate_current_need
 from adaptgym.verticals import VerticalSchema
+from adaptgym.simulation import render_domain
 
 FREE_CASES = (
     'initial_need', 'add_requirement', 'clarify_requirement', 'reinforce_preference',
@@ -76,11 +77,10 @@ def generate_plan(vertical: VerticalSchema, catalog: dict, case: str, *, seed: i
                   turn_count: int | None = None, finisher: str = 'auto') -> dict:
     """Plan every supported case against an actual catalog, or reject infeasibility.
 
-    For the full debug suite a vertical needs one enumerated string attribute
-    with two alternatives, one numeric attribute supporting lte, and another
-    attribute shared by at least five products. No-match relaxation needs a
-    valid threshold below the lowest catalog value. Unsupported catalogs fail
-    explicitly, not by inventing products or relaxing requirements.
+    Configuration selects context, categorical preference and numeric utility.
+    The catalog must contain witnesses for the requested scenario. Missing
+    attributes never satisfy a constraint. Unsupported catalogs fail explicitly,
+    not by inventing items or silently relaxing requirements.
     """
     if case not in CASE_MODES or expression not in ('explicit', 'implicit', 'mixed'):
         raise ValueError('unknown scenario case or expression mode')
@@ -100,31 +100,25 @@ def generate_plan(vertical: VerticalSchema, catalog: dict, case: str, *, seed: i
     validate_catalog(catalog, vertical)
     rng = random.Random(seed)
     fields = vertical.schema['properties']
-    numeric = next((name for name, field in fields.items()
-                    if field['type'] in ('number', 'integer') and 'lte' in field['x-adaptgym']['operators']
-                    and 'enum' not in field), None)
-    focal = next((name for name, field in fields.items()
-                  if field['type'] == 'string' and len(field.get('enum', [])) >= 2
-                  and 'eq' in field['x-adaptgym']['operators']), None)
+    config = vertical.simulation
+    numeric, focal = config['numeric_attribute'], config['preference_attribute']
+    operator = config['numeric_operator']
     if numeric is None or focal is None:
-        raise ValueError('suite requires a numeric lte attribute and an enumerated string attribute')
+        raise ValueError('suite requires configured numeric and categorical preference attributes')
+    direction = 1 if operator == 'lte' else -1
     minimum_matches = recommendation_count + 1 if case == 'soft_preference_missed' else recommendation_count if case in ('no_match_relax', 'no_match_refuse') else 2
     context_candidates = []
-    for name in vertical.attributes:
+    for name in config['context_attributes']:
         if name in (focal, numeric) or 'eq' not in fields[name]['x-adaptgym']['operators']:
             continue
-        for value, count in Counter(p['attributes'][name] for p in catalog['products']).most_common():
-            subset = [p for p in catalog['products'] if p['attributes'][name] == value]
+        for value, count in Counter(p['attributes'][name] for p in catalog['products'] if name in p['attributes'] and focal in p['attributes'] and numeric in p['attributes'] and p['attributes'][name] != 'unspecified').most_common():
+            subset = [p for p in catalog['products'] if p['attributes'].get(name) == value and p['attributes'].get(focal) not in (None, 'unspecified') and numeric in p['attributes']]
             groups = Counter(p['attributes'][focal] for p in subset)
             eligible = sorted(value for value, n in groups.items() if n >= 1)
             if len(subset) >= minimum_matches and len(eligible) >= 2:
                 context_candidates.append((name, value, eligible, subset))
     if not context_candidates:
         raise ValueError('catalog needs a shared context with five products and two categorical alternatives')
-    # Prefer an actual shopping use over incidental shared size/colour values.
-    sport_candidates = [candidate for candidate in context_candidates if candidate[0] == 'sport']
-    if sport_candidates:
-        context_candidates = sport_candidates
     if case == 'soft_preference_missed':
         context_candidates = [c for c in context_candidates
                               if any(sum(p['attributes'][focal] != value for p in c[3]) >= recommendation_count
@@ -133,10 +127,14 @@ def generate_plan(vertical: VerticalSchema, catalog: dict, case: str, *, seed: i
             raise ValueError('soft-preference case needs five alternatives missing the preference')
     need = generate_current_need(vertical, catalog, seed=rng.getrandbits(32),
         minimum_matches=minimum_matches, diversity_attribute=focal,
+        witness_attributes=(focal, numeric),
         type_candidates=[vertical.assignment(c[0], c[1]) for c in context_candidates])
     base = need['requirements']
     context, context_value = base[0]['attribute'], base[0]['value']
-    subset = [p for p in catalog['products'] if p['id'] in need['matching_product_ids']]
+    subset = [p for p in catalog['products'] if p['id'] in need['matching_product_ids']
+              and numeric in p['attributes'] and p['attributes'].get(focal) not in (None, 'unspecified')]
+    witness_ids = [p['id'] for p in subset]
+    reference_ids = (witness_ids + [pid for pid in need['matching_product_ids'] if pid not in witness_ids])[:recommendation_count]
     choices = sorted({p['attributes'][focal] for p in subset})
     preferred, alternative = rng.sample(choices, 2)
     if case == 'soft_preference_missed':
@@ -146,14 +144,16 @@ def generate_plan(vertical: VerticalSchema, catalog: dict, case: str, *, seed: i
         preferred = rng.choice(acceptable)
     numeric_requirement = next((a for a in base if a['attribute'] == numeric), None)
     if numeric_requirement is None:
-        peak = max(p['attributes'][numeric] for p in subset)
+        values = [p['attributes'][numeric] for p in subset if numeric in p['attributes']]
+        peak = max(values) if direction == 1 else min(values)
         step = fields[numeric].get('multipleOf', 1)
-        budget_values = [peak + step * n for n in range(1, 51)]
-        budget_values = [v for v in budget_values if v <= fields[numeric].get('maximum', float('inf'))]
-        numeric_requirement = vertical.assignment(numeric, rng.choice(budget_values) if budget_values else peak, 'lte')
+        budget_values = [peak + direction * step * n for n in range(1, 51)]
+        budget_values = [v for v in budget_values if fields[numeric].get('minimum', -float('inf')) <= v <= fields[numeric].get('maximum', float('inf'))]
+        numeric_requirement = vertical.assignment(numeric, rng.choice(budget_values) if budget_values else peak, operator)
     maximum = numeric_requirement['value']
-    minimum = min(p['attributes'][numeric] for p in subset)
-    below_minimum = minimum - fields[numeric].get('multipleOf', 1)
+    known_numeric = [p['attributes'][numeric] for p in subset if numeric in p['attributes']]
+    extreme = min(known_numeric) if direction == 1 else max(known_numeric)
+    impossible_threshold = extreme - direction * fields[numeric].get('multipleOf', 1)
     preferred_assignment = vertical.assignment(focal, preferred)
     alternate_assignment = vertical.assignment(focal, alternative)
     state = IntentState([vertical])
@@ -185,15 +185,16 @@ def generate_plan(vertical: VerticalSchema, catalog: dict, case: str, *, seed: i
             if kind == 'ask_attribute':
                 text = f'What is your requirement for {attribute}?'
             elif kind == 'no_match':
-                text = f'No products meet these requirements. {next_instruction or "Would you change a requirement?"}'
+                text = f'No items meet these requirements. {next_instruction or "Would you change a requirement?"}'
             elif kind == 'offer_completion':
-                text = 'Would you like to finish this shopping task, or keep looking?'
+                text = 'Would you like to finish this {task} task, or keep looking?'
             elif kind == 'suggest_preference':
                 text = f'Do you generally prefer {focal} {preferred}?'
             elif kind == 'confirm_selection':
                 text = f'You selected {selected[0]}.'
             else:
                 text = 'Here are the catalog options:' if selected else 'Understood.'
+        text = render_domain(text, config)
         if selected:
             rows = []
             for index, pid in enumerate(selected, 1):
@@ -213,6 +214,7 @@ def generate_plan(vertical: VerticalSchema, catalog: dict, case: str, *, seed: i
             current_target = None
         if selected is not None:
             current_target = selected
+        instruction = render_domain(instruction, config)
         index = len(steps) + 1
         mid = f'u{index}'
         visible.append({'id': mid, 'role': 'user', 'text': instruction})
@@ -247,15 +249,15 @@ def generate_plan(vertical: VerticalSchema, catalog: dict, case: str, *, seed: i
         visible.append({'id': f'a{index}', 'role': 'assistant', 'text': reply['text']})
         return reply
 
-    full_instruction = 'Start this purchase and ask naturally for ' + ', '.join(map(_describe, base)) + '. Combine these requirements in one shopper-led request.'
+    full_instruction = 'Start this {task} and ask naturally for ' + ', '.join(map(_describe, base)) + '. Combine these requirements in one user-led request.'
     base_changes = [change(a) for a in base]
     if case == 'initial_need' or case in FINISHER_CASES:
         add(full_instruction, base_changes, begin='task-1')
     elif case in ('add_requirement', 'clarify_requirement'):
         later = base[-1]
         initial = base[:-1]
-        add('Start a purchase; require ' + ', '.join(map(_describe, initial)) + '.', [change(a) for a in initial], begin='task-1')
-        add(('Volunteer an additional requirement: ' if case == 'add_requirement' else 'Clarify that this purchase requires ') + _describe(later),
+        add('Start a {task}; require ' + ', '.join(map(_describe, initial)) + '.', [change(a) for a in initial], begin='task-1')
+        add(('Volunteer an additional requirement: ' if case == 'add_requirement' else 'Clarify that this {task} requires ') + _describe(later),
             [change(later)], depends_on=('u1',))
     elif case == 'reinforce_preference':
         add(full_instruction + f' Also express a general soft preference for {focal} {preferred}; evidence mode {preference_mode(0)}.',
@@ -263,27 +265,27 @@ def generate_plan(vertical: VerticalSchema, catalog: dict, case: str, *, seed: i
         add(f'Reinforce the same general preference, without making it mandatory: {focal} {preferred}. Evidence mode {preference_mode(1)}.',
             [change(preferred_assignment, operation='reinforce', scope='durable', strength='soft', mode=preference_mode(1))])
     elif case in ('revise_value', 'retract_requirement', 'restore_value'):
-        add(full_instruction + f' For this order, require {focal} {preferred}.', base_changes + [change(preferred_assignment)], begin='task-1')
+        add(full_instruction + f' For this {{task}}, require {focal} {preferred}.', base_changes + [change(preferred_assignment)], begin='task-1')
         if case == 'retract_requirement':
-            add(f'Remove only the {focal} requirement for this order.', [change(preferred_assignment, operation='remove')], depends_on=('u1',))
+            add(f'Remove only the {focal} requirement for this {{task}}.', [change(preferred_assignment, operation='remove')], depends_on=('u1',))
         else:
-            add(f'Change only {focal} to {alternative} for this order.', [change(alternate_assignment)], depends_on=('u1',))
+            add(f'Change only {focal} to {alternative} for this {{task}}.', [change(alternate_assignment)], depends_on=('u1',))
             if case == 'restore_value':
                 add(f'Restore the original {focal} requirement ({preferred}), referring back naturally.', [change(preferred_assignment)], depends_on=('u1', 'u2'))
     elif case in ('finish_task', 'start_another_task'):
         add(full_instruction + f' Also state a general soft preference for {focal} {preferred}.', base_changes + [change(preferred_assignment, scope='durable', strength='soft')], begin='task-1')
         if case == 'finish_task':
-            add('Explicitly finish this purchase.', end=True, action='acknowledge')
+            add('Explicitly finish this {task}.', end=True, action='acknowledge')
         else:
-            add(f'Explicitly start a separate purchase; require {focal} {alternative} for this new order.', [change(alternate_assignment)], begin='task-2')
+            add(f'Explicitly start a separate {{task}}; require {focal} {alternative} for this new {{task}}.', [change(alternate_assignment)], begin='task-2')
     elif case == 'irrelevant_information':
         add(full_instruction, base_changes, begin='task-1')
-        add(f'Mention that a friend chooses {focal} {alternative}, without endorsing it or changing your own needs. Return to the shopping task.', action='recommend')
+        add(f'Mention that a friend chooses {focal} {alternative}, without endorsing it or changing your own needs. Return to the {{task}} task.', action='recommend')
     elif case == 'clarification_question':
-        add('Start a purchase and require ' + ', '.join(map(_describe, base[1:])) + f'. Do not reveal {context} yet.', [change(a) for a in base[1:]], begin='task-1', action='ask_attribute', attribute=context)
+        add('Start a {task} and require ' + ', '.join(map(_describe, base[1:])) + f'. Do not reveal {context} yet.', [change(a) for a in base[1:]], begin='task-1', action='ask_attribute', attribute=context)
         add(f'Answer the assistant question with the value {context_value}; omit the attribute name so the question is necessary context.', [change(base[0])], reaction_to='a1', depends_on=('a1',))
     elif case in ('select_product', 'compare_products', 'product_reference_refinement'):
-        reply = add(full_instruction, base_changes, begin='task-1')
+        reply = add(full_instruction, base_changes, begin='task-1', ids=reference_ids)
         ids = reply['product_ids']
         if len(ids) < 2:
             raise ValueError('scenario requires at least two referenceable products')
@@ -294,7 +296,7 @@ def generate_plan(vertical: VerticalSchema, catalog: dict, case: str, *, seed: i
             add('Ask to compare the first and second displayed products, without adding requirements.', reaction_to='a1', depends_on=('a1',), action='compare', ids=ids[:2], text='Comparison of the two requested catalog products:')
         else:
             value = product['attributes'][focal]
-            add(f'Refer to the second displayed product and require the same {focal} for this order. Do not name the value directly.', [change(vertical.assignment(focal, value))], reaction_to='a1', depends_on=('a1',))
+            add(f'Refer to the second displayed product and require the same {focal} for this {{task}}. Do not name the value directly.', [change(vertical.assignment(focal, value))], reaction_to='a1', depends_on=('a1',))
     elif case == 'soft_preference_missed':
         ids = [p['id'] for p in subset if p['attributes'][focal] != preferred][:recommendation_count]
         add(full_instruction + f' Also express a general soft preference for {focal} {preferred}, evidence mode {preference_mode(0)}.', base_changes + [change(preferred_assignment, scope='durable', strength='soft', mode=preference_mode(0))], begin='task-1', ids=ids)
@@ -310,63 +312,60 @@ def generate_plan(vertical: VerticalSchema, catalog: dict, case: str, *, seed: i
             reaction_to='a1', depends_on=('u1', 'a1'))
     elif case in ('hard_constraint_violated', 'misunderstanding'):
         ids = [p['id'] for p in subset if p['attributes'][focal] == alternative][:recommendation_count]
-        add(full_instruction + f' Require {focal} {preferred} for this purchase.', base_changes + [change(preferred_assignment)], begin='task-1', ids=ids, deliberate=True,
+        add(full_instruction + f' Require {focal} {preferred} for this {{task}}.', base_changes + [change(preferred_assignment)], begin='task-1', ids=ids, deliberate=True,
             text=(f'I understood that {focal} {alternative} is required. Here are options:' if case == 'misunderstanding' else 'Here are options:'))
         add(f'Correct the assistant: your requirement is still {focal} {preferred}. Do not change the requirement.', [change(preferred_assignment, operation='reinforce')], reaction_to='a1', depends_on=('u1', 'a1'))
     elif case in ('no_match_relax', 'no_match_refuse'):
-        low = vertical.assignment(numeric, below_minimum, 'lte')
-        add('Start a purchase and require ' + ', '.join(map(_describe, [a for a in base if a['attribute'] != numeric] + [low])) + '.', [change(a) for a in base if a['attribute'] != numeric] + [change(low)], begin='task-1', action='no_match',
-            next_instruction=f'Would you increase {numeric} maximum to {maximum} {numeric_requirement.get("unit", "")}?')
+        low = vertical.assignment(numeric, impossible_threshold, operator)
+        add('Start a {task} and require ' + ', '.join(map(_describe, [a for a in base if a['attribute'] != numeric] + [low])) + '.', [change(a) for a in base if a['attribute'] != numeric] + [change(low)], begin='task-1', action='no_match',
+            next_instruction=f'Would you relax the {numeric} {operator} threshold to {maximum} {numeric_requirement.get("unit", "")}?')
         if case == 'no_match_relax':
-            add(f'Accept increasing the maximum to {maximum}, keeping other requirements unchanged.', [change(numeric_requirement)], reaction_to='a1', depends_on=('u1', 'a1'))
+            add(f'Accept relaxing {numeric} to {operator} {maximum}, keeping other requirements unchanged.', [change(numeric_requirement)], reaction_to='a1', depends_on=('u1', 'a1'))
         else:
-            add('Decline the proposed increase. Keep the original maximum; do not invent alternatives.', [change(low, operation='reinforce')], reaction_to='a1', depends_on=('u1', 'a1'), action='no_match', next_instruction='There are still no matches at your unchanged limit.')
+            add('Decline the proposed relaxation. Keep the original threshold; do not invent alternatives.', [change(low, operation='reinforce')], reaction_to='a1', depends_on=('u1', 'a1'), action='no_match', next_instruction='There are still no matches at your unchanged limit.')
     elif case in ('tradeoff_accept', 'tradeoff_reject'):
-        # Trade-off is between soft brand preference and objectively cheaper price.
+        # Compare numeric utility in the configured direction, without assuming lower is better.
+        def utility(product):
+            return direction * product['attributes'][numeric]
+
         groups = [(value, [p for p in subset if p['attributes'][focal] == value]) for value in choices]
         pairs = [(a, b) for a in groups for b in groups if a[0] != b[0]
-                 and min(p['attributes'][numeric] for p in a[1]) > min(p['attributes'][numeric] for p in b[1])]
+                 and min(map(utility, a[1])) > min(map(utility, b[1]))]
         if not pairs:
-            raise ValueError('trade-off requires differently priced categorical alternatives')
-        expensive, cheap = rng.choice(pairs)
-        pref = vertical.assignment(focal, expensive[0])
-        cheap_product = min(cheap[1], key=lambda p: p['attributes'][numeric])
-        dear_product = min(expensive[1], key=lambda p: p['attributes'][numeric])
-        ids = [cheap_product['id'], dear_product['id']] + [p['id'] for p in subset if p['id'] not in (cheap_product['id'], dear_product['id'])][:recommendation_count-2]
-        add(full_instruction + f' State a general soft preference for {focal} {expensive[0]}.', base_changes + [change(pref, scope='durable', strength='soft')], begin='task-1', action='tradeoff', ids=ids,
-            text=f"The first item has {focal} {cheap[0]} and {numeric} {cheap_product['attributes'][numeric]}; the second has your preferred {focal} {expensive[0]} and {numeric} {dear_product['attributes'][numeric]}.")
-        chosen = cheap_product if case == 'tradeoff_accept' else dear_product
+            raise ValueError('trade-off requires categorical alternatives with different numeric utility')
+        preferred_group, better_group = rng.choice(pairs)
+        pref = vertical.assignment(focal, preferred_group[0])
+        better_product = min(better_group[1], key=utility)
+        preferred_product = min(preferred_group[1], key=utility)
+        ids = [better_product['id'], preferred_product['id']] + [p['id'] for p in catalog['products']
+            if p['id'] in need['matching_product_ids'] and p['id'] not in (better_product['id'], preferred_product['id'])][:recommendation_count-2]
+        add(full_instruction + f' State a general soft preference for {focal} {preferred_group[0]}.', base_changes + [change(pref, scope='durable', strength='soft')], begin='task-1', action='tradeoff', ids=ids,
+            text=f"The first item has {focal} {better_group[0]} and {numeric} {better_product['attributes'][numeric]}; the second has your preferred {focal} {preferred_group[0]} and {numeric} {preferred_product['attributes'][numeric]}.")
+        chosen = better_product if case == 'tradeoff_accept' else preferred_product
         position = 'first' if case == 'tradeoff_accept' else 'second'
         add(f'Choose the {position} displayed item after considering the trade-off. This is a one-off selection, not a change of durable preference.', selected=chosen['id'], reaction_to='a1', depends_on=('a1',), action='confirm_selection', ids=[chosen['id']])
     elif case in ('suggestion_confirm', 'suggestion_reject'):
-        ids = matching_ids(catalog, base)[:recommendation_count]
+        ids = reference_ids
         anchor = next(product for product in catalog['products'] if product['id'] == ids[1])
         proposal = vertical.assignment(focal, anchor['attributes'][focal])
         add(full_instruction + f' Do not express any {focal} preference yet.', base_changes, begin='task-1', action='suggest_preference', ids=ids,
-            text=f'Here are the options. Do you generally prefer the {focal} of the second pair?')
+            text=f'Here are the options. Do you generally prefer the {focal} of the second item?')
         if case == 'suggestion_confirm':
             mode = preference_mode(0)
             instruction = ('Answer yes to the assistant question as a general soft preference. Do not repeat the attribute or value.'
                            if mode == 'explicit' else
-                           f'Describe repeatedly choosing the {focal} of the second displayed pair with good experiences. Do not name its value or directly state a preference.')
+                           f'Describe repeatedly choosing the {focal} of the second displayed item with good experiences. Do not name its value or directly state a preference.')
             add(instruction, [change(proposal, scope='durable', strength='soft', mode=mode)], reaction_to='a1', depends_on=('a1',))
         else:
-            add('Answer no to the assistant suggestion. Do not name the attribute or value, invent an alternative, or end the shopping task.', reaction_to='a1', depends_on=('a1',))
+            add('Answer no to the assistant suggestion. Do not name the attribute or value, invent an alternative, or end the {task} task.', reaction_to='a1', depends_on=('a1',))
     elif case in ('completion_confirm', 'completion_continue'):
         add(full_instruction, base_changes, begin='task-1', action='offer_completion')
         if case == 'completion_confirm':
-            add('Confirm that this shopping task is finished.', end=True, reaction_to='a1', depends_on=('a1',), action='acknowledge')
+            add('Confirm that this {task} task is finished.', end=True, reaction_to='a1', depends_on=('a1',), action='acknowledge')
         else:
             add('Decline completion and ask to keep looking with the same requirements.', reaction_to='a1', depends_on=('a1',))
     # Preserve the complete core event before composing additional exchanges.
-    service_questions = (
-        ('delivery times', 'Delivery times are not provided in this debug catalog.'),
-        ('returns policy', 'Returns policies are not provided in this debug catalog.'),
-        ('warranty details', 'Warranty terms are not provided in this debug catalog.'),
-        ('care instructions', 'Care instructions are not provided in this debug catalog.'),
-        ('stock availability', 'These are synthetic offers; live stock is not provided.'),
-        ('delivery costs', 'Delivery costs are not provided in this debug catalog.'),
-    )
+    service_questions = config['service_questions']
     core_turns = len(steps)
     native_completion = case in ('finish_task', 'completion_confirm')
     if native_completion and finisher == 'ambiguous':
@@ -391,7 +390,7 @@ def generate_plan(vertical: VerticalSchema, catalog: dict, case: str, *, seed: i
         previous = steps[-1]
         selected = previous['target_product']
         if state.state['active_task_id'] is None or selected is not None:
-            topic, answer = service_questions[len(steps) - core_turns]
+            topic, answer = service_questions[(len(steps) - core_turns) % len(service_questions)]
             add(f'Ask about {topic}. Do not reopen a finished task or change the existing selection or requirements.',
                 action='acknowledge', text=answer, selected=selected)
             continue
@@ -399,32 +398,32 @@ def generate_plan(vertical: VerticalSchema, catalog: dict, case: str, *, seed: i
         valid = matching_ids(catalog, hard)
         if not valid:
             add('Ask whether any item meets the unchanged request. Keep all requirements and refuse to relax them.',
-                action='no_match', text='There are still no matching products under the unchanged requirements.')
+                action='no_match', text='There are still no matching items under the unchanged requirements.')
             continue
         established = {entry['assignment']['attribute'] for entry in state.state['entries']}
-        candidates = [name for name in ('size', 'colour', 'gender', 'surface', 'upper_material', 'cushioning')
-                      if name in fields and name not in established and 'eq' in fields[name]['x-adaptgym']['operators']]
+        candidates = [name for name in config['refinement_attributes']
+                      if name not in established and any(name in p['attributes'] and p['attributes'][name] != 'unspecified' for p in catalog['products'] if p['id'] in valid)]
         if candidates:
             name = candidates[0]
-            witness_id = rng.choice(valid)
+            witness_id = rng.choice([p['id'] for p in catalog['products'] if p['id'] in valid and name in p['attributes'] and p['attributes'][name] != 'unspecified'])
             witness = next(product for product in catalog['products'] if product['id'] == witness_id)
             assignment = vertical.assignment(name, witness['attributes'][name])
-            add(f'Add this requirement for the current purchase: {_describe(assignment)}. Keep earlier requirements unchanged.',
+            add(f'Add this requirement for the current {{task}}: {_describe(assignment)}. Keep earlier requirements unchanged.',
                 [change(assignment)])
         else:
-            topic, answer = service_questions[len(steps) - core_turns]
-            add(f'Ask about {topic}, without changing your shopping requirements.', action='acknowledge', text=answer)
+            topic, answer = service_questions[(len(steps) - core_turns) % len(service_questions)]
+            add(f'Ask about {topic}, without changing your {{task}} requirements.', action='acknowledge', text=answer)
     if finisher != 'ambiguous':
-        instruction = ('Say you found what you wanted and explicitly finish shopping successfully. '
+        instruction = ('Say you found what you wanted and explicitly finish {activity} successfully. '
                        'Do not name a product unless a product was already selected.' if finisher == 'positive' else
-                       'Say you did not find what you wanted and explicitly stop shopping unsuccessfully. '
+                       'Say you did not find what you wanted and explicitly stop {activity} unsuccessfully. '
                        'Do not invent a reason, retract preferences, or start another task.')
         if finisher == 'positive' and steps[-1]['assistant']['kind'] == 'no_match':
-            instruction = 'Explicitly say you found what you needed elsewhere and are ending this shopping task successfully. Do not claim any displayed product matches or name a selected catalog item.'
-        response = 'Glad you found what you needed. This shopping task is complete.' if finisher == 'positive' else 'Understood. We will stop here without a purchase.'
+            instruction = 'Explicitly say you found what you needed elsewhere and are ending this {task} task successfully. Do not claim any displayed product matches or name a selected catalog item.'
+        response = 'Glad you found what you needed. This {task} task is complete.' if finisher == 'positive' else 'Understood. We will stop here without finding a suitable option.'
         if reuse_completion:
-            steps[-1]['shopper_instruction'] = instruction
-            steps[-1]['assistant']['text'] = response
+            steps[-1]['shopper_instruction'] = render_domain(instruction, config)
+            steps[-1]['assistant']['text'] = render_domain(response, config)
         else:
             selected = steps[-1]['target_product'] if finisher == 'positive' else None
             add(instruction, end=state.state['active_task_id'] is not None,
@@ -441,7 +440,7 @@ def generate_plan(vertical: VerticalSchema, catalog: dict, case: str, *, seed: i
             'catalog': copy.deepcopy(catalog), 'exchanges': steps,
             'status': 'private_plan_requires_language_verification',
             'instructions': [
-                'Generate only shopper messages. Assistant messages are fixed by code.',
+                'Generate only user messages. Assistant messages are fixed by code.',
                 'React to actual displayed products and preserve list order.',
                 'Do not reveal later instructions or invent requirements.',
                 'A product choice does not imply durable preferences for all its attributes.',

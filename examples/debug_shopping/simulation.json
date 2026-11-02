@@ -1,0 +1,78 @@
+{
+  "schema_version": "adaptgym.simulation.v1",
+  "context_attributes": [
+    "sport"
+  ],
+  "preference_attribute": "brand",
+  "numeric_attribute": "price",
+  "numeric_operator": "lte",
+  "feature_operators": {
+    "price": "lte",
+    "size": "eq",
+    "colour": "eq",
+    "gender": "eq",
+    "brand": "eq",
+    "cushioning": "eq",
+    "upper_material": "eq",
+    "surface": "eq",
+    "style": "eq",
+    "closure": "eq"
+  },
+  "refinement_attributes": [
+    "size",
+    "colour",
+    "gender",
+    "surface",
+    "upper_material",
+    "cushioning"
+  ],
+  "query_attributes": [
+    "category",
+    "sport",
+    "style",
+    "surface",
+    "primary_use"
+  ],
+  "display_attributes": [
+    "brand",
+    "sport",
+    "price",
+    "size",
+    "colour",
+    "surface"
+  ],
+  "missing_attributes": "reject",
+  "vocabulary": {
+    "user": "shopper",
+    "item": "product",
+    "task": "purchase",
+    "activity": "shopping"
+  },
+  "domain_instructions": "You are simulating footwear shopping. The user is a customer buying shoes, never the assistant. Size uses EU sizing and price uses EUR. A positive ending means the user has finished this shopping task successfully; selecting a product alone does not complete it. Persona background does not establish product preferences.",
+  "service_questions": [
+    [
+      "delivery times",
+      "Delivery times are not provided in this debug catalog."
+    ],
+    [
+      "returns policy",
+      "Returns policies are not provided in this debug catalog."
+    ],
+    [
+      "warranty details",
+      "Warranty terms are not provided in this debug catalog."
+    ],
+    [
+      "care instructions",
+      "Care instructions are not provided in this debug catalog."
+    ],
+    [
+      "stock availability",
+      "These are synthetic offers; live stock is not provided."
+    ],
+    [
+      "delivery costs",
+      "Delivery costs are not provided in this debug catalog."
+    ]
+  ]
+}

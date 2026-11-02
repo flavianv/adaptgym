@@ -1,0 +1,54 @@
+{
+  "schema_version": "adaptgym.persona.general.v1",
+  "persona_id": "synthetic-job-seeker-haruka",
+  "profile": {
+    "first_name": "Haruka",
+    "last_name": "Tanaka",
+    "full_name": "Haruka Tanaka",
+    "age": 32,
+    "gender": "nonbinary",
+    "nationality": "Japanese",
+    "profession": {
+      "title": "Office administrator",
+      "field": "Business administration"
+    },
+    "education": {
+      "level": "Master's degree",
+      "field_of_study": "Computer science",
+      "status": "completed"
+    },
+    "income": {
+      "kind": "amount",
+      "amount": 3000000,
+      "currency": "JPY",
+      "time_basis": "annual"
+    },
+    "family": {
+      "relationship_status": "single",
+      "partner": null,
+      "children": []
+    },
+    "household": {
+      "living_arrangement": "Shares an apartment",
+      "members": [
+        {
+          "relationship": "roommate",
+          "first_name": "Camille",
+          "age": 31
+        }
+      ]
+    },
+    "hobbies": [
+      "running",
+      "photography",
+      "cooking"
+    ],
+    "life_circumstances": [
+      {
+        "topic": "career",
+        "detail": "Exploring a change of role while balancing existing commitments.",
+        "timeframe": "this year"
+      }
+    ]
+  }
+}

@@ -16,6 +16,9 @@ def validate_catalog(catalog: dict[str, Any], vertical: VerticalSchema) -> None:
     if not isinstance(products, list) or not products:
         raise ValueError("catalog needs nonempty products")
     ids = set()
+    schema = vertical.schema
+    required = (set(vertical.attributes) if vertical.simulation['missing_attributes'] == 'reject'
+                else set(schema.get('required', [])))
     for product in products:
         if not isinstance(product, dict) or not isinstance(product.get("id"), str) or not product["id"] or product["id"] in ids:
             raise ValueError("catalog product IDs must be nonempty and unique")
@@ -23,8 +26,9 @@ def validate_catalog(catalog: dict[str, Any], vertical: VerticalSchema) -> None:
         if not isinstance(product.get("name"), str) or not product["name"]:
             raise ValueError("product needs a name")
         attributes = product.get("attributes")
-        if not isinstance(attributes, dict) or set(attributes) != set(vertical.attributes):
-            raise ValueError("debug products must define exactly the vertical attributes")
+        if (not isinstance(attributes, dict) or set(attributes) - set(vertical.attributes)
+                or not required <= set(attributes)):
+            raise ValueError("catalog items must define required attributes and no unknown attributes")
         for attribute, value in attributes.items():
             vertical._check_value(attribute, value)
         if "description" in product and not isinstance(product["description"], str):
@@ -70,13 +74,15 @@ def build_catalog(template: dict[str, Any], vertical: VerticalSchema,
             if set(values) - set(variable_attributes):
                 raise ValueError("overrides may change only variable_attributes; model properties are fixed")
     products = []
+    required = (set(vertical.attributes) if vertical.simulation['missing_attributes'] == 'reject'
+                else set(vertical.schema.get('required', [])))
     for group in groups:
         count = group.get("count")
         if type(count) is not int or not 1 <= count <= 10000:
             raise ValueError("group count must be 1–10000")
         specs = {**group.get("attributes", {}), **overrides.get(group["name"], {})}
-        if set(specs) != set(vertical.attributes):
-            raise ValueError("group must specify exactly the vertical attributes")
+        if set(specs) - set(vertical.attributes) or not required <= set(specs):
+            raise ValueError("group must specify required attributes and no unknown attributes")
         for index in range(count):
             attributes = {}
             for name, spec in specs.items():

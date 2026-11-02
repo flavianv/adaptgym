@@ -1,0 +1,56 @@
+{
+  "schema_version": "adaptgym.simulation.v1",
+  "context_attributes": [
+    "location_region"
+  ],
+  "preference_attribute": "work_arrangement",
+  "numeric_attribute": "salary_hourly_jpy",
+  "numeric_operator": "gte",
+  "feature_operators": {
+    "salary_hourly_jpy": "gte",
+    "employment_type": "eq",
+    "days_per_week": "lte",
+    "minimum_experience_months": "lte",
+    "public_holidays_off": "eq"
+  },
+  "refinement_attributes": [
+    "employment_type",
+    "public_holidays_off",
+    "working_days_pattern"
+  ],
+  "query_attributes": [
+    "job_title",
+    "location_region",
+    "location_locality",
+    "employment_type"
+  ],
+  "display_attributes": [
+    "job_title",
+    "location_region",
+    "work_arrangement",
+    "salary_hourly_jpy",
+    "employment_type"
+  ],
+  "missing_attributes": "omit",
+  "vocabulary": {
+    "user": "job seeker",
+    "item": "job listing",
+    "task": "job search",
+    "activity": "searching for jobs"
+  },
+  "domain_instructions": "Simulate a job seeker finding suitable Japanese job listings. Pay is in JPY; hourly and monthly pay must not be compared or converted. A positive ending means finding a suitable opportunity or shortlist, not applying, receiving an offer, or being hired. Selecting a listing alone does not complete the search. Candidate skills and experience are capabilities, not preferences for jobs requiring those skills. Staffing agency is distinct from the client employer. remote_negotiable is not guaranteed remote or hybrid. unspecified and omitted fields are unknown evidence, not negative facts. Required and mentioned skills are distinct. Overtime limits need a known reference period before comparing periods.",
+  "service_questions": [
+    [
+      "application process",
+      "Application steps are not available in this synthetic catalog."
+    ],
+    [
+      "recruiter contact",
+      "Recruiter contact details are not available in this synthetic catalog."
+    ],
+    [
+      "interview process",
+      "Interview details are not available in this synthetic catalog."
+    ]
+  ]
+}

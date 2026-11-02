@@ -1,0 +1,642 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "adaptgym.vertical.job_search.v1",
+  "title": "Job search: Japanese staffing and employment",
+  "description": "Synthetic job-search vocabulary for Japanese employment listings. All examples are illustrative sampling seeds, not verified vacancies. Missing evidence must not be inferred.",
+  "type": "object",
+  "additionalProperties": false,
+  "x-adaptgym": {
+    "vertical_id": "job_search",
+    "version": "1",
+    "scope": "Synthetic Japan / JPY job-search benchmark; no partner feed data"
+  },
+  "properties": {
+    "job_title": {
+      "type": "string",
+      "description": "Actual position title, preserving specializations; do not replace it with a promotional feed headline.",
+      "x-adaptgym": {
+        "operators": [
+          "eq",
+          "in"
+        ]
+      },
+      "minLength": 1,
+      "examples": [
+        "General office work / Data entry",
+        "Accounting clerk",
+        "Secretary",
+        "Systems engineer"
+      ]
+    },
+    "category_breadcrumb": {
+      "type": "string",
+      "description": "Partner breadcrumb as a single normalized path; equality compares the full path, not ancestors.",
+      "x-adaptgym": {
+        "operators": [
+          "eq",
+          "in"
+        ]
+      },
+      "minLength": 1,
+      "examples": [
+        "Kyoto / Temporary staffing / General office work",
+        "Tokyo / Temporary staffing / Accounting",
+        "Tokyo / Temporary staffing / Secretary",
+        "Aichi / Temporary staffing / Systems engineer"
+      ]
+    },
+    "location_country": {
+      "type": "string",
+      "description": "ISO country code explicitly supplied by the listing.",
+      "x-adaptgym": {
+        "operators": [
+          "eq",
+          "in"
+        ]
+      },
+      "enum": [
+        "JP"
+      ]
+    },
+    "location_region": {
+      "type": "string",
+      "description": "Normalized prefecture name; examples are sampling seeds, not an exhaustive vocabulary.",
+      "x-adaptgym": {
+        "operators": [
+          "eq",
+          "in"
+        ]
+      },
+      "minLength": 1,
+      "examples": [
+        "Kyoto",
+        "Tokyo",
+        "Aichi"
+      ]
+    },
+    "location_locality": {
+      "type": "string",
+      "description": "Normalized municipality and ward; keep compatible with the region when constructing listings.",
+      "x-adaptgym": {
+        "operators": [
+          "eq",
+          "in"
+        ]
+      },
+      "minLength": 1,
+      "examples": [
+        "Kyoto, Shimogyo Ward",
+        "Tokyo, Chiyoda Ward",
+        "Tokyo, Minato Ward",
+        "Nagoya, Higashi Ward"
+      ]
+    },
+    "short_description": {
+      "type": "string",
+      "description": "Concise factual summary from the full page or JSON-LD description. A workweek alone is not a job summary.",
+      "x-adaptgym": {
+        "operators": [
+          "eq",
+          "in"
+        ]
+      },
+      "minLength": 1,
+      "examples": [
+        "Office administration and data entry.",
+        "Accounting and general administration.",
+        "Secretarial support with English correspondence.",
+        "SAP application development using Java."
+      ]
+    },
+    "employer_name": {
+      "type": "string",
+      "description": "Actual employer, when explicitly identified; unspecified otherwise. Keep the employer distinct from a recruiting or staffing agency.",
+      "x-adaptgym": {
+        "operators": [
+          "eq",
+          "in"
+        ]
+      },
+      "minLength": 1,
+      "examples": [
+        "Example Manufacturing Company",
+        "unspecified"
+      ]
+    },
+    "staffing_agency": {
+      "type": "string",
+      "description": "Recruiting or staffing organization, distinct from the client employer.",
+      "x-adaptgym": {
+        "operators": [
+          "eq",
+          "in"
+        ]
+      },
+      "minLength": 1,
+      "examples": [
+        "Example Staffing Agency"
+      ]
+    },
+    "salary_hourly_jpy": {
+      "type": "integer",
+      "minimum": 0,
+      "examples": [
+        1380,
+        1900,
+        2050,
+        3000
+      ],
+      "description": "Explicitly advertised hourly pay in JPY. If quoted as a range or lower bound, retain the guaranteed lower endpoint; omit when unknown. Never derive it from monthly pay.",
+      "x-adaptgym": {
+        "operators": [
+          "eq",
+          "lt",
+          "lte",
+          "gt",
+          "gte"
+        ],
+        "unit": "JPY/hour"
+      }
+    },
+    "salary_monthly_jpy": {
+      "type": "integer",
+      "minimum": 0,
+      "examples": [
+        480000
+      ],
+      "description": "Explicitly advertised monthly pay in JPY; retain the lower endpoint of a range or lower-bound quote. Omit if not stated; do not convert hourly pay.",
+      "x-adaptgym": {
+        "operators": [
+          "eq",
+          "lt",
+          "lte",
+          "gt",
+          "gte"
+        ],
+        "unit": "JPY/month"
+      }
+    },
+    "employment_type": {
+      "type": "string",
+      "description": "Normalized illustrative employment categories, kept distinct from hours worked.",
+      "x-adaptgym": {
+        "operators": [
+          "eq",
+          "in"
+        ]
+      },
+      "enum": [
+        "temporary_staffing",
+        "temporary_to_permanent_staffing",
+        "full_time_employee",
+        "outsourced_contract_employee",
+        "part_time_employee",
+        "fixed_term_contract_employee",
+        "contract_with_path_to_full_time",
+        "adjunct_staff",
+        "indefinite_term_contract_employee",
+        "part_time_worker",
+        "unspecified"
+      ]
+    },
+    "working_days_pattern": {
+      "type": "string",
+      "description": "Explicit workweek pattern; unspecified if missing. A weekday schedule alone does not establish intraday hours.",
+      "x-adaptgym": {
+        "operators": [
+          "eq",
+          "in"
+        ]
+      },
+      "enum": [
+        "monday_to_friday",
+        "unspecified"
+      ]
+    },
+    "days_per_week": {
+      "type": "integer",
+      "minimum": 0,
+      "examples": [
+        5
+      ],
+      "description": "Explicit number of working days each week; omit if unknown.",
+      "x-adaptgym": {
+        "operators": [
+          "eq",
+          "lt",
+          "lte",
+          "gt",
+          "gte"
+        ],
+        "unit": "days/week"
+      },
+      "maximum": 7
+    },
+    "work_start_minute": {
+      "type": "integer",
+      "minimum": 0,
+      "examples": [
+        510,
+        540
+      ],
+      "description": "Local start time as minutes after midnight, e.g. 540 = 09:00. Omit when unknown.",
+      "x-adaptgym": {
+        "operators": [
+          "eq",
+          "lt",
+          "lte",
+          "gt",
+          "gte"
+        ],
+        "unit": "minutes after midnight"
+      },
+      "maximum": 1439
+    },
+    "work_end_minute": {
+      "type": "integer",
+      "minimum": 0,
+      "examples": [
+        1050,
+        1060,
+        1080
+      ],
+      "description": "Local end time as minutes after midnight, e.g. 1060 = 17:40. Omit when unknown. Overnight shifts need explicit handling outside this schema.",
+      "x-adaptgym": {
+        "operators": [
+          "eq",
+          "lt",
+          "lte",
+          "gt",
+          "gte"
+        ],
+        "unit": "minutes after midnight"
+      },
+      "maximum": 1439
+    },
+    "working_minutes_per_day": {
+      "type": "integer",
+      "minimum": 0,
+      "examples": [
+        450,
+        460,
+        475,
+        480
+      ],
+      "description": "Explicit paid/actual daily working duration, not a duration inferred from clock times. Preserve source discrepancies for review.",
+      "x-adaptgym": {
+        "operators": [
+          "eq",
+          "lt",
+          "lte",
+          "gt",
+          "gte"
+        ],
+        "unit": "minutes/day"
+      },
+      "maximum": 1440
+    },
+    "break_minutes_per_day": {
+      "type": "integer",
+      "minimum": 0,
+      "examples": [
+        60
+      ],
+      "description": "Explicit break duration; omit if not stated.",
+      "x-adaptgym": {
+        "operators": [
+          "eq",
+          "lt",
+          "lte",
+          "gt",
+          "gte"
+        ],
+        "unit": "minutes/day"
+      },
+      "maximum": 1440
+    },
+    "shorter_hours_negotiable": {
+      "type": "string",
+      "description": "Whether the listing explicitly permits discussing shorter hours. Missing evidence is unspecified.",
+      "x-adaptgym": {
+        "operators": [
+          "eq",
+          "in"
+        ]
+      },
+      "enum": [
+        "yes",
+        "no",
+        "unspecified"
+      ]
+    },
+    "work_arrangement": {
+      "type": "string",
+      "description": "Explicit work arrangement. remote_negotiable means work from home can be discussed, not guaranteed remote or hybrid work. Never infer on-site from an occupation.",
+      "x-adaptgym": {
+        "operators": [
+          "eq",
+          "in"
+        ]
+      },
+      "enum": [
+        "on_site",
+        "hybrid",
+        "remote",
+        "remote_negotiable",
+        "unspecified"
+      ]
+    },
+    "minimum_experience_months": {
+      "type": "integer",
+      "minimum": 0,
+      "examples": [
+        12
+      ],
+      "description": "Explicit minimum required experience; omit when unknown. Do not translate an occupation label into a numeric requirement.",
+      "x-adaptgym": {
+        "operators": [
+          "eq",
+          "lt",
+          "lte",
+          "gt",
+          "gte"
+        ],
+        "unit": "months"
+      }
+    },
+    "experience_specialization": {
+      "type": "string",
+      "description": "Explicit required experience, separate from duration. unspecified if missing.",
+      "x-adaptgym": {
+        "operators": [
+          "eq",
+          "in"
+        ]
+      },
+      "minLength": 1,
+      "examples": [
+        "English correspondence and executive secretarial support",
+        "Systems engineering / Programming",
+        "unspecified"
+      ]
+    },
+    "skill_word": {
+      "type": "string",
+      "description": "Microsoft Word: required only when explicitly required; mentioned for tools or development environment without a stated requirement; not_required only for an explicit negation; unspecified when absent. Multiple skill fields may be set independently.",
+      "x-adaptgym": {
+        "operators": [
+          "eq",
+          "in"
+        ]
+      },
+      "enum": [
+        "required",
+        "mentioned",
+        "not_required",
+        "unspecified"
+      ]
+    },
+    "skill_excel": {
+      "type": "string",
+      "description": "Microsoft Excel: required only when explicitly required; mentioned for tools or development environment without a stated requirement; not_required only for an explicit negation; unspecified when absent. Multiple skill fields may be set independently.",
+      "x-adaptgym": {
+        "operators": [
+          "eq",
+          "in"
+        ]
+      },
+      "enum": [
+        "required",
+        "mentioned",
+        "not_required",
+        "unspecified"
+      ]
+    },
+    "skill_excel_sum_average": {
+      "type": "string",
+      "description": "Excel SUM / AVERAGE: required only when explicitly required; mentioned for tools or development environment without a stated requirement; not_required only for an explicit negation; unspecified when absent. Multiple skill fields may be set independently.",
+      "x-adaptgym": {
+        "operators": [
+          "eq",
+          "in"
+        ]
+      },
+      "enum": [
+        "required",
+        "mentioned",
+        "not_required",
+        "unspecified"
+      ]
+    },
+    "skill_excel_vlookup": {
+      "type": "string",
+      "description": "Excel VLOOKUP: required only when explicitly required; mentioned for tools or development environment without a stated requirement; not_required only for an explicit negation; unspecified when absent. Multiple skill fields may be set independently.",
+      "x-adaptgym": {
+        "operators": [
+          "eq",
+          "in"
+        ]
+      },
+      "enum": [
+        "required",
+        "mentioned",
+        "not_required",
+        "unspecified"
+      ]
+    },
+    "skill_powerpoint": {
+      "type": "string",
+      "description": "Microsoft PowerPoint: required only when explicitly required; mentioned for tools or development environment without a stated requirement; not_required only for an explicit negation; unspecified when absent. Multiple skill fields may be set independently.",
+      "x-adaptgym": {
+        "operators": [
+          "eq",
+          "in"
+        ]
+      },
+      "enum": [
+        "required",
+        "mentioned",
+        "not_required",
+        "unspecified"
+      ]
+    },
+    "skill_english": {
+      "type": "string",
+      "description": "English communication: required only when explicitly required; mentioned for tools or development environment without a stated requirement; not_required only for an explicit negation; unspecified when absent. Multiple skill fields may be set independently.",
+      "x-adaptgym": {
+        "operators": [
+          "eq",
+          "in"
+        ]
+      },
+      "enum": [
+        "required",
+        "mentioned",
+        "not_required",
+        "unspecified"
+      ]
+    },
+    "skill_sap": {
+      "type": "string",
+      "description": "SAP: required only when explicitly required; mentioned for tools or development environment without a stated requirement; not_required only for an explicit negation; unspecified when absent. Multiple skill fields may be set independently.",
+      "x-adaptgym": {
+        "operators": [
+          "eq",
+          "in"
+        ]
+      },
+      "enum": [
+        "required",
+        "mentioned",
+        "not_required",
+        "unspecified"
+      ]
+    },
+    "skill_sap_btp": {
+      "type": "string",
+      "description": "SAP BTP application development: required only when explicitly required; mentioned for tools or development environment without a stated requirement; not_required only for an explicit negation; unspecified when absent. Multiple skill fields may be set independently.",
+      "x-adaptgym": {
+        "operators": [
+          "eq",
+          "in"
+        ]
+      },
+      "enum": [
+        "required",
+        "mentioned",
+        "not_required",
+        "unspecified"
+      ]
+    },
+    "skill_java": {
+      "type": "string",
+      "description": "Java: required only when explicitly required; mentioned for tools or development environment without a stated requirement; not_required only for an explicit negation; unspecified when absent. Multiple skill fields may be set independently.",
+      "x-adaptgym": {
+        "operators": [
+          "eq",
+          "in"
+        ]
+      },
+      "enum": [
+        "required",
+        "mentioned",
+        "not_required",
+        "unspecified"
+      ]
+    },
+    "skill_javascript": {
+      "type": "string",
+      "description": "JavaScript: required only when explicitly required; mentioned for tools or development environment without a stated requirement; not_required only for an explicit negation; unspecified when absent. Multiple skill fields may be set independently.",
+      "x-adaptgym": {
+        "operators": [
+          "eq",
+          "in"
+        ]
+      },
+      "enum": [
+        "required",
+        "mentioned",
+        "not_required",
+        "unspecified"
+      ]
+    },
+    "skill_typescript": {
+      "type": "string",
+      "description": "TypeScript: required only when explicitly required; mentioned for tools or development environment without a stated requirement; not_required only for an explicit negation; unspecified when absent. Multiple skill fields may be set independently.",
+      "x-adaptgym": {
+        "operators": [
+          "eq",
+          "in"
+        ]
+      },
+      "enum": [
+        "required",
+        "mentioned",
+        "not_required",
+        "unspecified"
+      ]
+    },
+    "skill_nodejs": {
+      "type": "string",
+      "description": "Node.js: required only when explicitly required; mentioned for tools or development environment without a stated requirement; not_required only for an explicit negation; unspecified when absent. Multiple skill fields may be set independently.",
+      "x-adaptgym": {
+        "operators": [
+          "eq",
+          "in"
+        ]
+      },
+      "enum": [
+        "required",
+        "mentioned",
+        "not_required",
+        "unspecified"
+      ]
+    },
+    "skill_sql": {
+      "type": "string",
+      "description": "SQL: required only when explicitly required; mentioned for tools or development environment without a stated requirement; not_required only for an explicit negation; unspecified when absent. Multiple skill fields may be set independently.",
+      "x-adaptgym": {
+        "operators": [
+          "eq",
+          "in"
+        ]
+      },
+      "enum": [
+        "required",
+        "mentioned",
+        "not_required",
+        "unspecified"
+      ]
+    },
+    "overtime_max_hours": {
+      "type": "integer",
+      "minimum": 0,
+      "examples": [
+        15,
+        20
+      ],
+      "description": "Explicit advertised maximum overtime. Interpret only together with overtime_reference_period; do not assume a reference period when one is absent.",
+      "x-adaptgym": {
+        "operators": [
+          "eq",
+          "lt",
+          "lte",
+          "gt",
+          "gte"
+        ],
+        "unit": "hours"
+      }
+    },
+    "overtime_reference_period": {
+      "type": "string",
+      "description": "Period explicitly attached to the overtime limit; unspecified when the listing does not establish it.",
+      "enum": [
+        "day",
+        "week",
+        "month",
+        "unspecified"
+      ],
+      "x-adaptgym": {
+        "operators": [
+          "eq",
+          "in"
+        ]
+      }
+    },
+    "public_holidays_off": {
+      "type": "string",
+      "description": "Whether public holidays are explicitly days off; keep distinct from weekends.",
+      "enum": [
+        "yes",
+        "no",
+        "unspecified"
+      ],
+      "x-adaptgym": {
+        "operators": [
+          "eq",
+          "in"
+        ]
+      }
+    }
+  }
+}

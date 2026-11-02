@@ -7,7 +7,7 @@ from __future__ import annotations
 import json
 
 
-def build_search_request(intent: dict, vertical_id: str) -> dict | None:
+def build_search_request(intent: dict, vertical_id: str, simulation: dict | None = None) -> dict | None:
     if not intent['active_task_id'] or intent.get('target_product'):
         return None
     applicable = {}
@@ -25,7 +25,7 @@ def build_search_request(intent: dict, vertical_id: str) -> dict | None:
         (filters if claim['strength'] == 'hard' else preferences).append(assignment)
         if (claim['strength'] == 'hard' and claim['operator'] == 'eq' and
                 isinstance(claim['value'], str) and name in
-                {'category', 'shoe_type', 'sport', 'style', 'surface', 'primary_use'}):
+                (simulation or {}).get('query_attributes', [])):
             terms.append(claim['value'].replace('_', ' '))
     return {'query': ' '.join(terms), 'filters': filters, 'preferences': preferences}
 
@@ -38,8 +38,9 @@ def same_search_constraints(actual: dict | None, expected: dict | None) -> bool:
     return all(signatures(actual[key]) == signatures(expected[key]) for key in ('filters', 'preferences'))
 
 
-def describe_intent(intent: dict, vertical_id: str) -> str:
+def describe_intent(intent: dict, vertical_id: str, simulation: dict | None = None) -> str:
     """Reference wording, judged semantically rather than by exact match."""
+    vocab = (simulation or {}).get('vocabulary', {'user': 'user', 'item': 'item', 'task': 'search', 'activity': 'searching'})
     def text(claim):
         value = claim['value']
         rendered = ', '.join(map(str, value)) if isinstance(value, list) else str(value)
@@ -48,17 +49,17 @@ def describe_intent(intent: dict, vertical_id: str) -> str:
         return f"{claim['attribute']} {operator} {rendered}".replace('_', ' ')
     if not intent['active_task_id']:
         durable = [text(c) for c in intent['claims'] if c['scope'] == 'durable']
-        completion = ('The shopper stopped shopping without finding what they wanted.'
+        completion = (f"The {vocab['user']} stopped {vocab['activity']} without finding what they wanted."
                       if intent.get('satisfied') is False else
-                      'The shopper found what they wanted and finished shopping.'
-                      if intent.get('satisfied') is True else 'No active shopping task.')
+                      f"The {vocab['user']} found what they wanted and finished {vocab['activity']}."
+                      if intent.get('satisfied') is True else f"No active {vocab['task']} task.")
         return completion + (' Retain preferences: ' + '; '.join(durable) + '.' if durable else '')
-    request = build_search_request(intent, vertical_id)
+    request = build_search_request(intent, vertical_id, simulation)
     if request is None:
-        return f"Product {intent['target_product']} selected for the current purchase."
+        return f"Selected {vocab['item']} {intent['target_product']} for the current {vocab['task']}."
     hard = '; '.join(text(c) for c in request['filters'])
     soft = '; '.join(text(c) for c in request['preferences'])
-    return (f"Find {vertical_id.replace('_', ' ')} for this purchase" +
+    return (f"Find {vertical_id.replace('_', ' ')} for this {vocab['task']}" +
             (': ' + hard if hard else '') + '.' + (' Prefer ' + soft + '.' if soft else ''))
 
 
