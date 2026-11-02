@@ -11,18 +11,6 @@ jobs:
         with:
           python-version: '3.12'
       - run: python scripts/check_public_content.py
-      - run: python -m pip install detect-secrets==1.5.0
+      - run: python -m pip install uv
       - name: Scan tracked files without transmitting credentials
-        shell: bash
-        run: |
-          detect-secrets scan --no-verify > "$RUNNER_TEMP/secret-scan.json"
-          python - <<'PY'
-          import json, os
-          from pathlib import Path
-          report = json.loads((Path(os.environ['RUNNER_TEMP']) / 'secret-scan.json').read_text())
-          findings = report['results']
-          for filename, entries in findings.items():
-              for entry in entries:
-                  print(f"{filename}:{entry['line_number']}: {entry['type']}")
-          raise SystemExit(bool(findings))
-          PY
+        run: python scripts/check_repository_secrets.py
