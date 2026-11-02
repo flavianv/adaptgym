@@ -10,6 +10,8 @@ from pathlib import Path
 import shlex
 import sys
 import threading
+import time
+import uuid
 import webbrowser
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import urlparse, parse_qs
@@ -125,6 +127,16 @@ def create_server(port=8768, directory=FIXTURES, *, host='127.0.0.1'):
             raise ValueError('public URL must be an HTTP(S) origin without credentials, path, query, or fragment')
         public_origins.add(parsed.scheme + '://' + parsed.netloc)
     run_lock = threading.Lock()
+    status_lock = threading.Lock()
+    live_status = {'running': False, 'id': None, 'vertical': None, 'outcome': None}
+    run_clock = {'started': None, 'finished': None}
+
+    def status_snapshot():
+        with status_lock:
+            snapshot = dict(live_status)
+            end = time.monotonic() if snapshot['running'] else run_clock['finished']
+            snapshot['elapsed_seconds'] = round(end - run_clock['started']) if end is not None else 0
+            return snapshot
     latest = {}
     for key, bundle_directory in directories.items():
         featured_path = bundle_directory / 'featured_run.json'
@@ -153,6 +165,8 @@ def create_server(port=8768, directory=FIXTURES, *, host='127.0.0.1'):
             key = parse_qs(request_url.query).get('vertical', [default_vertical])[0]
             if path == '/healthz':
                 return self.send_json(200, {'status': 'ok'})
+            if path == '/api/run-status':
+                return self.send_json(200, status_snapshot())
             if path == '/':
                 body = (ROOT / 'src/adaptgym/viewer.html').read_bytes()
                 self.send_response(200)
@@ -208,14 +222,29 @@ def create_server(port=8768, directory=FIXTURES, *, host='127.0.0.1'):
                     _, plan = make_plan(payload, bundle_directory)
                     return self.send_json(200, plan)
                 if self.path == '/api/test':
-                    if not run_lock.acquire(blocking=False):
-                        return self.send_json(409, {'error': 'a live test is already running'})
+                    with status_lock:
+                        acquired = run_lock.acquire(blocking=False)
+                        if acquired:
+                            live_status.update(running=True, id=uuid.uuid4().hex, vertical=key, outcome=None)
+                            run_clock.update(started=time.monotonic(), finished=None)
+                    if not acquired:
+                        return self.send_json(409, {'error': 'A live run is already in progress.',
+                                                   'run': status_snapshot()})
                     try:
                         result = run_live(payload, bundle_directory)
                         latest[key] = result
-                        return self.send_json(200, result)
+                        with status_lock:
+                            live_status['outcome'] = 'completed'
+                    except Exception:
+                        with status_lock:
+                            live_status['outcome'] = 'failed'
+                        raise
                     finally:
-                        run_lock.release()
+                        with status_lock:
+                            live_status['running'] = False
+                            run_clock['finished'] = time.monotonic()
+                            run_lock.release()
+                    return self.send_json(200, result)
                 self.send_json(404, {'error': 'not found'})
             except (ValueError, KeyError, TypeError) as exc:
                 self.send_json(400, {'error': str(exc)[:250]})

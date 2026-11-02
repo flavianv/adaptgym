@@ -60,7 +60,7 @@
 </div></div></main><footer><span>AdaptGym / Useful adaptation</span><span>Evidence → intent → evaluation</span></footer>
 <script>
 
-const $=id=>document.getElementById(id);let busy=false;let minimumTurns={};let scenarioCases={};let scenarioSubtypes={};let middleCases=[];let builtConfig=null;let activeVertical=null;let simulation={};let verticalSchema={};
+const $=id=>document.getElementById(id);let busy=false;let minimumTurns={};let scenarioCases={};let scenarioSubtypes={};let middleCases=[];let builtConfig=null;let activeVertical=null;let apiConfigured=false;let simulation={};let verticalSchema={};
 function node(tag,text,cls){const n=document.createElement(tag);if(text!==undefined)n.textContent=text;if(cls)n.className=cls;return n}
 function json(id,value){$(id).textContent=JSON.stringify(value,null,2)}
 function friendly(value){return String(value).replaceAll('_',' ')}
@@ -175,8 +175,8 @@ function renderTraining(plan,result=null){
 
 function emptyResult(){const box=node('div',undefined,'empty');box.append(node('strong','A conversation starts here.'),node('span','Choose a scenario, then Generate & test.'));$('result').replaceChildren(box)}
 for(const tab of document.querySelectorAll('[data-view]'))tab.onclick=()=>{for(const button of document.querySelectorAll('[data-view]')){const active=button===tab;button.classList.toggle('active',active);button.setAttribute('aria-pressed',String(active))}for(const panel of document.querySelectorAll('.view-panel'))panel.hidden=panel.id!=='view-'+tab.dataset.view};
-async function request(path,payload){const response=await fetch(path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});const data=await response.json();if(!response.ok)throw Error(data.error||'Request failed');return data}
-async function run(live){if(busy)return;busy=true;$('vertical').disabled=$('plan').disabled=$('live').disabled=true;$('status').className='status-line';$('status').textContent=live?'Calling OpenAI. This may take a few minutes.':'Building deterministic plan…';try{if(!live&&$('randomSeed').checked)$('seed').value=String(crypto.getRandomValues(new Uint32Array(1))[0]%1000000000);const selected=$('case').value;const category=selected.startsWith('any:')?selected.slice(4):null;const draft={vertical:activeVertical,case:selected.startsWith('any')?'any':selected,mode_filter:category?category==='context_dependent'?'assistant_reactive':category:$('scenarioFilter').value,subtype_filter:category?category==='context_dependent'?'context_dependent':'all':$('scenarioSubtype').value,seed:Number($('seed').value),turn_count:Number($('turns').value),finisher:$('finisher').value,expression:$('expression').value,model:$('model').value,include_distractors:$('distractors').checked};if(live&&!builtConfig)throw Error('Build a scenario in Step 1 first.');const payload=live?{...builtConfig,model:$('model').value}:draft;if(live){loadingResult();const data=await request('/api/test',payload);renderPlan(data.plan);renderResult(data);$('status').textContent='RUN COMPLETE / Inspect checkpoint matches and extraction traces.'}else{const plan=await request('/api/plan',payload);builtConfig={...structuredClone(payload),case:plan.scenario_type};renderPlan(plan);emptyResult();$('resultRaw').textContent='';$('status').textContent='SCENARIO READY / '+friendly(plan.scenario_type)+' · '+plan.exchanges.length+' turns.'}}catch(e){$('status').className='status-line error';$('status').textContent=e.message;if(live){const error=node('div',undefined,'empty');error.append(node('strong','Generation could not complete.'),node('span',e.message));$('result').replaceChildren(error)}}finally{$('result').removeAttribute('aria-busy');busy=false;$('vertical').disabled=$('plan').disabled=$('live').disabled=false}}
+async function request(path,payload){const response=await fetch(path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});const data=await response.json();if(!response.ok){const error=Error(data.error||'Request failed');error.status=response.status;error.run=data.run;throw error}return data}
+async function run(live){if(busy)return;busy=true;$('vertical').disabled=$('plan').disabled=$('live').disabled=true;$('status').className='status-line';$('status').textContent=live?'Calling OpenAI. This may take a few minutes.':'Building deterministic plan…';try{if(!live&&$('randomSeed').checked)$('seed').value=String(crypto.getRandomValues(new Uint32Array(1))[0]%1000000000);const selected=$('case').value;const category=selected.startsWith('any:')?selected.slice(4):null;const draft={vertical:activeVertical,case:selected.startsWith('any')?'any':selected,mode_filter:category?category==='context_dependent'?'assistant_reactive':category:$('scenarioFilter').value,subtype_filter:category?category==='context_dependent'?'context_dependent':'all':$('scenarioSubtype').value,seed:Number($('seed').value),turn_count:Number($('turns').value),finisher:$('finisher').value,expression:$('expression').value,model:$('model').value,include_distractors:$('distractors').checked};if(live&&!builtConfig)throw Error('Build a scenario in Step 1 first.');const payload=live?{...builtConfig,model:$('model').value}:draft;if(live){loadingResult();const data=await request('/api/test',payload);renderPlan(data.plan);renderResult(data);$('status').textContent='RUN COMPLETE / Inspect checkpoint matches and extraction traces.'}else{const plan=await request('/api/plan',payload);builtConfig={...structuredClone(payload),case:plan.scenario_type};renderPlan(plan);emptyResult();$('resultRaw').textContent='';$('status').textContent='SCENARIO READY / '+friendly(plan.scenario_type)+' · '+plan.exchanges.length+' turns.'}}catch(e){if(live&&e.status===409){try{await waitForExistingRun(e.run)}catch(error){$('status').className='status-line error';$('status').textContent=error.message;emptyResult()}return}$('status').className='status-line error';$('status').textContent=e.message;if(live){const error=node('div',undefined,'empty');error.append(node('strong','Generation could not complete.'),node('span',e.message));$('result').replaceChildren(error)}}finally{$('result').removeAttribute('aria-busy');busy=false;$('vertical').disabled=$('plan').disabled=false;$('live').disabled=!apiConfigured}}
 function scenarioCategory(name,mode){return name==='initial_need'?'starter':name.startsWith('finish_task')||name==='completion_confirm'?'finisher':mode}
 function setAssistantVisibility(mode){if(!['assistant_free','assistant_reactive'].includes(mode))return;const show=mode!=='assistant_free';$('showAssistant').checked=show;document.body.classList.toggle('hide-assistant',!show)}
 function updateSelectedAssistantVisibility(){const selected=$('case').value;const mode=selected.startsWith('any:')?selected.slice(4)==='context_dependent'?'assistant_reactive':selected.slice(4):selected==='any'?$('scenarioFilter').value:scenarioCases[selected];setAssistantVisibility(mode)}
@@ -189,7 +189,20 @@ function endingCard(ending){const box=node('div',undefined,'ending '+ending.type
 $('turns').oninput=()=>{updateTurns();markDraftChanged()};$('case').onchange=()=>{syncScenarioChoice();markDraftChanged()};$('finisher').onchange=()=>{updateTurns();markDraftChanged()};$('seed').oninput=markDraftChanged;$('expression').onchange=markDraftChanged;$('scenarioFilter').onchange=()=>{if($('scenarioFilter').value==='assistant_free')$('scenarioSubtype').value='all';populateScenarios();markDraftChanged()};$('scenarioSubtype').onchange=()=>{if($('scenarioSubtype').value==='context_dependent')$('scenarioFilter').value='assistant_reactive';populateScenarios();markDraftChanged()};
 $('showAssistant').onchange=()=>document.body.classList.toggle('hide-assistant',!$('showAssistant').checked);
 $('distractors').onchange=()=>run(false);$('plan').onclick=()=>run(false);$('live').onclick=()=>run(true);
-async function readJSON(path){const response=await fetch(path);const data=await response.json();if(!response.ok)throw Error(data.error||'Request failed');return data}
+async function waitForExistingRun(run){
+ const box=node('div',undefined,'run-loading');box.setAttribute('role','status');
+ const heading=node('strong','Another live run is in progress.');const detail=node('span');
+ box.append(heading,detail);$('result').replaceChildren(box);$('status').className='status-line';
+ const show=current=>{const name=current.vertical===activeVertical?simulation.label:friendly(current.vertical);detail.textContent=name+' · '+current.elapsed_seconds+' seconds. Waiting for it to finish; no duplicate API calls will be made.';$('status').textContent='LIVE RUN BUSY / '+name+' · '+current.elapsed_seconds+' seconds.'};
+ if(run)show(run);
+ for(;;){
+  await new Promise(resolve=>setTimeout(resolve,1500));
+  const current=await readJSON('/api/run-status');
+  if(!current.running){heading.textContent='Ready to generate.';detail.textContent='The other run has finished. Your built scenario is unchanged; click Generate & test to start it.';$('status').textContent='READY / The previous live run has finished.';return}
+  show(current);
+ }
+}
+async function readJSON(path){const response=await fetch(path);const data=await response.json();if(!response.ok){const error=Error(data.error||'Request failed');error.status=response.status;error.run=data.run;throw error}return data}
 async function loadVertical(id){
  if(busy)return;
  busy=true;$('vertical').disabled=$('plan').disabled=$('live').disabled=true;
@@ -197,7 +210,7 @@ async function loadVertical(id){
  try{
   const suffix='?vertical='+encodeURIComponent(id);
   const [f,latest]=await Promise.all([readJSON('/api/fixtures'+suffix),readJSON('/api/last-test'+suffix)]);
-  activeVertical=id;simulation=f.simulation;verticalSchema=f.domain_schema;builtConfig=null;
+  activeVertical=id;apiConfigured=f.api_configured;simulation=f.simulation;verticalSchema=f.domain_schema;builtConfig=null;
   $('vertical').value=id;$('verticalSummary').textContent=f.simulation.label+' · '+f.catalog.products.length+' catalog items';
   const url=new URL(window.location.href);url.searchParams.set('vertical',id);history.replaceState(null,'',url);
   $('catalogSize').textContent=f.catalog.products.length;$('distractors').checked=false;
@@ -224,7 +237,7 @@ async function loadVertical(id){
   setAssistantVisibility('assistant_reactive');
   if(!f.api_configured)$('status').textContent+=' API key is not configured on this server; restart with --env-file to enable live tests.';
  }catch(error){$('status').textContent=error.message;$('status').className='status-line error';if(activeVertical)$('vertical').value=activeVertical}
- finally{busy=false;$('vertical').disabled=false;$('plan').disabled=$('live').disabled=!activeVertical}
+ finally{busy=false;$('vertical').disabled=false;$('plan').disabled=!activeVertical;$('live').disabled=!activeVertical||!apiConfigured}
 }
 $('vertical').onchange=()=>loadVertical($('vertical').value);
 (async()=>{try{

@@ -142,6 +142,51 @@ def test_vertical_selection_rejects_unknown_ids_and_paths(server_factory):
                        payload={'vertical': value})[0] == 400
 
 
+def test_busy_run_reports_status_across_verticals_and_releases_after_completion(server_factory, monkeypatch):
+    base = server_factory()
+    entered, finish = threading.Event(), threading.Event()
+    outcome = []
+    calls = []
+    def live(payload, directory):
+        calls.append(directory.name)
+        entered.set()
+        assert finish.wait(4)
+        return {'status': 'completed'}
+    monkeypatch.setattr(demo, 'run_live', live)
+    headers = {'Content-Type': 'application/json'}
+    thread = threading.Thread(target=lambda: outcome.append(request(base, '/api/test', headers=headers,
+                                                                    payload={'vertical': 'footwear'})))
+    thread.start()
+    try:
+        assert entered.wait(2)
+        status = json.loads(request(base, '/api/run-status')[2])
+        assert status['running'] and status['vertical'] == 'footwear'
+        assert status['id'] and status['elapsed_seconds'] >= 0
+        code, _, body = request(base, '/api/test', headers=headers, payload={'vertical': 'job_search'})
+        assert code == 409 and json.loads(body)['run']['id'] == status['id']
+        assert calls == ['debug_shopping']
+    finally:
+        finish.set()
+        thread.join(timeout=3)
+    assert outcome[0][0] == 200
+    status = json.loads(request(base, '/api/run-status')[2])
+    assert not status['running'] and status['outcome'] == 'completed'
+    assert request(base, '/api/test', headers=headers, payload={'vertical': 'job_search'})[0] == 200
+
+
+def test_failed_run_releases_lock_and_does_not_expose_exception_details(server_factory, monkeypatch):
+    base = server_factory()
+    def fail(payload, directory):
+        raise RuntimeError('private upstream details')
+    monkeypatch.setattr(demo, 'run_live', fail)
+    headers = {'Content-Type': 'application/json'}
+    for _ in range(2):
+        code, _, body = request(base, '/api/test', headers=headers, payload={})
+        assert code == 500 and b'private upstream details' not in body
+        status = json.loads(request(base, '/api/run-status')[2])
+        assert not status['running'] and status['outcome'] == 'failed'
+
+
 def test_featured_run_preloads_without_api_calls_and_survives_server_restart(server_factory, monkeypatch):
     def no_api(*args, **kwargs):
         pytest.fail('Preloading must not call OpenAI')
