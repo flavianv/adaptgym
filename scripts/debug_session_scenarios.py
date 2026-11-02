@@ -12,7 +12,7 @@ import sys
 import threading
 import webbrowser
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
-from urllib.parse import urlparse
+from urllib.parse import urlparse, parse_qs
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / 'src'))
@@ -96,7 +96,23 @@ def run_live(payload, directory=FIXTURES):
 
 def create_server(port=8768, directory=FIXTURES, *, host='127.0.0.1'):
     """Configure the local or hosted demo without starting its event loop."""
-    load_fixtures(directory)
+    directory = Path(directory).resolve()
+    default_bundle = VerticalBundle.load(directory)
+    default_vertical = default_bundle.vertical.vertical_id
+    directories = {default_vertical: directory}
+    labels = {default_vertical: default_bundle.vertical.simulation['label']}
+    for candidate in sorted(directory.parent.iterdir()):
+        if candidate.resolve() == directory or not (candidate / 'simulation.json').is_file():
+            continue
+        bundle = VerticalBundle.load(candidate)
+        key = bundle.vertical.vertical_id
+        if key in directories:
+            raise ValueError(f'duplicate vertical ID: {key}')
+        directories[key], labels[key] = candidate, bundle.vertical.simulation['label']
+    def selected_directory(key):
+        if not isinstance(key, str) or key not in directories:
+            raise ValueError('unknown vertical')
+        return directories[key]
     public_origins = set()
     render_hostname = os.environ.get('RENDER_EXTERNAL_HOSTNAME', '')
     configured_urls = [os.environ.get('ADAPTGYM_PUBLIC_URL', '')]
@@ -109,11 +125,13 @@ def create_server(port=8768, directory=FIXTURES, *, host='127.0.0.1'):
             raise ValueError('public URL must be an HTTP(S) origin without credentials, path, query, or fragment')
         public_origins.add(parsed.scheme + '://' + parsed.netloc)
     run_lock = threading.Lock()
-    featured_path = Path(directory) / 'featured_run.json'
-    featured = json.loads(featured_path.read_text()) if featured_path.exists() else None
-    if featured is not None:
-        validate_plan(featured['plan'])
-    latest = {"test": featured}
+    latest = {}
+    for key, bundle_directory in directories.items():
+        featured_path = bundle_directory / 'featured_run.json'
+        featured = json.loads(featured_path.read_text()) if featured_path.exists() else None
+        if featured is not None:
+            validate_plan(featured['plan'])
+        latest[key] = featured
 
     class Handler(BaseHTTPRequestHandler):
         def log_message(self, *args):
@@ -130,9 +148,12 @@ def create_server(port=8768, directory=FIXTURES, *, host='127.0.0.1'):
             self.wfile.write(body)
 
         def do_GET(self):
-            if self.path == '/healthz':
+            request_url = urlparse(self.path)
+            path = request_url.path
+            key = parse_qs(request_url.query).get('vertical', [default_vertical])[0]
+            if path == '/healthz':
                 return self.send_json(200, {'status': 'ok'})
-            if self.path == '/':
+            if path == '/':
                 body = (ROOT / 'src/adaptgym/viewer.html').read_bytes()
                 self.send_response(200)
                 self.send_header('Content-Type', 'text/html; charset=utf-8')
@@ -141,13 +162,20 @@ def create_server(port=8768, directory=FIXTURES, *, host='127.0.0.1'):
                 self.send_header('Cache-Control', 'no-store')
                 self.end_headers()
                 self.wfile.write(body)
-            elif self.path == '/api/last-test':
-                self.send_json(200, latest['test'])
-            elif self.path == '/api/fixtures':
-                vertical, persona, template = load_fixtures(directory)
+            elif path == '/api/verticals':
+                self.send_json(200, {'default_vertical': default_vertical,
+                    'verticals': [{'id': k, 'label': labels[k]} for k in sorted(directories, key=lambda k: labels[k])]})
+            elif path in ('/api/last-test', '/api/fixtures'):
+                try:
+                    bundle_directory = selected_directory(key)
+                except ValueError as exc:
+                    return self.send_json(400, {'error': str(exc)})
+                if path == '/api/last-test':
+                    return self.send_json(200, latest[key])
+                vertical, persona, template = load_fixtures(bundle_directory)
                 self.send_json(200, {'persona': persona, 'domain_schema': vertical.schema,
                     'catalog_template': template, 'catalog': build_catalog(template, vertical),
-                    'distractor_pool': VerticalBundle.load(directory).distractors,
+                    'distractor_pool': VerticalBundle.load(bundle_directory).distractors,
                     'simulation': vertical.simulation,
                     'cases': CASE_MODES, 'case_min_turns': CASE_MIN_TURNS,
                     'case_subtypes': CASE_SUBTYPES,
@@ -174,15 +202,17 @@ def create_server(port=8768, directory=FIXTURES, *, host='127.0.0.1'):
                 payload = json.loads(self.rfile.read(length))
                 if not isinstance(payload, dict):
                     raise ValueError('request must be an object')
+                key = payload.get('vertical', default_vertical)
+                bundle_directory = selected_directory(key)
                 if self.path == '/api/plan':
-                    _, plan = make_plan(payload, directory)
+                    _, plan = make_plan(payload, bundle_directory)
                     return self.send_json(200, plan)
                 if self.path == '/api/test':
                     if not run_lock.acquire(blocking=False):
                         return self.send_json(409, {'error': 'a live test is already running'})
                     try:
-                        result = run_live(payload, directory)
-                        latest['test'] = result
+                        result = run_live(payload, bundle_directory)
+                        latest[key] = result
                         return self.send_json(200, result)
                     finally:
                         run_lock.release()

@@ -14,6 +14,7 @@ def simulation_config(schema: dict[str, Any]) -> dict[str, Any]:
                and 'enum' not in f and set(f['x-adaptgym']['operators']) & {'lte', 'gte'}]
     defaults = {
         'schema_version': 'adaptgym.simulation.v1',
+        'label': schema.get('title', schema['x-adaptgym']['vertical_id']),
         'context_attributes': [n for n, f in fields.items() if 'eq' in f['x-adaptgym']['operators']],
         'preference_attribute': categorical[0] if categorical else None,
         'numeric_attribute': numeric[0] if numeric else None,
@@ -33,6 +34,8 @@ def simulation_config(schema: dict[str, Any]) -> dict[str, Any]:
     config = {**defaults, **copy.deepcopy(raw)}
     if config['schema_version'] != defaults['schema_version']:
         raise ValueError('simulation: unsupported schema_version')
+    if not isinstance(config['label'], str) or not config['label'].strip():
+        raise ValueError('simulation: label must be nonempty text')
     for key in ('context_attributes', 'refinement_attributes', 'query_attributes', 'display_attributes'):
         names = config[key]
         if (not isinstance(names, list) or any(not isinstance(n, str) or n not in fields for n in names)

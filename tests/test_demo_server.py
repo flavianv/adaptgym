@@ -111,6 +111,37 @@ def test_judge_tab_receives_the_actual_backend_prompts(server_factory):
     assert b'LLM-Judge' in request(base)[2]
 
 
+def test_vertical_selection_routes_data_plans_and_saved_runs_independently(server_factory, monkeypatch):
+    base = server_factory()
+    registry = json.loads(request(base, '/api/verticals')[2])
+    assert registry['default_vertical'] == 'footwear'
+    assert {v['label'] for v in registry['verticals']} == {'Fashion/shoes', 'Job search'}
+    before = json.loads(request(base, '/api/last-test?vertical=footwear')[2])
+    for vertical, count in [('footwear', 30), ('job_search', 36)]:
+        status, _, body = request(base, '/api/fixtures?vertical=' + vertical)
+        data = json.loads(body)
+        assert status == 200 and data['domain_schema']['x-adaptgym']['vertical_id'] == vertical
+        assert len(data['catalog']['products']) == count
+        status, _, body = request(base, '/api/plan', headers={'Content-Type': 'application/json'},
+                                 payload={'vertical': vertical, 'case': 'no_match_relax'})
+        assert status == 200 and json.loads(body)['vertical_id'] == vertical
+    monkeypatch.setattr(demo, 'run_live', lambda payload, directory: {'directory': directory.name})
+    status, _, body = request(base, '/api/test', headers={'Content-Type': 'application/json'},
+                             payload={'vertical': 'job_search'})
+    assert status == 200 and json.loads(body) == {'directory': 'job_search'}
+    assert json.loads(request(base, '/api/last-test?vertical=job_search')[2]) == {'directory': 'job_search'}
+    assert json.loads(request(base, '/api/last-test?vertical=footwear')[2]) == before
+    assert b'id="vertical"' in request(base)[2]
+
+
+def test_vertical_selection_rejects_unknown_ids_and_paths(server_factory):
+    base = server_factory()
+    for value in ('missing', '../../etc', ''):
+        assert request(base, '/api/fixtures?vertical=' + value)[0] == (200 if value == '' else 400)
+        assert request(base, '/api/plan', headers={'Content-Type': 'application/json'},
+                       payload={'vertical': value})[0] == 400
+
+
 def test_featured_run_preloads_without_api_calls_and_survives_server_restart(server_factory, monkeypatch):
     def no_api(*args, **kwargs):
         pytest.fail('Preloading must not call OpenAI')
