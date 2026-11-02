@@ -187,6 +187,19 @@ def test_failed_run_releases_lock_and_does_not_expose_exception_details(server_f
         assert not status['running'] and status['outcome'] == 'failed'
 
 
+@pytest.mark.parametrize('mode,subtype', [
+    ('assistant_free', 'all'),
+    ('assistant_reactive', 'non_context_dependent'),
+    ('assistant_reactive', 'context_dependent'),
+])
+def test_group_sampling_respects_the_three_scenario_groups(mode, subtype):
+    for seed in range(6):
+        _, plan = demo.make_plan({'case': 'any', 'mode_filter': mode,
+            'subtype_filter': subtype, 'seed': seed, 'turn_count': 5, 'finisher': 'ambiguous'})
+        assert plan['mode'] == mode
+        assert (plan['scenario_subtype'] == 'context_dependent') == (subtype == 'context_dependent')
+
+
 def test_featured_run_preloads_without_api_calls_and_survives_server_restart(server_factory, monkeypatch):
     def no_api(*args, **kwargs):
         pytest.fail('Preloading must not call OpenAI')

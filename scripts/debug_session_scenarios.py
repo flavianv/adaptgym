@@ -68,11 +68,12 @@ def make_plan(payload, directory=FIXTURES):
     if case == 'any':
         mode = payload.get('mode_filter', 'all')
         subtype = payload.get('subtype_filter', 'all')
-        if mode not in ('all', 'assistant_free', 'assistant_reactive') or subtype not in ('all', 'context_dependent'):
+        if mode not in ('all', 'assistant_free', 'assistant_reactive') or subtype not in ('all', 'context_dependent', 'non_context_dependent'):
             raise ValueError('unknown scenario filter')
         candidates = [name for name in MIDDLE_CASES
                       if (mode == 'all' or CASE_MODES[name] == mode)
-                      and (subtype == 'all' or CASE_SUBTYPES[name] == subtype)
+                      and (subtype == 'all' or CASE_SUBTYPES[name] == subtype
+                           or (subtype == 'non_context_dependent' and CASE_SUBTYPES[name] is None))
                       and (turn_count is None or CASE_MIN_TURNS[name] + int(finisher in ('positive', 'negative')) <= turn_count)]
         if not candidates:
             raise ValueError('no middle scenario fits these filters and turn budget')
