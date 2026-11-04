@@ -1,0 +1,10 @@
+/* Shared header on every demo page. */
+.site-header{box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;gap:20px;width:calc(100% - 76px);max-width:1084px;height:auto;min-height:86px;margin:0 auto;padding:0;border-bottom:1px solid #dddfd6;font:14px/1.65 system-ui,sans-serif;color:#262924}
+.site-header .site-brand{display:flex;align-items:baseline;flex-shrink:0;gap:8px;margin:0;padding:0;color:#262924;text-decoration:none;font:650 24px/1.4 system-ui,sans-serif;letter-spacing:-1px}
+.site-header .site-brand span{margin:0;font:32px/1 Georgia,serif;color:#ba4928;letter-spacing:0}
+.site-header .site-nav{display:flex;align-items:center;justify-content:flex-end;flex-wrap:wrap;gap:6px;width:auto;margin:0;padding:0}
+.site-header .site-nav a{display:inline-block!important;margin:0;padding:9px 13px;border-radius:5px;color:#62685e;text-decoration:none;font:13px/1.5 system-ui,sans-serif;letter-spacing:0;white-space:nowrap}
+.site-header .site-nav a:hover{background:#ecefe7;color:#262924}
+.site-header .site-nav a[aria-current=page]{background:#ecefe7;color:#263e2f;font-weight:650}
+.site-header a:focus-visible{outline:2px solid #ba4928;outline-offset:3px}
+@media(max-width:760px){.site-header{width:calc(100% - 44px);min-height:86px;flex-wrap:wrap;gap:12px;padding:16px 0}.site-header .site-nav{width:100%;justify-content:flex-start;gap:4px}.site-header .site-nav a{padding:8px 9px;font-size:12px}}

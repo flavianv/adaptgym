@@ -272,3 +272,14 @@ def test_every_page_has_shared_top_navigation_and_current_page(server_factory):
             assert b'href="' + href + b'"' in navigation
         active_path = '/' if path == '/lab' else path
         assert b'href="' + active_path.encode() + b'" aria-current="page"' in navigation
+
+
+def test_shared_header_stylesheet_is_served(server_factory):
+    base = server_factory()
+    status, headers, css = request(base, '/assets/site-header.css')
+    assert status == 200 and headers['Content-Type'].startswith('text/css')
+    assert b'.site-header .site-brand' in css
+    for path in ('/', '/about', '/flows'):
+        body = request(base, path)[2]
+        assert b'href="/assets/site-header.css"' in body
+        assert b'<header class="site-header"><a class="site-brand"' in body

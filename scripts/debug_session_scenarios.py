@@ -178,11 +178,14 @@ def create_server(port=8768, directory=FIXTURES, *, host='127.0.0.1'):
             figures = {'adaptgym-evaluation-flow.svg', 'adaptgym-sft-training-flow.svg',
                        'adaptgym-rlvr-extraction-training-flow.svg',
                        'adaptgym-rlvr-end-to-end-training-flow.svg'}
-            if path in pages or path.startswith('/assets/flows/'):
+            if path in pages or path == '/assets/site-header.css' or path.startswith('/assets/flows/'):
                 if path in pages:
                     page = 'viewer.html' if path == '/' and 'vertical' in parse_qs(request_url.query) else pages[path]
                     body = (ROOT / 'src/adaptgym' / page).read_bytes()
                     content_type = 'text/html; charset=utf-8'
+                elif path == '/assets/site-header.css':
+                    body = (ROOT / 'src/adaptgym/site-header.css').read_bytes()
+                    content_type = 'text/css; charset=utf-8'
                 else:
                     name = path.removeprefix('/assets/flows/')
                     if name not in figures:

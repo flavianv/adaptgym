@@ -19,7 +19,7 @@ dev = ["pytest>=8.0"]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/adaptgym"]
-include = ["src/adaptgym/schemas/*.json", "src/adaptgym/scenario_guide.json", "src/adaptgym/viewer.html", "src/adaptgym/introduction.html", "src/adaptgym/flows.html"]
+include = ["src/adaptgym/schemas/*.json", "src/adaptgym/scenario_guide.json", "src/adaptgym/viewer.html", "src/adaptgym/introduction.html", "src/adaptgym/flows.html", "src/adaptgym/site-header.css"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
