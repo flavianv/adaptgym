@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1480" height="740" viewBox="0 0 1480 740" role="img" aria-labelledby="title desc">
+<title id="title">AdaptGym — Evaluation flow</title>
+<desc id="desc">Five steps: code generates controlled multi-turn traces and reference states; a large LLM renders natural sessions; a separate large-LLM pass checks information preservation; the small LLM under evaluation extracts user information at every turn; code compares predictions with reference states to compute precision, recall and complete-turn coverage. Reference states are hidden from the evaluated model.</desc>
+<defs>
+ <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10Z" fill="#6b756e"/></marker>
+ <marker id="reference-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#b77932"/></marker>
+ <style>
+  text{font-family:Inter,Arial,sans-serif;fill:#24332c}.eyebrow{font-size:13px;font-weight:700;letter-spacing:2px;fill:#627269}.heading{font-size:38px;font-weight:700;letter-spacing:-1px}.subtitle{font-size:18px;fill:#5c6b63}.role{font-size:12px;font-weight:700;letter-spacing:1px}.step{font-size:29px;font-weight:700}.card-title{font-size:21px;font-weight:700}.body{font-size:16px;fill:#55665c}.small{font-size:14px;fill:#617168}.ref{font-size:15px;fill:#976021}.legend{font-size:14px;fill:#45564b}
+ </style>
+</defs>
+<rect width="1480" height="740" rx="18" fill="#f8f9f5"/>
+<text x="60" y="54" class="eyebrow">ADAPTGYM</text>
+<text x="60" y="105" class="heading">Evaluation flow</text>
+<text x="60" y="141" class="subtitle">Controlled traces → natural conversations → verified labels → turn-by-turn extraction → quality metrics</text>
+<!-- Step cards -->
+<g transform="translate(60 235)">
+ <rect width="240" height="280" rx="12" fill="#fff" stroke="#cbd5cd"/>
+ <path d="M12 0H228Q240 0 240 12V48H0V12Q0 0 12 0" fill="#e5ede6"/>
+ <text x="20" y="30" class="role" style="fill:#3f614b">CODE · PROCEDURAL</text>
+ <text x="20" y="90" class="step">01</text>
+ <text x="20" y="128" class="card-title"><tspan x="20">Generate synthetic</tspan><tspan x="20" dy="27">multi-turn traces</tspan></text>
+ <text x="20" y="190" class="body"><tspan x="20">Control turns, endings</tspan><tspan x="20" dy="25">and reveal events.</tspan><tspan x="20" dy="25">Compute reference states.</tspan></text>
+</g>
+<g transform="translate(340 235)">
+ <rect width="240" height="280" rx="12" fill="#fff" stroke="#c8d3df"/>
+ <path d="M12 0H228Q240 0 240 12V48H0V12Q0 0 12 0" fill="#e6edf7"/>
+ <text x="20" y="30" class="role" style="fill:#426486">LARGE LLM · GENERATOR</text>
+ <text x="20" y="90" class="step">02</text>
+ <text x="20" y="128" class="card-title"><tspan x="20">Render natural</tspan><tspan x="20" dy="27">conversations</tspan></text>
+ <text x="20" y="190" class="body"><tspan x="20">Generate user wording</tspan><tspan x="20" dy="25">around programmed</tspan><tspan x="20" dy="25">assistant responses.</tspan></text>
+</g>
+<g transform="translate(620 235)">
+ <rect width="240" height="280" rx="12" fill="#fff" stroke="#c8d3df"/>
+ <path d="M12 0H228Q240 0 240 12V48H0V12Q0 0 12 0" fill="#e6edf7"/>
+ <text x="20" y="30" class="role" style="fill:#426486">LARGE LLM · VERIFIER</text>
+ <text x="20" y="90" class="step">03</text>
+ <text x="20" y="128" class="card-title"><tspan x="20">Check information</tspan><tspan x="20" dy="27">preservation</tspan></text>
+ <text x="20" y="190" class="body"><tspan x="20">A separate pass checks</tspan><tspan x="20" dy="25">whether sessions support</tspan><tspan x="20" dy="25">their reference states.</tspan></text>
+</g>
+<g transform="translate(900 235)">
+ <rect width="240" height="280" rx="12" fill="#fff" stroke="#d5c9df"/>
+ <path d="M12 0H228Q240 0 240 12V48H0V12Q0 0 12 0" fill="#eee6f4"/>
+ <text x="20" y="30" class="role" style="fill:#77558e">SMALL LLM · EVALUATED</text>
+ <text x="20" y="90" class="step">04</text>
+ <text x="20" y="128" class="card-title"><tspan x="20">Extract user info</tspan><tspan x="20" dy="27">at every turn</tspan></text>
+ <text x="20" y="190" class="body"><tspan x="20">Short-term requirements</tspan><tspan x="20" dy="25">and long-term preferences.</tspan><tspan x="20" dy="25">No reference-state access.</tspan></text>
+</g>
+<g transform="translate(1180 235)">
+ <rect width="240" height="280" rx="12" fill="#fff" stroke="#cbd5cd"/>
+ <path d="M12 0H228Q240 0 240 12V48H0V12Q0 0 12 0" fill="#e5ede6"/>
+ <text x="20" y="30" class="role" style="fill:#3f614b">CODE · SCORING</text>
+ <text x="20" y="90" class="step">05</text>
+ <text x="20" y="128" class="card-title"><tspan x="20">Measure extraction</tspan><tspan x="20" dy="27">quality</tspan></text>
+ <text x="20" y="190" class="body"><tspan x="20">Compare predictions</tspan><tspan x="20" dy="25">with reference states.</tspan><tspan x="20" dy="25">Precision · recall · coverage</tspan></text>
+</g>
+<!-- Main evaluation sequence -->
+<g fill="none" stroke="#6b756e" stroke-width="2.3" marker-end="url(#arrow)">
+ <path d="M303 375H329"/><path d="M583 375H609"/><path d="M863 375H889"/><path d="M1143 375H1169"/>
+</g>
+<!-- Answer-key routing: explicitly bypass the model being evaluated -->
+<g fill="none" stroke="#b77932" stroke-width="2" stroke-dasharray="7 6">
+ <path d="M180 235V194H1300V235" marker-end="url(#reference-arrow)"/>
+ <path d="M740 194V235" marker-end="url(#reference-arrow)"/>
+</g>
+<rect x="473" y="180" width="534" height="29" rx="6" fill="#f8f9f5"/>
+<text x="740" y="200" text-anchor="middle" class="ref">Reference states from step 1 → verification and scoring only</text>
+<!-- Notes -->
+<rect x="60" y="549" width="1360" height="79" rx="10" fill="#edf1ea"/>
+<text x="84" y="580" style="font-size:17px;font-weight:700">Evaluate the small checkpoint on supported conversation prefixes.</text>
+<text x="84" y="607" class="body">Carry forward its own previous valid prediction. Aggregate results by field, turn count, reveal pattern and ending.</text>
+<text x="60" y="665" class="small">Large-model generation and verification prepare the dataset; only the small extractor is measured in this flow.</text>
+<text x="60" y="693" class="small">Checks are model-assisted, not guarantees. Matching rules are explicit; fine-tuning is a separate downstream use of the data.</text>
+</svg>

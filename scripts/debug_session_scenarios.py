@@ -22,7 +22,7 @@ sys.path.insert(0, str(ROOT / 'src'))
 from adaptgym.catalog import build_catalog, validate_catalog
 from adaptgym.bundles import VerticalBundle
 from adaptgym.scenario_guide import load_scenario_guide
-from adaptgym.openai_session_test import ResponsesClient, render_and_test, prompts_for
+from adaptgym.openai_session_test import ResponsesClient, render_and_test, prompts_for, STATE_MODES
 from adaptgym.session_plans import CASE_MIN_TURNS, CASE_MODES, CASE_SUBTYPES, MIDDLE_CASES, generate_plan, validate_plan
 
 FIXTURES = ROOT / 'examples/debug_shopping'
@@ -86,13 +86,16 @@ def make_plan(payload, directory=FIXTURES):
 
 
 def run_live(payload, directory=FIXTURES):
+    state_mode = payload.get('state_mode', 'accumulated')
+    if state_mode not in STATE_MODES:
+        raise ValueError('unknown evaluation state mode')
     persona, plan = make_plan(payload, directory)
     model = str(payload.get('model') or os.environ.get('OPENAI_MODEL', '')).strip()
     if not model:
         raise ValueError('choose an OpenAI model before running a live test')
     # Explicit per-run request cap; automatic HTTP retries are not performed.
     client = ResponsesClient(model, max_calls=4 * len(plan['exchanges']), max_output_tokens=2400)
-    result = render_and_test(plan, persona, client, client, verifier=client)
+    result = render_and_test(plan, persona, client, client, verifier=client, state_mode=state_mode)
     return {'plan': plan, 'result': result, 'api_traces': client.traces,
             'model': model, 'prompt_version': 'modular-vertical-v1',
             'same_model_roles': True}
@@ -169,10 +172,25 @@ def create_server(port=8768, directory=FIXTURES, *, host='127.0.0.1'):
                 return self.send_json(200, {'status': 'ok'})
             if path == '/api/run-status':
                 return self.send_json(200, status_snapshot())
-            if path == '/':
-                body = (ROOT / 'src/adaptgym/viewer.html').read_bytes()
+            pages = {'/': 'viewer.html', '/about': 'introduction.html',
+                     '/about/': 'introduction.html', '/lab': 'viewer.html',
+                     '/lab/': 'viewer.html', '/flows': 'flows.html', '/flows/': 'flows.html'}
+            figures = {'adaptgym-evaluation-flow.svg', 'adaptgym-sft-training-flow.svg',
+                       'adaptgym-rlvr-extraction-training-flow.svg',
+                       'adaptgym-rlvr-end-to-end-training-flow.svg'}
+            if path in pages or path.startswith('/assets/flows/'):
+                if path in pages:
+                    page = 'viewer.html' if path == '/' and 'vertical' in parse_qs(request_url.query) else pages[path]
+                    body = (ROOT / 'src/adaptgym' / page).read_bytes()
+                    content_type = 'text/html; charset=utf-8'
+                else:
+                    name = path.removeprefix('/assets/flows/')
+                    if name not in figures:
+                        return self.send_json(404, {'error': 'not found'})
+                    body = (ROOT / 'documentation/figures' / name).read_bytes()
+                    content_type = 'image/svg+xml'
                 self.send_response(200)
-                self.send_header('Content-Type', 'text/html; charset=utf-8')
+                self.send_header('Content-Type', content_type)
                 self.send_header('Content-Length', str(len(body)))
                 self.send_header('X-Content-Type-Options', 'nosniff')
                 self.send_header('Cache-Control', 'no-store')

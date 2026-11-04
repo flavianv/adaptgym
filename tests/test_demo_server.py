@@ -108,7 +108,7 @@ def test_judge_tab_receives_the_actual_backend_prompts(server_factory):
     assert prompts['conversation_generator'] == demo.prompts_for(vertical)['conversation_generator']
     assert prompts['verifier'] == demo.prompts_for(vertical)['verifier']
     assert 'search_request' in prompts['verifier']
-    assert b'LLM-Judge' in request(base)[2]
+    assert b'LLM-Judge' in request(base, '/lab')[2]
 
 
 def test_vertical_selection_routes_data_plans_and_saved_runs_independently(server_factory, monkeypatch):
@@ -133,7 +133,7 @@ def test_vertical_selection_routes_data_plans_and_saved_runs_independently(serve
     assert status == 200 and json.loads(body) == {'directory': 'job_search'}
     assert json.loads(request(base, '/api/last-test?vertical=job_search')[2]) == {'directory': 'job_search'}
     assert json.loads(request(base, '/api/last-test?vertical=footwear')[2]) == before
-    assert b'id="vertical"' in request(base)[2]
+    assert b'id="vertical"' in request(base, '/lab')[2]
 
 
 def test_vertical_selection_rejects_unknown_ids_and_paths(server_factory):
@@ -232,3 +232,43 @@ def test_featured_run_preloads_without_api_calls_and_survives_server_restart(ser
     assert json.loads(request(first, '/api/last-test')[2])['result']['status'] == 'user-run'
     second = server_factory()
     assert json.loads(request(second, '/api/last-test')[2]) == saved
+
+
+def test_intro_lab_flows_and_allowlisted_figures_are_available(server_factory):
+    import re
+    base = server_factory()
+    assert b'id="stateMode"' in request(base, '/')[2]
+    assert b'Controlled conversations.' in request(base, '/about')[2]
+    assert b'id="stateMode"' in request(base, '/lab')[2]
+    assert b'id="vertical"' in request(base, '/?vertical=job_search')[2]
+    status, _, body = request(base, '/flows')
+    assert status == 200
+    figures = re.findall(rb'<img[^>]+src="([^"]+)"', body)
+    assert len(figures) == 4
+    for figure in figures:
+        status, headers, svg = request(base, figure.decode())
+        assert status == 200 and headers['Content-Type'] == 'image/svg+xml'
+        assert b'<svg' in svg
+    for path in ('/assets/flows/../../README.md', '/assets/flows/unknown.svg'):
+        assert request(base, path)[0] == 404
+
+
+def test_unknown_live_state_mode_rejected_without_api_calls(server_factory, monkeypatch):
+    base = server_factory()
+    monkeypatch.setattr(demo, 'ResponsesClient', lambda *a, **k: pytest.fail('API client must not be created'))
+    status, _, body = request(base, '/api/test', headers={'Content-Type': 'application/json'},
+                              payload={'state_mode': 'unknown'})
+    assert status == 400 and b'state mode' in body
+
+
+def test_every_page_has_shared_top_navigation_and_current_page(server_factory):
+    import re
+    base = server_factory()
+    for path in ('/', '/lab', '/about', '/flows'):
+        status, _, body = request(base, path)
+        assert status == 200
+        navigation = re.search(rb'<nav[^>]+aria-label="Main navigation"[^>]*>(.*?)</nav>', body).group(1)
+        for href in (b'/', b'/about', b'/flows', b'https://github.com/flavianv/adaptgym'):
+            assert b'href="' + href + b'"' in navigation
+        active_path = '/' if path == '/lab' else path
+        assert b'href="' + active_path.encode() + b'" aria-current="page"' in navigation

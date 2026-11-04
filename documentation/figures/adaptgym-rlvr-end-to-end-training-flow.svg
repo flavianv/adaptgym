@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1480" height="1450" viewBox="0 0 1480 1450" role="img" aria-labelledby="title desc">
+<title id="title">AdaptGym — End-to-end RLVR training flow</title>
+<desc id="desc">One-time preparation and policy initialization feed an RL loop: sample an episode, generate agent actions, execute them in the environment, verify completed trajectories, and update the policy. A short inner loop returns observations from environment to agent. The outer learning loop returns the updated policy to sampling. Held-out checkpoint evaluation is a separate branch.</desc>
+<defs>
+<marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#68766d"/></marker>
+<marker id="purple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#77558e"/></marker>
+<marker id="gold" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 10 5 0 10Z" fill="#a7752d"/></marker>
+<style>text{font-family:Inter,Arial,sans-serif;fill:#24332c}.eyebrow{font-size:13px;letter-spacing:1.5px;font-weight:700;fill:#627269}.heading{font-size:36px;font-weight:700}.subtitle{font-size:18px;fill:#56665c}.role{font-size:12px;letter-spacing:.6px;font-weight:700}.card-title{font-size:24px;font-weight:700}.body{font-size:17px;fill:#526259}.label{font-size:15px;font-weight:600}.small{font-size:14px;fill:#617168}</style>
+</defs>
+<rect width="1480" height="1450" rx="18" fill="#f8f9f5"/>
+<text x="60" y="48" class="eyebrow">ADAPTGYM · PROPOSED TRAINING ARCHITECTURE</text>
+<text x="60" y="98" class="heading">RLVR training · end-to-end agent</text>
+<text x="60" y="133" class="subtitle">One-time setup, an interaction loop within each episode, and a learning loop across episodes.</text>
+<rect x="60" y="175" width="840" height="115" rx="12" fill="#edf2e9" stroke="#cbd5cd"/>
+<text x="82" y="202" class="role" fill="#3f614b">ONCE · DATA PREPARATION</text>
+<text x="82" y="233" class="body"><tspan x="82" dy="0">Generate scenarios → render sessions → check information preservation.</tspan><tspan x="82" dy="26">Split by user/scenario family. Freeze validation and test episodes.</tspan></text><rect x="980" y="175" width="440" height="115" rx="12" fill="#eee6f4" stroke="#d5c9df"/>
+<text x="1002" y="202" class="role" style="fill:#77558e">ONCE · POLICY INITIALIZATION</text><text x="1002" y="233" class="body"><tspan x="1002" dy="0">Load a base or supervised agent.</tspan><tspan x="1002" dy="26">An extractor can be one component.</tspan></text><rect x="60" y="360" width="1360" height="790" rx="14" fill="#f3f0f6" stroke="#cbbbda"/>
+<text x="100" y="397" class="eyebrow" style="fill:#77558e">RL TRAINING LOOP · TRAIN PARTITION ONLY</text><g id="node-100-465" transform="translate(100 465)"><rect width="280" height="220" rx="10" fill="#fff" stroke="#cbd5cd"/><path d="M10 0H270Q280 0 280 10V42H0V10Q0 0 10 0" fill="#e5ede6"/><text x="20" y="27" class="role"><tspan x="20" dy="0">CODE · SAMPLER</tspan></text><text x="20" y="85" class="card-title"><tspan x="20" dy="0">Sample a training</tspan><tspan x="20" dy="29">episode</tspan></text><text x="20" y="161" class="body"><tspan x="20" dy="0">Choose hidden needs,</tspan><tspan x="20" dy="27">catalog and task dynamics.</tspan></text></g><g id="node-480-465" transform="translate(480 465)"><rect width="320" height="220" rx="10" fill="#fff" stroke="#bda5cc"/><path d="M10 0H310Q320 0 320 10V42H0V10Q0 0 10 0" fill="#eee6f4"/><text x="20" y="27" class="role"><tspan x="20" dy="0">AGENT POLICY</tspan></text><text x="20" y="85" class="card-title"><tspan x="20" dy="0">Generate the</tspan><tspan x="20" dy="29">next action</tspan></text><text x="20" y="161" class="body"><tspan x="20" dy="0">Maintain intent; search,</tspan><tspan x="20" dy="27">recommend, clarify or finish.</tspan></text></g><g id="node-900-465" transform="translate(900 465)"><rect width="360" height="220" rx="10" fill="#fff" stroke="#c8d3df"/><path d="M10 0H350Q360 0 360 10V42H0V10Q0 0 10 0" fill="#e6edf7"/><text x="20" y="27" class="role"><tspan x="20" dy="0">ENVIRONMENT</tspan></text><text x="20" y="85" class="card-title"><tspan x="20" dy="0">Execute the action;</tspan><tspan x="20" dy="29">return observations</tspan></text><text x="20" y="161" class="body"><tspan x="20" dy="0">Run tools against the catalog.</tspan><tspan x="20" dy="27">Produce the simulated user reply.</tspan></text></g><g id="node-900-815" transform="translate(900 815)"><rect width="360" height="220" rx="10" fill="#fff" stroke="#cbd5cd"/><path d="M10 0H350Q360 0 360 10V42H0V10Q0 0 10 0" fill="#e5ede6"/><text x="20" y="27" class="role"><tspan x="20" dy="0">CODE · VERIFIER</tspan></text><text x="20" y="85" class="card-title"><tspan x="20" dy="0">Compute verifiable</tspan><tspan x="20" dy="29">episode rewards</tspan></text><text x="20" y="161" class="body"><tspan x="20" dy="0">Check actual grounding, constraints</tspan><tspan x="20" dy="27">and task success from the trajectory.</tspan></text></g><g id="node-480-815" transform="translate(480 815)"><rect width="320" height="220" rx="10" fill="#fff" stroke="#cbd5cd"/><path d="M10 0H310Q320 0 320 10V42H0V10Q0 0 10 0" fill="#e5ede6"/><text x="20" y="27" class="role"><tspan x="20" dy="0">RL OPTIMIZER</tspan></text><text x="20" y="85" class="card-title"><tspan x="20" dy="0">Update the</tspan><tspan x="20" dy="29">agent policy</tspan></text><text x="20" y="161" class="body"><tspan x="20" dy="0">Optimize rewards from sampled</tspan><tspan x="20" dy="27">trajectories; save checkpoints.</tspan></text></g><g fill="none" stroke="#68766d" stroke-width="2.3" marker-end="url(#arrow)">
+<path id="setup-to-sampler" d="M240 290V330H80V540H98"/>
+<path id="sample-to-agent" d="M380 575H478"/>
+<path id="agent-to-environment" d="M800 575H898"/>
+<path id="episode-to-reward" d="M1180 685V735H1320V925H1262"/>
+<path id="reward-to-update" d="M900 925H802"/>
+<path id="interaction-feedback" d="M975 685V725H640V687"/>
+<path id="checkpoint-evaluation" d="M740 1035V1065H1380V1180H1080V1208"/>
+</g>
+<path id="initial-policy" d="M1200 290V335H640V463" fill="none" stroke="#77558e" stroke-width="2.3" marker-end="url(#purple)"/>
+<text x="92" y="348" class="small">Training scenarios</text>
+<rect x="660" y="707" width="290" height="31" rx="5" fill="#f3f0f6"/>
+<text x="802" y="728" text-anchor="middle" class="label">Next observation · continue episode</text>
+<rect x="1193" y="712" width="190" height="28" rx="5" fill="#f3f0f6"/>
+<text x="1288" y="732" text-anchor="middle" class="small">Episode ends / budget reached</text>
+<rect x="900" y="758" width="360" height="35" rx="6" fill="#f6ebd8" stroke="#dec89f"/>
+<text x="1080" y="781" text-anchor="middle" class="small" style="fill:#976021">Hidden needs + catalog truth · verifier only</text>
+<path id="reference-to-reward" d="M1080 793V813" fill="none" stroke="#a7752d" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#gold)"/>
+<path id="training-feedback" d="M640 1035V1100H240V687" fill="none" stroke="#77558e" stroke-width="2.8" marker-end="url(#purple)"/>
+<rect x="305" y="1083" width="520" height="31" rx="5" fill="#f3f0f6"/>
+<text x="565" y="1104" text-anchor="middle" class="label" style="fill:#77558e">Updated policy → sample the next training episode</text>
+<rect x="1100" y="1138" width="220" height="30" fill="#f8f9f5"/>
+<text x="1110" y="1159" class="small">Saved checkpoint</text>
+<rect x="60" y="1210" width="1360" height="135" rx="12" fill="#fff" stroke="#cbd5cd"/>
+<text x="82" y="1238" class="role" style="fill:#3f614b">SEPARATE · HELD-OUT EVALUATION</text><text x="82" y="1269" class="body"><tspan x="82" dy="0">Use fixed validation episodes for checkpoint selection; report final results on the untouched test set.</tspan><tspan x="82" dy="27">Measure actual task success, grounding and constraint satisfaction. Intent extraction can be an auxiliary diagnostic.</tspan><tspan x="82" dy="27">Held-out results do not enter training rewards. Scripted positive endings are not evidence of agent success.</tspan></text><text x="60" y="1390" class="small"><tspan x="60" dy="0">Proposed flow. Interactive simulation, RL optimization and the reward objective remain to be implemented.</tspan><tspan x="60" dy="25">The hidden reference badge is a verifier input, not an observation available to the agent.</tspan></text></svg>

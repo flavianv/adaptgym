@@ -160,7 +160,7 @@ def test_job_bundle_server_and_optional_distractors():
             plan = json.load(response)
         validate_plan(plan)
         assert plan['vertical_id'] == 'job_search'
-        with urlopen(base) as response:
+        with urlopen(base + '/lab') as response:
             assert b'attributeUnit' in response.read()
     finally:
         server.shutdown()

@@ -738,3 +738,43 @@ def test_negative_completion_summary_describes_stopping_not_an_active_search():
     assert not summary.startswith('Find')
     assert build_search_request(state, 'footwear') is None
     assert describe_intent({**state, 'satisfied': True}, 'footwear') == 'The user found what they wanted and finished searching.'
+
+
+@pytest.mark.parametrize('state_mode', ['accumulated', 'previous_correct'])
+def test_state_mode_controls_previous_input_even_after_invalid_output(state_mode):
+    from adaptgym.openai_session_test import reference_state
+    vertical, _, catalog = fixtures()
+    plan = generate_plan(vertical, catalog, 'initial_need', turn_count=3, finisher='positive')
+    persona = json.loads((DEBUG / 'user_persona.json').read_text())
+    class Fallible(FakeExtractor):
+        def json(self, instructions, payload, schema, *, purpose):
+            if self.index == 1:
+                self.payloads.append(copy.deepcopy(payload))
+                self.index += 1
+                raise ValueError('deliberate invalid second output')
+            result = super().json(instructions, payload, schema, purpose=purpose)
+            result['intent'] = 'The model’s own state.'
+            return result
+    extractor = Fallible(plan)
+    result = render_and_test(plan, persona, FakeShopper(), extractor, state_mode=state_mode)
+    assert result['state_mode'] == state_mode
+    assert extractor.payloads[0]['previous_prediction'] is None
+    assert not result['checkpoints'][1]['score']['valid']
+    if state_mode == 'accumulated':
+        assert extractor.payloads[1]['previous_prediction'] == result['checkpoints'][0]['prediction']
+        assert extractor.payloads[2]['previous_prediction'] == result['checkpoints'][0]['prediction']
+    else:
+        for index in (1, 2):
+            assert extractor.payloads[index]['previous_prediction'] == reference_state(plan, plan['exchanges'][index-1], vertical)
+    assert 'planned_state' not in extractor.payloads[1]
+    assert len(extractor.payloads[1]['visible_conversation']) == 3
+
+
+def test_unknown_state_mode_fails_before_generation():
+    vertical, _, catalog = fixtures()
+    plan = generate_plan(vertical, catalog, 'initial_need')
+    persona = json.loads((DEBUG / 'user_persona.json').read_text())
+    shopper = FakeShopper()
+    with pytest.raises(ValueError, match='state mode'):
+        render_and_test(plan, persona, shopper, FakeExtractor(plan), state_mode='unknown')
+    assert not shopper.payloads

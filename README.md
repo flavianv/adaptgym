@@ -4,6 +4,15 @@ Synthetic conversations for evaluating how agents update user intent across turn
 Tracks task requirements, durable preferences, search requests, and expressed outcomes.
 Includes Fashion/shoes and Job search with synthetic catalog data.
 
+The homepage opens the interactive session lab (also available at `/lab`).
+Use the top navigation to open the project overview at `/about`, evaluation and
+training diagrams at `/flows`, or the GitHub repository.
+
+The lab supports two previous-state inputs: accumulated model predictions, or the
+previous correct state to isolate each update. Current targets stay hidden from
+the extractor.
+Read the [project overview](documentation/project-overview.md) for the approach.
+
 ## Run
 
 ```bash

@@ -397,12 +397,30 @@ def verify_intent_labels(client: Any, plan: dict, step: dict, messages: list[dic
                 'report': report}
 
 
-def render_and_test(plan: dict, persona: dict, shopper: Any, extractor: Any, verifier: Any | None = None) -> dict:
+STATE_MODES = ('accumulated', 'previous_correct')
+
+
+def reference_state(plan, step, vertical):
+    """Previous-turn oracle input; never call with the current step before inference."""
+    state = {'active_task_id': step['planned_state']['active_task_id'],
+             **expected_outcome(plan, step),
+             'claims': [{**{k: e['assignment'][k] for k in ('attribute', 'operator', 'value')},
+                         **{k: e[k] for k in ('scope', 'task_id', 'strength', 'evidence')}}
+                        for e in step['planned_state']['entries']]}
+    state['search_request'] = build_search_request(state, plan['vertical_id'], vertical.simulation)
+    state['intent'] = describe_intent(state, plan['vertical_id'], vertical.simulation)
+    return copy.deepcopy(state)
+
+
+def render_and_test(plan: dict, persona: dict, shopper: Any, extractor: Any, verifier: Any | None = None, *,
+                    state_mode: str = 'accumulated') -> dict:
     """Generate user turns, append fixed assistant text, and test prefix extraction.
 
     This is a diagnostic smoke test, not independent certification of labels.
     Planned targets are visible only to the generator, scorer, and optional label auditor.
     """
+    if state_mode not in STATE_MODES:
+        raise ValueError('unknown evaluation state mode')
     validate_plan(plan)
     vertical = VerticalSchema(plan['vertical_schema'])
     prompts = prompts_for(vertical)
@@ -467,8 +485,10 @@ def render_and_test(plan: dict, persona: dict, shopper: Any, extractor: Any, ver
                             'expected_intent': describe_intent(reference_intent, plan['vertical_id'], vertical.simulation),
                             'expected_search_request': build_search_request(reference_intent, plan['vertical_id'], vertical.simulation),
                             'verification': verification, 'intent_judgment': judgment})
+        if state_mode == 'previous_correct':
+            previous = reference_state(plan, step, vertical)
         messages.append({'id': step['assistant']['message_id'], 'role': 'assistant', 'text': step['assistant']['text']})
-    return {'plan_id': plan['id'], 'status': 'completed', 'conversation': messages,
+    return {'plan_id': plan['id'], 'status': 'completed', 'state_mode': state_mode, 'conversation': messages,
             'finisher': copy.deepcopy(plan['finisher']),
             'checkpoints': checkpoints, 'exact_checkpoints': sum(c['score']['exact_state'] for c in checkpoints),
             'total_checkpoints': len(checkpoints),
