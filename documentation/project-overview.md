@@ -1,7 +1,5 @@
 # AdaptGym: controlled conversations for evaluating adaptation
 
-**Live demo:** [AdaptGym](https://adaptgym.onrender.com/) — live LLM calls use shared API quota; please keep requests modest.
-
 Similar work in the legal domain: [Engram: Understanding a Law Firm through Study](https://engram.com/blog/legal-agents-with-memory).
 
 A recommendation agent can understand the first request and still lose track of the user when a budget changes, another requirement arrives, or a reply refers to an earlier recommendation. A useful test must check what the agent retains, revises and discards throughout the conversation.

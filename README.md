@@ -7,12 +7,10 @@ budget changes, another requirement arrives, or a reply refers to an earlier res
 AdaptGym tests whether a model retains, revises and discards the right user information
 throughout a conversation.
 
-[Live demo](https://adaptgym.onrender.com/) ·
-[Project overview](https://adaptgym.onrender.com/about) ·
-[Evaluation and training flows](https://adaptgym.onrender.com/flows)
+[Project overview and evaluation/training flows](documentation/project-overview.md)
 
-Planning and the preloaded example are free of model calls. Live generation uses
-shared paid API quota; please keep requests modest.
+Planning and the preloaded example make no model calls. Live generation uses the
+API key configured on your server.
 
 ## How it works
 
