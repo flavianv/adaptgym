@@ -4,7 +4,13 @@
 
 Similar work in the legal domain: [Engram: Understanding a Law Firm through Study](https://engram.com/blog/legal-agents-with-memory).
 
-AdaptGym’s goal is to provide a configurable RL environment for training and evaluating agents that adapt as users, tasks, and circumstances change. It generates interactions in which requirements accumulate, preferences evolve, and earlier information becomes invalid. The central question is whether an agent can maintain an accurate understanding of the user and use it to make better decisions.
+A recommendation agent can understand the first request and still lose track of the user when a budget changes, another requirement arrives, or a reply refers to an earlier recommendation. A useful test must check what the agent retains, revises and discards throughout the conversation.
+
+AdaptGym creates controlled synthetic conversations with an explicit reference state after every user turn. Code specifies the intended changes; an LLM renders them naturally; a separate verification pass checks that the wording supports the labels. The extraction checkpoint then reconstructs the user’s current requirements and longer-term preferences from the visible conversation.
+
+**Control what changes. Measure what the model remembers.** These conversation–target pairs support detailed extraction evaluation and can provide supervision for fine-tuning.
+
+The current implementation tests structured intent extraction with programmed assistant actions. Training loops and evaluation of a live recommendation policy are proposed extensions toward a broader configurable RL environment.
 
 **What is an RL environment?**
 
@@ -24,6 +30,16 @@ AdaptGym will support two complementary training objectives:
 - **Adaptation within the recommendation agent:** train an agent to maintain intent as part of its own capabilities and use that state to choose recommendations, questions, and other actions.
 
 Both objectives use the same underlying conversations and per-turn intent targets. Their evaluation differs: extraction is measured by faithful interpretation, while the integrated agent must also be measured by the usefulness of its subsequent decisions.
+
+## What the tests reveal
+
+- **Retention:** keep earlier requirements active while other information arrives.
+- **Revision:** replace outdated values or withdraw constraints without losing unrelated information.
+- **Reference resolution:** interpret a reply using the assistant question or recommendation list it refers to.
+- **Task boundaries:** recognize a new or completed search and retire task-specific requirements.
+- **Scope and strength:** distinguish a current mandatory requirement from a longer-term preference.
+
+Vary conversation length, disclosure timing and event combinations to isolate these behaviors. A correct final answer alone can conceal errors and recovery at intermediary turns.
 
 ## Stage 1: Evaluation — the five-step approach
 
