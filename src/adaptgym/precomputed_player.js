@@ -61,7 +61,7 @@ function renderTraceSummary(evaluation,scope){
  }
  box.append(el('p','Exact feature, operator and value; strings lowercased. Missing/changed targets fail. Extras warn only. Other state diagnostics do not gate this check.','trace-note'));
  const savedVersion=savedBundle?.sample.plan.vertical_schema['x-adaptgym'].version,currentVersion=liveSchemaVersions[evaluation.vertical];
- if(currentVersion&&savedVersion!==currentVersion)box.append(el('p','Historical extraction: '+evaluation.vertical+' schema v'+savedVersion+'. Live extraction uses v'+currentVersion+'. Scores retain the original target schema.','trace-note'));
+ if(currentVersion&&savedVersion!==currentVersion)box.append(el('p','Historical extraction: '+evaluation.vertical+' schema v'+savedVersion+'. New conversations use v'+currentVersion+'. Scores retain the original target schema.','trace-note'));
  body.prepend(box);
 }
 
