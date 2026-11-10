@@ -1,7 +1,7 @@
 {
   "catalog_id": "optional-footwear-distractors-30",
   "vertical_id": "footwear",
-  "schema_version": "1",
+  "schema_version": "2",
   "synthetic": true,
   "products": [
     {
@@ -70,7 +70,6 @@
         "gender": "unisex",
         "model": "Pegasus",
         "sport": "road_running",
-        "primary_use": "Road running",
         "cushioning": "unspecified",
         "upper_material": "Engineered mesh",
         "surface": "road",
@@ -97,7 +96,6 @@
         "gender": "unisex",
         "model": "9060",
         "sport": "lifestyle",
-        "primary_use": "Lifestyle",
         "cushioning": "unspecified",
         "upper_material": "Mesh and suede",
         "surface": "unspecified",
@@ -205,7 +203,6 @@
         "gender": "unisex",
         "model": "Speedcross",
         "sport": "trail_running",
-        "primary_use": "Trail running",
         "cushioning": "unspecified",
         "upper_material": "Synthetic textile",
         "surface": "trails",
@@ -232,7 +229,6 @@
         "gender": "unisex",
         "model": "Moab",
         "sport": "hiking",
-        "primary_use": "Hiking",
         "cushioning": "unspecified",
         "upper_material": "Mesh and leather/suede",
         "surface": "unspecified",

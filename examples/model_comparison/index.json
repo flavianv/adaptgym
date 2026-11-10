@@ -357,5 +357,9 @@
         "recall": 0.8395061728395061
       }
     }
+  },
+  "live_schema_versions": {
+    "footwear": "2",
+    "job_search": "1"
   }
 }

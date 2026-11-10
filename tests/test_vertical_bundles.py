@@ -171,3 +171,20 @@ def test_job_bundle_server_and_optional_distractors():
         server.shutdown()
         server.server_close()
         thread.join(timeout=2)
+
+
+def test_footwear_v2_has_one_slot_for_generic_activities():
+    bundle=VerticalBundle.load(ROOT/'examples/debug_shopping')
+    vertical=bundle.vertical
+    assert vertical.version=='2'
+    sport_names={x.replace('_',' ').lower() for x in vertical.schema['properties']['sport']['enum']}
+    uses={x.lower() for x in vertical.schema['properties']['primary_use']['enum']}
+    assert not sport_names & uses
+    vertical.assignment('sport','basketball')
+    vertical.assignment('primary_use','Marathon racing')
+    with pytest.raises(ValueError):vertical.assignment('primary_use','Basketball')
+    catalog=build_catalog(bundle.template,vertical)
+    for product in catalog['products']+bundle.distractors['products']:
+        use=product['attributes'].get('primary_use')
+        assert use is None or use.lower() not in sport_names
+    assert all('primary_use' not in p['attributes'] for p in catalog['products'] if p['attributes']['sport']=='basketball')

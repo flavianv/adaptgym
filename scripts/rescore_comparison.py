@@ -19,6 +19,7 @@ def rescore_directory(directory):
                     cp['metrics'].update(value_precision=score['precision'],value_recall=score['recall'],feature_pass=score['accepted'])
                 run['feature_summary']=summarize_features(scores);all_scores.setdefault(model,{}).setdefault(mode,[]).extend(scores)
         file.write_text(json.dumps(bundle,ensure_ascii=False,indent=2)+'\n')
+    index['live_schema_versions']={name:json.loads((ROOT/'examples'/folder/'domain_schema.json').read_text())['x-adaptgym']['version'] for name,folder in [('footwear','debug_shopping'),('job_search','job_search')]}
     index['feature_policy']={'id':POLICY,'matching':'Exact feature, operator and scalar values; strings lowercase only; array values are unordered sets.',
         'errors':'Missing or changed target features/values. No aliases or cross-feature equivalence.',
         'warnings':'All extra features/values; warnings never block acceptance.',

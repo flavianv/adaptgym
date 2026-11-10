@@ -41,7 +41,7 @@
     "colour",
     "surface"
   ],
-  "missing_attributes": "reject",
+  "missing_attributes": "omit",
   "vocabulary": {
     "user": "shopper",
     "item": "product",

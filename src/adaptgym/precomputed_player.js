@@ -1,6 +1,6 @@
 /* Saved playback only. Live chat and live replay continue to use the Luna API. */
 const savedLabels={luna:'Luna',baseline:'Qwen 4B zero-shot',lora:'Qwen 4B fine-tuned'};
-let playTimer=null,rightEvaluation=null,savedBundle=null;
+let playTimer=null,rightEvaluation=null,savedBundle=null,liveSchemaVersions={};
 const originalReset=reset,originalBusy=busyControls,originalRefresh=refreshReplaySamples,originalLoad=loadReplay;
 const rightPanel=document.querySelector('.layout>aside').cloneNode(true);
 rightPanel.id='rightPanel';rightPanel.hidden=true;
@@ -29,7 +29,7 @@ busyControls=function(value){
 refreshReplaySamples=async function(){
  if($('mode').value!=='saved')return originalRefresh();
  const response=await fetch('/api/comparison');if(!response.ok)throw Error('Saved comparisons unavailable');
- const index=await response.json();$('replaySample').replaceChildren();
+ const index=await response.json();liveSchemaVersions=index.live_schema_versions||{};$('replaySample').replaceChildren();
  for(const entry of index.cases.filter(e=>e.vertical===$('catalog').value)){
   const option=el('option',entry.label);option.value=entry.id;$('replaySample').append(option);
  }
@@ -60,6 +60,8 @@ function renderTraceSummary(evaluation,scope){
   box.append(details);
  }
  box.append(el('p','Exact feature, operator and value; strings lowercased. Missing/changed targets fail. Extras warn only. Other state diagnostics do not gate this check.','trace-note'));
+ const savedVersion=savedBundle?.sample.plan.vertical_schema['x-adaptgym'].version,currentVersion=liveSchemaVersions[evaluation.vertical];
+ if(currentVersion&&savedVersion!==currentVersion)box.append(el('p','Historical extraction: '+evaluation.vertical+' schema v'+savedVersion+'. Live extraction uses v'+currentVersion+'. Scores retain the original target schema.','trace-note'));
  body.prepend(box);
 }
 

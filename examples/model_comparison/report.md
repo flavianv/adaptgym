@@ -60,3 +60,9 @@ The feature `sport = basketball` does not satisfy a target `primary_use = Basket
 ## Player
 
 Choose **Play pre-extracted**, select a shoes or jobs conversation, and enable **Compare side by side**. Select the two models independently. Full-trace pass/error/warning counts and precision/recall appear at the top of each extractor panel; links jump to error or warning turns. Each extracted feature has a compact title with its expected/extracted values and evidence collapsed underneath. Assistant product and job listings are also collapsed individually. Playback and model switching make no API calls. Live extraction remains Luna-only.
+
+## Footwear schema v2
+
+Generic activity names now have one canonical field: `sport`. The duplicate `primary_use` values Road running, Trail running, Basketball, Football, Tennis, Volleyball, Sprinting, Lifestyle and Hiking have been removed. Specific uses such as Marathon racing, Easy runs, Technical trail running and Weightlifting remain in `primary_use`. Catalogs no longer repeat generic activities in both fields.
+
+The ten saved traces above were extracted with schema v1. Their raw outputs, target labels and scores retain that version for reproducibility; they have not been rerun with v2, and no score-time alias was introduced. The player labels historical shoe traces accordingly. Live extraction and newly generated footwear scenarios use v2.

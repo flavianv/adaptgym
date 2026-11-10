@@ -1,13 +1,13 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "adaptgym.vertical.footwear.v1",
+  "$id": "adaptgym.vertical.footwear.v2",
   "title": "Footwear: sports and optional distractors",
   "description": "Fixed model descriptions from user-supplied shortlists; normalized simulator taxonomy. Availability, size, price, colour and gender are synthetic offers. Unspecified is not a verified product property.",
   "type": "object",
   "additionalProperties": false,
   "x-adaptgym": {
     "vertical_id": "footwear",
-    "version": "1",
+    "version": "2",
     "benchmark_attributes": [
       "brand",
       "price",
@@ -246,8 +246,9 @@
           "eq",
           "in"
         ],
-        "generation_hint": "State only this sport; do not infer additional category or primary_use requirements from it."
-      }
+        "generation_hint": "State only this sport. Generic activity names map exclusively to sport; do not duplicate them in primary_use. Add primary_use only when a distinct, more specific use is separately required."
+      },
+      "description": "The activity or sport itself. Generic activity names belong here, not in primary_use. Basketball shoes means sport=basketball; marathon racing is a specific primary_use."
     },
     "primary_use": {
       "type": "string",
@@ -257,25 +258,16 @@
         "Marathon racing",
         "Easy runs",
         "Tempo running",
-        "Road running",
-        "Trail running",
         "Technical trail running",
         "CrossFit, lifting",
         "Functional training",
         "Weightlifting",
         "Strength training",
         "HIIT, mixed training",
-        "Basketball",
-        "Football",
-        "Tennis",
-        "Volleyball",
-        "Sprinting",
         "Rock climbing",
         "Everyday casual",
         "Fashion, casual",
-        "Lifestyle",
         "Skateboarding, casual",
-        "Hiking",
         "Casual, smart casual",
         "Everyday, fashion",
         "Casual, cold weather",
@@ -301,9 +293,10 @@
           "eq",
           "in"
         ],
-        "generation_hint": "Describe only the requested use; do not add category or sport labels unless separately required.",
+        "generation_hint": "State a specific use from this enum. Generic activity names such as basketball, football, tennis, road running and trail running belong only in sport. Do not duplicate a sport requirement in primary_use.",
         "correction_eligible": false
-      }
+      },
+      "description": "A specific use or training purpose, such as Marathon racing or Weightlifting. Generic activity names belong only in sport; never encode the same activity in both fields."
     },
     "cushioning": {
       "type": "string",
