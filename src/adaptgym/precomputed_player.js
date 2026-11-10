@@ -6,11 +6,16 @@ const rightPanel=document.querySelector('.layout>aside').cloneNode(true);
 rightPanel.id='rightPanel';rightPanel.hidden=true;
 for(const item of rightPanel.querySelectorAll('[id]'))item.id='right-'+item.id;
 document.querySelector('.layout').append(rightPanel);
-function stopPlayback(){if(playTimer)clearInterval(playTimer);playTimer=null;if($('mode').value==='saved')$('startExtraction').textContent='Play'}
+function playerButton(id,label){
+ const paths={Play:'<path d="m8 5 11 7-11 7z" fill="currentColor"/>',Pause:'<path d="M8 5v14M16 5v14"/>','Previous turn':'<path d="M6 5v14M19 5 8 12l11 7z"/>','Next turn':'<path d="M18 5v14M5 5l11 7-11 7z"/>',Reset:'<path d="M4 10a8 8 0 1 1 1 8M4 4v6h6"/>'};
+ const button=$(id);button.classList.add('player-icon');button.setAttribute('aria-label',label);button.title=label;
+ button.innerHTML='<svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+paths[label]+'</svg>';
+}
+function stopPlayback(){if(playTimer)clearInterval(playTimer);playTimer=null;if($('mode').value==='saved')playerButton('startExtraction','Play')}
 function configureModels(){
  const saved=$('mode').value==='saved',compare=saved&&$('compareModels').checked;
- if(saved)$('startExtraction').textContent=playTimer?'Pause':'Play';
- $('turnSeek').hidden=!saved;$('savedModelControls').hidden=!saved;$('previousTurn').hidden=!saved;
+ if(saved){playerButton('startExtraction',playTimer?'Pause':'Play');playerButton('previousTurn','Previous turn');playerButton('nextTurn','Next turn');playerButton('resetPlayback','Reset')}else{for(const id of ['startExtraction','nextTurn']){$(id).classList.remove('player-icon');$(id).removeAttribute('aria-label');$(id).removeAttribute('title')}}
+ $('resetPlayback').hidden=!saved;$('turnSeek').hidden=!saved;$('savedModelControls').hidden=!saved;$('previousTurn').hidden=!saved;
  $('rightModelLabel').hidden=!compare;rightPanel.hidden=!compare;
  document.querySelector('.layout').classList.toggle('comparing',compare);
  $('leftModelLabel').firstChild.textContent=compare?'Left model ':'Model ';
@@ -25,6 +30,7 @@ busyControls=function(value){
   $('startExtraction').disabled=value||!replayData||!replayResults.length;
   $('previousTurn').disabled=value||!replayData||replayIndex===0;
   $('turnSeek').disabled=value||!replayResults.length;
+  $('resetPlayback').disabled=value||!replayResults.length;
  }
  for(const id of ['leftModel','rightModel','compareModels'])$(id).disabled=value;
 };
@@ -45,7 +51,12 @@ function panelMetrics(cp,scope){
  if(!row){row=el('p',undefined,'comparison-turn-metrics');target.querySelector('.panel-body').prepend(row)}
  const format=n=>n===null||n===undefined?'—':(100*n).toFixed(1)+'%';
  const f=cp.feature_score;
- row.textContent='Turn '+cp.turn+' · '+(f.accepted?'PASS':'FAIL')+' · Errors '+f.error_count+' · Warnings '+f.warning_count+' · Precision '+format(f.precision)+' · Recall '+format(f.recall);
+ row.className='comparison-turn-metrics '+(f.accepted?'turn-pass':'turn-fail');
+ row.replaceChildren(el('strong','Turn '+cp.turn+' · '+(f.accepted?'PASS':'FAIL')+' · '+f.error_count+' error'+(f.error_count===1?'':'s')),el('span','Warnings '+f.warning_count+' · Precision '+format(f.precision)+' · Recall '+format(f.recall),'score-details'));
+ if($('compareModels').checked&&rightEvaluation){
+  const peer=(scope?replayEvaluation:rightEvaluation).checkpoints[replayIndex].feature_score;
+  row.append(el('span',f.error_count<peer.error_count?'Fewer errors this turn':f.error_count>peer.error_count?'More errors this turn':'Same error count this turn','turn-comparison'));
+ }
 }
 function renderTraceSummary(evaluation,scope){
  const target=scope||document.querySelector('.layout>aside'),body=target.querySelector('.panel-body');
@@ -105,9 +116,10 @@ $('startExtraction').onclick=()=>{
  if($('mode').value!=='saved')return extractAllTurns();
  if(playTimer){stopPlayback();return}
  if(replayIndex>=replayResults.length-1)replayIndex=0;
- showSavedTurn();$('startExtraction').textContent='Pause';
+ showSavedTurn();playerButton('startExtraction','Pause');
  playTimer=setInterval(()=>{if(replayIndex>=replayResults.length-1){stopPlayback();return}replayIndex++;showSavedTurn();if(replayIndex>=replayResults.length-1)stopPlayback()},2500);
 };
+$('resetPlayback').onclick=()=>{stopPlayback();replayIndex=0;showSavedTurn()};
 $('turnSeek').oninput=()=>{stopPlayback();replayIndex=Number($('turnSeek').value)-1;showSavedTurn()};
 $('previousTurn').onclick=()=>{stopPlayback();if(replayIndex>0){replayIndex--;showSavedTurn()}};
 $('nextTurn').onclick=()=>{stopPlayback();if(!busy&&replayResults.length>replayIndex+1){replayIndex++;if($('mode').value==='saved')showSavedTurn();else showReplayTurn()}};
