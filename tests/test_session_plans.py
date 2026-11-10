@@ -12,6 +12,7 @@ from adaptgym.persona import GENERAL_PERSONA_SCHEMA, validate_persona
 from adaptgym.openai_session_test import ResponsesClient, render_and_test, score_extraction
 from adaptgym.session_plans import CASE_MIN_TURNS, CASE_MODES, generate_plan, validate_plan
 from adaptgym.verticals import VerticalSchema
+from adaptgym.product_interest import selected_products, target_products
 from adaptgym.search_requests import build_search_request, describe_intent, expected_outcome
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -116,7 +117,7 @@ def test_unconfirmed_suggestion_creates_no_preference():
 
 def prediction_for(step, plan=None):
     result = {'active_task_id': step['planned_state']['active_task_id'],
-            'target_product': step['target_product'],
+            'selected_products': selected_products(step), 'target_products': target_products(step),
             'claims': [{'attribute': e['assignment']['attribute'], 'operator': e['assignment']['operator'],
                         'value': e['assignment']['value'], 'scope': e['scope'], 'task_id': e['task_id'],
                         'strength': e['strength'], 'evidence': e['evidence']} for e in step['planned_state']['entries']]}
@@ -250,14 +251,14 @@ def test_requested_turn_count_preserves_core_scenario(count):
         else:
             plan = generate_plan(vertical, catalog, case, turn_count=count)
             assert len(plan['exchanges']) == plan['turn_count'] == count
-            assert plan['core_turn_count'] == CASE_MIN_TURNS[case] - int(case in ('finish_task_positive', 'finish_task_negative'))
+            assert plan['core_turn_count'] == (count if case == 'mixed' else CASE_MIN_TURNS[case] - int(case in ('finish_task_positive', 'finish_task_negative')))
             validate_plan(plan)
 
 
-@pytest.mark.parametrize('count', [0, 8, 2.5, True, '3'])
+@pytest.mark.parametrize('count', [0, 13, 2.5, True, '3'])
 def test_bad_turn_counts_are_rejected(count):
     vertical, _, catalog = fixtures()
-    with pytest.raises(ValueError, match='integer from 1 to 7'):
+    with pytest.raises(ValueError, match='integer from 1 to 12'):
         generate_plan(vertical, catalog, 'initial_need', turn_count=count)
 
 
@@ -318,7 +319,7 @@ def test_departure_does_not_add_llm_calls_or_fabricated_chat_evidence():
     assert 'finisher' not in extractor.payloads[0]
 
 
-def test_seven_turn_shopper_only_sees_last_assistant_extractor_sees_full_prefix():
+def test_seven_turn_generator_and_extractor_only_see_visible_prefix():
     vertical, _, catalog = fixtures()
     plan = generate_plan(vertical, catalog, 'initial_need', turn_count=7, finisher='positive')
     persona = json.loads((DEBUG / 'user_persona.json').read_text())
@@ -327,7 +328,8 @@ def test_seven_turn_shopper_only_sees_last_assistant_extractor_sees_full_prefix(
     assert result['status'] == 'completed'
     assert len(shopper.payloads) == len(extractor.payloads) == 7
     for index, payload in enumerate(shopper.payloads):
-        assert set(payload) == {'persona', 'last_assistant_message', 'current_instruction'}
+        assert set(payload) == {'persona', 'last_assistant_message', 'current_instruction', 'visible_conversation'}
+        assert len(payload['visible_conversation']) == index * 2
         assert payload['current_instruction'] == plan['exchanges'][index]['shopper_instruction']
         assert payload['last_assistant_message'] == (None if index == 0 else {
             'id': plan['exchanges'][index - 1]['assistant']['message_id'],
@@ -445,13 +447,17 @@ class FakeVerifier:
                                   'certainty': 'resolved', 'message_ids': [mid], 'reason': 'Shopping task state.'},
                   'satisfied': {'observed_value': payload['candidate_intent']['satisfied'],
                                 'certainty': 'resolved', 'message_ids': [mid], 'reason': 'Outcome evidence.'},
-                  'target_product': {'observed_value': payload['candidate_intent']['target_product'],
+                  'selected_products': {'observed_value': payload['candidate_intent']['selected_products'],
                                      'certainty': 'resolved', 'message_ids': [mid], 'reason': 'Product evidence.'},
+                  'target_products': {'observed_value': payload['candidate_intent']['target_products'],
+                                      'certainty': 'resolved', 'message_ids': [mid], 'reason': 'User interest evidence.'},
+                  'preferences': {'observed_value': payload['candidate_intent'].get('preferences', []),
+                                  'certainty': 'resolved', 'message_ids': [mid], 'reason': 'Comparison evidence.'},
                   'additional_intent': [], 'intent': copy.deepcopy(check), 'search_request': copy.deepcopy(check), 'summary': 'All candidate labels are supported.'}
         if self.issue == 'contradiction':
             report['active_task']['observed_value'] = 'task-99'
         elif self.issue == 'uncertain':
-            report['target_product']['certainty'] = 'uncertain'
+            report['selected_products']['certainty'] = 'uncertain'
         elif self.issue == 'omission':
             report['additional_intent'] = [{'description': 'Missing requirement', 'message_ids': [mid],
                 'claim': {'attribute': 'price', 'operator': 'lte', 'value': 100,
@@ -511,7 +517,7 @@ def test_absence_of_selection_allows_empty_refs_but_claims_still_need_evidence()
     class AbsenceVerifier(FakeVerifier):
         def json(self, *args, **kwargs):
             report = super().json(*args, **kwargs)
-            report['target_product']['message_ids'] = []
+            report['selected_products']['message_ids'] = []
             return report
     vertical, _, catalog = fixtures()
     plan = generate_plan(vertical, catalog, 'initial_need')
@@ -529,9 +535,10 @@ def test_verifier_compares_observed_null_selection_and_completed_task_in_code():
     result = verify_intent_labels(FakeVerifier(), plan, step,
         [{'id': step['shopper_message_id'], 'role': 'user', 'text': "I've found what I wanted; I'll proceed with the purchase."}])
     assert result['accepted']
-    for field in ('active_task', 'target_product'):
-        assert result[field]['observed_value'] is None
-        assert result[field]['expected_value'] is None
+    for field in ('active_task', 'selected_products', 'target_products'):
+        empty = None if field == 'active_task' else []
+        assert result[field]['observed_value'] == empty
+        assert result[field]['expected_value'] == empty
         assert result[field]['verdict'] == 'supported'
 
 
@@ -684,7 +691,7 @@ def test_outcome_comes_from_expressed_ending_not_assistant_framing(ending, expec
     plan = generate_plan(vertical, catalog, 'initial_need', turn_count=3, finisher=ending)
     outcome = expected_outcome(plan, plan['exchanges'][-1])
     assert outcome['satisfied'] == expected
-    assert outcome['target_product'] is None
+    assert outcome['selected_products'] == [] and outcome['target_products'] == []
 
 
 def test_outcome_keeps_selected_product_when_task_closes():
@@ -695,18 +702,18 @@ def test_outcome_keeps_selected_product_when_task_closes():
     selected = plan['exchanges'][1]['target_product']
     assert selected
     last = result['checkpoints'][-1]
-    assert last['prediction']['target_product'] == selected
+    assert last['prediction']['selected_products'] == [selected]
     assert last['prediction']['satisfied'] is True
-    assert last['expected_outcome'] == {'satisfied': True, 'target_product': selected}
+    assert last['expected_outcome'] == {'satisfied': True, 'target_products': [selected], 'selected_products': [selected], 'preferences': []}
     assert last['score']['outcome_correct']
 
 
-def test_target_product_is_the_only_product_identity_in_extractor_and_judge():
+def test_interest_and_selection_are_separate_lists_in_extractor_and_judge():
     from adaptgym.openai_session_test import EXTRACT_SCHEMA, VERIFICATION_SCHEMA
-    assert 'target_product' in EXTRACT_SCHEMA['properties']
-    assert 'selected_product_id' not in EXTRACT_SCHEMA['properties']
-    assert 'target_product' in VERIFICATION_SCHEMA['properties']
-    assert 'selected_product' not in VERIFICATION_SCHEMA['properties']
+    for field in ('target_products', 'selected_products'):
+        assert EXTRACT_SCHEMA['properties'][field]['type'] == 'array'
+        assert VERIFICATION_SCHEMA['properties'][field]['properties']['observed_value']['type'] == 'array'
+    assert 'target_product' not in EXTRACT_SCHEMA['properties']
 
 
 def test_target_product_persists_across_followups_and_completion():
@@ -717,7 +724,7 @@ def test_target_product_persists_across_followups_and_completion():
     assert plan['exchanges'][0]['target_product'] is None
     assert all(step['target_product'] == product for step in plan['exchanges'][1:])
     assert plan['finisher']['target_product'] == product
-    assert expected_outcome(plan, plan['exchanges'][-1]) == {'satisfied': True, 'target_product': product}
+    assert expected_outcome(plan, plan['exchanges'][-1]) == {'satisfied': True, 'target_products': [product], 'selected_products': [product], 'preferences': []}
 
 
 def test_new_task_resets_product_and_satisfaction_instead_of_carrying_old_choice():
@@ -726,7 +733,7 @@ def test_new_task_resets_product_and_satisfaction_instead_of_carrying_old_choice
     new_task = {'exchange': 4, 'expected_events': [{'operation': 'begin_task', 'task_id': 'task-2'}],
                 'target_product': None}
     plan['exchanges'].append(new_task)
-    assert expected_outcome(plan, new_task) == {'satisfied': 'unk', 'target_product': None}
+    assert expected_outcome(plan, new_task) == {'satisfied': 'unk', 'target_products': [], 'selected_products': [], 'preferences': []}
     intent = {'active_task_id': 'task-2', 'target_product': None, 'claims': []}
     assert build_search_request(intent, 'footwear') is not None
 
@@ -738,6 +745,82 @@ def test_negative_completion_summary_describes_stopping_not_an_active_search():
     assert not summary.startswith('Find')
     assert build_search_request(state, 'footwear') is None
     assert describe_intent({**state, 'satisfied': True}, 'footwear') == 'The user found what they wanted and finished searching.'
+
+
+def test_extra_attributes_can_be_ignored_without_ignoring_expected_errors():
+    import copy
+    vertical, _, catalog = fixtures()
+    step = copy.deepcopy(generate_plan(vertical, catalog, 'initial_need')['exchanges'][0])
+    original = prediction_for(step)
+    attribute = original['claims'][0]['attribute']
+    extras = [c for c in original['claims'] if c['attribute'] != attribute]
+    assert extras
+    step['planned_state']['entries'] = [e for e in step['planned_state']['entries']
+                                        if e['assignment']['attribute'] == attribute]
+    prediction = prediction_for(step)
+    prediction['claims'].append(extras[0])
+    prediction['search_request'] = build_search_request(prediction, vertical.vertical_id)
+    messages = [{'id': 'u1', 'role': 'user', 'text': step['shopper_instruction']}]
+    assert not score_extraction(prediction, step, vertical, messages, catalog)['exact_state']
+    score = score_extraction(prediction, step, vertical, messages, catalog, ignore_extra_attributes=True)
+    assert score['valid'] and score['exact_state'] and not score['strict_exact_state']
+    assert score['predicted_claims'] > score['correct_claims']
+    missing = copy.deepcopy(prediction)
+    missing['claims'] = extras[:1]
+    assert not score_extraction(missing, step, vertical, messages, catalog,
+                                ignore_extra_attributes=True)['exact_state']
+    wrong = copy.deepcopy(prediction)
+    wrong['claims'][0]['strength'] = 'soft' if wrong['claims'][0]['strength'] == 'hard' else 'hard'
+    assert not score_extraction(wrong, step, vertical, messages, catalog,
+                                ignore_extra_attributes=True)['exact_state']
+
+
+def test_value_only_accuracy_ignores_metadata_but_requires_all_typed_values():
+    import copy
+    vertical, _, catalog = fixtures()
+    step = generate_plan(vertical, catalog, 'initial_need')['exchanges'][0]
+    numeric_entry = copy.deepcopy(step['planned_state']['entries'][0])
+    numeric_entry['assignment'] = vertical.assignment('price', 100, 'lte')
+    step['planned_state']['entries'].append(numeric_entry)
+    prediction = prediction_for(step)
+    messages = [{'id': 'u1', 'role': 'user', 'text': step['shopper_instruction']}]
+    for c in prediction['claims']:
+        c.update(scope='durable', task_id=None, strength='soft')
+        if c['operator'] == 'lte':
+            c['operator'] = 'gte'
+    prediction['satisfied'] = True
+    assert not score_extraction(prediction, step, vertical, messages, catalog)['exact_state']
+    assert score_extraction(prediction, step, vertical, messages, catalog,
+                            value_only=True)['exact_state']
+    missing = copy.deepcopy(prediction)
+    missing['claims'].pop(0)
+    assert not score_extraction(missing, step, vertical, messages, catalog,
+                                value_only=True)['exact_state']
+    wrong = copy.deepcopy(prediction)
+    numeric = next(c for c in wrong['claims'] if isinstance(c['value'], (int, float)))
+    numeric['value'] += 1
+    assert not score_extraction(wrong, step, vertical, messages, catalog,
+                                value_only=True)['exact_state']
+
+
+def test_value_only_accepts_case_changes_and_array_membership():
+    from adaptgym.openai_session_test import value_signatures
+    vertical, _, catalog = fixtures()
+    step = generate_plan(vertical, catalog, 'initial_need')['exchanges'][0]
+    prediction = prediction_for(step)
+    for c in prediction['claims']:
+        c['value'] = [c['value']]
+        c['operator'] = 'in'
+    messages = [{'id': 'u1', 'role': 'user', 'text': step['shopper_instruction']}]
+    score = score_extraction(prediction, step, vertical, messages, catalog, value_only=True)
+    assert score['valid'] and score['exact_state']
+    assert not score['strict_exact_state']
+    expected = value_signatures([{'attribute': 'work_arrangement', 'value': 'remote'}])
+    assert expected <= value_signatures([{'attribute': 'work_arrangement',
+                                         'value': ['REMOTE', 'hybrid']}])
+    assert not expected <= value_signatures([{'attribute': 'work_arrangement', 'value': ['hybrid']}])
+    assert value_signatures([{'attribute': 'n', 'value': 4}]) != value_signatures([
+        {'attribute': 'n', 'value': '4'}])
 
 
 @pytest.mark.parametrize('state_mode', ['accumulated', 'previous_correct'])

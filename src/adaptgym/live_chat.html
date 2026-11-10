@@ -1,0 +1,219 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>AdaptGym · Live chat</title><link rel="stylesheet" href="/assets/site-header.css"><style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+:root{color-scheme:light;--paper:#f7f6f2;--white:#fffefa;--ink:#262924;--muted:#747870;--line:#dddfd6;--orange:#dc6038;--pale:#f4e7df;--green:#4d6655;--mono:'IBM Plex Mono',monospace;--sans:'DM Sans',system-ui,sans-serif}
+*{box-sizing:border-box}[hidden]{display:none!important}body{margin:0;background:var(--paper);color:var(--ink);font:14px/1.65 var(--sans)}main{max-width:1180px;margin:auto;padding:0 48px 48px}button,select,textarea{font:inherit}button,summary{cursor:pointer}button:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{outline:2px solid var(--orange);outline-offset:3px}::selection{background:#efc2ad}
+.intro{padding:38px 0 28px}.eyebrow,.panel-index,.tag{font:9px/1.7 var(--mono);letter-spacing:1px;text-transform:uppercase;color:var(--muted)}.eyebrow{margin:0 0 10px}h1{font:clamp(32px,4vw,48px)/1.14 Georgia,serif;letter-spacing:-1.4px;margin:0 0 12px}h1 em{font-weight:400;color:var(--orange)}.lead{margin:0;color:var(--muted);font-size:13px}.muted{color:var(--muted);font-size:11px;line-height:1.8}.controls{display:flex;flex-wrap:wrap;gap:14px;align-items:end;margin:0;padding:18px 0;border-top:1px solid var(--line)}label{display:grid;gap:6px;font-size:10px;color:var(--muted)}select,textarea{min-width:0;border:1px solid var(--line);border-radius:3px;padding:9px 11px;background:var(--white);color:var(--ink);font-size:11px}select{max-width:100%;text-overflow:ellipsis}button{padding:9px 14px;border:1px solid var(--line);border-radius:3px;background:transparent;color:var(--ink);font-size:11px;line-height:1.6;white-space:nowrap}button:hover{border-color:var(--ink)}button:disabled{opacity:.45;cursor:default}#send{background:var(--ink);border-color:var(--ink);color:var(--white)}#nextTurn:hover,#send:hover{background:var(--green);border-color:var(--green)}.controls>.muted{flex:1;min-width:180px;margin:0 0 6px;font:9px/1.8 var(--mono)}#replayControls{background:#eeeee7;padding:14px 16px;border:1px solid var(--line);border-radius:4px;margin:0 0 12px}#replayControls label{flex:1;min-width:0}#replaySample{width:100%}#replayProgress{margin:0;font:9px/1.8 var(--mono)}#status{min-height:18px;margin:12px 0 20px;color:var(--green);font:10px/1.8 var(--mono);overflow-wrap:anywhere}
+.layout{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:24px;align-items:start}.panel{min-width:0;background:var(--white);border:1px solid var(--line);border-radius:4px;overflow:hidden}.panel-heading{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:18px 20px;border-bottom:1px solid var(--line)}h2{font:25px/1.3 Georgia,serif;letter-spacing:-.4px;margin:0}.panel-index{color:var(--orange);font-size:8px;white-space:nowrap}.panel-body{padding:16px 20px}.panel-body>details:last-child{margin-bottom:0}#conversation{position:relative;height:510px;overflow:auto;padding:18px 20px;scrollbar-width:thin;scrollbar-color:#ced2c7 transparent}#conversation:has(>p:only-child){display:grid;place-content:center;text-align:center}#conversation>p{max-width:280px;font-size:12px;line-height:1.9}.message{margin:0 0 14px;padding:13px 14px;border:1px solid var(--line);border-radius:4px;background:#eeeee8;overflow-wrap:anywhere;font-size:12px;line-height:1.85}.message.user{background:var(--white);border-left:2px solid #b8c7ae}.role{display:block;margin-bottom:7px;font:8px/1.7 var(--mono);letter-spacing:.9px;text-transform:uppercase;color:var(--muted)}.message-copy{white-space:pre-wrap}.message-products{border-top:1px solid #d6d9ce;padding-top:9px;margin-top:12px}.message-products summary{color:var(--green);font:9px/1.8 var(--mono)}.catalog-option{padding:12px 0;border-bottom:1px solid var(--line)}.catalog-option:last-child{border-bottom:0}.catalog-option strong{display:block;font-size:11px;font-weight:600}.catalog-option .item-id{font:8px/1.8 var(--mono);color:var(--muted)}.catalog-option p{font-size:10px;line-height:1.9;color:var(--muted);margin:5px 0 0}#chat{padding:16px 20px 20px;border-top:1px solid var(--line);background:var(--paper)}textarea{width:100%;min-height:80px;resize:vertical;font:12px/1.8 var(--sans)}form button{display:block;margin:10px 0 0 auto}#extractorStatus{margin:0 0 12px;font:9px/1.9 var(--mono);color:var(--green)}#extractorStatus:empty{display:none}#profile{max-height:510px;min-height:180px;overflow:auto;scrollbar-width:thin}#profile>p{padding:22px 8px;text-align:center}#profile[aria-busy=true]{opacity:.6;transition:opacity .15s}.profile-group{padding:12px 0;border-top:1px solid var(--line)}.profile-group:first-child{border-top:0;padding-top:0}.profile-group strong{display:block;font:8px/1.8 var(--mono);text-transform:uppercase;letter-spacing:.7px;color:var(--muted);margin-bottom:5px}.profile-value{white-space:pre-line;overflow-wrap:anywhere;font-size:12px;line-height:1.85}details{margin-top:12px}summary{font-size:10px;color:var(--muted)}pre{white-space:pre-wrap;overflow-wrap:anywhere;max-height:320px;overflow:auto;padding:12px;background:#eeeee7;border:1px solid var(--line);border-radius:3px;font:9px/1.9 var(--mono);color:#596052}.product{padding:12px 16px;margin:10px 20px;border:1px solid var(--line);border-radius:3px}.product summary{color:var(--green);font-size:10px}
+.metrics-section{margin-top:28px;padding-top:22px;border-top:1px solid var(--line)}.section-heading{display:flex;justify-content:space-between;align-items:baseline;gap:12px}.metrics-section>.muted{max-width:780px;margin:10px 0 16px;font-size:10px}.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.metric{min-width:0;padding:16px;background:var(--white);border:1px solid var(--line);border-radius:4px}.metric b{display:block;font:27px/1.3 Georgia,serif;letter-spacing:-.5px;margin-bottom:7px}.metric span{display:block;font:8px/1.8 var(--mono);color:var(--muted)}#changes{font-size:10px}.session-note{margin-top:24px;padding-top:12px;border-top:1px solid var(--line)}.session-note p{max-width:780px}
+@media(max-width:900px){main{padding-inline:24px}.layout{gap:16px}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:650px){main{padding-inline:20px}.intro{padding:28px 0 24px}h1{font-size:36px}.layout{gap:12px;grid-template-columns:minmax(0,1.08fr) minmax(0,1fr)}.panel-heading{padding:14px 12px;align-items:start;flex-direction:column;gap:4px}h2{font-size:22px}.panel-body,#conversation{padding:12px}#chat{padding:12px}.message{padding:10px;font-size:11px}#conversation{height:470px}.controls{gap:10px}.controls>.muted{flex-basis:100%;margin:0}.metric{padding:12px}.metric b{font-size:25px}}@media(max-width:480px){.layout{grid-template-columns:1fr}#conversation{height:400px}.panel-heading{flex-direction:row}#replayControls{gap:10px}#replayControls label{flex-basis:100%}}@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+
+.extraction-legend{display:flex;flex-wrap:wrap;gap:6px 12px;margin:0 0 14px;font:8px/1.8 var(--mono)}.extraction-legend span::before{content:'●';margin-right:5px}.correct{--feedback:#3f7252;--feedback-bg:#edf4ec}.wrong{--feedback:#b04539;--feedback-bg:#faeeeb}.incomplete{--feedback:#ad6a22;--feedback-bg:#fbf1e2}.extraction-legend span{color:var(--feedback)}.extraction-value{margin:7px 0;padding:9px 10px;border-left:2px solid var(--feedback,var(--line));border-radius:2px;background:var(--feedback-bg,transparent);color:var(--feedback,var(--ink));font-size:11px;line-height:1.85;overflow-wrap:anywhere;white-space:pre-line}.feedback-label{display:block;font:8px/1.8 var(--mono);letter-spacing:.3px;margin-bottom:3px}.feedback-detail{display:block;margin-top:5px;font-size:10px;opacity:.9}.reference-warning{font-size:10px;color:var(--muted);margin:0 0 12px;line-height:1.8}
+#extractorStatus:not(:empty){display:flex;align-items:flex-start;gap:8px}#extractorStatus:not(:empty)::before{content:'';display:block;flex:0 0 13px;width:13px;height:13px;margin-top:3px;border:2px solid #d9dfd3;border-top-color:var(--green);border-radius:50%;animation:extract-spin .8s linear infinite}@keyframes extract-spin{to{transform:rotate(360deg)}}@media(prefers-reduced-motion:reduce){#extractorStatus:not(:empty)::before{animation:none;border-top-color:var(--green);border-right-color:var(--green)}}
+#startExtraction{background:var(--green);border-color:var(--green);color:var(--white)}#startExtraction:hover{background:#3d5745}#profileTurn{font:8px/1.8 var(--mono);color:var(--muted);margin:0 0 10px}#extractionReady{font-size:10px;color:var(--green);margin:0 0 12px}
+.layout.comparing{grid-template-columns:repeat(2,minmax(0,1fr))}.layout.comparing>section{grid-column:1/-1}.layout.comparing #conversation{height:220px}.comparison-turn-metrics{font:10px/1.8 var(--mono);color:var(--green)}#rightPanel #right-profile{max-height:510px;overflow:auto}#savedModelControls label{gap:8px}@media(max-width:700px){.layout.comparing{grid-template-columns:1fr}}
+</style></head><body>
+<header class="site-header"><a class="site-brand" href="/" aria-label="AdaptGym home"><span aria-hidden="true">a·</span>AdaptGym</a><nav class="site-nav" aria-label="Main navigation"><a href="/about">Overview</a><a href="/">Session lab</a><a href="/live" aria-current="page">Live chat</a><a href="/flows">Evaluation &amp; training</a><a href="https://github.com/flavianv/adaptgym" target="_blank" rel="noopener noreferrer">GitHub ↗</a></nav></header>
+<main><section class="intro"><p class="eyebrow">THE ADAPTATION LABORATORY · LIVE CHAT</p><h1>A conversation. <em>An evolving profile.</em></h1><p class="lead">Refine a search, compare alternatives, change your mind. Watch the extractor follow.</p></section>
+<div class="controls"><label>Catalog <select id="catalog"><option value="job_search">Jobs</option><option value="footwear">Shoes</option></select></label><button id="reset">New chat</button><label>Mode <select id="mode"><option value="chat">Live conversation</option><option value="replay">Live extraction · Luna</option><option id="savedResultsMode" value="saved">Play pre-extracted</option></select></label><span id="modeNote" class="muted">Up to 20 turns per chat · each message makes two model calls: baseline extraction and assistant response.</span></div>
+<section id="replayControls" class="controls" hidden><label>Saved conversation <select id="replaySample"></select></label><button id="startExtraction" disabled>Start extraction</button><button id="nextTurn" disabled>Next turn</button><button id="previousTurn" disabled>Previous turn</button><span id="replayProgress" class="muted"></span></section>
+<section id="savedModelControls" class="controls" hidden><label><input type="checkbox" id="compareModels"> Compare side by side</label><label id="leftModelLabel">Model <select id="leftModel"><option value="luna">Luna</option><option value="baseline">Qwen 4B zero-shot</option><option value="lora">Qwen 4B fine-tuned</option></select></label><label id="rightModelLabel" hidden>Right model <select id="rightModel"><option value="luna">Luna</option><option value="baseline">Qwen 4B zero-shot</option><option value="lora" selected>Qwen 4B fine-tuned</option></select></label><a class="muted" href="/reports/qwen4b-lora-report.md" download>Download experiment report (.md)</a></section><p id="status" role="status" aria-live="polite"></p><div class="layout"><section class="panel"><div class="panel-heading"><h2>Conversation</h2><span class="panel-index">01 / CATALOG ASSISTANT</span></div><div id="conversation"><p class="muted">Tell the assistant what you’re looking for. Then refine, compare, or change your mind.</p></div><form id="chat"><label for="message">Your message</label><textarea id="message" maxlength="2000" required placeholder="I’m looking for a part-time job in Tokyo…"></textarea><button id="send">Send message</button></form></section><aside class="panel"><div class="panel-heading"><h2 id="extractorTitle">Luna extractor</h2><span class="panel-index" id="extractorLabel">02 / LIVE EXTRACTION</span></div><div class="panel-body"><p id="profileTurn" class="muted">Not extracted yet</p><p id="extractionReady" class="muted" hidden></p><p id="extractorStatus" class="muted" role="status" aria-live="polite"></p><div id="extractionLegend" class="extraction-legend" hidden><span class="correct">Correct</span><span class="wrong">Wrong / missing</span><span class="incomplete">Partial / attribute differences</span></div><p id="referenceWarning" class="reference-warning" hidden>Scored against a reference label flagged for review.</p><div id="profile"><p class="muted">The baseline profile will appear after your first message.</p></div><details><summary>Structured profile &amp; evidence</summary><pre id="raw">{}</pre></details><details id="validationDetails" hidden><summary>Output validity &amp; checks</summary><p id="validationMessage" class="muted"></p><pre id="validationRaw">{}</pre></details><details id="referenceDetails" hidden><summary>Reference target · replay only</summary><p id="referenceAudit" class="muted"></p><pre id="referenceRaw">{}</pre></details><details><summary>Baseline prompt</summary><pre id="extractorPrompt">Simple intent extraction · Luna</pre></details></div></aside></div>
+<section class="metrics-section" aria-label="Live metrics"><div class="section-heading"><h2>This conversation</h2><span class="tag">EXTRACTION METRICS</span></div><p class="muted">Live chat shows operational metrics because it has no labeled ground truth. Replay also shows per-turn value precision and recall against the saved reference: capitalization is ignored and arrays are scored as value sets. Reference labels flagged by the audit remain marked for review.</p><div id="metrics" class="metrics"></div><p id="changes" class="muted"></p></section><details class="session-note"><summary>About this session</summary><p class="muted">Live conversation and live extraction use GPT-6 Luna. Play pre-extracted offers saved Luna, Qwen 4B zero-shot and Qwen 4B fine-tuned outputs, with synchronized model comparison. Saved experiment traces use the same full extraction prompt; Luna uses the OpenAI Responses API while Qwen uses the frozen local-serving configuration. Conversations stay in server memory for up to one hour. Start a new chat to reset the profile.</p></details></main>
+<script>
+let profileScope=null;
+const $=id=>(profileScope?.querySelector('#right-'+id))||document.getElementById(id);let session=null,busy=false,replayData=null,replayEvaluation=null,replayIndex=0,revealedTurns=0,replayDone=false,replayResults=[],lastMetrics={};
+function el(tag,text,cls){const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(cls)e.className=cls;return e}
+function metric(value,label){const e=el('div',undefined,'metric');e.append(el('b',value),el('span',label));return e}
+function renderMetrics(m){lastMetrics=m;$('metrics').replaceChildren(...[[m.turns??0,'User turns'],[m.extraction_ms===undefined?'—':(m.extraction_ms/1000).toFixed(2)+' s','Extraction latency'],[m.attempts?Math.round(100*m.valid_outputs/m.attempts)+'%':'—','Validated turns / attempts'],[m.attributes??0,'Active attributes'],[m.item_preferences??0,'Item preferences'],[m.matching_items??'—','Matching catalog items'],[m.targets??0,'Items of interest'],[m.selected??0,'Selected items']].map(x=>metric(...x)));if(m.value_precision!==undefined){for(const [value,label] of [[m.value_precision,'Value precision · this turn'],[m.value_recall,'Value recall · this turn']])$('metrics').append(metric(value===null?'—':Math.round(value*100)+'%',label));$('metrics').append(metric(m.preferences_correct?'Match':'Mismatch','Item preference pairs · this turn'))}
+$('changes').textContent=m.changed_attributes?.length?'Updated: '+m.changed_attributes.join(', '):'No attribute changes.'}
+function group(title,value){const e=el('div',undefined,'profile-group');e.append(el('strong',title));if(value!==undefined)e.append(el('div',value,'profile-value'));$('profile').append(e);return e}
+// Normalize values as the replay metrics do: capitalization and array order do not matter.
+function valueKey(value){return JSON.stringify(typeof value==='string'?value.toLowerCase():value)}
+function assessValues(actual,expected){
+ const got=new Set(actual.map(valueKey)),want=new Set(expected.map(valueKey));
+ const matched=[...want].filter(v=>got.has(v)).length;
+ if(!got.size&&want.size)return {status:'wrong',label:'Missing entirely'};
+ if(!want.size&&got.size)return {status:'incomplete',label:'Unexpected attribute or item'};
+ if(want.size&&!matched)return {status:'wrong',label:'Wrong value'};
+ if(matched<want.size)return {status:'incomplete',label:'Incomplete'};
+ if([...got].some(v=>!want.has(v)))return {status:'incomplete',label:'Extra values'};
+ return {status:'correct',label:'Correct'};
+}
+function feedbackRow(parent,text,assessment,expected){
+ const row=el('div',undefined,'extraction-value '+assessment.status);
+ row.append(el('span',assessment.label,'feedback-label'),el('span',text));
+ if(assessment.status!=='correct')row.append(el('span','Expected: '+expected,'feedback-detail'));
+ parent.append(row);
+}
+function claimText(c){return c.attribute+' '+c.operator+' '+JSON.stringify(c.value)+' ('+c.strength+')'}
+function renderProfile(p,reference=null,verification=null){
+ $('profile').replaceChildren();$('extractionLegend').hidden=!reference;
+ $('referenceWarning').hidden=!reference||Boolean(verification?.accepted);
+ if(!p){
+  const parent=group('Extraction result');feedbackRow(parent,'No structured output returned',{status:'wrong',label:'Invalid output'},'A structured profile');
+  for(const claim of reference?.claims||[])feedbackRow(parent,claim.attribute+' · no extracted value',{status:'wrong',label:'Missing entirely'},claimText(claim));
+  $('raw').textContent='null';return;
+ }
+ group('Current intent',p.intent);
+ const assessed=new Set(),scopeParents={};
+ for(const scope of ['task','durable','unknown']){
+  const parent=group(scope==='task'?'Current search':scope==='durable'?'Long-term preferences':'Scope unknown');
+  scopeParents[scope]=parent;
+  const claims=p.claims.filter(c=>c.scope===scope);
+  for(const c of claims){
+   if(!reference){parent.append(el('div',claimText(c),'profile-value'));continue}
+   const candidates=reference.claims.filter(e=>e.attribute===c.attribute);
+   // Match values across scopes first; report scope/operator/strength errors separately.
+   const exactScope=candidates.filter(e=>e.scope===c.scope&&e.task_id===c.task_id);
+   const pool=exactScope.length?exactScope:candidates;
+   const scored=pool.map(e=>({expected:e,assessment:assessValues([].concat(c.value),[].concat(e.value))}));
+   const rank={correct:0,incomplete:1,wrong:2};scored.sort((a,b)=>rank[a.assessment.status]-rank[b.assessment.status]);
+   const match=scored[0];let assessment=match?.assessment||{status:'incomplete',label:'Unexpected attribute'};
+   if(match){
+    assessed.add(reference.claims.indexOf(match.expected));
+    if(assessment.status==='correct'&&['scope','task_id','operator','strength'].some(k=>c[k]!==match.expected[k]))assessment={status:'incomplete',label:'Scope / requirement differences'};
+   }
+   feedbackRow(parent,claimText(c),assessment,match?claimText(match.expected)+' · '+match.expected.scope:'No claim for this attribute');
+  }
+  if(!parent.querySelector('.extraction-value,.profile-value'))parent.append(el('div','None established','profile-value'));
+ }
+ if(reference)reference.claims.forEach((c,i)=>{
+  if(assessed.has(i))return;
+  const parent=scopeParents[c.scope];if(!parent)return;
+  parent.querySelector(':scope > .profile-value')?.remove();
+  const otherScope=p.claims.some(a=>a.attribute===c.attribute);
+  const strings=[].concat(c.value).filter(v=>typeof v==='string').map(valueKey);
+  const elsewhere=p.claims.filter(a=>a.attribute!==c.attribute&&[].concat(a.value).some(v=>typeof v==='string'&&strings.includes(valueKey(v)))).map(a=>a.attribute);
+  const assessment=otherScope?{status:'incomplete',label:'Missing for this scope'}:elsewhere.length?{status:'incomplete',label:'Possible field mismatch · value appears under '+[...new Set(elsewhere)].join(', ')}:{status:'wrong',label:'Missing entirely'};
+  feedbackRow(parent,c.attribute+' · no extracted value',assessment,claimText(c));
+ });
+ for(const [key,title,format] of [
+  ['target_products','Items of interest',x=>x],['selected_products','Selected items',x=>x],
+  ['preferences','Relative item preferences',x=>x.preferred+' > '+x.over]]){
+  const actual=p[key].map(format),expected=reference?.[key].map(format);
+  const parent=group(title);
+  if(reference)feedbackRow(parent,actual.join(', ')||'None',assessValues(actual,expected),expected.join(', ')||'None');
+  else parent.append(el('div',actual.join(', ')||'None established','profile-value'));
+ }
+ const outcome=x=>x==='unk'?'Not established':x?'Satisfied':'Not satisfied';
+ const parent=group('Outcome');
+ if(reference)feedbackRow(parent,outcome(p.satisfied),assessValues([p.satisfied],[reference.satisfied]),outcome(reference.satisfied));
+ else parent.append(el('div',outcome(p.satisfied),'profile-value'));
+ $('raw').textContent=JSON.stringify(p,null,2);
+}
+function reset(){session=null;replayData=null;replayEvaluation=null;replayIndex=0;revealedTurns=0;replayDone=false;replayResults=[];$('nextTurn').textContent='Next turn';$('startExtraction').textContent='Start extraction';$('nextTurn').disabled=true;$('startExtraction').disabled=true;$('profileTurn').textContent='Not extracted yet';$('extractionReady').hidden=true;setExtractorPending(false);$('extractorStatus').textContent='';$('replayProgress').textContent='';$('referenceDetails').hidden=true;$('validationDetails').hidden=true;$('extractionLegend').hidden=true;$('referenceWarning').hidden=true;$('conversation').replaceChildren(el('p','Tell the assistant what you’re looking for.','muted'));$('profile').replaceChildren(el('p','The baseline profile will appear after your first message.','muted'));$('raw').textContent='{}';$('message').value='';$('message').placeholder=$('catalog').value==='job_search'?'I’m looking for a part-time job in Tokyo…':'I need road-running shoes under €150…';$('status').textContent='';renderMetrics({});}
+async function refreshReplaySamples(){
+ const response=await fetch('/api/samples?vertical='+encodeURIComponent($('catalog').value));
+ const samples=await response.json();$('replaySample').replaceChildren();
+ for(const s of samples){const option=el('option',s.label);option.value=s.id;$('replaySample').append(option)}
+ $('savedResultsMode').disabled=!samples.some(s=>s.evaluation_available);
+ if($('mode').value==='saved'&&$('savedResultsMode').disabled){$('mode').value='replay';$('modeNote').textContent='One model call per turn · Start extraction processes the whole conversation.'}
+ if(samples.length&&$('mode').value!=='chat')await loadReplay();
+}
+function busyControls(value){
+ busy=value;for(const id of ['send','reset','catalog','mode','replaySample'])$(id).disabled=value;
+ const total=replayData?.plan.exchanges.length||0;
+ $('nextTurn').disabled=value||!replayData||replayIndex+1>=total||replayResults.length<=replayIndex+1;
+ $('startExtraction').disabled=value||!replayData||replayResults.length===total;
+}
+function appendMessage(role,text){
+ const line=el('div',undefined,'message '+role);line.append(el('span',role==='user'?'You':'Catalog assistant','role'));
+ const split=role==='assistant'?text.search(/\n1\. /):-1;
+ line.append(el('div',split<0?text:text.slice(0,split),'message-copy'));
+ if(split>=0){
+  const details=el('details',undefined,'message-products'),rows=text.slice(split+1).split(/\n(?=\d+\. )/);
+  details.append(el('summary',rows.length+' catalog options · view details'));
+  for(const row of rows){const card=el('div',undefined,'catalog-option'),parts=row.split(': ');card.append(el('strong',parts.shift()),el('p',parts.join(': ')));details.append(card)}
+  line.append(details);
+ }
+ $('conversation').append(line);return line;
+}
+async function loadReplay(){
+ reset();busyControls(true);
+ try{
+  const response=await fetch('/api/sample?vertical='+encodeURIComponent($('catalog').value)+'&id='+encodeURIComponent($('replaySample').value));
+  if(!response.ok)throw Error('Sample unavailable');replayData=await response.json();
+  if($('mode').value==='saved'){
+   const saved=await fetch('/api/replay-results?vertical='+encodeURIComponent($('catalog').value)+'&id='+encodeURIComponent(replayData.sample_id));
+   const data=await saved.json();if(!saved.ok)throw Error(data.error||'Saved evaluation unavailable');replayEvaluation=data;
+  }
+  $('conversation').replaceChildren();showReplayTurn();
+ }catch(error){$('status').textContent=error.message;replayData=null}
+ finally{busyControls(false)}
+}
+function renderReplayResult(data){
+ $('validationDetails').hidden=false;
+ $('validationMessage').textContent=data.score.valid?'State-validity checks passed.':('Validation failed: '+(data.score.validation_issue||data.score.error_type||'Invalid structured state'));
+ $('validationMessage').className='extraction-value '+(data.score.valid?'correct':'wrong');
+ $('validationRaw').textContent=JSON.stringify({score:data.score,structured_fields_correct:data.structured_fields_correct||null},null,2);
+ renderProfile(data.profile,data.reference_profile,data.verification);renderMetrics(data.metrics);
+ $('extractorPrompt').textContent=data.extractor_prompt;
+ $('referenceDetails').hidden=false;$('referenceRaw').textContent=JSON.stringify(data.reference_profile,null,2);
+ $('referenceAudit').textContent=data.verification?.accepted?'Reference label supported by the model audit.':'Reference label flagged for review by the model audit.';
+ $('profileTurn').textContent='Profile after turn '+(replayIndex+1)+' · '+(data.score.valid?'output valid':'validation failed');
+ $('extractionReady').hidden=true;
+}
+function showReplayTurn(){
+ if(!replayData||replayIndex>=replayData.plan.exchanges.length)return;
+ const step=replayData.plan.exchanges[replayIndex],turn=replayIndex+1;
+ let first;
+ for(const id of [step.shopper_message_id,step.assistant.message_id]){
+  const message=replayData.result.conversation.find(m=>m.id===id);
+  const bubble=appendMessage(message.role,message.text);if(!first)first=bubble;
+ }
+ revealedTurns=turn;replayDone=turn===replayData.plan.exchanges.length;
+ $('conversation').scrollTop=Math.max(0,first.offsetTop-16);
+ $('replayProgress').textContent='Viewing '+turn+' / '+replayData.plan.exchanges.length+' · '+replayResults.length+' extracted';
+ if(replayResults[replayIndex]){
+  renderReplayResult(replayResults[replayIndex]);
+  $('status').textContent='Showing saved result for turn '+turn+' · no model call';
+ }else{
+  $('profileTurn').textContent='Turn '+turn+' ready · not extracted';
+  $('extractionReady').textContent=replayEvaluation?'Start extraction loads results for every turn.':'Start extraction runs the baseline on every turn in this conversation.';
+  $('extractionReady').hidden=false;
+  $('status').textContent='Turn '+turn+' loaded · '+replayData.sample_id+' · extraction has not started';
+ }
+ busyControls(false);
+}
+function setExtractorPending(pending,turn){
+ $('profile').setAttribute('aria-busy',String(pending));
+ $('extractorStatus').textContent=pending?'Extracting'+(turn?' turn '+turn:'')+'… The previous profile stays visible until the update is ready.':'';
+}
+async function extractAllTurns(){
+ if(busy||!replayData||replayResults.length===replayData.plan.exchanges.length)return;
+ busyControls(true);$('extractionReady').hidden=true;
+ const total=replayData.plan.exchanges.length;
+ try{
+  while(replayResults.length<total){
+   const index=replayResults.length,turn=index+1;
+   setExtractorPending(true,turn+' of '+total);
+   $('replayProgress').textContent='Extracting '+turn+' / '+total+' · viewing '+(replayIndex+1);
+   $('status').textContent='Extracting the full conversation · '+index+' / '+total+' complete';
+   let data;
+   if(replayEvaluation){
+    const cp=replayEvaluation.checkpoints[index];
+    data={...cp,extractor_prompt:replayEvaluation.extractor_prompt,metrics:{turns:turn,total_turns:total,value_precision:null,value_recall:cp.reference_profile.claims.length?0:null,preferences_correct:false,...cp.metrics,
+     attempts:turn,valid_outputs:replayEvaluation.checkpoints.slice(0,turn).filter(c=>c.score.valid).length}};
+   }else{
+    const response=await fetch('/api/replay',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({vertical:$('catalog').value,sample_id:replayData.sample_id,session_id:session})});
+    data=await response.json();if(!response.ok)throw Error(data.error||'Replay failed');session=data.session_id;
+   }
+   if(data.metrics.turns!==turn)throw Error('Unexpected replay position; reload this scenario.');
+   replayResults.push(data);
+   if(index===replayIndex)renderReplayResult(data);
+  }
+  $('startExtraction').textContent='Extraction complete';
+  $('replayProgress').textContent=total+' / '+total+' extracted · viewing '+(replayIndex+1);
+  $('status').textContent='All '+total+' turns extracted. Use Next turn to inspect each result.';
+ }catch(error){
+  $('status').textContent=error.message+' · '+replayResults.length+' / '+total+' turns saved';
+  $('startExtraction').textContent='Resume extraction';
+ }finally{setExtractorPending(false);busyControls(false)}
+}
+$('replaySample').onchange=loadReplay;
+$('startExtraction').onclick=extractAllTurns;
+$('nextTurn').onclick=()=>{if(!busy&&replayResults.length>replayIndex+1){replayIndex++;showReplayTurn()}};
+$('mode').onchange=()=>{reset();$('modeNote').textContent=$('mode').value==='saved'?'Saved outputs · no model calls.':$('mode').value==='replay'?'Start extraction processes all turns · Next turn inspects results.':'Up to 20 turns · two model calls per message.';const replay=$('mode').value!=='chat';$('replayControls').hidden=!replay;$('chat').hidden=replay;if(replay)refreshReplaySamples()};
+$('reset').onclick=()=>{reset();if($('mode').value!=='chat')refreshReplaySamples()};$('catalog').onchange=()=>{reset();refreshReplaySamples()};
+$('chat').onsubmit=async e=>{e.preventDefault();if(busy)return;const message=$('message').value.trim();if(!message)return;busyControls(true);$('conversation').querySelector('.muted')?.remove();const pendingUser=appendMessage('user',message);$('conversation').scrollTop=$('conversation').scrollHeight;setExtractorPending(true);$('status').textContent='Extracting your intent and preparing the assistant response…';try{const response=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({session_id:session,vertical:$('catalog').value,message})});const data=await response.json();if(data.session_id)session=data.session_id;if(!response.ok){if(data.attempts)renderMetrics({...lastMetrics,attempts:data.attempts,valid_outputs:data.valid_outputs});throw Error(data.error||'Chat failed')}if(!session)return;appendMessage('assistant',data.reply);for(const p of data.products){const card=el('details',undefined,'product');card.append(el('summary',p.name+' ['+p.id+']'),el('pre',JSON.stringify(p.attributes,null,2)));$('conversation').append(card)}renderProfile(data.profile);$('profileTurn').textContent='Profile after turn '+data.metrics.turns;$('extractorPrompt').textContent=data.extractor_prompt||'Simple intent extraction · Luna';renderMetrics(data.metrics);$('message').value='';$('conversation').scrollTop=$('conversation').scrollHeight;$('status').textContent=(data.metrics.output_valid?'Profile updated':'Baseline validation failed · conversation continues')+' · '+data.model+' · '+(data.metrics.total_ms/1000).toFixed(1)+' s';}catch(error){pendingUser.remove();$('status').textContent=error.message}finally{setExtractorPending(false);busyControls(false)}};
+renderMetrics({});
+</script><script src="/assets/precomputed-player.js"></script></body></html>

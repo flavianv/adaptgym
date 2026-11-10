@@ -283,3 +283,70 @@ def test_shared_header_stylesheet_is_served(server_factory):
         body = request(base, path)[2]
         assert b'href="/assets/site-header.css"' in body
         assert b'<header class="site-header"><a class="site-brand"' in body
+
+
+def test_live_page_and_chat_input_boundaries(server_factory):
+    base = server_factory()
+    assert request(base, '/live')[0] == 200
+    assert b'Luna extractor' in request(base, '/live')[2]
+    for message in ('', 'x'*2001):
+        assert request(base, '/api/chat', headers={'Content-Type':'application/json'},
+                       payload={'message':message})[0] == 400
+    assert request(base, '/api/samples')[0] == 200
+    assert request(base, '/api/sample?id=../../.env')[0] == 404
+    assert request(base, '/api/chat', headers={'Content-Type':'application/json', 'Origin':'https://attacker.example'},
+                   payload={'message':'Hello'})[0] == 403
+
+
+def test_saved_replay_results_are_bound_to_the_sample_version(server_factory, monkeypatch, tmp_path):
+    import hashlib
+    monkeypatch.setattr(demo, 'ROOT', tmp_path)
+    samples = tmp_path / 'runs/inspection-samples'
+    evaluation = tmp_path / 'runs/inspection-evaluation'
+    run = evaluation / 'test-run'
+    samples.mkdir(parents=True)
+    run.mkdir(parents=True)
+    content = b'{"synthetic":true}'
+    (samples / 'sample.json').write_bytes(content)
+    (samples / 'index.json').write_text(json.dumps([{'id':'sample-1','vertical':'footwear','file':'sample.json'}]))
+    (evaluation / 'latest.json').write_text(json.dumps({'directory':'test-run'}))
+    (run / 'sample-1.json').write_text(json.dumps({'completed':True,
+        'sample_sha256':hashlib.sha256(content).hexdigest(),'checkpoints':[]}))
+    base = server_factory()
+    path = '/api/replay-results?vertical=footwear&id=sample-1'
+    assert request(base,path)[0] == 200
+    (samples / 'sample.json').write_text('{"changed":true}')
+    assert request(base,path)[0] == 409
+    (evaluation / 'latest.json').write_text(json.dumps({'directory':'../../outside'}))
+    assert request(base,path)[0] == 400
+
+
+def test_precomputed_models_share_complete_demo_traces(server_factory, monkeypatch):
+    def forbidden(*args,**kwargs):raise AssertionError('saved playback called a model')
+    monkeypatch.setattr(demo.ResponsesClient,'json',forbidden)
+    base=server_factory()
+    status,_,body=request(base,'/api/comparison');assert status==200
+    index=json.loads(body);assert len(index['cases'])==10
+    assert {m['id'] for m in index['models']}=={'luna','baseline','lora'}
+    assert sum(e['vertical']=='footwear' for e in index['cases'])==5
+    assert sum(e['vertical']=='job_search' for e in index['cases'])==5
+    for entry in index['cases']:
+        status,_,body=request(base,'/api/comparison?id='+entry['id']);assert status==200
+        bundle=json.loads(body);assert bundle['sample']['plan']['exchanges']
+        n=entry['turns']
+        for model in ('luna','baseline','lora'):
+            for mode in ('rollout','teacher_forced'):
+                trace=bundle['models'][model][mode]
+                assert trace['completed'] and len(trace['checkpoints'])==n
+                assert [cp['turn'] for cp in trace['checkpoints']]==list(range(1,n+1))
+                assert all('reference_profile' in cp and 'profile' in cp and 'score' in cp for cp in trace['checkpoints'])
+        for mode in ('teacher_forced',):
+            assert len({tuple(cp['input_sha256'] for cp in bundle['models'][m][mode]['checkpoints']) for m in bundle['models']})==1
+    entry=index['cases'][0]
+    status,_,body=request(base,'/api/replay-results?vertical='+entry['vertical']+'&id='+entry['id']+'&model=lora')
+    assert status==200 and json.loads(body)['label']=='Qwen 4B fine-tuned'
+    assert request(base,'/api/comparison?id=../private')[0]==404
+    assert request(base,'/api/replay-results?vertical='+entry['vertical']+'&id='+entry['id']+'&model=unknown')[0]==404
+    assert request(base,'/assets/precomputed-player.js')[0]==200
+    status,headers,body=request(base,'/reports/qwen4b-lora-report.md')
+    assert status==200 and 'text/markdown' in headers['Content-Type'] and b'522' in body

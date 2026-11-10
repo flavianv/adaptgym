@@ -109,10 +109,11 @@
   },
   "compare_products": {
     "title": "Compare displayed alternatives",
-    "description": "The user asks to compare two items from the preceding shortlist. The assistant context identifies the alternatives, but the request alone does not choose one or change requirements. The builder should preserve the current search while tracking only supported intent.",
+    "description": "The user requests a comparison, then expresses an item preference: explicitly X over Y, or contextually “I prefer the first one”. Record preferred/over pairs in preferences and add the preferred item to targets, without selecting it or rejecting alternatives.",
     "expected_behavior": [
-      "Resolve which displayed alternatives are being compared.",
-      "Do not invent a selection or a new requirement."
+      "Resolve compared item IDs from the assistant context.",
+      "Extract item preference pairs only after the user expresses a preference; a comparison request alone adds none.",
+      "Keep preference, interest, and selection separate; never infer attribute preferences from item ranking."
     ],
     "common_mistake": "Treating interest in an item as a selection or preference."
   },
@@ -259,5 +260,41 @@
       "Distinguish the last conversation-supported profile from environment-level task cleanup."
     ],
     "common_mistake": "Treating silence as satisfaction, rejection, or a user-stated completion."
+  },
+  "express_interest": {
+    "title": "Express interest",
+    "description": "The user explicitly likes one or more displayed items without making a final choice.",
+    "expected_behavior": [
+      "Add only user-endorsed IDs to target_products.",
+      "Keep the task and search active; selected_products remains empty."
+    ],
+    "common_mistake": "Treating every recommendation as user interest or confusing liking with selection."
+  },
+  "withdraw_interest": {
+    "title": "Withdraw interest",
+    "description": "The user removes an item from an existing shortlist without abandoning the task.",
+    "expected_behavior": [
+      "Remove the specified ID while preserving other interested items.",
+      "Do not erase requirements, preferences or the entire shortlist."
+    ],
+    "common_mistake": "Keeping a withdrawn item or clearing unrelated user information."
+  },
+  "select": {
+    "title": "Select an item",
+    "description": "The user explicitly chooses an item. A later confirmation determines whether the task is complete.",
+    "expected_behavior": [
+      "Set selected_products and include the chosen ID in target_products.",
+      "Pause search but keep the task active until explicit completion."
+    ],
+    "common_mistake": "Treating interest as a final choice or closing the task immediately."
+  },
+  "mixed": {
+    "title": "Mixed multi-turn sequence",
+    "description": "A session combines volunteered information, explicit corrections and context-dependent replies. Longer traces can include interest, withdrawal and selection.",
+    "expected_behavior": [
+      "Ask only about undisclosed information in the relevant scope.",
+      "Track attributes, user interest and final choices separately."
+    ],
+    "common_mistake": "Repeating known questions or treating all middle turns as the same interaction type."
   }
 }

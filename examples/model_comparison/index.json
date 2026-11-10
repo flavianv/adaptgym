@@ -1,0 +1,262 @@
+{
+  "selection": {
+    "method": "seeded random; five per vertical; test only",
+    "seed": 20261110
+  },
+  "models": [
+    {
+      "id": "luna",
+      "label": "Luna"
+    },
+    {
+      "id": "baseline",
+      "label": "Qwen 4B zero-shot"
+    },
+    {
+      "id": "lora",
+      "label": "Qwen 4B fine-tuned"
+    }
+  ],
+  "cases": [
+    {
+      "id": "sft-shoes-1",
+      "vertical": "footwear",
+      "file": "sft-shoes-1.json",
+      "label": "Shoes 1 · 3 turns",
+      "turns": 3
+    },
+    {
+      "id": "sft-shoes-2",
+      "vertical": "footwear",
+      "file": "sft-shoes-2.json",
+      "label": "Shoes 2 · 4 turns",
+      "turns": 4
+    },
+    {
+      "id": "sft-shoes-3",
+      "vertical": "footwear",
+      "file": "sft-shoes-3.json",
+      "label": "Shoes 3 · 4 turns",
+      "turns": 4
+    },
+    {
+      "id": "sft-shoes-4",
+      "vertical": "footwear",
+      "file": "sft-shoes-4.json",
+      "label": "Shoes 4 · 4 turns",
+      "turns": 4
+    },
+    {
+      "id": "sft-shoes-5",
+      "vertical": "footwear",
+      "file": "sft-shoes-5.json",
+      "label": "Shoes 5 · 5 turns",
+      "turns": 5
+    },
+    {
+      "id": "sft-jobs-1",
+      "vertical": "job_search",
+      "file": "sft-jobs-1.json",
+      "label": "Jobs 1 · 7 turns",
+      "turns": 7
+    },
+    {
+      "id": "sft-jobs-2",
+      "vertical": "job_search",
+      "file": "sft-jobs-2.json",
+      "label": "Jobs 2 · 5 turns",
+      "turns": 5
+    },
+    {
+      "id": "sft-jobs-3",
+      "vertical": "job_search",
+      "file": "sft-jobs-3.json",
+      "label": "Jobs 3 · 6 turns",
+      "turns": 6
+    },
+    {
+      "id": "sft-jobs-4",
+      "vertical": "job_search",
+      "file": "sft-jobs-4.json",
+      "label": "Jobs 4 · 3 turns",
+      "turns": 3
+    },
+    {
+      "id": "sft-jobs-5",
+      "vertical": "job_search",
+      "file": "sft-jobs-5.json",
+      "label": "Jobs 5 · 5 turns",
+      "turns": 5
+    }
+  ],
+  "summary": {
+    "luna": {
+      "teacher_forced": {
+        "rows": 46,
+        "valid": 46,
+        "failed_or_invalid": 0,
+        "value_precision": 0.9876543209876543,
+        "value_recall": 0.9876543209876543,
+        "value_tp": 240,
+        "value_fp": 3,
+        "value_fn": 3,
+        "structured_fields_correct": {
+          "active_task_correct": 46,
+          "selected_products_correct": 46,
+          "target_products_correct": 46,
+          "preferences_correct": 46,
+          "outcome_correct": 46,
+          "search_constraints_correct": 42
+        },
+        "complete_value_coverage": 43,
+        "complete_value_coverage_rate_all": 0.9347826086956522,
+        "complete_value_coverage_rate_valid": 0.9347826086956522,
+        "exact_values": 42,
+        "exact_values_rate_all": 0.9130434782608695,
+        "exact_values_rate_valid": 0.9130434782608695,
+        "strict_exact_state": 41,
+        "strict_exact_state_rate_all": 0.8913043478260869,
+        "strict_exact_state_rate_valid": 0.8913043478260869
+      },
+      "rollout": {
+        "rows": 46,
+        "valid": 46,
+        "failed_or_invalid": 0,
+        "value_precision": 0.9635627530364372,
+        "value_recall": 0.9794238683127572,
+        "value_tp": 238,
+        "value_fp": 9,
+        "value_fn": 5,
+        "structured_fields_correct": {
+          "active_task_correct": 46,
+          "selected_products_correct": 46,
+          "target_products_correct": 46,
+          "preferences_correct": 46,
+          "outcome_correct": 46,
+          "search_constraints_correct": 36
+        },
+        "complete_value_coverage": 41,
+        "complete_value_coverage_rate_all": 0.8913043478260869,
+        "complete_value_coverage_rate_valid": 0.8913043478260869,
+        "exact_values": 35,
+        "exact_values_rate_all": 0.7608695652173914,
+        "exact_values_rate_valid": 0.7608695652173914,
+        "strict_exact_state": 30,
+        "strict_exact_state_rate_all": 0.6521739130434783,
+        "strict_exact_state_rate_valid": 0.6521739130434783
+      }
+    },
+    "baseline": {
+      "teacher_forced": {
+        "rows": 46,
+        "valid": 24,
+        "failed_or_invalid": 22,
+        "value_precision": 0.961038961038961,
+        "value_recall": 0.3045267489711934,
+        "value_tp": 74,
+        "value_fp": 3,
+        "value_fn": 169,
+        "structured_fields_correct": {
+          "active_task_correct": 22,
+          "selected_products_correct": 23,
+          "target_products_correct": 20,
+          "preferences_correct": 22,
+          "outcome_correct": 19,
+          "search_constraints_correct": 19
+        },
+        "complete_value_coverage": 10,
+        "complete_value_coverage_rate_all": 0.21739130434782608,
+        "complete_value_coverage_rate_valid": 0.4166666666666667,
+        "exact_values": 9,
+        "exact_values_rate_all": 0.1956521739130435,
+        "exact_values_rate_valid": 0.375,
+        "strict_exact_state": 4,
+        "strict_exact_state_rate_all": 0.08695652173913043,
+        "strict_exact_state_rate_valid": 0.16666666666666666
+      },
+      "rollout": {
+        "rows": 46,
+        "valid": 21,
+        "failed_or_invalid": 25,
+        "value_precision": 0.8333333333333334,
+        "value_recall": 0.39094650205761317,
+        "value_tp": 95,
+        "value_fp": 19,
+        "value_fn": 148,
+        "structured_fields_correct": {
+          "active_task_correct": 20,
+          "selected_products_correct": 21,
+          "target_products_correct": 15,
+          "preferences_correct": 15,
+          "outcome_correct": 14,
+          "search_constraints_correct": 9
+        },
+        "complete_value_coverage": 12,
+        "complete_value_coverage_rate_all": 0.2608695652173913,
+        "complete_value_coverage_rate_valid": 0.5714285714285714,
+        "exact_values": 9,
+        "exact_values_rate_all": 0.1956521739130435,
+        "exact_values_rate_valid": 0.42857142857142855,
+        "strict_exact_state": 1,
+        "strict_exact_state_rate_all": 0.021739130434782608,
+        "strict_exact_state_rate_valid": 0.047619047619047616
+      }
+    },
+    "lora": {
+      "teacher_forced": {
+        "rows": 46,
+        "valid": 28,
+        "failed_or_invalid": 18,
+        "value_precision": 1.0,
+        "value_recall": 0.5432098765432098,
+        "value_tp": 132,
+        "value_fp": 0,
+        "value_fn": 111,
+        "structured_fields_correct": {
+          "active_task_correct": 28,
+          "selected_products_correct": 28,
+          "target_products_correct": 16,
+          "preferences_correct": 12,
+          "outcome_correct": 12,
+          "search_constraints_correct": 25
+        },
+        "complete_value_coverage": 21,
+        "complete_value_coverage_rate_all": 0.45652173913043476,
+        "complete_value_coverage_rate_valid": 0.75,
+        "exact_values": 21,
+        "exact_values_rate_all": 0.45652173913043476,
+        "exact_values_rate_valid": 0.75,
+        "strict_exact_state": 11,
+        "strict_exact_state_rate_all": 0.2391304347826087,
+        "strict_exact_state_rate_valid": 0.39285714285714285
+      },
+      "rollout": {
+        "rows": 46,
+        "valid": 26,
+        "failed_or_invalid": 20,
+        "value_precision": 0.9807692307692307,
+        "value_recall": 0.41975308641975306,
+        "value_tp": 102,
+        "value_fp": 2,
+        "value_fn": 141,
+        "structured_fields_correct": {
+          "active_task_correct": 26,
+          "selected_products_correct": 26,
+          "target_products_correct": 12,
+          "preferences_correct": 10,
+          "outcome_correct": 10,
+          "search_constraints_correct": 17
+        },
+        "complete_value_coverage": 11,
+        "complete_value_coverage_rate_all": 0.2391304347826087,
+        "complete_value_coverage_rate_valid": 0.4230769230769231,
+        "exact_values": 11,
+        "exact_values_rate_all": 0.2391304347826087,
+        "exact_values_rate_valid": 0.4230769230769231,
+        "strict_exact_state": 5,
+        "strict_exact_state_rate_all": 0.10869565217391304,
+        "strict_exact_state_rate_valid": 0.19230769230769232
+      }
+    }
+  }
+}

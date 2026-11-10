@@ -53,6 +53,10 @@ class VerticalSchema:
                 raise ValueError(f"{name}: define supported operators explicitly")
             if len(ops) != len(set(ops)):
                 raise ValueError(f"{name}: duplicate operators")
+            if 'scenario_operator' in cfg and cfg['scenario_operator'] not in ops:
+                raise ValueError(f"{name}: scenario operator must be supported")
+            if 'correction_eligible' in cfg and type(cfg['correction_eligible']) is not bool:
+                raise ValueError(f"{name}: correction_eligible must be boolean")
             if field["type"] not in {"number", "integer"} and set(ops) - {"eq", "in"}:
                 raise ValueError(f"{name}: ordered comparisons require a numeric attribute")
             if "unit" in cfg and (not isinstance(cfg["unit"], str) or not cfg["unit"]):

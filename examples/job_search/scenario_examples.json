@@ -180,9 +180,21 @@
       {
         "role": "user",
         "text": "Can you compare the first and second options?"
+      },
+      {
+        "role": "assistant",
+        "text": "Option A and Option B differ as shown above. Which do you prefer?"
+      },
+      {
+        "role": "user",
+        "text": "I prefer Option A over Option B."
       }
     ],
-    "expected_result": "Compare A and B; do not select either or alter the existing constraints."
+    "expected_result": "Record preferences=[{preferred: A, over: B}] and target_products=[A]. Keep selected_products empty and do not reject B or infer attribute preferences.",
+    "implicit_variant": {
+      "user_reply": "I prefer the first one.",
+      "expected_result": "Resolve the immediately compared alternatives: A > B, with A interested but not selected."
+    }
   },
   "soft_preference_missed": {
     "conversation": [
@@ -451,5 +463,77 @@
       }
     ],
     "expected_result": "Outcome stays unknown. The environment retires task state after departure without inventing a user completion message."
+  },
+  "express_interest": {
+    "conversation": [
+      {
+        "role": "assistant",
+        "text": "1. Option A. 2. Option B."
+      },
+      {
+        "role": "user",
+        "text": "Both interest me, but I haven’t chosen yet."
+      }
+    ],
+    "expected_result": "target_products=[A,B], selected_products=[]; continue search."
+  },
+  "withdraw_interest": {
+    "conversation": [
+      {
+        "role": "user",
+        "text": "Both interest me."
+      },
+      {
+        "role": "assistant",
+        "text": "Your shortlist contains A and B."
+      },
+      {
+        "role": "user",
+        "text": "Actually, remove B. Keep A."
+      }
+    ],
+    "expected_result": "target_products=[A]; retain other information."
+  },
+  "select": {
+    "conversation": [
+      {
+        "role": "assistant",
+        "text": "1. Option A. 2. Option B."
+      },
+      {
+        "role": "user",
+        "text": "I’ll take the first one."
+      },
+      {
+        "role": "assistant",
+        "text": "Noted. Is this task complete?"
+      }
+    ],
+    "expected_result": "target_products=[A], selected_products=[A]; task remains active."
+  },
+  "mixed": {
+    "conversation": [
+      {
+        "role": "user",
+        "text": "I need options within my budget."
+      },
+      {
+        "role": "assistant",
+        "text": "What location do you require?"
+      },
+      {
+        "role": "user",
+        "text": "Kyoto."
+      },
+      {
+        "role": "assistant",
+        "text": "Here are two matching options."
+      },
+      {
+        "role": "user",
+        "text": "Both interest me, but I haven’t chosen."
+      }
+    ],
+    "expected_result": "Combine the updates at their stated scope; interest does not imply completion."
   }
 }

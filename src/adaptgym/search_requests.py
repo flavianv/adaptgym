@@ -4,11 +4,15 @@ Query wording is illustrative; semantic correctness is assessed by the model jud
 """
 from __future__ import annotations
 
+import copy
+
 import json
+
+from adaptgym.product_interest import selected_products, target_products
 
 
 def build_search_request(intent: dict, vertical_id: str, simulation: dict | None = None) -> dict | None:
-    if not intent['active_task_id'] or intent.get('target_product'):
+    if not intent['active_task_id'] or selected_products(intent):
         return None
     applicable = {}
     for claim in intent['claims']:
@@ -56,24 +60,40 @@ def describe_intent(intent: dict, vertical_id: str, simulation: dict | None = No
         return completion + (' Retain preferences: ' + '; '.join(durable) + '.' if durable else '')
     request = build_search_request(intent, vertical_id, simulation)
     if request is None:
-        return f"Selected {vocab['item']} {intent['target_product']} for the current {vocab['task']}."
+        return f"Selected {vocab['item']} {', '.join(selected_products(intent))} for the current {vocab['task']}."
     hard = '; '.join(text(c) for c in request['filters'])
     soft = '; '.join(text(c) for c in request['preferences'])
-    return (f"Find {vertical_id.replace('_', ' ')} for this {vocab['task']}" +
-            (': ' + hard if hard else '') + '.' + (' Prefer ' + soft + '.' if soft else ''))
+    category = vocab['item'] if (simulation or {}).get('vocabulary') else vertical_id.replace('_', ' ')
+    lead = f"Find a suitable {category}" if (simulation or {}).get('vocabulary') else f"Find suitable {category}"
+    summary = (lead + (': ' + hard if hard else '') + '.' +
+               (' Prefer ' + soft + '.' if soft else ''))
+    # Task overrides affect this search, not the user's retained general preferences.
+    task_attributes = {c['attribute'] for c in intent['claims']
+                       if c['scope'] == 'task' and c['task_id'] == intent['active_task_id']}
+    retained = [text(c) for c in intent['claims']
+                if c['scope'] == 'durable' and c['attribute'] in task_attributes]
+    if retained:
+        summary += ' General preferences retained but overridden for this search: ' + '; '.join(retained) + '.'
+    return summary
 
 
 def expected_outcome(plan: dict, step: dict) -> dict:
     """Only consider exchanges through this shopper checkpoint."""
-    product = None
+    selected, targets, preferences = [], [], []
     satisfied = 'unk'
     for exchange in plan['exchanges']:
         if any(e['operation'] == 'begin_task' for e in exchange['expected_events']):
-            product, satisfied = None, 'unk'
-        if exchange['target_product']:
-            product = exchange['target_product']
+            selected, targets, preferences, satisfied = [], [], [], 'unk'
+        if 'preferences' in exchange:
+            preferences = copy.deepcopy(exchange['preferences'])
+        if 'selected_products' in exchange or exchange.get('target_product'):
+            selected = selected_products(exchange)
+        if 'target_products' in exchange:
+            targets = target_products(exchange)
+        else:
+            targets.extend(pid for pid in selected if pid not in targets)
         if exchange.get('finisher') in ('positive', 'negative'):
             satisfied = exchange['finisher'] == 'positive'
         if exchange['exchange'] == step['exchange']:
             break
-    return {'satisfied': satisfied, 'target_product': product}
+    return {'satisfied': satisfied, 'target_products': targets, 'selected_products': selected, 'preferences': preferences}

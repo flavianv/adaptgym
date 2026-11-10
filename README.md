@@ -80,3 +80,37 @@ git config core.hooksPath .githooks
 
 Hooks require Python and `uvx`. Internal notes, real user data, credentials, and
 private infrastructure references do not belong in this public repository.
+
+## New session-lab scenarios
+
+The lab includes **Express interest**, **Withdraw interest**, **Select**, and a
+**Mixed multi-turn sequence** combining disclosure types and item actions. Mixed
+sessions budget 6–12 distinct attributes from the available catalog properties;
+the count depends on disclosure turns, interaction types and item-action slots.
+The turn control supports up to 12 turns.
+
+`target_products` contains only items the user explicitly expressed interest in.
+`selected_products` records actual choices. Recommendations alone populate neither
+list. Interest keeps search active; choosing and completing a task are separate.
+
+
+Item comparisons also produce `preferences`, a list of `{preferred, over}` item
+ID pairs. “I prefer the first one” uses the clearly referenced alternatives;
+liking an item alone does not imply a ranking or selection.
+
+The **Live chat** page uses Luna as a catalog assistant and a separate baseline
+extractor with a simple prompt. The conversation appears beside the evolving
+profile, with operational metrics underneath. Saved conversations can be replayed
+one turn at a time or with Play/Pause; replay adds reference value precision and
+recall. The trained extractor comparison is reserved for a later update.
+
+Generate local inspection samples with:
+
+```bash
+python scripts/generate_inspection_samples.py --env-file .env
+```
+
+The script creates five job and five footwear conversations with 3–8 turns using
+`gpt-6-luna`. Generated data remains under ignored `runs/inspection-samples/` and
+can be loaded from either the session lab or live replay. Model audits mark
+uncertain reference labels for review; these are not independent guarantees.

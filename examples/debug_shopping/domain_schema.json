@@ -7,7 +7,23 @@
   "additionalProperties": false,
   "x-adaptgym": {
     "vertical_id": "footwear",
-    "version": "1"
+    "version": "1",
+    "benchmark_attributes": [
+      "brand",
+      "price",
+      "size",
+      "colour",
+      "gender",
+      "model",
+      "sport",
+      "primary_use",
+      "cushioning",
+      "upper_material",
+      "surface",
+      "key_characteristics",
+      "style",
+      "closure"
+    ]
   },
   "properties": {
     "brand": {
@@ -206,7 +222,8 @@
         "operators": [
           "eq",
           "in"
-        ]
+        ],
+        "generation_hint": "State a model-name requirement as an attribute constraint. Do not endorse or select a particular listing unless the current event explicitly does so."
       }
     },
     "sport": {
@@ -228,7 +245,8 @@
         "operators": [
           "eq",
           "in"
-        ]
+        ],
+        "generation_hint": "State only this sport; do not infer additional category or primary_use requirements from it."
       }
     },
     "primary_use": {
@@ -282,7 +300,9 @@
         "operators": [
           "eq",
           "in"
-        ]
+        ],
+        "generation_hint": "Describe only the requested use; do not add category or sport labels unless separately required.",
+        "correction_eligible": false
       }
     },
     "cushioning": {
@@ -360,7 +380,8 @@
         "operators": [
           "eq",
           "in"
-        ]
+        ],
+        "generation_hint": "Describe only the required surface or terrain (for example, suitable for road surfaces). Do not add a running sport or product category unless separately present in current_reference."
       }
     },
     "key_characteristics": {
@@ -430,7 +451,8 @@
         "operators": [
           "eq",
           "in"
-        ]
+        ],
+        "correction_eligible": false
       }
     },
     "category": {
@@ -480,7 +502,8 @@
         "operators": [
           "eq",
           "in"
-        ]
+        ],
+        "generation_hint": "Describe the category alone; do not introduce additional sport or use constraints."
       }
     },
     "style": {

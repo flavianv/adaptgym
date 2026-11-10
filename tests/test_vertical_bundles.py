@@ -101,6 +101,11 @@ def test_third_vertical_can_rename_every_field_without_engine_changes():
     schema = bundle.vertical.schema
     renamed = {name: 'custom_' + name for name in schema['properties']}
     schema['properties'] = {renamed[n]: f for n, f in schema['properties'].items()}
+    for key in ('benchmark_attributes', 'preference_attributes'):
+        if key in schema['x-adaptgym']:
+            schema['x-adaptgym'][key] = [renamed[n] for n in schema['x-adaptgym'][key]]
+    if 'disclosure_groups' in schema['x-adaptgym']:
+        schema['x-adaptgym']['disclosure_groups'] = [[renamed[n] for n in group] for group in schema['x-adaptgym']['disclosure_groups']]
     schema['x-adaptgym']['vertical_id'] = 'custom_opportunities'
     config = schema['x-adaptgym']['simulation']
     for key in ('context_attributes', 'refinement_attributes', 'query_attributes', 'display_attributes'):

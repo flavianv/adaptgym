@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 import random
@@ -72,7 +73,8 @@ def make_plan(payload, directory=FIXTURES):
         if mode not in ('all', 'assistant_free', 'assistant_reactive') or subtype not in ('all', 'context_dependent', 'non_context_dependent'):
             raise ValueError('unknown scenario filter')
         candidates = [name for name in MIDDLE_CASES
-                      if (mode == 'all' or CASE_MODES[name] == mode)
+                      if (name != 'mixed' or mode == 'all' and subtype == 'all')
+                      and (mode == 'all' or CASE_MODES[name] == mode)
                       and (subtype == 'all' or CASE_SUBTYPES[name] == subtype
                            or (subtype == 'non_context_dependent' and CASE_SUBTYPES[name] is None))
                       and (turn_count is None or CASE_MIN_TURNS[name] + int(finisher in ('positive', 'negative')) <= turn_count)]
@@ -99,6 +101,18 @@ def run_live(payload, directory=FIXTURES):
     return {'plan': plan, 'result': result, 'api_traces': client.traces,
             'model': model, 'prompt_version': 'modular-vertical-v1',
             'same_model_roles': True}
+
+
+def comparison_index():
+    path=ROOT/'examples/model_comparison/index.json'
+    return json.loads(path.read_text()) if path.is_file() else {'cases':[],'models':[]}
+
+
+def comparison_bundle(sample_id):
+    entry=next((e for e in comparison_index()['cases'] if e['id']==sample_id),None)
+    if not entry or Path(entry['file']).name!=entry['file']:return None
+    path=ROOT/'examples/model_comparison'/entry['file']
+    return json.loads(path.read_text()) if path.is_file() else None
 
 
 def create_server(port=8768, directory=FIXTURES, *, host='127.0.0.1'):
@@ -131,6 +145,9 @@ def create_server(port=8768, directory=FIXTURES, *, host='127.0.0.1'):
                 or parsed.password is not None or parsed.path not in ('', '/') or parsed.query or parsed.fragment):
             raise ValueError('public URL must be an HTTP(S) origin without credentials, path, query, or fragment')
         public_origins.add(parsed.scheme + '://' + parsed.netloc)
+    from adaptgym.live_chat import chat_turn
+    sessions = {}
+    chat_lock = threading.Lock()
     run_lock = threading.Lock()
     status_lock = threading.Lock()
     live_status = {'running': False, 'id': None, 'vertical': None, 'outcome': None}
@@ -170,19 +187,31 @@ def create_server(port=8768, directory=FIXTURES, *, host='127.0.0.1'):
             key = parse_qs(request_url.query).get('vertical', [default_vertical])[0]
             if path == '/healthz':
                 return self.send_json(200, {'status': 'ok'})
+            if path == '/api/comparison':
+                sample_id=parse_qs(request_url.query).get('id',[''])[0]
+                if not sample_id:return self.send_json(200,comparison_index())
+                value=comparison_bundle(sample_id)
+                return self.send_json(200,value) if value else self.send_json(404,{'error':'unknown comparison sample'})
+            if path == '/reports/qwen4b-lora-report.md':
+                report=ROOT/'examples/model_comparison/report.md'
+                if not report.is_file():return self.send_json(404,{'error':'report unavailable'})
+                body=report.read_bytes();self.send_response(200);self.send_header('Content-Type','text/markdown; charset=utf-8');self.send_header('Content-Length',str(len(body)));self.end_headers();self.wfile.write(body);return
             if path == '/api/run-status':
                 return self.send_json(200, status_snapshot())
             pages = {'/': 'viewer.html', '/about': 'introduction.html',
                      '/about/': 'introduction.html', '/lab': 'viewer.html',
-                     '/lab/': 'viewer.html', '/flows': 'flows.html', '/flows/': 'flows.html'}
+                     '/lab/': 'viewer.html', '/live': 'live_chat.html', '/live/': 'live_chat.html', '/flows': 'flows.html', '/flows/': 'flows.html'}
             figures = {'adaptgym-evaluation-flow.svg', 'adaptgym-sft-training-flow.svg',
                        'adaptgym-rlvr-extraction-training-flow.svg',
                        'adaptgym-rlvr-end-to-end-training-flow.svg'}
-            if path in pages or path == '/assets/site-header.css' or path.startswith('/assets/flows/'):
+            if path in pages or path in ('/assets/site-header.css','/assets/precomputed-player.js') or path.startswith('/assets/flows/'):
                 if path in pages:
                     page = 'viewer.html' if path == '/' and 'vertical' in parse_qs(request_url.query) else pages[path]
                     body = (ROOT / 'src/adaptgym' / page).read_bytes()
                     content_type = 'text/html; charset=utf-8'
+                elif path == '/assets/precomputed-player.js':
+                    body=(ROOT/'src/adaptgym/precomputed_player.js').read_bytes()
+                    content_type='text/javascript; charset=utf-8'
                 elif path == '/assets/site-header.css':
                     body = (ROOT / 'src/adaptgym/site-header.css').read_bytes()
                     content_type = 'text/css; charset=utf-8'
@@ -199,6 +228,54 @@ def create_server(port=8768, directory=FIXTURES, *, host='127.0.0.1'):
                 self.send_header('Cache-Control', 'no-store')
                 self.end_headers()
                 self.wfile.write(body)
+            elif path in ('/api/samples', '/api/sample', '/api/replay-results'):
+                sample_root = ROOT / 'runs/inspection-samples'
+                manifest = sample_root / 'index.json'
+                entries = json.loads(manifest.read_text()) if manifest.is_file() else []
+                entries = [e for e in entries if Path(e['file']).name == e['file']
+                           and (sample_root / e['file']).is_file()]
+                if path == '/api/samples':
+                    selected=[dict(e,evaluation_available=False) for e in entries if e['vertical']==key]
+                    selected += [dict(e,evaluation_available=True) for e in comparison_index()['cases'] if e['vertical']==key]
+                    base=(ROOT/'runs/inspection-evaluation').resolve();pointer=base/'latest.json'
+                    if pointer.is_file():
+                        run=(base/json.loads(pointer.read_text())['directory']).resolve()
+                        if run.is_relative_to(base):
+                            for entry in selected:
+                                result_file=run/(entry['id']+'.json')
+                                if result_file.is_file():
+                                    result=json.loads(result_file.read_text())
+                                    entry['evaluation_available']=bool(result.get('completed') and result.get('sample_sha256')==hashlib.sha256((sample_root/entry['file']).read_bytes()).hexdigest())
+                    return self.send_json(200,selected)
+                sample_id = parse_qs(request_url.query).get('id', [''])[0]
+                comparison=comparison_bundle(sample_id)
+                if comparison and comparison['vertical']==key:
+                    if path=='/api/sample':return self.send_json(200,comparison['sample'])
+                    model=parse_qs(request_url.query).get('model',['luna'])[0]
+                    mode=parse_qs(request_url.query).get('state_mode',['rollout'])[0]
+                    result=comparison['models'].get(model,{}).get(mode)
+                    return self.send_json(200,result) if result else self.send_json(404,{'error':'unknown saved model or state mode'})
+                entry = next((e for e in entries if e['id'] == sample_id and e['vertical'] == key), None)
+                if entry is None:
+                    return self.send_json(404, {'error': 'unknown sample'})
+                if path == '/api/replay-results':
+                    base = (ROOT/'runs/inspection-evaluation').resolve()
+                    pointer = base/'latest.json'
+                    if not pointer.is_file():
+                        return self.send_json(404, {'error':'No saved evaluation yet'})
+                    run_root = (base/json.loads(pointer.read_text())['directory']).resolve()
+                    if not run_root.is_relative_to(base):
+                        return self.send_json(400, {'error':'Invalid evaluation directory'})
+                    result_file = run_root/(entry['id']+'.json')
+                    if not result_file.is_file():
+                        return self.send_json(404, {'error':'This sample has not been evaluated yet'})
+                    result = json.loads(result_file.read_text())
+                    if not result.get('completed'):
+                        return self.send_json(409, {'error':'This sample is still being evaluated'})
+                    if result['sample_sha256'] != hashlib.sha256((sample_root/entry['file']).read_bytes()).hexdigest():
+                        return self.send_json(409, {'error':'Saved results belong to a different version of this sample'})
+                    return self.send_json(200,result)
+                return self.send_json(200, json.loads((sample_root / entry['file']).read_text()))
             elif path == '/api/verticals':
                 self.send_json(200, {'default_vertical': default_vertical,
                     'verticals': [{'id': k, 'label': labels[k]} for k in sorted(directories, key=lambda k: labels[k])]})
@@ -242,6 +319,104 @@ def create_server(port=8768, directory=FIXTURES, *, host='127.0.0.1'):
                     raise ValueError('request must be an object')
                 key = payload.get('vertical', default_vertical)
                 bundle_directory = selected_directory(key)
+                if self.path == '/api/replay':
+                    from adaptgym.live_chat import replay_turn, BASELINE_EXTRACTOR_PROMPT
+                    sample_id = payload.get('sample_id')
+                    sample_root = ROOT / 'runs/inspection-samples'
+                    manifest = sample_root / 'index.json'
+                    entries = json.loads(manifest.read_text()) if manifest.is_file() else []
+                    entry = next((e for e in entries if e['id']==sample_id and e['vertical']==key), None)
+                    comparison=comparison_bundle(sample_id)
+                    if comparison and comparison['vertical']!=key:comparison=None
+                    if not comparison and (not entry or Path(entry['file']).name != entry['file'] or not (sample_root/entry['file']).is_file()):
+                        raise ValueError('unknown saved sample')
+                    if not chat_lock.acquire(blocking=False):
+                        return self.send_json(409, {'error': 'Another extractor call is running. Try again shortly.'})
+                    try:
+                        now = time.monotonic()
+                        for expired in [sid for sid,v in sessions.items() if now-v['updated']>3600]:
+                            del sessions[expired]
+                        sid = payload.get('session_id')
+                        if sid is not None and (not isinstance(sid,str) or len(sid)!=32):
+                            raise ValueError('invalid replay session')
+                        if sid:
+                            session = sessions.get(sid)
+                            if not session or session.get('sample_id')!=sample_id:
+                                raise ValueError('replay expired or changed; reload the sample')
+                        else:
+                            if len(sessions)>=100:
+                                return self.send_json(429, {'error':'Chat capacity reached'})
+                            sid = uuid.uuid4().hex
+                            session = {'sample_id':sample_id, 'profile':None, 'index':0,
+                                       'attempts':0, 'valid':0, 'updated':now, 'vertical':key, 'mode':'replay'}
+                            sessions[sid] = session
+                        sample = comparison['sample'] if comparison else json.loads((sample_root/entry['file']).read_text())
+                        if session['index'] >= len(sample['plan']['exchanges']):
+                            raise ValueError('replay finished; reload to start again')
+                        if session['attempts']>=20:
+                            return self.send_json(429, {'error':'Replay attempt limit reached; reload to start again'})
+                        session['attempts'] += 1
+                        session['updated'] = now
+                        client = ResponsesClient('gpt-6-luna',max_calls=1,max_output_tokens=4000)
+                        value = replay_turn(sample,session['index'],session['profile'],client)
+                        session['index'] += 1
+                        if value['score']['valid']:
+                            session['profile'] = value['profile']
+                            session['valid'] += 1
+                        value.update(session_id=sid,model='gpt-6-luna',extractor_prompt=BASELINE_EXTRACTOR_PROMPT)
+                        value['metrics'].update(attempts=session['attempts'],valid_outputs=session['valid'])
+                        return self.send_json(200,value)
+                    finally:
+                        chat_lock.release()
+                if self.path == '/api/chat':
+                    text = payload.get('message', '')
+                    if not isinstance(text, str) or not text.strip() or len(text) > 2000:
+                        raise ValueError('send a message of 1–2000 characters')
+                    if not chat_lock.acquire(blocking=False):
+                        return self.send_json(409, {'error': 'Another chat turn is running. Try again shortly.'})
+                    sid = None
+                    session = None
+                    try:
+                        now = time.monotonic()
+                        for expired in [sid for sid, v in sessions.items() if now-v['updated']>3600]:
+                            del sessions[expired]
+                        sid = payload.get('session_id')
+                        if sid is not None and (not isinstance(sid, str) or len(sid) != 32):
+                            raise ValueError('invalid chat session; start a new chat')
+                        if sid:
+                            session = sessions.get(sid)
+                            if not session or session['vertical'] != key or session.get('mode')=='replay':
+                                raise ValueError('session expired or catalog changed; start a new chat')
+                        else:
+                            if len(sessions) >= 100:
+                                return self.send_json(429, {'error': 'Chat capacity reached. Try again later.'})
+                            sid = uuid.uuid4().hex
+                            session = {'vertical': key, 'messages': [], 'profile': None,
+                                       'attempts': 0, 'valid': 0, 'updated': now}
+                            sessions[sid] = session
+                        if session['attempts'] >= 20:
+                            return self.send_json(429, {'error': '20-turn limit reached. Start a new chat.'})
+                        session['attempts'] += 1
+                        session['updated'] = now
+                        bundle = VerticalBundle.load(bundle_directory)
+                        model = 'gpt-6-luna'
+                        client = ResponsesClient(model, max_calls=2, max_output_tokens=4000)
+                        value = chat_turn(bundle, build_catalog(bundle.template, bundle.vertical),
+                                          session['messages'], session['profile'], text.strip(), client, client)
+                        session['messages'] = value['messages']
+                        if value['metrics']['output_valid']:
+                            session['profile'] = value['profile']
+                            session['valid'] += 1
+                        from adaptgym.live_chat import BASELINE_EXTRACTOR_PROMPT
+                        value.update(session_id=sid, model=model, prompt_version='simple-baseline-v1',
+                                     extractor_prompt=BASELINE_EXTRACTOR_PROMPT)
+                        value['metrics'].update(valid_outputs=session['valid'], attempts=session['attempts'])
+                        return self.send_json(200, value)
+                    except Exception:
+                        return self.send_json(502, {'error': 'The model turn failed validation or could not complete. Your previous profile is preserved.',
+                                                   'session_id': sid if session else None, 'attempts': session['attempts'] if session else 0, 'valid_outputs': session['valid'] if session else 0})
+                    finally:
+                        chat_lock.release()
                 if self.path == '/api/plan':
                     _, plan = make_plan(payload, bundle_directory)
                     return self.send_json(200, plan)

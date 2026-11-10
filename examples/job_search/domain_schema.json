@@ -8,7 +8,34 @@
   "x-adaptgym": {
     "vertical_id": "job_search",
     "version": "1",
-    "scope": "Synthetic Japan / JPY job-search benchmark; no partner feed data"
+    "scope": "Synthetic Japan / JPY job-search benchmark; no partner feed data",
+    "disclosure_groups": [
+      [
+        "overtime_max_hours",
+        "overtime_reference_period"
+      ]
+    ],
+    "benchmark_attributes": [
+      "job_title",
+      "employment_type",
+      "location_region",
+      "salary_hourly_jpy",
+      "days_per_week",
+      "minimum_experience_months",
+      "public_holidays_off",
+      "work_arrangement",
+      "location_locality",
+      "work_start_minute",
+      "work_end_minute",
+      "shorter_hours_negotiable",
+      "skill_english",
+      "overtime_max_hours",
+      "overtime_reference_period"
+    ],
+    "preference_attributes": [
+      "work_arrangement",
+      "public_holidays_off"
+    ]
   },
   "properties": {
     "job_title": {
@@ -26,7 +53,8 @@
         "Accounting clerk",
         "Secretary",
         "Systems engineer"
-      ]
+      ],
+      "title": "the kind of job you want"
     },
     "category_breadcrumb": {
       "type": "string",
@@ -72,7 +100,8 @@
         "Kyoto",
         "Tokyo",
         "Aichi"
-      ]
+      ],
+      "title": "the prefecture"
     },
     "location_locality": {
       "type": "string",
@@ -89,7 +118,8 @@
         "Tokyo, Chiyoda Ward",
         "Tokyo, Minato Ward",
         "Nagoya, Higashi Ward"
-      ]
+      ],
+      "title": "the city or ward"
     },
     "short_description": {
       "type": "string",
@@ -156,7 +186,8 @@
           "gte"
         ],
         "unit": "JPY/hour"
-      }
+      },
+      "title": "hourly pay in JPY"
     },
     "salary_monthly_jpy": {
       "type": "integer",
@@ -197,7 +228,8 @@
         "indefinite_term_contract_employee",
         "part_time_worker",
         "unspecified"
-      ]
+      ],
+      "title": "the employment contract type"
     },
     "working_days_pattern": {
       "type": "string",
@@ -230,7 +262,8 @@
         ],
         "unit": "days/week"
       },
-      "maximum": 7
+      "maximum": 7,
+      "title": "working days per week"
     },
     "work_start_minute": {
       "type": "integer",
@@ -248,9 +281,11 @@
           "gt",
           "gte"
         ],
-        "unit": "minutes after midnight"
+        "unit": "minutes after midnight",
+        "scenario_operator": "gte"
       },
-      "maximum": 1439
+      "maximum": 1439,
+      "title": "the earliest acceptable start time"
     },
     "work_end_minute": {
       "type": "integer",
@@ -269,9 +304,11 @@
           "gt",
           "gte"
         ],
-        "unit": "minutes after midnight"
+        "unit": "minutes after midnight",
+        "scenario_operator": "lte"
       },
-      "maximum": 1439
+      "maximum": 1439,
+      "title": "the latest acceptable finish time"
     },
     "working_minutes_per_day": {
       "type": "integer",
@@ -327,7 +364,8 @@
         "yes",
         "no",
         "unspecified"
-      ]
+      ],
+      "title": "whether reduced hours must be negotiable"
     },
     "work_arrangement": {
       "type": "string",
@@ -344,7 +382,8 @@
         "remote",
         "remote_negotiable",
         "unspecified"
-      ]
+      ],
+      "title": "where you need to work"
     },
     "minimum_experience_months": {
       "type": "integer",
@@ -362,7 +401,8 @@
           "gte"
         ],
         "unit": "months"
-      }
+      },
+      "title": "experience required by the job, in months"
     },
     "experience_specialization": {
       "type": "string",
@@ -474,7 +514,8 @@
         "mentioned",
         "not_required",
         "unspecified"
-      ]
+      ],
+      "title": "whether the job should require English"
     },
     "skill_sap": {
       "type": "string",
@@ -604,8 +645,10 @@
           "gt",
           "gte"
         ],
-        "unit": "hours"
-      }
+        "unit": "hours",
+        "scenario_operator": "lte"
+      },
+      "title": "the maximum acceptable overtime hours"
     },
     "overtime_reference_period": {
       "type": "string",
@@ -621,7 +664,8 @@
           "eq",
           "in"
         ]
-      }
+      },
+      "title": "the period for that overtime limit"
     },
     "public_holidays_off": {
       "type": "string",
@@ -636,7 +680,8 @@
           "eq",
           "in"
         ]
-      }
+      },
+      "title": "whether public holidays should be days off"
     }
   }
 }

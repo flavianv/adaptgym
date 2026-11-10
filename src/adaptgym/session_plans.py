@@ -14,6 +14,7 @@ from adaptgym.intent_state import IntentState, evidence
 from adaptgym.current_need import generate_current_need
 from adaptgym.verticals import VerticalSchema
 from adaptgym.simulation import render_domain
+from adaptgym.product_interest import ProductInterest
 
 FREE_CASES = (
     'initial_need', 'add_requirement', 'clarify_requirement', 'reinforce_preference',
@@ -25,7 +26,7 @@ REACTIVE_CASES = (
     'soft_preference_missed', 'hard_constraint_violated',
     'no_match_relax', 'no_match_refuse', 'tradeoff_accept', 'tradeoff_reject',
     'misunderstanding', 'suggestion_confirm', 'suggestion_reject',
-    'product_reference_refinement', 'completion_confirm', 'completion_continue',
+    'product_reference_refinement', 'express_interest', 'withdraw_interest', 'select', 'completion_confirm', 'completion_continue',
     'poor_results_positive_framing',
 )
 CASE_MODES = {**{name: 'assistant_free' for name in FREE_CASES},
@@ -36,10 +37,14 @@ CASE_MODES.update({name: 'assistant_free' for name in FINISHER_CASES})
 CASE_MIN_TURNS = {name: (1 if name == 'initial_need' else 3 if name == 'restore_value' else 2)
                   for name in CASE_MODES}
 CASE_MIN_TURNS['finish_task_ambiguous'] = 1
+CASE_MODES['mixed'] = 'assistant_free'
+CASE_MIN_TURNS['mixed'] = 5
+CASE_MIN_TURNS['withdraw_interest'] = 3
+CASE_MIN_TURNS['compare_products'] = 3
 # This describes interpretation difficulty, independently of evidence mode.
 # A reactive reply that restates its values is not automatically in this set.
 CONTEXT_DEPENDENT_CASES = frozenset({
-    'clarification_question', 'select_product', 'compare_products',
+    'clarification_question', 'select_product', 'compare_products', 'express_interest', 'withdraw_interest', 'select',
     'product_reference_refinement', 'tradeoff_accept', 'tradeoff_reject',
     'suggestion_confirm', 'suggestion_reject',
 })
@@ -47,7 +52,7 @@ CASE_SUBTYPES = {name: 'context_dependent' if name in CONTEXT_DEPENDENT_CASES el
                  for name in CASE_MODES}
 MIDDLE_CASES = tuple(name for name in CASE_MODES
                      if name not in FINISHER_CASES and name not in ('initial_need', 'finish_task', 'completion_confirm'))
-PREFERENCE_CASES = frozenset({'reinforce_preference', 'soft_preference_missed', 'suggestion_confirm'})
+PREFERENCE_CASES = frozenset({'compare_products', 'reinforce_preference', 'soft_preference_missed', 'suggestion_confirm'})
 
 
 def terminal_record(steps: list[dict], kind: str, *, native: bool = False) -> dict:
@@ -63,7 +68,10 @@ def terminal_record(steps: list[dict], kind: str, *, native: bool = False) -> di
             'message_id': None if kind == 'ambiguous' else last['shopper_message_id'],
             'after_message_id': last['assistant']['message_id'],
             'native_completion': native,
+            'preferences': copy.deepcopy(last.get('preferences', [])),
             'target_product': last['target_product'],
+            'target_products': last.get('target_products', [last['target_product']] if last['target_product'] else []),
+            'selected_products': last.get('selected_products', [last['target_product']] if last['target_product'] else []),
             'terminal_profile': {'active_task_id': None,
                                  'entries': copy.deepcopy([e for e in before['entries'] if e['scope'] != 'task'])},
             'lifecycle_expirations': copy.deepcopy([e for e in before['entries'] if e['scope'] == 'task'])}
@@ -83,6 +91,11 @@ def generate_plan(vertical: VerticalSchema, catalog: dict, case: str, *, seed: i
     attributes never satisfy a constraint. Unsupported catalogs fail explicitly,
     not by inventing items or silently relaxing requirements.
     """
+    if case == 'mixed':
+        if turn_count is not None and (type(turn_count) is not int or turn_count < 5):
+            raise ValueError('mixed requires at least 5 turns')
+        from adaptgym.dialogue_planning import catalog_dialogue
+        return catalog_dialogue(vertical, catalog, seed=seed, turns=turn_count or 5, finisher=finisher)
     if case not in CASE_MODES or expression not in ('explicit', 'implicit', 'mixed'):
         raise ValueError('unknown scenario case or expression mode')
     if finisher not in ('auto', 'positive', 'negative', 'ambiguous'):
@@ -92,8 +105,8 @@ def generate_plan(vertical: VerticalSchema, catalog: dict, case: str, *, seed: i
             raise ValueError('finisher selection conflicts with the chosen finisher scenario')
         finisher = FINISHER_CASES[case]
     if turn_count is not None:
-        if type(turn_count) is not int or not 1 <= turn_count <= 7:
-            raise ValueError('turn_count must be an integer from 1 to 7')
+        if type(turn_count) is not int or not 1 <= turn_count <= 12:
+            raise ValueError('turn_count must be an integer from 1 to 12')
         if turn_count < CASE_MIN_TURNS[case]:
             raise ValueError(f'{case} requires at least {CASE_MIN_TURNS[case]} turns; choose another scenario or increase turns')
     if type(recommendation_count) is not int or recommendation_count < 2:
@@ -207,18 +220,29 @@ def generate_plan(vertical: VerticalSchema, catalog: dict, case: str, *, seed: i
                 'deliberate_error': deliberate, 'violating_product_ids': invalid}
 
     current_target = None
+    interest_state = ProductInterest()
 
     def add(instruction, changes=(), action='recommend', *, begin=None, end=False,
-            selected=None, reaction_to=None, depends_on=(), **assistant_kwargs):
-        nonlocal current_target
+            selected=None, reaction_to=None, depends_on=(), product_event=None,
+            requested_comparison_ids=(), **assistant_kwargs):
+        nonlocal current_target, interest_state
         if begin:
             current_target = None
+            interest_state = ProductInterest()
         if selected is not None:
             current_target = selected
         instruction = render_domain(instruction, config)
         index = len(steps) + 1
         mid = f'u{index}'
         visible.append({'id': mid, 'role': 'user', 'text': instruction})
+        shown = {pid for step in steps for pid in step['assistant']['product_ids']}
+        product_events = []
+        if product_event:
+            product_events.append(interest_state.prefer(*product_event[1:], shown=shown, message_id=mid)
+                                  if product_event[0] == 'prefer' else
+                                  interest_state.apply(*product_event, shown=shown, message_id=mid))
+        if selected is not None and interest_state.selected != [selected]:
+            product_events.append(interest_state.apply('select', [selected], shown=shown, message_id=mid))
         refs = list(dict.fromkeys([*depends_on, mid]))
         # State snapshots are planned targets. Text validation happens after rendering.
         records = [evidence('explicit', refs, 'Planned change; verify generated language before accepting labels.')]
@@ -242,10 +266,14 @@ def generate_plan(vertical: VerticalSchema, catalog: dict, case: str, *, seed: i
                 'reaction_to': reaction_to, 'expected_events': executed,
                 'turn_subtype': 'context_dependent' if case in CONTEXT_DEPENDENT_CASES and reaction_to else None,
                 'planned_state': state.state, 'target_product': current_target,
+                **interest_state.snapshot(), 'expected_product_events': product_events,
+                'user_action': product_event[0] if product_event else 'select' if selected is not None else None,
                 'assistant': {'message_id': f'a{index}', **reply}}
         step['product_roles'] = classify_products(catalog,
             [entry['assignment'] for entry in state.state['entries'] if entry['strength'] == 'hard'],
             [entry['assignment'] for entry in state.state['entries'] if entry['strength'] == 'soft'])
+        if requested_comparison_ids:
+            step['requested_comparison_ids'] = list(requested_comparison_ids)
         steps.append(step)
         visible.append({'id': f'a{index}', 'role': 'assistant', 'text': reply['text']})
         return reply
@@ -285,16 +313,30 @@ def generate_plan(vertical: VerticalSchema, catalog: dict, case: str, *, seed: i
     elif case == 'clarification_question':
         add('Start a {task} and require ' + ', '.join(map(_describe, base[1:])) + f'. Do not reveal {context} yet.', [change(a) for a in base[1:]], begin='task-1', action='ask_attribute', attribute=context)
         add(f'Answer the assistant question with the value {context_value}; omit the attribute name so the question is necessary context.', [change(base[0])], reaction_to='a1', depends_on=('a1',))
-    elif case in ('select_product', 'compare_products', 'product_reference_refinement'):
+    elif case in ('select_product', 'select', 'express_interest', 'withdraw_interest', 'compare_products', 'product_reference_refinement'):
         reply = add(full_instruction, base_changes, begin='task-1', ids=reference_ids)
         ids = reply['product_ids']
         if len(ids) < 2:
             raise ValueError('scenario requires at least two referenceable products')
         product = next(p for p in catalog['products'] if p['id'] == ids[1])
-        if case == 'select_product':
+        if case in ('express_interest', 'withdraw_interest'):
+            add('Explicitly say the first two displayed items interest you. Do not choose or finish yet.',
+                reaction_to='a1', depends_on=('a1',), product_event=('express_interest', ids[:2]),
+                action='acknowledge', ids=ids[:2], text='I have added those items to your shortlist. No final choice yet.')
+            if case == 'withdraw_interest':
+                add('Explicitly withdraw interest only in the second particular catalog listing, not its model or attributes. Keep all attribute requirements unchanged and the first item on your shortlist; do not finish.',
+                    reaction_to='a2', depends_on=('a2',), product_event=('withdraw_interest', [ids[1]]),
+                    action='acknowledge', ids=[ids[0]], text='I have removed that item from your shortlist.')
+        elif case in ('select_product', 'select'):
             add('Select the second displayed product by its list position. Do not assert durable preferences for its attributes.', selected=ids[1], reaction_to='a1', depends_on=('a1',), action='confirm_selection', ids=[ids[1]])
         elif case == 'compare_products':
-            add('Ask to compare the first and second displayed products, without adding requirements.', reaction_to='a1', depends_on=('a1',), action='compare', ids=ids[:2], text='Comparison of the two requested catalog products:')
+            add('Ask to compare the first and second displayed products, without adding requirements.', reaction_to='a1', depends_on=('a1',), requested_comparison_ids=ids[:2], action='compare', ids=ids[:2], text='Comparison of the two requested catalog products:')
+            contextual = expression == 'implicit' or (expression == 'mixed' and seed % 2 == 0)
+            instruction = ('Say "I prefer the first one", relying on the immediately preceding two-item comparison.'
+                           if contextual else f'Explicitly say you prefer catalog item {ids[0]} over catalog item {ids[1]}, naming both alternatives.')
+            add(instruction + ' Express relative preference only; do not select, reject, or finish.',
+                reaction_to='a2', depends_on=('a2',), product_event=('prefer', ids[0], [ids[1]]),
+                action='acknowledge', text='Your preference is noted; you have not made a final choice.')
         else:
             value = product['attributes'][focal]
             add(f'Refer to the second displayed product and require the same {focal} for this {{task}}. Do not name the value directly.', [change(vertical.assignment(focal, value))], reaction_to='a1', depends_on=('a1',))
@@ -457,6 +499,8 @@ def validate_plan(plan: dict[str, Any]) -> None:
     validate_catalog(plan['catalog'], vertical)
     state = IntentState([vertical])
     messages = []
+    interest = ProductInterest()
+    shown_products = set()
     catalog_ids = {p['id'] for p in plan['catalog']['products']}
     case = plan.get('scenario_type')
     if case not in CASE_MODES or plan.get('mode') != CASE_MODES[case] or plan.get('scenario_subtype') != CASE_SUBTYPES[case]:
@@ -464,10 +508,32 @@ def validate_plan(plan: dict[str, Any]) -> None:
     if not plan['exchanges'] or plan.get('turn_count') != len(plan['exchanges']):
         raise ValueError('chain needs a valid turn count')
     for step in plan['exchanges']:
-        expected_subtype = 'context_dependent' if case in CONTEXT_DEPENDENT_CASES and step['reaction_to'] else None
+        comparison = step.get('requested_comparison_ids', [])
+        if (not isinstance(comparison, list) or any(not isinstance(pid, str) for pid in comparison)
+                or comparison and (len(comparison) < 2 or len(set(comparison)) != len(comparison)
+                                   or not set(comparison) <= shown_products)):
+            raise ValueError('user comparisons require distinct previously displayed items')
+        expected_subtype = 'context_dependent' if step['reaction_to'] and (
+            (step.get('middle_type') == 'reactive_context' if 'middle_type' in step else case in CONTEXT_DEPENDENT_CASES)
+            or step.get('user_action') == 'express_interest' or ('middle_type' in step and step.get('user_action')=='prefer')) else None
         if step.get('turn_subtype') != expected_subtype:
             raise ValueError('turn subtype must reflect an actual assistant-context dependency')
         messages.append({'id': step['shopper_message_id'], 'role': 'user', 'text': step['shopper_instruction']})
+        if any(event['operation'] == 'begin_task' for event in step['expected_events']):
+            interest = ProductInterest()
+        for event in step.get('expected_product_events', []):
+            if event.get('message_ids') != [step['shopper_message_id']]:
+                raise ValueError('product actions require evidence from the current user message')
+            if event['action'] == 'prefer':
+                interest.prefer(event['preferred'], event['over'], shown=shown_products,
+                                message_id=step['shopper_message_id'])
+            else:
+                interest.apply(event['action'], event['product_ids'], shown=shown_products,
+                               message_id=step['shopper_message_id'])
+        if 'target_products' in step or 'selected_products' in step or step.get('expected_product_events'):
+            if any(step.get(name, [] if name == 'preferences' else None) != values
+                   for name, values in interest.snapshot().items()):
+                raise ValueError('product-interest snapshot does not match explicit user actions')
         for event in step['expected_events']:
             state.apply(event, messages)
         if state.state != step['planned_state']:
@@ -479,7 +545,12 @@ def validate_plan(plan: dict[str, Any]) -> None:
         if action['matching_product_ids'] != actual or len(ids) != len(set(ids)) or set(ids) - catalog_ids:
             raise ValueError('invalid catalog evidence in assistant action')
         invalid = [pid for pid in ids if pid not in actual]
-        if invalid != action['violating_product_ids'] or (invalid and not action['deliberate_error']):
+        # Reflecting saved/selected items is not a claim that they meet the filters.
+        reflected = (action['kind'] == 'shortlist_update' and set(ids) <= set(step.get('target_products', []))
+                     or action['kind'] == 'confirm_selection' and set(ids) <= set(step.get('selected_products', []))
+                     or action['kind'] == 'preference_update' and set(ids) <= shown_products
+                     or action['kind'] == 'compare' and action.get('allows_nonmatching_alternatives') is True)
+        if invalid != action['violating_product_ids'] or (invalid and not action['deliberate_error'] and not reflected):
             raise ValueError('unmarked hard-constraint violation')
         if action['kind'] == 'no_match' and actual:
             raise ValueError('false no-match claim')
@@ -490,10 +561,16 @@ def validate_plan(plan: dict[str, Any]) -> None:
         if step['reaction_to'] and step['reaction_to'] not in {m['id'] for m in messages if m['role'] == 'assistant'}:
             raise ValueError('reaction must reference a previous assistant reply')
         messages.append({'id': action['message_id'], 'role': 'assistant', 'text': action['text']})
+        shown_products.update(ids)
     ending = plan.get('finisher')
     if not isinstance(ending, dict) or ending.get('type') not in ('positive', 'negative', 'ambiguous'):
         raise ValueError('every chain needs a positive, negative, or ambiguous finisher')
-    if ending != terminal_record(plan['exchanges'], ending['type'], native=ending.get('native_completion', False)):
+    expected_ending = terminal_record(plan['exchanges'], ending['type'], native=ending.get('native_completion', False))
+    # Frozen v2 demos predate the separate shortlist/selection fields.
+    for name in ('target_products', 'selected_products', 'preferences'):
+        if name not in ending:
+            expected_ending.pop(name, None)
+    if ending != expected_ending:
         raise ValueError('finisher lifecycle does not match the final checkpoint')
     if any(step.get('finisher') for step in plan['exchanges'][:-1]):
         raise ValueError('no dialogue may follow a finisher')
