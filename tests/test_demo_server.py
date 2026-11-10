@@ -349,4 +349,19 @@ def test_precomputed_models_share_complete_demo_traces(server_factory, monkeypat
     assert request(base,'/api/replay-results?vertical='+entry['vertical']+'&id='+entry['id']+'&model=unknown')[0]==404
     assert request(base,'/assets/precomputed-player.js')[0]==200
     status,headers,body=request(base,'/reports/qwen4b-lora-report.md')
-    assert status==200 and 'text/markdown' in headers['Content-Type'] and b'522' in body
+    assert status==200 and 'text/markdown' in headers['Content-Type'] and b'46 user turns' in body
+
+
+def test_saved_feature_verdicts_and_headers_use_exact_feature_policy(server_factory):
+    base=server_factory()
+    _,_,body=request(base,'/api/comparison?id=sft-jobs-1');bundle=json.loads(body)
+    # Correct features survive a separately invalid native preference/selection state.
+    cp=bundle['models']['baseline']['rollout']['checkpoints'][0]
+    assert not cp['score']['valid']
+    assert cp['feature_score']['recall']==1 and cp['feature_score']['accepted']
+    assert bundle['models']['luna']['rollout']['feature_summary']['passed_turns']==7
+    for model in bundle['models'].values():
+        for run in model.values():
+            assert run['feature_summary']['passed_turns']==sum(c['feature_score']['accepted'] for c in run['checkpoints'])
+    _,_,body=request(base,'/assets/precomputed-player.js')
+    assert b'Inspect error turns' in body and b'Inspect warning turns' in body

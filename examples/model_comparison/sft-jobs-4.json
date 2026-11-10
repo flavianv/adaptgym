@@ -3112,6 +3112,35 @@
               "item_preferences": 0,
               "preferences_correct": true,
               "attempts": 1,
+              "valid_outputs": 1,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 1,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 1,
+              "total_turns": 3,
+              "extraction_ms": 6735,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 1,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 1,
               "valid_outputs": 1
             }
           },
@@ -3660,6 +3689,35 @@
               "item_preferences": 0,
               "preferences_correct": true,
               "attempts": 2,
+              "valid_outputs": 2,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 6,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 2,
+              "total_turns": 3,
+              "extraction_ms": 7597,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 6,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 2,
               "valid_outputs": 2
             }
           },
@@ -4045,6 +4103,35 @@
               "item_preferences": 0,
               "preferences_correct": true,
               "attempts": 3,
+              "valid_outputs": 3,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 2,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 3,
+              "total_turns": 3,
+              "extraction_ms": 3810,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 2,
+              "targets": 1,
+              "selected": 1,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 3,
               "valid_outputs": 3
             }
           }
@@ -4128,7 +4215,21 @@
             },
             "wall_seconds": 3.796
           }
-        ]
+        ],
+        "feature_summary": {
+          "policy": "exact-features-lowercase-v1",
+          "turns": 3,
+          "passed_turns": 3,
+          "error_turns": 0,
+          "warning_turns": 0,
+          "errors": 0,
+          "warnings": 0,
+          "tp": 9,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0
+        }
       },
       "rollout": {
         "sample_id": "sft-jobs-4",
@@ -4335,6 +4436,35 @@
             },
             "input_sha256": "sha256:7f634b658fe88a204ef456f618f4c4a203848730a0f9e8a331de1892c2d24f89",
             "metrics": {
+              "turns": 1,
+              "total_turns": 3,
+              "extraction_ms": 3425,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 1,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 1,
+              "valid_outputs": 1,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 1,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 1,
               "total_turns": 3,
               "extraction_ms": 3425,
@@ -4894,6 +5024,35 @@
               "item_preferences": 0,
               "preferences_correct": true,
               "attempts": 2,
+              "valid_outputs": 2,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 6,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 2,
+              "total_turns": 3,
+              "extraction_ms": 8161,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 6,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 2,
               "valid_outputs": 2
             }
           },
@@ -5275,6 +5434,35 @@
               "item_preferences": 0,
               "preferences_correct": true,
               "attempts": 3,
+              "valid_outputs": 3,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 2,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 3,
+              "total_turns": 3,
+              "extraction_ms": 2923,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 2,
+              "targets": 1,
+              "selected": 1,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 3,
               "valid_outputs": 3
             }
           }
@@ -5358,7 +5546,21 @@
             },
             "wall_seconds": 2.908
           }
-        ]
+        ],
+        "feature_summary": {
+          "policy": "exact-features-lowercase-v1",
+          "turns": 3,
+          "passed_turns": 3,
+          "error_turns": 0,
+          "warning_turns": 0,
+          "errors": 0,
+          "warnings": 0,
+          "tp": 9,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0
+        }
       }
     },
     "baseline": {
@@ -5567,6 +5769,35 @@
             },
             "input_sha256": "sha256:7f634b658fe88a204ef456f618f4c4a203848730a0f9e8a331de1892c2d24f89",
             "metrics": {
+              "turns": 1,
+              "total_turns": 3,
+              "extraction_ms": 8146,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 1,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 1,
+              "valid_outputs": 1,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 1,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 1,
               "total_turns": 3,
               "extraction_ms": 8146,
@@ -6116,6 +6347,35 @@
               "turns": 2,
               "total_turns": 3,
               "extraction_ms": 33052,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 6,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 2,
+              "preferences_correct": false,
+              "attempts": 2,
+              "valid_outputs": 1,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 6,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 2,
+              "total_turns": 3,
+              "extraction_ms": 33052,
               "value_precision": null,
               "value_recall": 0.0,
               "attributes": 6,
@@ -6481,6 +6741,74 @@
               "item_preferences": 0,
               "preferences_correct": true,
               "attempts": 3,
+              "valid_outputs": 2,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 0,
+              "fp": 0,
+              "fn": 2,
+              "precision": null,
+              "recall": 0.0,
+              "errors": [
+                {
+                  "type": "missing",
+                  "attribute": "public_holidays_off",
+                  "expected": [
+                    {
+                      "attribute": "public_holidays_off",
+                      "operator": "eq",
+                      "value": "yes"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "public_holidays_off",
+                      "operator": "eq",
+                      "value": "yes"
+                    }
+                  ]
+                },
+                {
+                  "type": "missing",
+                  "attribute": "work_arrangement",
+                  "expected": [
+                    {
+                      "attribute": "work_arrangement",
+                      "operator": "eq",
+                      "value": "remote"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "work_arrangement",
+                      "operator": "eq",
+                      "value": "remote"
+                    }
+                  ]
+                }
+              ],
+              "warnings": [],
+              "error_count": 2,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 3,
+              "total_turns": 3,
+              "extraction_ms": 3370,
+              "value_precision": null,
+              "value_recall": 0.0,
+              "attributes": 0,
+              "targets": 1,
+              "selected": 1,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 3,
               "valid_outputs": 2
             }
           }
@@ -6558,7 +6886,21 @@
             "finish_reason": "stop",
             "wall_seconds": 3.359
           }
-        ]
+        ],
+        "feature_summary": {
+          "policy": "exact-features-lowercase-v1",
+          "turns": 3,
+          "passed_turns": 2,
+          "error_turns": 1,
+          "warning_turns": 0,
+          "errors": 2,
+          "warnings": 0,
+          "tp": 7,
+          "fp": 0,
+          "fn": 2,
+          "precision": 1.0,
+          "recall": 0.7777777777777778
+        }
       },
       "rollout": {
         "sample_id": "sft-jobs-4",
@@ -6765,6 +7107,35 @@
             },
             "input_sha256": "sha256:7f634b658fe88a204ef456f618f4c4a203848730a0f9e8a331de1892c2d24f89",
             "metrics": {
+              "turns": 1,
+              "total_turns": 3,
+              "extraction_ms": 7988,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 1,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 1,
+              "valid_outputs": 1,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 1,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 1,
               "total_turns": 3,
               "extraction_ms": 7988,
@@ -7315,6 +7686,35 @@
               "turns": 2,
               "total_turns": 3,
               "extraction_ms": 34177,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 6,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 2,
+              "preferences_correct": false,
+              "attempts": 2,
+              "valid_outputs": 1,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 6,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 2,
+              "total_turns": 3,
+              "extraction_ms": 34177,
               "value_precision": null,
               "value_recall": 0.0,
               "attributes": 6,
@@ -7523,6 +7923,74 @@
               "item_preferences": 0,
               "preferences_correct": false,
               "attempts": 3,
+              "valid_outputs": 1,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 0,
+              "fp": 0,
+              "fn": 2,
+              "precision": null,
+              "recall": 0.0,
+              "errors": [
+                {
+                  "type": "missing",
+                  "attribute": "public_holidays_off",
+                  "expected": [
+                    {
+                      "attribute": "public_holidays_off",
+                      "operator": "eq",
+                      "value": "yes"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "public_holidays_off",
+                      "operator": "eq",
+                      "value": "yes"
+                    }
+                  ]
+                },
+                {
+                  "type": "missing",
+                  "attribute": "work_arrangement",
+                  "expected": [
+                    {
+                      "attribute": "work_arrangement",
+                      "operator": "eq",
+                      "value": "remote"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "work_arrangement",
+                      "operator": "eq",
+                      "value": "remote"
+                    }
+                  ]
+                }
+              ],
+              "warnings": [],
+              "error_count": 2,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 3,
+              "total_turns": 3,
+              "extraction_ms": 2696,
+              "value_precision": null,
+              "value_recall": 0.0,
+              "attributes": 0,
+              "targets": 0,
+              "selected": 1,
+              "item_preferences": 0,
+              "preferences_correct": false,
+              "attempts": 3,
               "valid_outputs": 1
             }
           }
@@ -7600,7 +8068,21 @@
             "finish_reason": "stop",
             "wall_seconds": 2.679
           }
-        ]
+        ],
+        "feature_summary": {
+          "policy": "exact-features-lowercase-v1",
+          "turns": 3,
+          "passed_turns": 2,
+          "error_turns": 1,
+          "warning_turns": 0,
+          "errors": 2,
+          "warnings": 0,
+          "tp": 7,
+          "fp": 0,
+          "fn": 2,
+          "precision": 1.0,
+          "recall": 0.7777777777777778
+        }
       }
     },
     "lora": {
@@ -7809,6 +8291,35 @@
             },
             "input_sha256": "sha256:7f634b658fe88a204ef456f618f4c4a203848730a0f9e8a331de1892c2d24f89",
             "metrics": {
+              "turns": 1,
+              "total_turns": 3,
+              "extraction_ms": 5601,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 1,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 1,
+              "valid_outputs": 1,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 1,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 1,
               "total_turns": 3,
               "extraction_ms": 5601,
@@ -8362,6 +8873,35 @@
               "turns": 2,
               "total_turns": 3,
               "extraction_ms": 32132,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 6,
+              "targets": 1,
+              "selected": 0,
+              "item_preferences": 1,
+              "preferences_correct": false,
+              "attempts": 2,
+              "valid_outputs": 1,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 6,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 2,
+              "total_turns": 3,
+              "extraction_ms": 32132,
               "value_precision": null,
               "value_recall": 0.0,
               "attributes": 6,
@@ -8732,6 +9272,74 @@
               "item_preferences": 1,
               "preferences_correct": false,
               "attempts": 3,
+              "valid_outputs": 2,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 0,
+              "fp": 0,
+              "fn": 2,
+              "precision": null,
+              "recall": 0.0,
+              "errors": [
+                {
+                  "type": "missing",
+                  "attribute": "public_holidays_off",
+                  "expected": [
+                    {
+                      "attribute": "public_holidays_off",
+                      "operator": "eq",
+                      "value": "yes"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "public_holidays_off",
+                      "operator": "eq",
+                      "value": "yes"
+                    }
+                  ]
+                },
+                {
+                  "type": "missing",
+                  "attribute": "work_arrangement",
+                  "expected": [
+                    {
+                      "attribute": "work_arrangement",
+                      "operator": "eq",
+                      "value": "remote"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "work_arrangement",
+                      "operator": "eq",
+                      "value": "remote"
+                    }
+                  ]
+                }
+              ],
+              "warnings": [],
+              "error_count": 2,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 3,
+              "total_turns": 3,
+              "extraction_ms": 3780,
+              "value_precision": null,
+              "value_recall": 0.0,
+              "attributes": 0,
+              "targets": 1,
+              "selected": 1,
+              "item_preferences": 1,
+              "preferences_correct": false,
+              "attempts": 3,
               "valid_outputs": 2
             }
           }
@@ -8809,7 +9417,21 @@
             "finish_reason": "stop",
             "wall_seconds": 3.77
           }
-        ]
+        ],
+        "feature_summary": {
+          "policy": "exact-features-lowercase-v1",
+          "turns": 3,
+          "passed_turns": 2,
+          "error_turns": 1,
+          "warning_turns": 0,
+          "errors": 2,
+          "warnings": 0,
+          "tp": 7,
+          "fp": 0,
+          "fn": 2,
+          "precision": 1.0,
+          "recall": 0.7777777777777778
+        }
       },
       "rollout": {
         "sample_id": "sft-jobs-4",
@@ -9016,6 +9638,35 @@
             },
             "input_sha256": "sha256:7f634b658fe88a204ef456f618f4c4a203848730a0f9e8a331de1892c2d24f89",
             "metrics": {
+              "turns": 1,
+              "total_turns": 3,
+              "extraction_ms": 4469,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 1,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 1,
+              "valid_outputs": 1,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 1,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 1,
               "total_turns": 3,
               "extraction_ms": 4469,
@@ -9545,6 +10196,55 @@
               "turns": 2,
               "total_turns": 3,
               "extraction_ms": 21672,
+              "value_precision": 1.0,
+              "value_recall": 0.8333333333333334,
+              "attributes": 5,
+              "targets": 1,
+              "selected": 0,
+              "item_preferences": 1,
+              "preferences_correct": false,
+              "attempts": 2,
+              "valid_outputs": 1,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 5,
+              "fp": 0,
+              "fn": 1,
+              "precision": 1.0,
+              "recall": 0.8333333333333334,
+              "errors": [
+                {
+                  "type": "missing",
+                  "attribute": "employment_type",
+                  "expected": [
+                    {
+                      "attribute": "employment_type",
+                      "operator": "eq",
+                      "value": "temporary_staffing"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "employment_type",
+                      "operator": "eq",
+                      "value": "temporary_staffing"
+                    }
+                  ]
+                }
+              ],
+              "warnings": [],
+              "error_count": 1,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 2,
+              "total_turns": 3,
+              "extraction_ms": 21672,
               "value_precision": null,
               "value_recall": 0.0,
               "attributes": 5,
@@ -9817,6 +10517,35 @@
               "item_preferences": 0,
               "preferences_correct": true,
               "attempts": 3,
+              "valid_outputs": 2,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 2,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 3,
+              "total_turns": 3,
+              "extraction_ms": 8711,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 2,
+              "targets": 1,
+              "selected": 1,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 3,
               "valid_outputs": 2
             }
           }
@@ -9894,7 +10623,21 @@
             "finish_reason": "stop",
             "wall_seconds": 8.701
           }
-        ]
+        ],
+        "feature_summary": {
+          "policy": "exact-features-lowercase-v1",
+          "turns": 3,
+          "passed_turns": 2,
+          "error_turns": 1,
+          "warning_turns": 0,
+          "errors": 1,
+          "warnings": 0,
+          "tp": 8,
+          "fp": 0,
+          "fn": 1,
+          "precision": 1.0,
+          "recall": 0.8888888888888888
+        }
       }
     }
   }

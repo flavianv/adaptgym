@@ -4213,6 +4213,35 @@
               "item_preferences": 0,
               "preferences_correct": true,
               "attempts": 1,
+              "valid_outputs": 1,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 5,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 1,
+              "total_turns": 5,
+              "extraction_ms": 7493,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 5,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 1,
               "valid_outputs": 1
             }
           },
@@ -4764,6 +4793,67 @@
             },
             "input_sha256": "sha256:7d958f78878ceee1fa6652e0c702d51dab062ef59697a0cb9f3b3a333a2e3d13",
             "metrics": {
+              "turns": 2,
+              "total_turns": 5,
+              "extraction_ms": 7749,
+              "value_precision": 0.8333333333333334,
+              "value_recall": 0.8333333333333334,
+              "attributes": 6,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 2,
+              "valid_outputs": 2,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 5,
+              "fp": 1,
+              "fn": 1,
+              "precision": 0.8333333333333334,
+              "recall": 0.8333333333333334,
+              "errors": [
+                {
+                  "type": "missing",
+                  "attribute": "primary_use",
+                  "expected": [
+                    {
+                      "attribute": "primary_use",
+                      "operator": "eq",
+                      "value": "basketball"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "primary_use",
+                      "operator": "eq",
+                      "value": "basketball"
+                    }
+                  ]
+                }
+              ],
+              "warnings": [
+                {
+                  "type": "invented",
+                  "attribute": "sport",
+                  "values": [
+                    {
+                      "attribute": "sport",
+                      "operator": "eq",
+                      "value": "basketball"
+                    }
+                  ]
+                }
+              ],
+              "error_count": 1,
+              "warning_count": 1
+            },
+            "original_metrics": {
               "turns": 2,
               "total_turns": 5,
               "extraction_ms": 7749,
@@ -5438,6 +5528,67 @@
             },
             "input_sha256": "sha256:fe03ff9a0118ead1e388cbafe5de56065c5b2d2913d401ad48b79e85a6858383",
             "metrics": {
+              "turns": 3,
+              "total_turns": 5,
+              "extraction_ms": 15965,
+              "value_precision": 0.8571428571428571,
+              "value_recall": 0.8571428571428571,
+              "attributes": 7,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 3,
+              "valid_outputs": 3,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 6,
+              "fp": 1,
+              "fn": 1,
+              "precision": 0.8571428571428571,
+              "recall": 0.8571428571428571,
+              "errors": [
+                {
+                  "type": "missing",
+                  "attribute": "primary_use",
+                  "expected": [
+                    {
+                      "attribute": "primary_use",
+                      "operator": "eq",
+                      "value": "basketball"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "primary_use",
+                      "operator": "eq",
+                      "value": "basketball"
+                    }
+                  ]
+                }
+              ],
+              "warnings": [
+                {
+                  "type": "invented",
+                  "attribute": "category",
+                  "values": [
+                    {
+                      "attribute": "category",
+                      "operator": "eq",
+                      "value": "basketball"
+                    }
+                  ]
+                }
+              ],
+              "error_count": 1,
+              "warning_count": 1
+            },
+            "original_metrics": {
               "turns": 3,
               "total_turns": 5,
               "extraction_ms": 15965,
@@ -6213,6 +6364,35 @@
               "item_preferences": 0,
               "preferences_correct": true,
               "attempts": 4,
+              "valid_outputs": 4,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 9,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 4,
+              "total_turns": 5,
+              "extraction_ms": 17817,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 9,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 4,
               "valid_outputs": 4
             }
           },
@@ -6640,6 +6820,35 @@
               "item_preferences": 0,
               "preferences_correct": true,
               "attempts": 5,
+              "valid_outputs": 5,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 1,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 5,
+              "total_turns": 5,
+              "extraction_ms": 3192,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 1,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 5,
               "valid_outputs": 5
             }
           }
@@ -6757,7 +6966,21 @@
             },
             "wall_seconds": 3.186
           }
-        ]
+        ],
+        "feature_summary": {
+          "policy": "exact-features-lowercase-v1",
+          "turns": 5,
+          "passed_turns": 3,
+          "error_turns": 2,
+          "warning_turns": 2,
+          "errors": 2,
+          "warnings": 2,
+          "tp": 26,
+          "fp": 2,
+          "fn": 2,
+          "precision": 0.9285714285714286,
+          "recall": 0.9285714285714286
+        }
       },
       "rollout": {
         "sample_id": "sft-shoes-5",
@@ -7148,6 +7371,35 @@
             },
             "input_sha256": "sha256:f46ea1a338c6ddb3e201bfbd73af3fbade5cd3f75199319c03efeafa21c7dbba",
             "metrics": {
+              "turns": 1,
+              "total_turns": 5,
+              "extraction_ms": 7006,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 5,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 1,
+              "valid_outputs": 1,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 5,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 1,
               "total_turns": 5,
               "extraction_ms": 7006,
@@ -7710,6 +7962,67 @@
             },
             "input_sha256": "sha256:5bec316fb62375374f968a80ea2df3f2b96879669fe31ecb92326df45cb68c3a",
             "metrics": {
+              "turns": 2,
+              "total_turns": 5,
+              "extraction_ms": 10796,
+              "value_precision": 0.8333333333333334,
+              "value_recall": 0.8333333333333334,
+              "attributes": 6,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 2,
+              "valid_outputs": 2,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 5,
+              "fp": 1,
+              "fn": 1,
+              "precision": 0.8333333333333334,
+              "recall": 0.8333333333333334,
+              "errors": [
+                {
+                  "type": "missing",
+                  "attribute": "primary_use",
+                  "expected": [
+                    {
+                      "attribute": "primary_use",
+                      "operator": "eq",
+                      "value": "basketball"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "primary_use",
+                      "operator": "eq",
+                      "value": "basketball"
+                    }
+                  ]
+                }
+              ],
+              "warnings": [
+                {
+                  "type": "invented",
+                  "attribute": "sport",
+                  "values": [
+                    {
+                      "attribute": "sport",
+                      "operator": "eq",
+                      "value": "basketball"
+                    }
+                  ]
+                }
+              ],
+              "error_count": 1,
+              "warning_count": 1
+            },
+            "original_metrics": {
               "turns": 2,
               "total_turns": 5,
               "extraction_ms": 10796,
@@ -8384,6 +8697,67 @@
             },
             "input_sha256": "sha256:6ec98d1e854a2e108a42168c2283f6daee024b09454936d960156ff7896256eb",
             "metrics": {
+              "turns": 3,
+              "total_turns": 5,
+              "extraction_ms": 10097,
+              "value_precision": 0.8571428571428571,
+              "value_recall": 0.8571428571428571,
+              "attributes": 7,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 3,
+              "valid_outputs": 3,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 6,
+              "fp": 1,
+              "fn": 1,
+              "precision": 0.8571428571428571,
+              "recall": 0.8571428571428571,
+              "errors": [
+                {
+                  "type": "missing",
+                  "attribute": "primary_use",
+                  "expected": [
+                    {
+                      "attribute": "primary_use",
+                      "operator": "eq",
+                      "value": "basketball"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "primary_use",
+                      "operator": "eq",
+                      "value": "basketball"
+                    }
+                  ]
+                }
+              ],
+              "warnings": [
+                {
+                  "type": "invented",
+                  "attribute": "sport",
+                  "values": [
+                    {
+                      "attribute": "sport",
+                      "operator": "eq",
+                      "value": "basketball"
+                    }
+                  ]
+                }
+              ],
+              "error_count": 1,
+              "warning_count": 1
+            },
+            "original_metrics": {
               "turns": 3,
               "total_turns": 5,
               "extraction_ms": 10097,
@@ -9168,6 +9542,67 @@
               "item_preferences": 0,
               "preferences_correct": true,
               "attempts": 4,
+              "valid_outputs": 4,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 8,
+              "fp": 1,
+              "fn": 1,
+              "precision": 0.8888888888888888,
+              "recall": 0.8888888888888888,
+              "errors": [
+                {
+                  "type": "missing",
+                  "attribute": "primary_use",
+                  "expected": [
+                    {
+                      "attribute": "primary_use",
+                      "operator": "eq",
+                      "value": "basketball"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "primary_use",
+                      "operator": "eq",
+                      "value": "basketball"
+                    }
+                  ]
+                }
+              ],
+              "warnings": [
+                {
+                  "type": "invented",
+                  "attribute": "sport",
+                  "values": [
+                    {
+                      "attribute": "sport",
+                      "operator": "eq",
+                      "value": "basketball"
+                    }
+                  ]
+                }
+              ],
+              "error_count": 1,
+              "warning_count": 1
+            },
+            "original_metrics": {
+              "turns": 4,
+              "total_turns": 5,
+              "extraction_ms": 13386,
+              "value_precision": 0.8888888888888888,
+              "value_recall": 0.8888888888888888,
+              "attributes": 9,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 4,
               "valid_outputs": 4
             }
           },
@@ -9595,6 +10030,35 @@
               "item_preferences": 0,
               "preferences_correct": true,
               "attempts": 5,
+              "valid_outputs": 5,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 1,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 5,
+              "total_turns": 5,
+              "extraction_ms": 3158,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 1,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 5,
               "valid_outputs": 5
             }
           }
@@ -9712,7 +10176,21 @@
             },
             "wall_seconds": 3.152
           }
-        ]
+        ],
+        "feature_summary": {
+          "policy": "exact-features-lowercase-v1",
+          "turns": 5,
+          "passed_turns": 2,
+          "error_turns": 3,
+          "warning_turns": 3,
+          "errors": 3,
+          "warnings": 3,
+          "tp": 25,
+          "fp": 3,
+          "fn": 3,
+          "precision": 0.8928571428571429,
+          "recall": 0.8928571428571429
+        }
       }
     },
     "baseline": {
@@ -10102,6 +10580,92 @@
             },
             "input_sha256": "sha256:f46ea1a338c6ddb3e201bfbd73af3fbade5cd3f75199319c03efeafa21c7dbba",
             "metrics": {
+              "turns": 1,
+              "total_turns": 5,
+              "extraction_ms": 32131,
+              "value_precision": 0.6,
+              "value_recall": 0.6,
+              "attributes": 5,
+              "targets": 5,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": false,
+              "attempts": 1,
+              "valid_outputs": 0,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 3,
+              "fp": 2,
+              "fn": 2,
+              "precision": 0.6,
+              "recall": 0.6,
+              "errors": [
+                {
+                  "type": "changed",
+                  "attribute": "key_characteristics",
+                  "expected": [
+                    {
+                      "attribute": "key_characteristics",
+                      "operator": "eq",
+                      "value": "traction, quick movements"
+                    }
+                  ],
+                  "extracted": [
+                    {
+                      "attribute": "key_characteristics",
+                      "operator": "in",
+                      "value": "traction, quick movements"
+                    }
+                  ],
+                  "missing": [
+                    {
+                      "attribute": "key_characteristics",
+                      "operator": "eq",
+                      "value": "traction, quick movements"
+                    }
+                  ]
+                },
+                {
+                  "type": "missing",
+                  "attribute": "style",
+                  "expected": [
+                    {
+                      "attribute": "style",
+                      "operator": "eq",
+                      "value": "performance"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "style",
+                      "operator": "eq",
+                      "value": "performance"
+                    }
+                  ]
+                }
+              ],
+              "warnings": [
+                {
+                  "type": "invented",
+                  "attribute": "category",
+                  "values": [
+                    {
+                      "attribute": "category",
+                      "operator": "eq",
+                      "value": "basketball"
+                    }
+                  ]
+                }
+              ],
+              "error_count": 2,
+              "warning_count": 1
+            },
+            "original_metrics": {
               "turns": 1,
               "total_turns": 5,
               "extraction_ms": 32131,
@@ -10664,6 +11228,67 @@
             },
             "input_sha256": "sha256:7d958f78878ceee1fa6652e0c702d51dab062ef59697a0cb9f3b3a333a2e3d13",
             "metrics": {
+              "turns": 2,
+              "total_turns": 5,
+              "extraction_ms": 31484,
+              "value_precision": 0.8333333333333334,
+              "value_recall": 0.8333333333333334,
+              "attributes": 6,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 2,
+              "valid_outputs": 1,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 5,
+              "fp": 1,
+              "fn": 1,
+              "precision": 0.8333333333333334,
+              "recall": 0.8333333333333334,
+              "errors": [
+                {
+                  "type": "missing",
+                  "attribute": "primary_use",
+                  "expected": [
+                    {
+                      "attribute": "primary_use",
+                      "operator": "eq",
+                      "value": "basketball"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "primary_use",
+                      "operator": "eq",
+                      "value": "basketball"
+                    }
+                  ]
+                }
+              ],
+              "warnings": [
+                {
+                  "type": "invented",
+                  "attribute": "sport",
+                  "values": [
+                    {
+                      "attribute": "sport",
+                      "operator": "eq",
+                      "value": "basketball"
+                    }
+                  ]
+                }
+              ],
+              "error_count": 1,
+              "warning_count": 1
+            },
+            "original_metrics": {
               "turns": 2,
               "total_turns": 5,
               "extraction_ms": 31484,
@@ -11325,6 +11950,67 @@
             },
             "input_sha256": "sha256:fe03ff9a0118ead1e388cbafe5de56065c5b2d2913d401ad48b79e85a6858383",
             "metrics": {
+              "turns": 3,
+              "total_turns": 5,
+              "extraction_ms": 35188,
+              "value_precision": 0.8571428571428571,
+              "value_recall": 0.8571428571428571,
+              "attributes": 7,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 1,
+              "preferences_correct": false,
+              "attempts": 3,
+              "valid_outputs": 1,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 6,
+              "fp": 1,
+              "fn": 1,
+              "precision": 0.8571428571428571,
+              "recall": 0.8571428571428571,
+              "errors": [
+                {
+                  "type": "missing",
+                  "attribute": "primary_use",
+                  "expected": [
+                    {
+                      "attribute": "primary_use",
+                      "operator": "eq",
+                      "value": "basketball"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "primary_use",
+                      "operator": "eq",
+                      "value": "basketball"
+                    }
+                  ]
+                }
+              ],
+              "warnings": [
+                {
+                  "type": "invented",
+                  "attribute": "sport",
+                  "values": [
+                    {
+                      "attribute": "sport",
+                      "operator": "eq",
+                      "value": "basketball"
+                    }
+                  ]
+                }
+              ],
+              "error_count": 1,
+              "warning_count": 1
+            },
+            "original_metrics": {
               "turns": 3,
               "total_turns": 5,
               "extraction_ms": 35188,
@@ -12097,6 +12783,35 @@
               "turns": 4,
               "total_turns": 5,
               "extraction_ms": 47662,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 9,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 1,
+              "preferences_correct": false,
+              "attempts": 4,
+              "valid_outputs": 1,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 9,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 4,
+              "total_turns": 5,
+              "extraction_ms": 47662,
               "value_precision": null,
               "value_recall": 0.0,
               "attributes": 9,
@@ -12517,6 +13232,55 @@
               "item_preferences": 0,
               "preferences_correct": true,
               "attempts": 5,
+              "valid_outputs": 2,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 0,
+              "fp": 0,
+              "fn": 1,
+              "precision": null,
+              "recall": 0.0,
+              "errors": [
+                {
+                  "type": "missing",
+                  "attribute": "brand",
+                  "expected": [
+                    {
+                      "attribute": "brand",
+                      "operator": "eq",
+                      "value": "under armour"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "brand",
+                      "operator": "eq",
+                      "value": "under armour"
+                    }
+                  ]
+                }
+              ],
+              "warnings": [],
+              "error_count": 1,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 5,
+              "total_turns": 5,
+              "extraction_ms": 2352,
+              "value_precision": null,
+              "value_recall": 0.0,
+              "attributes": 0,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 5,
               "valid_outputs": 2
             }
           }
@@ -12624,7 +13388,21 @@
             "finish_reason": "stop",
             "wall_seconds": 2.343
           }
-        ]
+        ],
+        "feature_summary": {
+          "policy": "exact-features-lowercase-v1",
+          "turns": 5,
+          "passed_turns": 1,
+          "error_turns": 4,
+          "warning_turns": 3,
+          "errors": 5,
+          "warnings": 3,
+          "tp": 23,
+          "fp": 4,
+          "fn": 5,
+          "precision": 0.8518518518518519,
+          "recall": 0.8214285714285714
+        }
       },
       "rollout": {
         "sample_id": "sft-shoes-5",
@@ -13012,6 +13790,92 @@
             },
             "input_sha256": "sha256:f46ea1a338c6ddb3e201bfbd73af3fbade5cd3f75199319c03efeafa21c7dbba",
             "metrics": {
+              "turns": 1,
+              "total_turns": 5,
+              "extraction_ms": 30342,
+              "value_precision": 0.6,
+              "value_recall": 0.6,
+              "attributes": 5,
+              "targets": 5,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": false,
+              "attempts": 1,
+              "valid_outputs": 0,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 3,
+              "fp": 2,
+              "fn": 2,
+              "precision": 0.6,
+              "recall": 0.6,
+              "errors": [
+                {
+                  "type": "changed",
+                  "attribute": "key_characteristics",
+                  "expected": [
+                    {
+                      "attribute": "key_characteristics",
+                      "operator": "eq",
+                      "value": "traction, quick movements"
+                    }
+                  ],
+                  "extracted": [
+                    {
+                      "attribute": "key_characteristics",
+                      "operator": "in",
+                      "value": "traction, quick movements"
+                    }
+                  ],
+                  "missing": [
+                    {
+                      "attribute": "key_characteristics",
+                      "operator": "eq",
+                      "value": "traction, quick movements"
+                    }
+                  ]
+                },
+                {
+                  "type": "missing",
+                  "attribute": "style",
+                  "expected": [
+                    {
+                      "attribute": "style",
+                      "operator": "eq",
+                      "value": "performance"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "style",
+                      "operator": "eq",
+                      "value": "performance"
+                    }
+                  ]
+                }
+              ],
+              "warnings": [
+                {
+                  "type": "invented",
+                  "attribute": "category",
+                  "values": [
+                    {
+                      "attribute": "category",
+                      "operator": "eq",
+                      "value": "basketball"
+                    }
+                  ]
+                }
+              ],
+              "error_count": 2,
+              "warning_count": 1
+            },
+            "original_metrics": {
               "turns": 1,
               "total_turns": 5,
               "extraction_ms": 30342,
@@ -13428,6 +14292,92 @@
             },
             "input_sha256": "sha256:c5ed0435417394feba47b03179ea9bbc03e87145ee186c1cbdd44f76224c7237",
             "metrics": {
+              "turns": 2,
+              "total_turns": 5,
+              "extraction_ms": 33660,
+              "value_precision": 0.6666666666666666,
+              "value_recall": 0.6666666666666666,
+              "attributes": 6,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": false,
+              "attempts": 2,
+              "valid_outputs": 0,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 4,
+              "fp": 2,
+              "fn": 2,
+              "precision": 0.6666666666666666,
+              "recall": 0.6666666666666666,
+              "errors": [
+                {
+                  "type": "changed",
+                  "attribute": "key_characteristics",
+                  "expected": [
+                    {
+                      "attribute": "key_characteristics",
+                      "operator": "eq",
+                      "value": "traction, quick movements"
+                    }
+                  ],
+                  "extracted": [
+                    {
+                      "attribute": "key_characteristics",
+                      "operator": "in",
+                      "value": "traction, quick movements"
+                    }
+                  ],
+                  "missing": [
+                    {
+                      "attribute": "key_characteristics",
+                      "operator": "eq",
+                      "value": "traction, quick movements"
+                    }
+                  ]
+                },
+                {
+                  "type": "missing",
+                  "attribute": "primary_use",
+                  "expected": [
+                    {
+                      "attribute": "primary_use",
+                      "operator": "eq",
+                      "value": "basketball"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "primary_use",
+                      "operator": "eq",
+                      "value": "basketball"
+                    }
+                  ]
+                }
+              ],
+              "warnings": [
+                {
+                  "type": "invented",
+                  "attribute": "sport",
+                  "values": [
+                    {
+                      "attribute": "sport",
+                      "operator": "eq",
+                      "value": "basketball"
+                    }
+                  ]
+                }
+              ],
+              "error_count": 2,
+              "warning_count": 1
+            },
+            "original_metrics": {
               "turns": 2,
               "total_turns": 5,
               "extraction_ms": 33660,
@@ -13916,6 +14866,111 @@
             },
             "input_sha256": "sha256:cf8b7d760109009f35370a2f6bb2bad66711ec02f0b699926a9112394f4219c6",
             "metrics": {
+              "turns": 3,
+              "total_turns": 5,
+              "extraction_ms": 34687,
+              "value_precision": 0.6666666666666666,
+              "value_recall": 0.5714285714285714,
+              "attributes": 6,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 1,
+              "preferences_correct": false,
+              "attempts": 3,
+              "valid_outputs": 0,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 4,
+              "fp": 2,
+              "fn": 3,
+              "precision": 0.6666666666666666,
+              "recall": 0.5714285714285714,
+              "errors": [
+                {
+                  "type": "changed",
+                  "attribute": "key_characteristics",
+                  "expected": [
+                    {
+                      "attribute": "key_characteristics",
+                      "operator": "eq",
+                      "value": "traction, quick movements"
+                    }
+                  ],
+                  "extracted": [
+                    {
+                      "attribute": "key_characteristics",
+                      "operator": "in",
+                      "value": "traction, quick movements"
+                    }
+                  ],
+                  "missing": [
+                    {
+                      "attribute": "key_characteristics",
+                      "operator": "eq",
+                      "value": "traction, quick movements"
+                    }
+                  ]
+                },
+                {
+                  "type": "missing",
+                  "attribute": "primary_use",
+                  "expected": [
+                    {
+                      "attribute": "primary_use",
+                      "operator": "eq",
+                      "value": "basketball"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "primary_use",
+                      "operator": "eq",
+                      "value": "basketball"
+                    }
+                  ]
+                },
+                {
+                  "type": "missing",
+                  "attribute": "style",
+                  "expected": [
+                    {
+                      "attribute": "style",
+                      "operator": "eq",
+                      "value": "performance"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "style",
+                      "operator": "eq",
+                      "value": "performance"
+                    }
+                  ]
+                }
+              ],
+              "warnings": [
+                {
+                  "type": "invented",
+                  "attribute": "sport",
+                  "values": [
+                    {
+                      "attribute": "sport",
+                      "operator": "eq",
+                      "value": "basketball"
+                    }
+                  ]
+                }
+              ],
+              "error_count": 3,
+              "warning_count": 1
+            },
+            "original_metrics": {
               "turns": 3,
               "total_turns": 5,
               "extraction_ms": 34687,
@@ -14571,6 +15626,84 @@
               "turns": 4,
               "total_turns": 5,
               "extraction_ms": 41193,
+              "value_precision": 0.7272727272727273,
+              "value_recall": 0.8888888888888888,
+              "attributes": 11,
+              "targets": 1,
+              "selected": 0,
+              "item_preferences": 1,
+              "preferences_correct": false,
+              "attempts": 4,
+              "valid_outputs": 1,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 8,
+              "fp": 3,
+              "fn": 1,
+              "precision": 0.7272727272727273,
+              "recall": 0.8888888888888888,
+              "errors": [
+                {
+                  "type": "changed",
+                  "attribute": "key_characteristics",
+                  "expected": [
+                    {
+                      "attribute": "key_characteristics",
+                      "operator": "eq",
+                      "value": "traction, quick movements"
+                    }
+                  ],
+                  "extracted": [
+                    {
+                      "attribute": "key_characteristics",
+                      "operator": "in",
+                      "value": "traction, quick movements"
+                    }
+                  ],
+                  "missing": [
+                    {
+                      "attribute": "key_characteristics",
+                      "operator": "eq",
+                      "value": "traction, quick movements"
+                    }
+                  ]
+                }
+              ],
+              "warnings": [
+                {
+                  "type": "invented",
+                  "attribute": "size",
+                  "values": [
+                    {
+                      "attribute": "size",
+                      "operator": "eq",
+                      "value": 42
+                    }
+                  ]
+                },
+                {
+                  "type": "invented",
+                  "attribute": "sport",
+                  "values": [
+                    {
+                      "attribute": "sport",
+                      "operator": "eq",
+                      "value": "basketball"
+                    }
+                  ]
+                }
+              ],
+              "error_count": 1,
+              "warning_count": 2
+            },
+            "original_metrics": {
+              "turns": 4,
+              "total_turns": 5,
+              "extraction_ms": 41193,
               "value_precision": 0.8181818181818182,
               "value_recall": 1.0,
               "attributes": 11,
@@ -15050,6 +16183,55 @@
               "item_preferences": 0,
               "preferences_correct": true,
               "attempts": 5,
+              "valid_outputs": 2,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 0,
+              "fp": 0,
+              "fn": 1,
+              "precision": null,
+              "recall": 0.0,
+              "errors": [
+                {
+                  "type": "missing",
+                  "attribute": "brand",
+                  "expected": [
+                    {
+                      "attribute": "brand",
+                      "operator": "eq",
+                      "value": "under armour"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "brand",
+                      "operator": "eq",
+                      "value": "under armour"
+                    }
+                  ]
+                }
+              ],
+              "warnings": [],
+              "error_count": 1,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 5,
+              "total_turns": 5,
+              "extraction_ms": 2235,
+              "value_precision": null,
+              "value_recall": 0.0,
+              "attributes": 0,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 5,
               "valid_outputs": 2
             }
           }
@@ -15157,7 +16339,21 @@
             "finish_reason": "stop",
             "wall_seconds": 2.226
           }
-        ]
+        ],
+        "feature_summary": {
+          "policy": "exact-features-lowercase-v1",
+          "turns": 5,
+          "passed_turns": 0,
+          "error_turns": 5,
+          "warning_turns": 4,
+          "errors": 9,
+          "warnings": 5,
+          "tp": 19,
+          "fp": 9,
+          "fn": 9,
+          "precision": 0.6785714285714286,
+          "recall": 0.6785714285714286
+        }
       }
     },
     "lora": {
@@ -15551,6 +16747,35 @@
             },
             "input_sha256": "sha256:f46ea1a338c6ddb3e201bfbd73af3fbade5cd3f75199319c03efeafa21c7dbba",
             "metrics": {
+              "turns": 1,
+              "total_turns": 5,
+              "extraction_ms": 18118,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 5,
+              "targets": 2,
+              "selected": 0,
+              "item_preferences": 1,
+              "preferences_correct": false,
+              "attempts": 1,
+              "valid_outputs": 0,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 5,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 1,
               "total_turns": 5,
               "extraction_ms": 18118,
@@ -16101,6 +17326,67 @@
             },
             "input_sha256": "sha256:7d958f78878ceee1fa6652e0c702d51dab062ef59697a0cb9f3b3a333a2e3d13",
             "metrics": {
+              "turns": 2,
+              "total_turns": 5,
+              "extraction_ms": 20585,
+              "value_precision": 0.8333333333333334,
+              "value_recall": 0.8333333333333334,
+              "attributes": 6,
+              "targets": 1,
+              "selected": 0,
+              "item_preferences": 1,
+              "preferences_correct": false,
+              "attempts": 2,
+              "valid_outputs": 0,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 5,
+              "fp": 1,
+              "fn": 1,
+              "precision": 0.8333333333333334,
+              "recall": 0.8333333333333334,
+              "errors": [
+                {
+                  "type": "missing",
+                  "attribute": "primary_use",
+                  "expected": [
+                    {
+                      "attribute": "primary_use",
+                      "operator": "eq",
+                      "value": "basketball"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "primary_use",
+                      "operator": "eq",
+                      "value": "basketball"
+                    }
+                  ]
+                }
+              ],
+              "warnings": [
+                {
+                  "type": "invented",
+                  "attribute": "sport",
+                  "values": [
+                    {
+                      "attribute": "sport",
+                      "operator": "eq",
+                      "value": "basketball"
+                    }
+                  ]
+                }
+              ],
+              "error_count": 1,
+              "warning_count": 1
+            },
+            "original_metrics": {
               "turns": 2,
               "total_turns": 5,
               "extraction_ms": 20585,
@@ -16767,6 +18053,35 @@
             },
             "input_sha256": "sha256:fe03ff9a0118ead1e388cbafe5de56065c5b2d2913d401ad48b79e85a6858383",
             "metrics": {
+              "turns": 3,
+              "total_turns": 5,
+              "extraction_ms": 23403,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 7,
+              "targets": 1,
+              "selected": 0,
+              "item_preferences": 1,
+              "preferences_correct": false,
+              "attempts": 3,
+              "valid_outputs": 0,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 7,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 3,
               "total_turns": 5,
               "extraction_ms": 23403,
@@ -17549,6 +18864,35 @@
               "item_preferences": 1,
               "preferences_correct": false,
               "attempts": 4,
+              "valid_outputs": 1,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 9,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 4,
+              "total_turns": 5,
+              "extraction_ms": 29566,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 9,
+              "targets": 2,
+              "selected": 0,
+              "item_preferences": 1,
+              "preferences_correct": false,
+              "attempts": 4,
               "valid_outputs": 1
             }
           },
@@ -17983,6 +19327,35 @@
               "item_preferences": 1,
               "preferences_correct": false,
               "attempts": 5,
+              "valid_outputs": 2,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 1,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 5,
+              "total_turns": 5,
+              "extraction_ms": 4437,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 1,
+              "targets": 1,
+              "selected": 0,
+              "item_preferences": 1,
+              "preferences_correct": false,
+              "attempts": 5,
               "valid_outputs": 2
             }
           }
@@ -18090,7 +19463,21 @@
             "finish_reason": "stop",
             "wall_seconds": 4.432
           }
-        ]
+        ],
+        "feature_summary": {
+          "policy": "exact-features-lowercase-v1",
+          "turns": 5,
+          "passed_turns": 4,
+          "error_turns": 1,
+          "warning_turns": 1,
+          "errors": 1,
+          "warnings": 1,
+          "tp": 27,
+          "fp": 1,
+          "fn": 1,
+          "precision": 0.9642857142857143,
+          "recall": 0.9642857142857143
+        }
       },
       "rollout": {
         "sample_id": "sft-shoes-5",
@@ -18482,6 +19869,35 @@
             },
             "input_sha256": "sha256:f46ea1a338c6ddb3e201bfbd73af3fbade5cd3f75199319c03efeafa21c7dbba",
             "metrics": {
+              "turns": 1,
+              "total_turns": 5,
+              "extraction_ms": 18048,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 5,
+              "targets": 2,
+              "selected": 0,
+              "item_preferences": 1,
+              "preferences_correct": false,
+              "attempts": 1,
+              "valid_outputs": 0,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 5,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 1,
               "total_turns": 5,
               "extraction_ms": 18048,
@@ -18904,6 +20320,35 @@
             },
             "input_sha256": "sha256:c5ed0435417394feba47b03179ea9bbc03e87145ee186c1cbdd44f76224c7237",
             "metrics": {
+              "turns": 2,
+              "total_turns": 5,
+              "extraction_ms": 20786,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 6,
+              "targets": 1,
+              "selected": 0,
+              "item_preferences": 1,
+              "preferences_correct": false,
+              "attempts": 2,
+              "valid_outputs": 0,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 6,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 2,
               "total_turns": 5,
               "extraction_ms": 20786,
@@ -19417,6 +20862,35 @@
             },
             "input_sha256": "sha256:cf8b7d760109009f35370a2f6bb2bad66711ec02f0b699926a9112394f4219c6",
             "metrics": {
+              "turns": 3,
+              "total_turns": 5,
+              "extraction_ms": 23440,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 7,
+              "targets": 1,
+              "selected": 0,
+              "item_preferences": 1,
+              "preferences_correct": false,
+              "attempts": 3,
+              "valid_outputs": 0,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 7,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 3,
               "total_turns": 5,
               "extraction_ms": 23440,
@@ -19935,6 +21409,150 @@
               "item_preferences": 1,
               "preferences_correct": false,
               "attempts": 4,
+              "valid_outputs": 1,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 3,
+              "fp": 0,
+              "fn": 6,
+              "precision": 1.0,
+              "recall": 0.3333333333333333,
+              "errors": [
+                {
+                  "type": "missing",
+                  "attribute": "colour",
+                  "expected": [
+                    {
+                      "attribute": "colour",
+                      "operator": "eq",
+                      "value": "black"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "colour",
+                      "operator": "eq",
+                      "value": "black"
+                    }
+                  ]
+                },
+                {
+                  "type": "missing",
+                  "attribute": "gender",
+                  "expected": [
+                    {
+                      "attribute": "gender",
+                      "operator": "eq",
+                      "value": "unisex"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "gender",
+                      "operator": "eq",
+                      "value": "unisex"
+                    }
+                  ]
+                },
+                {
+                  "type": "missing",
+                  "attribute": "key_characteristics",
+                  "expected": [
+                    {
+                      "attribute": "key_characteristics",
+                      "operator": "eq",
+                      "value": "traction, quick movements"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "key_characteristics",
+                      "operator": "eq",
+                      "value": "traction, quick movements"
+                    }
+                  ]
+                },
+                {
+                  "type": "missing",
+                  "attribute": "primary_use",
+                  "expected": [
+                    {
+                      "attribute": "primary_use",
+                      "operator": "eq",
+                      "value": "basketball"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "primary_use",
+                      "operator": "eq",
+                      "value": "basketball"
+                    }
+                  ]
+                },
+                {
+                  "type": "missing",
+                  "attribute": "style",
+                  "expected": [
+                    {
+                      "attribute": "style",
+                      "operator": "eq",
+                      "value": "performance"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "style",
+                      "operator": "eq",
+                      "value": "performance"
+                    }
+                  ]
+                },
+                {
+                  "type": "missing",
+                  "attribute": "surface",
+                  "expected": [
+                    {
+                      "attribute": "surface",
+                      "operator": "eq",
+                      "value": "indoor_court"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "surface",
+                      "operator": "eq",
+                      "value": "indoor_court"
+                    }
+                  ]
+                }
+              ],
+              "warnings": [],
+              "error_count": 6,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 4,
+              "total_turns": 5,
+              "extraction_ms": 15374,
+              "value_precision": 1.0,
+              "value_recall": 0.3333333333333333,
+              "attributes": 3,
+              "targets": 1,
+              "selected": 0,
+              "item_preferences": 1,
+              "preferences_correct": false,
+              "attempts": 4,
               "valid_outputs": 1
             }
           },
@@ -20252,6 +21870,55 @@
               "item_preferences": 1,
               "preferences_correct": false,
               "attempts": 5,
+              "valid_outputs": 2,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 0,
+              "fp": 0,
+              "fn": 1,
+              "precision": null,
+              "recall": 0.0,
+              "errors": [
+                {
+                  "type": "missing",
+                  "attribute": "brand",
+                  "expected": [
+                    {
+                      "attribute": "brand",
+                      "operator": "eq",
+                      "value": "under armour"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "brand",
+                      "operator": "eq",
+                      "value": "under armour"
+                    }
+                  ]
+                }
+              ],
+              "warnings": [],
+              "error_count": 1,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 5,
+              "total_turns": 5,
+              "extraction_ms": 2407,
+              "value_precision": null,
+              "value_recall": 0.0,
+              "attributes": 0,
+              "targets": 1,
+              "selected": 0,
+              "item_preferences": 1,
+              "preferences_correct": false,
+              "attempts": 5,
               "valid_outputs": 2
             }
           }
@@ -20359,7 +22026,21 @@
             "finish_reason": "stop",
             "wall_seconds": 2.402
           }
-        ]
+        ],
+        "feature_summary": {
+          "policy": "exact-features-lowercase-v1",
+          "turns": 5,
+          "passed_turns": 3,
+          "error_turns": 2,
+          "warning_turns": 0,
+          "errors": 7,
+          "warnings": 0,
+          "tp": 21,
+          "fp": 0,
+          "fn": 7,
+          "precision": 1.0,
+          "recall": 0.75
+        }
       }
     }
   }

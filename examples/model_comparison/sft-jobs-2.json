@@ -3962,6 +3962,35 @@
               "item_preferences": 0,
               "preferences_correct": true,
               "attempts": 1,
+              "valid_outputs": 1,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 2,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 1,
+              "total_turns": 5,
+              "extraction_ms": 3955,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 2,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 1,
               "valid_outputs": 1
             }
           },
@@ -4497,6 +4526,35 @@
             },
             "input_sha256": "sha256:6ee3456858f506fc0ec89c5c645694f8ea38bf2a696b506c649bc2c5dfb0951c",
             "metrics": {
+              "turns": 2,
+              "total_turns": 5,
+              "extraction_ms": 9041,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 6,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 2,
+              "valid_outputs": 2,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 6,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 2,
               "total_turns": 5,
               "extraction_ms": 9041,
@@ -5175,6 +5233,35 @@
               "item_preferences": 1,
               "preferences_correct": true,
               "attempts": 3,
+              "valid_outputs": 3,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 6,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 3,
+              "total_turns": 5,
+              "extraction_ms": 10488,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 6,
+              "targets": 1,
+              "selected": 0,
+              "item_preferences": 1,
+              "preferences_correct": true,
+              "attempts": 3,
               "valid_outputs": 3
             }
           },
@@ -5764,6 +5851,35 @@
               "item_preferences": 1,
               "preferences_correct": true,
               "attempts": 4,
+              "valid_outputs": 4,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 6,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 4,
+              "total_turns": 5,
+              "extraction_ms": 6312,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 6,
+              "targets": 1,
+              "selected": 1,
+              "item_preferences": 1,
+              "preferences_correct": true,
+              "attempts": 4,
               "valid_outputs": 4
             }
           },
@@ -6153,6 +6269,35 @@
               "item_preferences": 1,
               "preferences_correct": true,
               "attempts": 5,
+              "valid_outputs": 5,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 2,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 5,
+              "total_turns": 5,
+              "extraction_ms": 5370,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 2,
+              "targets": 1,
+              "selected": 1,
+              "item_preferences": 1,
+              "preferences_correct": true,
+              "attempts": 5,
               "valid_outputs": 5
             }
           }
@@ -6270,7 +6415,21 @@
             },
             "wall_seconds": 5.354
           }
-        ]
+        ],
+        "feature_summary": {
+          "policy": "exact-features-lowercase-v1",
+          "turns": 5,
+          "passed_turns": 5,
+          "error_turns": 0,
+          "warning_turns": 0,
+          "errors": 0,
+          "warnings": 0,
+          "tp": 22,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0
+        }
       },
       "rollout": {
         "sample_id": "sft-jobs-2",
@@ -6495,6 +6654,35 @@
             },
             "input_sha256": "sha256:b2c41af282ae737b359a5412f0f00f047dfd97aaca64b1342d2003adfae739bc",
             "metrics": {
+              "turns": 1,
+              "total_turns": 5,
+              "extraction_ms": 3812,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 2,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 1,
+              "valid_outputs": 1,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 2,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 1,
               "total_turns": 5,
               "extraction_ms": 3812,
@@ -7037,6 +7225,35 @@
             },
             "input_sha256": "sha256:bf1095921d1c7bd5541e4dee167436fb04b55bf4cd00b2b6bb48722be1d97086",
             "metrics": {
+              "turns": 2,
+              "total_turns": 5,
+              "extraction_ms": 7205,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 6,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 2,
+              "valid_outputs": 2,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 6,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 2,
               "total_turns": 5,
               "extraction_ms": 7205,
@@ -7707,6 +7924,35 @@
               "item_preferences": 1,
               "preferences_correct": true,
               "attempts": 3,
+              "valid_outputs": 3,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 6,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 3,
+              "total_turns": 5,
+              "extraction_ms": 8976,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 6,
+              "targets": 1,
+              "selected": 0,
+              "item_preferences": 1,
+              "preferences_correct": true,
+              "attempts": 3,
               "valid_outputs": 3
             }
           },
@@ -8288,6 +8534,35 @@
               "item_preferences": 1,
               "preferences_correct": true,
               "attempts": 4,
+              "valid_outputs": 4,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 6,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 4,
+              "total_turns": 5,
+              "extraction_ms": 10990,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 6,
+              "targets": 1,
+              "selected": 1,
+              "item_preferences": 1,
+              "preferences_correct": true,
+              "attempts": 4,
               "valid_outputs": 4
             }
           },
@@ -8671,6 +8946,35 @@
               "item_preferences": 1,
               "preferences_correct": true,
               "attempts": 5,
+              "valid_outputs": 5,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 2,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 5,
+              "total_turns": 5,
+              "extraction_ms": 4218,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 2,
+              "targets": 1,
+              "selected": 1,
+              "item_preferences": 1,
+              "preferences_correct": true,
+              "attempts": 5,
               "valid_outputs": 5
             }
           }
@@ -8788,7 +9092,21 @@
             },
             "wall_seconds": 4.201
           }
-        ]
+        ],
+        "feature_summary": {
+          "policy": "exact-features-lowercase-v1",
+          "turns": 5,
+          "passed_turns": 5,
+          "error_turns": 0,
+          "warning_turns": 0,
+          "errors": 0,
+          "warnings": 0,
+          "tp": 22,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0
+        }
       }
     },
     "baseline": {
@@ -9025,6 +9343,61 @@
             },
             "input_sha256": "sha256:b2c41af282ae737b359a5412f0f00f047dfd97aaca64b1342d2003adfae739bc",
             "metrics": {
+              "turns": 1,
+              "total_turns": 5,
+              "extraction_ms": 18720,
+              "value_precision": 0.5,
+              "value_recall": 0.5,
+              "attributes": 2,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 1,
+              "valid_outputs": 1,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 1,
+              "fp": 1,
+              "fn": 1,
+              "precision": 0.5,
+              "recall": 0.5,
+              "errors": [
+                {
+                  "type": "changed",
+                  "attribute": "work_end_minute",
+                  "expected": [
+                    {
+                      "attribute": "work_end_minute",
+                      "operator": "lte",
+                      "value": 1050
+                    }
+                  ],
+                  "extracted": [
+                    {
+                      "attribute": "work_end_minute",
+                      "operator": "lte",
+                      "value": 930
+                    }
+                  ],
+                  "missing": [
+                    {
+                      "attribute": "work_end_minute",
+                      "operator": "lte",
+                      "value": 1050
+                    }
+                  ]
+                }
+              ],
+              "warnings": [],
+              "error_count": 1,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 1,
               "total_turns": 5,
               "extraction_ms": 18720,
@@ -9566,6 +9939,35 @@
             },
             "input_sha256": "sha256:6ee3456858f506fc0ec89c5c645694f8ea38bf2a696b506c649bc2c5dfb0951c",
             "metrics": {
+              "turns": 2,
+              "total_turns": 5,
+              "extraction_ms": 34514,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 6,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 2,
+              "preferences_correct": false,
+              "attempts": 2,
+              "valid_outputs": 1,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 6,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 2,
               "total_turns": 5,
               "extraction_ms": 34514,
@@ -10245,6 +10647,35 @@
               "item_preferences": 1,
               "preferences_correct": true,
               "attempts": 3,
+              "valid_outputs": 2,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 6,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 3,
+              "total_turns": 5,
+              "extraction_ms": 39780,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 6,
+              "targets": 2,
+              "selected": 0,
+              "item_preferences": 1,
+              "preferences_correct": true,
+              "attempts": 3,
               "valid_outputs": 2
             }
           },
@@ -10746,6 +11177,150 @@
               "item_preferences": 1,
               "preferences_correct": true,
               "attempts": 4,
+              "valid_outputs": 3,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 0,
+              "fp": 0,
+              "fn": 6,
+              "precision": null,
+              "recall": 0.0,
+              "errors": [
+                {
+                  "type": "missing",
+                  "attribute": "days_per_week",
+                  "expected": [
+                    {
+                      "attribute": "days_per_week",
+                      "operator": "lte",
+                      "value": 5
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "days_per_week",
+                      "operator": "lte",
+                      "value": 5
+                    }
+                  ]
+                },
+                {
+                  "type": "missing",
+                  "attribute": "job_title",
+                  "expected": [
+                    {
+                      "attribute": "job_title",
+                      "operator": "eq",
+                      "value": "systems engineer"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "job_title",
+                      "operator": "eq",
+                      "value": "systems engineer"
+                    }
+                  ]
+                },
+                {
+                  "type": "missing",
+                  "attribute": "public_holidays_off",
+                  "expected": [
+                    {
+                      "attribute": "public_holidays_off",
+                      "operator": "eq",
+                      "value": "yes"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "public_holidays_off",
+                      "operator": "eq",
+                      "value": "yes"
+                    }
+                  ]
+                },
+                {
+                  "type": "missing",
+                  "attribute": "work_arrangement",
+                  "expected": [
+                    {
+                      "attribute": "work_arrangement",
+                      "operator": "eq",
+                      "value": "hybrid"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "work_arrangement",
+                      "operator": "eq",
+                      "value": "hybrid"
+                    }
+                  ]
+                },
+                {
+                  "type": "missing",
+                  "attribute": "work_end_minute",
+                  "expected": [
+                    {
+                      "attribute": "work_end_minute",
+                      "operator": "lte",
+                      "value": 1050
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "work_end_minute",
+                      "operator": "lte",
+                      "value": 1050
+                    }
+                  ]
+                },
+                {
+                  "type": "missing",
+                  "attribute": "work_start_minute",
+                  "expected": [
+                    {
+                      "attribute": "work_start_minute",
+                      "operator": "gte",
+                      "value": 540
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "work_start_minute",
+                      "operator": "gte",
+                      "value": 540
+                    }
+                  ]
+                }
+              ],
+              "warnings": [],
+              "error_count": 6,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 4,
+              "total_turns": 5,
+              "extraction_ms": 4349,
+              "value_precision": null,
+              "value_recall": 0.0,
+              "attributes": 0,
+              "targets": 1,
+              "selected": 1,
+              "item_preferences": 1,
+              "preferences_correct": true,
+              "attempts": 4,
               "valid_outputs": 3
             }
           },
@@ -11105,6 +11680,74 @@
               "item_preferences": 1,
               "preferences_correct": true,
               "attempts": 5,
+              "valid_outputs": 4,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 0,
+              "fp": 0,
+              "fn": 2,
+              "precision": null,
+              "recall": 0.0,
+              "errors": [
+                {
+                  "type": "missing",
+                  "attribute": "public_holidays_off",
+                  "expected": [
+                    {
+                      "attribute": "public_holidays_off",
+                      "operator": "eq",
+                      "value": "yes"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "public_holidays_off",
+                      "operator": "eq",
+                      "value": "yes"
+                    }
+                  ]
+                },
+                {
+                  "type": "missing",
+                  "attribute": "work_arrangement",
+                  "expected": [
+                    {
+                      "attribute": "work_arrangement",
+                      "operator": "eq",
+                      "value": "hybrid"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "work_arrangement",
+                      "operator": "eq",
+                      "value": "hybrid"
+                    }
+                  ]
+                }
+              ],
+              "warnings": [],
+              "error_count": 2,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 5,
+              "total_turns": 5,
+              "extraction_ms": 4503,
+              "value_precision": null,
+              "value_recall": 0.0,
+              "attributes": 0,
+              "targets": 1,
+              "selected": 1,
+              "item_preferences": 1,
+              "preferences_correct": true,
+              "attempts": 5,
               "valid_outputs": 4
             }
           }
@@ -11212,7 +11855,21 @@
             "finish_reason": "stop",
             "wall_seconds": 4.493
           }
-        ]
+        ],
+        "feature_summary": {
+          "policy": "exact-features-lowercase-v1",
+          "turns": 5,
+          "passed_turns": 2,
+          "error_turns": 3,
+          "warning_turns": 0,
+          "errors": 9,
+          "warnings": 0,
+          "tp": 13,
+          "fp": 1,
+          "fn": 9,
+          "precision": 0.9285714285714286,
+          "recall": 0.5909090909090909
+        }
       },
       "rollout": {
         "sample_id": "sft-jobs-2",
@@ -11447,6 +12104,61 @@
             },
             "input_sha256": "sha256:b2c41af282ae737b359a5412f0f00f047dfd97aaca64b1342d2003adfae739bc",
             "metrics": {
+              "turns": 1,
+              "total_turns": 5,
+              "extraction_ms": 13858,
+              "value_precision": 0.5,
+              "value_recall": 0.5,
+              "attributes": 2,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 1,
+              "valid_outputs": 1,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 1,
+              "fp": 1,
+              "fn": 1,
+              "precision": 0.5,
+              "recall": 0.5,
+              "errors": [
+                {
+                  "type": "changed",
+                  "attribute": "work_end_minute",
+                  "expected": [
+                    {
+                      "attribute": "work_end_minute",
+                      "operator": "lte",
+                      "value": 1050
+                    }
+                  ],
+                  "extracted": [
+                    {
+                      "attribute": "work_end_minute",
+                      "operator": "lte",
+                      "value": 930
+                    }
+                  ],
+                  "missing": [
+                    {
+                      "attribute": "work_end_minute",
+                      "operator": "lte",
+                      "value": 1050
+                    }
+                  ]
+                }
+              ],
+              "warnings": [],
+              "error_count": 1,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 1,
               "total_turns": 5,
               "extraction_ms": 13858,
@@ -11984,6 +12696,61 @@
             },
             "input_sha256": "sha256:910042ea0ac03cee21be3d5acaf5ab2155136a3b824e7e7137678042e8f61899",
             "metrics": {
+              "turns": 2,
+              "total_turns": 5,
+              "extraction_ms": 32472,
+              "value_precision": 0.8333333333333334,
+              "value_recall": 0.8333333333333334,
+              "attributes": 6,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 1,
+              "preferences_correct": false,
+              "attempts": 2,
+              "valid_outputs": 1,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 5,
+              "fp": 1,
+              "fn": 1,
+              "precision": 0.8333333333333334,
+              "recall": 0.8333333333333334,
+              "errors": [
+                {
+                  "type": "changed",
+                  "attribute": "work_end_minute",
+                  "expected": [
+                    {
+                      "attribute": "work_end_minute",
+                      "operator": "lte",
+                      "value": 1050
+                    }
+                  ],
+                  "extracted": [
+                    {
+                      "attribute": "work_end_minute",
+                      "operator": "lte",
+                      "value": 930
+                    }
+                  ],
+                  "missing": [
+                    {
+                      "attribute": "work_end_minute",
+                      "operator": "lte",
+                      "value": 1050
+                    }
+                  ]
+                }
+              ],
+              "warnings": [],
+              "error_count": 1,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 2,
               "total_turns": 5,
               "extraction_ms": 32472,
@@ -12571,6 +13338,61 @@
               "item_preferences": 1,
               "preferences_correct": true,
               "attempts": 3,
+              "valid_outputs": 2,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 5,
+              "fp": 1,
+              "fn": 1,
+              "precision": 0.8333333333333334,
+              "recall": 0.8333333333333334,
+              "errors": [
+                {
+                  "type": "changed",
+                  "attribute": "work_end_minute",
+                  "expected": [
+                    {
+                      "attribute": "work_end_minute",
+                      "operator": "lte",
+                      "value": 1050
+                    }
+                  ],
+                  "extracted": [
+                    {
+                      "attribute": "work_end_minute",
+                      "operator": "lte",
+                      "value": 930
+                    }
+                  ],
+                  "missing": [
+                    {
+                      "attribute": "work_end_minute",
+                      "operator": "lte",
+                      "value": 1050
+                    }
+                  ]
+                }
+              ],
+              "warnings": [],
+              "error_count": 1,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 3,
+              "total_turns": 5,
+              "extraction_ms": 33413,
+              "value_precision": 0.8333333333333334,
+              "value_recall": 0.8333333333333334,
+              "attributes": 6,
+              "targets": 2,
+              "selected": 0,
+              "item_preferences": 1,
+              "preferences_correct": true,
+              "attempts": 3,
               "valid_outputs": 2
             }
           },
@@ -13068,6 +13890,150 @@
               "item_preferences": 1,
               "preferences_correct": true,
               "attempts": 4,
+              "valid_outputs": 3,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 0,
+              "fp": 0,
+              "fn": 6,
+              "precision": null,
+              "recall": 0.0,
+              "errors": [
+                {
+                  "type": "missing",
+                  "attribute": "days_per_week",
+                  "expected": [
+                    {
+                      "attribute": "days_per_week",
+                      "operator": "lte",
+                      "value": 5
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "days_per_week",
+                      "operator": "lte",
+                      "value": 5
+                    }
+                  ]
+                },
+                {
+                  "type": "missing",
+                  "attribute": "job_title",
+                  "expected": [
+                    {
+                      "attribute": "job_title",
+                      "operator": "eq",
+                      "value": "systems engineer"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "job_title",
+                      "operator": "eq",
+                      "value": "systems engineer"
+                    }
+                  ]
+                },
+                {
+                  "type": "missing",
+                  "attribute": "public_holidays_off",
+                  "expected": [
+                    {
+                      "attribute": "public_holidays_off",
+                      "operator": "eq",
+                      "value": "yes"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "public_holidays_off",
+                      "operator": "eq",
+                      "value": "yes"
+                    }
+                  ]
+                },
+                {
+                  "type": "missing",
+                  "attribute": "work_arrangement",
+                  "expected": [
+                    {
+                      "attribute": "work_arrangement",
+                      "operator": "eq",
+                      "value": "hybrid"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "work_arrangement",
+                      "operator": "eq",
+                      "value": "hybrid"
+                    }
+                  ]
+                },
+                {
+                  "type": "missing",
+                  "attribute": "work_end_minute",
+                  "expected": [
+                    {
+                      "attribute": "work_end_minute",
+                      "operator": "lte",
+                      "value": 1050
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "work_end_minute",
+                      "operator": "lte",
+                      "value": 1050
+                    }
+                  ]
+                },
+                {
+                  "type": "missing",
+                  "attribute": "work_start_minute",
+                  "expected": [
+                    {
+                      "attribute": "work_start_minute",
+                      "operator": "gte",
+                      "value": 540
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "work_start_minute",
+                      "operator": "gte",
+                      "value": 540
+                    }
+                  ]
+                }
+              ],
+              "warnings": [],
+              "error_count": 6,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 4,
+              "total_turns": 5,
+              "extraction_ms": 4462,
+              "value_precision": null,
+              "value_recall": 0.0,
+              "attributes": 0,
+              "targets": 1,
+              "selected": 1,
+              "item_preferences": 1,
+              "preferences_correct": true,
+              "attempts": 4,
               "valid_outputs": 3
             }
           },
@@ -13309,6 +14275,74 @@
               "item_preferences": 0,
               "preferences_correct": false,
               "attempts": 5,
+              "valid_outputs": 4,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 0,
+              "fp": 0,
+              "fn": 2,
+              "precision": null,
+              "recall": 0.0,
+              "errors": [
+                {
+                  "type": "missing",
+                  "attribute": "public_holidays_off",
+                  "expected": [
+                    {
+                      "attribute": "public_holidays_off",
+                      "operator": "eq",
+                      "value": "yes"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "public_holidays_off",
+                      "operator": "eq",
+                      "value": "yes"
+                    }
+                  ]
+                },
+                {
+                  "type": "missing",
+                  "attribute": "work_arrangement",
+                  "expected": [
+                    {
+                      "attribute": "work_arrangement",
+                      "operator": "eq",
+                      "value": "hybrid"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "work_arrangement",
+                      "operator": "eq",
+                      "value": "hybrid"
+                    }
+                  ]
+                }
+              ],
+              "warnings": [],
+              "error_count": 2,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 5,
+              "total_turns": 5,
+              "extraction_ms": 2974,
+              "value_precision": null,
+              "value_recall": 0.0,
+              "attributes": 0,
+              "targets": 1,
+              "selected": 1,
+              "item_preferences": 0,
+              "preferences_correct": false,
+              "attempts": 5,
               "valid_outputs": 4
             }
           }
@@ -13416,7 +14450,21 @@
             "finish_reason": "stop",
             "wall_seconds": 2.964
           }
-        ]
+        ],
+        "feature_summary": {
+          "policy": "exact-features-lowercase-v1",
+          "turns": 5,
+          "passed_turns": 0,
+          "error_turns": 5,
+          "warning_turns": 0,
+          "errors": 11,
+          "warnings": 0,
+          "tp": 11,
+          "fp": 3,
+          "fn": 11,
+          "precision": 0.7857142857142857,
+          "recall": 0.5
+        }
       }
     },
     "lora": {
@@ -13643,6 +14691,35 @@
             },
             "input_sha256": "sha256:b2c41af282ae737b359a5412f0f00f047dfd97aaca64b1342d2003adfae739bc",
             "metrics": {
+              "turns": 1,
+              "total_turns": 5,
+              "extraction_ms": 9333,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 2,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 1,
+              "valid_outputs": 1,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 2,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 1,
               "total_turns": 5,
               "extraction_ms": 9333,
@@ -14187,6 +15264,35 @@
             },
             "input_sha256": "sha256:6ee3456858f506fc0ec89c5c645694f8ea38bf2a696b506c649bc2c5dfb0951c",
             "metrics": {
+              "turns": 2,
+              "total_turns": 5,
+              "extraction_ms": 28255,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 6,
+              "targets": 1,
+              "selected": 0,
+              "item_preferences": 1,
+              "preferences_correct": false,
+              "attempts": 2,
+              "valid_outputs": 1,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 6,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 2,
               "total_turns": 5,
               "extraction_ms": 28255,
@@ -14865,6 +15971,35 @@
               "item_preferences": 1,
               "preferences_correct": true,
               "attempts": 3,
+              "valid_outputs": 2,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 6,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 3,
+              "total_turns": 5,
+              "extraction_ms": 26029,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 6,
+              "targets": 1,
+              "selected": 0,
+              "item_preferences": 1,
+              "preferences_correct": true,
+              "attempts": 3,
               "valid_outputs": 2
             }
           },
@@ -15454,6 +16589,35 @@
               "item_preferences": 1,
               "preferences_correct": true,
               "attempts": 4,
+              "valid_outputs": 3,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 6,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 4,
+              "total_turns": 5,
+              "extraction_ms": 21244,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 6,
+              "targets": 1,
+              "selected": 1,
+              "item_preferences": 1,
+              "preferences_correct": true,
+              "attempts": 4,
               "valid_outputs": 3
             }
           },
@@ -15813,6 +16977,74 @@
               "item_preferences": 1,
               "preferences_correct": true,
               "attempts": 5,
+              "valid_outputs": 4,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 0,
+              "fp": 0,
+              "fn": 2,
+              "precision": null,
+              "recall": 0.0,
+              "errors": [
+                {
+                  "type": "missing",
+                  "attribute": "public_holidays_off",
+                  "expected": [
+                    {
+                      "attribute": "public_holidays_off",
+                      "operator": "eq",
+                      "value": "yes"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "public_holidays_off",
+                      "operator": "eq",
+                      "value": "yes"
+                    }
+                  ]
+                },
+                {
+                  "type": "missing",
+                  "attribute": "work_arrangement",
+                  "expected": [
+                    {
+                      "attribute": "work_arrangement",
+                      "operator": "eq",
+                      "value": "hybrid"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "work_arrangement",
+                      "operator": "eq",
+                      "value": "hybrid"
+                    }
+                  ]
+                }
+              ],
+              "warnings": [],
+              "error_count": 2,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 5,
+              "total_turns": 5,
+              "extraction_ms": 2966,
+              "value_precision": null,
+              "value_recall": 0.0,
+              "attributes": 0,
+              "targets": 1,
+              "selected": 1,
+              "item_preferences": 1,
+              "preferences_correct": true,
+              "attempts": 5,
               "valid_outputs": 4
             }
           }
@@ -15920,7 +17152,21 @@
             "finish_reason": "stop",
             "wall_seconds": 2.957
           }
-        ]
+        ],
+        "feature_summary": {
+          "policy": "exact-features-lowercase-v1",
+          "turns": 5,
+          "passed_turns": 4,
+          "error_turns": 1,
+          "warning_turns": 0,
+          "errors": 2,
+          "warnings": 0,
+          "tp": 20,
+          "fp": 0,
+          "fn": 2,
+          "precision": 1.0,
+          "recall": 0.9090909090909091
+        }
       },
       "rollout": {
         "sample_id": "sft-jobs-2",
@@ -16145,6 +17391,35 @@
             },
             "input_sha256": "sha256:b2c41af282ae737b359a5412f0f00f047dfd97aaca64b1342d2003adfae739bc",
             "metrics": {
+              "turns": 1,
+              "total_turns": 5,
+              "extraction_ms": 8025,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 2,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 1,
+              "valid_outputs": 1,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 2,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 1,
               "total_turns": 5,
               "extraction_ms": 8025,
@@ -16697,6 +17972,35 @@
               "turns": 2,
               "total_turns": 5,
               "extraction_ms": 25246,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 6,
+              "targets": 1,
+              "selected": 0,
+              "item_preferences": 1,
+              "preferences_correct": false,
+              "attempts": 2,
+              "valid_outputs": 1,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 6,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 2,
+              "total_turns": 5,
+              "extraction_ms": 25246,
               "value_precision": null,
               "value_recall": 0.0,
               "attributes": 6,
@@ -17195,6 +18499,112 @@
               "item_preferences": 1,
               "preferences_correct": true,
               "attempts": 3,
+              "valid_outputs": 2,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 2,
+              "fp": 0,
+              "fn": 4,
+              "precision": 1.0,
+              "recall": 0.3333333333333333,
+              "errors": [
+                {
+                  "type": "missing",
+                  "attribute": "days_per_week",
+                  "expected": [
+                    {
+                      "attribute": "days_per_week",
+                      "operator": "lte",
+                      "value": 5
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "days_per_week",
+                      "operator": "lte",
+                      "value": 5
+                    }
+                  ]
+                },
+                {
+                  "type": "missing",
+                  "attribute": "public_holidays_off",
+                  "expected": [
+                    {
+                      "attribute": "public_holidays_off",
+                      "operator": "eq",
+                      "value": "yes"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "public_holidays_off",
+                      "operator": "eq",
+                      "value": "yes"
+                    }
+                  ]
+                },
+                {
+                  "type": "missing",
+                  "attribute": "work_arrangement",
+                  "expected": [
+                    {
+                      "attribute": "work_arrangement",
+                      "operator": "eq",
+                      "value": "hybrid"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "work_arrangement",
+                      "operator": "eq",
+                      "value": "hybrid"
+                    }
+                  ]
+                },
+                {
+                  "type": "missing",
+                  "attribute": "work_start_minute",
+                  "expected": [
+                    {
+                      "attribute": "work_start_minute",
+                      "operator": "gte",
+                      "value": 540
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "work_start_minute",
+                      "operator": "gte",
+                      "value": 540
+                    }
+                  ]
+                }
+              ],
+              "warnings": [],
+              "error_count": 4,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 3,
+              "total_turns": 5,
+              "extraction_ms": 8916,
+              "value_precision": 1.0,
+              "value_recall": 0.3333333333333333,
+              "attributes": 2,
+              "targets": 1,
+              "selected": 0,
+              "item_preferences": 1,
+              "preferences_correct": true,
+              "attempts": 3,
               "valid_outputs": 2
             }
           },
@@ -17628,6 +19038,112 @@
               "item_preferences": 1,
               "preferences_correct": true,
               "attempts": 4,
+              "valid_outputs": 3,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 2,
+              "fp": 0,
+              "fn": 4,
+              "precision": 1.0,
+              "recall": 0.3333333333333333,
+              "errors": [
+                {
+                  "type": "missing",
+                  "attribute": "days_per_week",
+                  "expected": [
+                    {
+                      "attribute": "days_per_week",
+                      "operator": "lte",
+                      "value": 5
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "days_per_week",
+                      "operator": "lte",
+                      "value": 5
+                    }
+                  ]
+                },
+                {
+                  "type": "missing",
+                  "attribute": "public_holidays_off",
+                  "expected": [
+                    {
+                      "attribute": "public_holidays_off",
+                      "operator": "eq",
+                      "value": "yes"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "public_holidays_off",
+                      "operator": "eq",
+                      "value": "yes"
+                    }
+                  ]
+                },
+                {
+                  "type": "missing",
+                  "attribute": "work_arrangement",
+                  "expected": [
+                    {
+                      "attribute": "work_arrangement",
+                      "operator": "eq",
+                      "value": "hybrid"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "work_arrangement",
+                      "operator": "eq",
+                      "value": "hybrid"
+                    }
+                  ]
+                },
+                {
+                  "type": "missing",
+                  "attribute": "work_start_minute",
+                  "expected": [
+                    {
+                      "attribute": "work_start_minute",
+                      "operator": "gte",
+                      "value": 540
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "work_start_minute",
+                      "operator": "gte",
+                      "value": 540
+                    }
+                  ]
+                }
+              ],
+              "warnings": [],
+              "error_count": 4,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 4,
+              "total_turns": 5,
+              "extraction_ms": 7528,
+              "value_precision": 1.0,
+              "value_recall": 0.3333333333333333,
+              "attributes": 2,
+              "targets": 1,
+              "selected": 1,
+              "item_preferences": 1,
+              "preferences_correct": true,
+              "attempts": 4,
               "valid_outputs": 3
             }
           },
@@ -17957,6 +19473,97 @@
               "item_preferences": 1,
               "preferences_correct": true,
               "attempts": 5,
+              "valid_outputs": 4,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 0,
+              "fp": 2,
+              "fn": 2,
+              "precision": 0.0,
+              "recall": 0.0,
+              "errors": [
+                {
+                  "type": "missing",
+                  "attribute": "public_holidays_off",
+                  "expected": [
+                    {
+                      "attribute": "public_holidays_off",
+                      "operator": "eq",
+                      "value": "yes"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "public_holidays_off",
+                      "operator": "eq",
+                      "value": "yes"
+                    }
+                  ]
+                },
+                {
+                  "type": "missing",
+                  "attribute": "work_arrangement",
+                  "expected": [
+                    {
+                      "attribute": "work_arrangement",
+                      "operator": "eq",
+                      "value": "hybrid"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "work_arrangement",
+                      "operator": "eq",
+                      "value": "hybrid"
+                    }
+                  ]
+                }
+              ],
+              "warnings": [
+                {
+                  "type": "invented",
+                  "attribute": "job_title",
+                  "values": [
+                    {
+                      "attribute": "job_title",
+                      "operator": "eq",
+                      "value": "systems engineer"
+                    }
+                  ]
+                },
+                {
+                  "type": "invented",
+                  "attribute": "work_end_minute",
+                  "values": [
+                    {
+                      "attribute": "work_end_minute",
+                      "operator": "lte",
+                      "value": 1050
+                    }
+                  ]
+                }
+              ],
+              "error_count": 2,
+              "warning_count": 2
+            },
+            "original_metrics": {
+              "turns": 5,
+              "total_turns": 5,
+              "extraction_ms": 7807,
+              "value_precision": 0.0,
+              "value_recall": 0.0,
+              "attributes": 2,
+              "targets": 1,
+              "selected": 1,
+              "item_preferences": 1,
+              "preferences_correct": true,
+              "attempts": 5,
               "valid_outputs": 4
             }
           }
@@ -18064,7 +19671,21 @@
             "finish_reason": "stop",
             "wall_seconds": 7.797
           }
-        ]
+        ],
+        "feature_summary": {
+          "policy": "exact-features-lowercase-v1",
+          "turns": 5,
+          "passed_turns": 2,
+          "error_turns": 3,
+          "warning_turns": 1,
+          "errors": 10,
+          "warnings": 2,
+          "tp": 12,
+          "fp": 2,
+          "fn": 10,
+          "precision": 0.8571428571428571,
+          "recall": 0.5454545454545454
+        }
       }
     }
   }

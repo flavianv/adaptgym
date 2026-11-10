@@ -3362,6 +3362,35 @@
               "item_preferences": 0,
               "preferences_correct": true,
               "attempts": 1,
+              "valid_outputs": 1,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 3,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 1,
+              "total_turns": 4,
+              "extraction_ms": 9445,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 3,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 1,
               "valid_outputs": 1
             }
           },
@@ -3840,6 +3869,35 @@
             },
             "input_sha256": "sha256:27f4d0adb1ec184740e9d94adf1bef04ba9ac57af924e783725507dddfed10c8",
             "metrics": {
+              "turns": 2,
+              "total_turns": 4,
+              "extraction_ms": 7372,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 5,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 2,
+              "valid_outputs": 2,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 5,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 2,
               "total_turns": 4,
               "extraction_ms": 7372,
@@ -4463,6 +4521,35 @@
               "item_preferences": 0,
               "preferences_correct": true,
               "attempts": 3,
+              "valid_outputs": 3,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 7,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 3,
+              "total_turns": 4,
+              "extraction_ms": 12128,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 7,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 3,
               "valid_outputs": 3
             }
           },
@@ -4832,6 +4919,35 @@
               "item_preferences": 0,
               "preferences_correct": true,
               "attempts": 4,
+              "valid_outputs": 4,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 1,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 4,
+              "total_turns": 4,
+              "extraction_ms": 6043,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 1,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 4,
               "valid_outputs": 4
             }
           }
@@ -4932,7 +5048,21 @@
             },
             "wall_seconds": 6.035
           }
-        ]
+        ],
+        "feature_summary": {
+          "policy": "exact-features-lowercase-v1",
+          "turns": 4,
+          "passed_turns": 4,
+          "error_turns": 0,
+          "warning_turns": 0,
+          "errors": 0,
+          "warnings": 0,
+          "tp": 16,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0
+        }
       },
       "rollout": {
         "sample_id": "sft-shoes-2",
@@ -5233,6 +5363,35 @@
             },
             "input_sha256": "sha256:5caa1ed782c73a5904919fce56f14fbcdcbac8eb1e2160ff011458878a7460b4",
             "metrics": {
+              "turns": 1,
+              "total_turns": 4,
+              "extraction_ms": 10048,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 3,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 1,
+              "valid_outputs": 1,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 3,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 1,
               "total_turns": 4,
               "extraction_ms": 10048,
@@ -5722,6 +5881,35 @@
             },
             "input_sha256": "sha256:8211c20521d3516fb23ecd94160962963c649c3805d2e931318a0b02bc33be63",
             "metrics": {
+              "turns": 2,
+              "total_turns": 4,
+              "extraction_ms": 7417,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 5,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 2,
+              "valid_outputs": 2,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 5,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 2,
               "total_turns": 4,
               "extraction_ms": 7417,
@@ -6345,6 +6533,35 @@
               "item_preferences": 0,
               "preferences_correct": true,
               "attempts": 3,
+              "valid_outputs": 3,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 7,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 3,
+              "total_turns": 4,
+              "extraction_ms": 10367,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 7,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 3,
               "valid_outputs": 3
             }
           },
@@ -6713,6 +6930,35 @@
               "item_preferences": 0,
               "preferences_correct": true,
               "attempts": 4,
+              "valid_outputs": 4,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 1,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 4,
+              "total_turns": 4,
+              "extraction_ms": 4874,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 1,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 4,
               "valid_outputs": 4
             }
           }
@@ -6813,7 +7059,21 @@
             },
             "wall_seconds": 4.867
           }
-        ]
+        ],
+        "feature_summary": {
+          "policy": "exact-features-lowercase-v1",
+          "turns": 4,
+          "passed_turns": 4,
+          "error_turns": 0,
+          "warning_turns": 0,
+          "errors": 0,
+          "warnings": 0,
+          "tp": 16,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0
+        }
       }
     },
     "baseline": {
@@ -7104,6 +7364,61 @@
             },
             "input_sha256": "sha256:5caa1ed782c73a5904919fce56f14fbcdcbac8eb1e2160ff011458878a7460b4",
             "metrics": {
+              "turns": 1,
+              "total_turns": 4,
+              "extraction_ms": 19674,
+              "value_precision": 0.6666666666666666,
+              "value_recall": 0.6666666666666666,
+              "attributes": 3,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 1,
+              "preferences_correct": false,
+              "attempts": 1,
+              "valid_outputs": 0,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 2,
+              "fp": 1,
+              "fn": 1,
+              "precision": 0.6666666666666666,
+              "recall": 0.6666666666666666,
+              "errors": [
+                {
+                  "type": "changed",
+                  "attribute": "key_characteristics",
+                  "expected": [
+                    {
+                      "attribute": "key_characteristics",
+                      "operator": "eq",
+                      "value": "supportive, bold design"
+                    }
+                  ],
+                  "extracted": [
+                    {
+                      "attribute": "key_characteristics",
+                      "operator": "in",
+                      "value": "supportive, bold design"
+                    }
+                  ],
+                  "missing": [
+                    {
+                      "attribute": "key_characteristics",
+                      "operator": "eq",
+                      "value": "supportive, bold design"
+                    }
+                  ]
+                }
+              ],
+              "warnings": [],
+              "error_count": 1,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 1,
               "total_turns": 4,
               "extraction_ms": 19674,
@@ -7590,6 +7905,35 @@
               "turns": 2,
               "total_turns": 4,
               "extraction_ms": 30888,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 5,
+              "targets": 1,
+              "selected": 0,
+              "item_preferences": 1,
+              "preferences_correct": false,
+              "attempts": 2,
+              "valid_outputs": 0,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 5,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 2,
+              "total_turns": 4,
+              "extraction_ms": 30888,
               "value_precision": null,
               "value_recall": 0.0,
               "attributes": 5,
@@ -8070,6 +8414,169 @@
               "item_preferences": 0,
               "preferences_correct": true,
               "attempts": 3,
+              "valid_outputs": 1,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 0,
+              "fp": 0,
+              "fn": 7,
+              "precision": null,
+              "recall": 0.0,
+              "errors": [
+                {
+                  "type": "missing",
+                  "attribute": "brand",
+                  "expected": [
+                    {
+                      "attribute": "brand",
+                      "operator": "eq",
+                      "value": "adidas"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "brand",
+                      "operator": "eq",
+                      "value": "adidas"
+                    }
+                  ]
+                },
+                {
+                  "type": "missing",
+                  "attribute": "colour",
+                  "expected": [
+                    {
+                      "attribute": "colour",
+                      "operator": "eq",
+                      "value": "black"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "colour",
+                      "operator": "eq",
+                      "value": "black"
+                    }
+                  ]
+                },
+                {
+                  "type": "missing",
+                  "attribute": "cushioning",
+                  "expected": [
+                    {
+                      "attribute": "cushioning",
+                      "operator": "eq",
+                      "value": "high"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "cushioning",
+                      "operator": "eq",
+                      "value": "high"
+                    }
+                  ]
+                },
+                {
+                  "type": "missing",
+                  "attribute": "key_characteristics",
+                  "expected": [
+                    {
+                      "attribute": "key_characteristics",
+                      "operator": "eq",
+                      "value": "supportive, bold design"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "key_characteristics",
+                      "operator": "eq",
+                      "value": "supportive, bold design"
+                    }
+                  ]
+                },
+                {
+                  "type": "missing",
+                  "attribute": "price",
+                  "expected": [
+                    {
+                      "attribute": "price",
+                      "operator": "lte",
+                      "value": 74.5
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "price",
+                      "operator": "lte",
+                      "value": 74.5
+                    }
+                  ]
+                },
+                {
+                  "type": "missing",
+                  "attribute": "sport",
+                  "expected": [
+                    {
+                      "attribute": "sport",
+                      "operator": "eq",
+                      "value": "basketball"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "sport",
+                      "operator": "eq",
+                      "value": "basketball"
+                    }
+                  ]
+                },
+                {
+                  "type": "missing",
+                  "attribute": "surface",
+                  "expected": [
+                    {
+                      "attribute": "surface",
+                      "operator": "eq",
+                      "value": "indoor_court"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "surface",
+                      "operator": "eq",
+                      "value": "indoor_court"
+                    }
+                  ]
+                }
+              ],
+              "warnings": [],
+              "error_count": 7,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 3,
+              "total_turns": 4,
+              "extraction_ms": 2251,
+              "value_precision": null,
+              "value_recall": 0.0,
+              "attributes": 0,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 3,
               "valid_outputs": 1
             }
           },
@@ -8425,6 +8932,55 @@
               "item_preferences": 0,
               "preferences_correct": true,
               "attempts": 4,
+              "valid_outputs": 2,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 0,
+              "fp": 0,
+              "fn": 1,
+              "precision": null,
+              "recall": 0.0,
+              "errors": [
+                {
+                  "type": "missing",
+                  "attribute": "brand",
+                  "expected": [
+                    {
+                      "attribute": "brand",
+                      "operator": "eq",
+                      "value": "adidas"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "brand",
+                      "operator": "eq",
+                      "value": "adidas"
+                    }
+                  ]
+                }
+              ],
+              "warnings": [],
+              "error_count": 1,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 4,
+              "total_turns": 4,
+              "extraction_ms": 2374,
+              "value_precision": null,
+              "value_recall": 0.0,
+              "attributes": 0,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 4,
               "valid_outputs": 2
             }
           }
@@ -8517,7 +9073,21 @@
             "finish_reason": "stop",
             "wall_seconds": 2.366
           }
-        ]
+        ],
+        "feature_summary": {
+          "policy": "exact-features-lowercase-v1",
+          "turns": 4,
+          "passed_turns": 1,
+          "error_turns": 3,
+          "warning_turns": 0,
+          "errors": 9,
+          "warnings": 0,
+          "tp": 7,
+          "fp": 1,
+          "fn": 9,
+          "precision": 0.875,
+          "recall": 0.4375
+        }
       },
       "rollout": {
         "sample_id": "sft-shoes-2",
@@ -8806,6 +9376,61 @@
             },
             "input_sha256": "sha256:5caa1ed782c73a5904919fce56f14fbcdcbac8eb1e2160ff011458878a7460b4",
             "metrics": {
+              "turns": 1,
+              "total_turns": 4,
+              "extraction_ms": 19464,
+              "value_precision": 0.6666666666666666,
+              "value_recall": 0.6666666666666666,
+              "attributes": 3,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 1,
+              "preferences_correct": false,
+              "attempts": 1,
+              "valid_outputs": 0,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 2,
+              "fp": 1,
+              "fn": 1,
+              "precision": 0.6666666666666666,
+              "recall": 0.6666666666666666,
+              "errors": [
+                {
+                  "type": "changed",
+                  "attribute": "key_characteristics",
+                  "expected": [
+                    {
+                      "attribute": "key_characteristics",
+                      "operator": "eq",
+                      "value": "supportive, bold design"
+                    }
+                  ],
+                  "extracted": [
+                    {
+                      "attribute": "key_characteristics",
+                      "operator": "in",
+                      "value": "supportive, bold design"
+                    }
+                  ],
+                  "missing": [
+                    {
+                      "attribute": "key_characteristics",
+                      "operator": "eq",
+                      "value": "supportive, bold design"
+                    }
+                  ]
+                }
+              ],
+              "warnings": [],
+              "error_count": 1,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 1,
               "total_turns": 4,
               "extraction_ms": 19464,
@@ -9210,6 +9835,66 @@
             },
             "input_sha256": "sha256:7311ddc7c20d9aa180a4a515dc22a6d495f515d052777b3727cd66c36f7ec41c",
             "metrics": {
+              "turns": 2,
+              "total_turns": 4,
+              "extraction_ms": 30491,
+              "value_precision": 0.6666666666666666,
+              "value_recall": 0.8,
+              "attributes": 5,
+              "targets": 1,
+              "selected": 0,
+              "item_preferences": 1,
+              "preferences_correct": false,
+              "attempts": 2,
+              "valid_outputs": 0,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 4,
+              "fp": 2,
+              "fn": 1,
+              "precision": 0.6666666666666666,
+              "recall": 0.8,
+              "errors": [
+                {
+                  "type": "changed",
+                  "attribute": "key_characteristics",
+                  "expected": [
+                    {
+                      "attribute": "key_characteristics",
+                      "operator": "eq",
+                      "value": "supportive, bold design"
+                    }
+                  ],
+                  "extracted": [
+                    {
+                      "attribute": "key_characteristics",
+                      "operator": "in",
+                      "value": "supportive"
+                    },
+                    {
+                      "attribute": "key_characteristics",
+                      "operator": "in",
+                      "value": "bold design"
+                    }
+                  ],
+                  "missing": [
+                    {
+                      "attribute": "key_characteristics",
+                      "operator": "eq",
+                      "value": "supportive, bold design"
+                    }
+                  ]
+                }
+              ],
+              "warnings": [],
+              "error_count": 1,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 2,
               "total_turns": 4,
               "extraction_ms": 30491,
@@ -9649,6 +10334,74 @@
               "turns": 3,
               "total_turns": 4,
               "extraction_ms": 29298,
+              "value_precision": 1.0,
+              "value_recall": 0.7142857142857143,
+              "attributes": 5,
+              "targets": 1,
+              "selected": 0,
+              "item_preferences": 1,
+              "preferences_correct": false,
+              "attempts": 3,
+              "valid_outputs": 0,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 5,
+              "fp": 0,
+              "fn": 2,
+              "precision": 1.0,
+              "recall": 0.7142857142857143,
+              "errors": [
+                {
+                  "type": "missing",
+                  "attribute": "key_characteristics",
+                  "expected": [
+                    {
+                      "attribute": "key_characteristics",
+                      "operator": "eq",
+                      "value": "supportive, bold design"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "key_characteristics",
+                      "operator": "eq",
+                      "value": "supportive, bold design"
+                    }
+                  ]
+                },
+                {
+                  "type": "missing",
+                  "attribute": "surface",
+                  "expected": [
+                    {
+                      "attribute": "surface",
+                      "operator": "eq",
+                      "value": "indoor_court"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "surface",
+                      "operator": "eq",
+                      "value": "indoor_court"
+                    }
+                  ]
+                }
+              ],
+              "warnings": [],
+              "error_count": 2,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 3,
+              "total_turns": 4,
+              "extraction_ms": 29298,
               "value_precision": null,
               "value_recall": 0.0,
               "attributes": 5,
@@ -9833,6 +10586,55 @@
               "item_preferences": 0,
               "preferences_correct": true,
               "attempts": 4,
+              "valid_outputs": 1,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 0,
+              "fp": 0,
+              "fn": 1,
+              "precision": null,
+              "recall": 0.0,
+              "errors": [
+                {
+                  "type": "missing",
+                  "attribute": "brand",
+                  "expected": [
+                    {
+                      "attribute": "brand",
+                      "operator": "eq",
+                      "value": "adidas"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "brand",
+                      "operator": "eq",
+                      "value": "adidas"
+                    }
+                  ]
+                }
+              ],
+              "warnings": [],
+              "error_count": 1,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 4,
+              "total_turns": 4,
+              "extraction_ms": 2241,
+              "value_precision": null,
+              "value_recall": 0.0,
+              "attributes": 0,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 4,
               "valid_outputs": 1
             }
           }
@@ -9925,7 +10727,21 @@
             "finish_reason": "stop",
             "wall_seconds": 2.236
           }
-        ]
+        ],
+        "feature_summary": {
+          "policy": "exact-features-lowercase-v1",
+          "turns": 4,
+          "passed_turns": 0,
+          "error_turns": 4,
+          "warning_turns": 0,
+          "errors": 5,
+          "warnings": 0,
+          "tp": 11,
+          "fp": 3,
+          "fn": 5,
+          "precision": 0.7857142857142857,
+          "recall": 0.6875
+        }
       }
     },
     "lora": {
@@ -10215,6 +11031,35 @@
             },
             "input_sha256": "sha256:5caa1ed782c73a5904919fce56f14fbcdcbac8eb1e2160ff011458878a7460b4",
             "metrics": {
+              "turns": 1,
+              "total_turns": 4,
+              "extraction_ms": 12017,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 3,
+              "targets": 2,
+              "selected": 0,
+              "item_preferences": 1,
+              "preferences_correct": false,
+              "attempts": 1,
+              "valid_outputs": 0,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 3,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 1,
               "total_turns": 4,
               "extraction_ms": 12017,
@@ -10698,6 +11543,35 @@
             },
             "input_sha256": "sha256:27f4d0adb1ec184740e9d94adf1bef04ba9ac57af924e783725507dddfed10c8",
             "metrics": {
+              "turns": 2,
+              "total_turns": 4,
+              "extraction_ms": 17276,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 5,
+              "targets": 1,
+              "selected": 0,
+              "item_preferences": 1,
+              "preferences_correct": false,
+              "attempts": 2,
+              "valid_outputs": 0,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 5,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 2,
               "total_turns": 4,
               "extraction_ms": 17276,
@@ -11329,6 +12203,35 @@
               "item_preferences": 1,
               "preferences_correct": false,
               "attempts": 3,
+              "valid_outputs": 1,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 7,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 3,
+              "total_turns": 4,
+              "extraction_ms": 23956,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 7,
+              "targets": 1,
+              "selected": 0,
+              "item_preferences": 1,
+              "preferences_correct": false,
+              "attempts": 3,
               "valid_outputs": 1
             }
           },
@@ -11706,6 +12609,35 @@
               "item_preferences": 1,
               "preferences_correct": false,
               "attempts": 4,
+              "valid_outputs": 2,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 1,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 4,
+              "total_turns": 4,
+              "extraction_ms": 5046,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 1,
+              "targets": 2,
+              "selected": 0,
+              "item_preferences": 1,
+              "preferences_correct": false,
+              "attempts": 4,
               "valid_outputs": 2
             }
           }
@@ -11798,7 +12730,21 @@
             "finish_reason": "stop",
             "wall_seconds": 5.041
           }
-        ]
+        ],
+        "feature_summary": {
+          "policy": "exact-features-lowercase-v1",
+          "turns": 4,
+          "passed_turns": 4,
+          "error_turns": 0,
+          "warning_turns": 0,
+          "errors": 0,
+          "warnings": 0,
+          "tp": 16,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0
+        }
       },
       "rollout": {
         "sample_id": "sft-shoes-2",
@@ -12086,6 +13032,35 @@
             },
             "input_sha256": "sha256:5caa1ed782c73a5904919fce56f14fbcdcbac8eb1e2160ff011458878a7460b4",
             "metrics": {
+              "turns": 1,
+              "total_turns": 4,
+              "extraction_ms": 11930,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 3,
+              "targets": 2,
+              "selected": 0,
+              "item_preferences": 1,
+              "preferences_correct": false,
+              "attempts": 1,
+              "valid_outputs": 0,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 3,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 1,
               "total_turns": 4,
               "extraction_ms": 11930,
@@ -12484,6 +13459,35 @@
             },
             "input_sha256": "sha256:7311ddc7c20d9aa180a4a515dc22a6d495f515d052777b3727cd66c36f7ec41c",
             "metrics": {
+              "turns": 2,
+              "total_turns": 4,
+              "extraction_ms": 17138,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 5,
+              "targets": 1,
+              "selected": 0,
+              "item_preferences": 1,
+              "preferences_correct": false,
+              "attempts": 2,
+              "valid_outputs": 0,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 5,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 2,
               "total_turns": 4,
               "extraction_ms": 17138,
@@ -12969,6 +13973,55 @@
               "item_preferences": 1,
               "preferences_correct": false,
               "attempts": 3,
+              "valid_outputs": 1,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 6,
+              "fp": 0,
+              "fn": 1,
+              "precision": 1.0,
+              "recall": 0.8571428571428571,
+              "errors": [
+                {
+                  "type": "missing",
+                  "attribute": "key_characteristics",
+                  "expected": [
+                    {
+                      "attribute": "key_characteristics",
+                      "operator": "eq",
+                      "value": "supportive, bold design"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "key_characteristics",
+                      "operator": "eq",
+                      "value": "supportive, bold design"
+                    }
+                  ]
+                }
+              ],
+              "warnings": [],
+              "error_count": 1,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 3,
+              "total_turns": 4,
+              "extraction_ms": 22036,
+              "value_precision": 1.0,
+              "value_recall": 0.8571428571428571,
+              "attributes": 6,
+              "targets": 2,
+              "selected": 0,
+              "item_preferences": 1,
+              "preferences_correct": false,
+              "attempts": 3,
               "valid_outputs": 1
             }
           },
@@ -13333,6 +14386,35 @@
               "item_preferences": 1,
               "preferences_correct": false,
               "attempts": 4,
+              "valid_outputs": 2,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 1,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 4,
+              "total_turns": 4,
+              "extraction_ms": 4949,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 1,
+              "targets": 2,
+              "selected": 0,
+              "item_preferences": 1,
+              "preferences_correct": false,
+              "attempts": 4,
               "valid_outputs": 2
             }
           }
@@ -13425,7 +14507,21 @@
             "finish_reason": "stop",
             "wall_seconds": 4.944
           }
-        ]
+        ],
+        "feature_summary": {
+          "policy": "exact-features-lowercase-v1",
+          "turns": 4,
+          "passed_turns": 3,
+          "error_turns": 1,
+          "warning_turns": 0,
+          "errors": 1,
+          "warnings": 0,
+          "tp": 15,
+          "fp": 0,
+          "fn": 1,
+          "precision": 1.0,
+          "recall": 0.9375
+        }
       }
     }
   }

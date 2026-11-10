@@ -11,6 +11,8 @@
 #extractorStatus:not(:empty){display:flex;align-items:flex-start;gap:8px}#extractorStatus:not(:empty)::before{content:'';display:block;flex:0 0 13px;width:13px;height:13px;margin-top:3px;border:2px solid #d9dfd3;border-top-color:var(--green);border-radius:50%;animation:extract-spin .8s linear infinite}@keyframes extract-spin{to{transform:rotate(360deg)}}@media(prefers-reduced-motion:reduce){#extractorStatus:not(:empty)::before{animation:none;border-top-color:var(--green);border-right-color:var(--green)}}
 #startExtraction{background:var(--green);border-color:var(--green);color:var(--white)}#startExtraction:hover{background:#3d5745}#profileTurn{font:8px/1.8 var(--mono);color:var(--muted);margin:0 0 10px}#extractionReady{font-size:10px;color:var(--green);margin:0 0 12px}
 .layout.comparing{grid-template-columns:repeat(2,minmax(0,1fr))}.layout.comparing>section{grid-column:1/-1}.layout.comparing #conversation{height:220px}.comparison-turn-metrics{font:10px/1.8 var(--mono);color:var(--green)}#rightPanel #right-profile{max-height:510px;overflow:auto}#savedModelControls label{gap:8px}@media(max-width:700px){.layout.comparing{grid-template-columns:1fr}}
+.message-products{list-style:none;padding:0;margin:10px 0 0;border-top:0}.catalog-option{padding:8px 0}.catalog-option details{margin:0}.catalog-option summary{font:500 11px/1.8 var(--sans);color:var(--green)}.catalog-details{white-space:pre-line;font-size:10px;line-height:1.9;color:var(--muted);padding:5px 0 0 13px}.catalog-option .item-id{padding:5px 0 0 13px}
+.extraction-value{margin:7px 0;padding:8px 10px}.extraction-value>summary{color:inherit;font-size:11px;cursor:pointer}.extraction-value .feedback-label{display:inline;font-size:8px;margin:0 0 0 8px;white-space:normal}.extraction-full-info{padding-top:6px}.extraction-full-info p{margin:4px 0}.neutral{--feedback:var(--muted);--feedback-bg:#f0f1eb}.trace-summary{padding:12px;margin:0 0 12px;border:1px solid var(--line);background:#edf4ec;border-radius:3px}.trace-summary.has-differences{background:#fbf1e2}.trace-summary h3{font:600 11px/1.6 var(--sans);margin:0 0 5px}.trace-summary p{font:9px/1.8 var(--mono);margin:4px 0}.trace-summary .trace-note{font:10px/1.6 var(--sans);color:var(--muted)}.trace-summary button{font:9px/1.6 var(--mono);padding:3px 6px;margin:4px 4px 0 0}
 </style></head><body>
 <header class="site-header"><a class="site-brand" href="/" aria-label="AdaptGym home"><span aria-hidden="true">a·</span>AdaptGym</a><nav class="site-nav" aria-label="Main navigation"><a href="/about">Overview</a><a href="/">Session lab</a><a href="/live" aria-current="page">Live chat</a><a href="/flows">Evaluation &amp; training</a><a href="https://github.com/flavianv/adaptgym" target="_blank" rel="noopener noreferrer">GitHub ↗</a></nav></header>
 <main><section class="intro"><p class="eyebrow">THE ADAPTATION LABORATORY · LIVE CHAT</p><h1>A conversation. <em>An evolving profile.</em></h1><p class="lead">Refine a search, compare alternatives, change your mind. Watch the extractor follow.</p></section>
@@ -23,7 +25,7 @@ let profileScope=null;
 const $=id=>(profileScope?.querySelector('#right-'+id))||document.getElementById(id);let session=null,busy=false,replayData=null,replayEvaluation=null,replayIndex=0,revealedTurns=0,replayDone=false,replayResults=[],lastMetrics={};
 function el(tag,text,cls){const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(cls)e.className=cls;return e}
 function metric(value,label){const e=el('div',undefined,'metric');e.append(el('b',value),el('span',label));return e}
-function renderMetrics(m){lastMetrics=m;$('metrics').replaceChildren(...[[m.turns??0,'User turns'],[m.extraction_ms===undefined?'—':(m.extraction_ms/1000).toFixed(2)+' s','Extraction latency'],[m.attempts?Math.round(100*m.valid_outputs/m.attempts)+'%':'—','Validated turns / attempts'],[m.attributes??0,'Active attributes'],[m.item_preferences??0,'Item preferences'],[m.matching_items??'—','Matching catalog items'],[m.targets??0,'Items of interest'],[m.selected??0,'Selected items']].map(x=>metric(...x)));if(m.value_precision!==undefined){for(const [value,label] of [[m.value_precision,'Value precision · this turn'],[m.value_recall,'Value recall · this turn']])$('metrics').append(metric(value===null?'—':Math.round(value*100)+'%',label));$('metrics').append(metric(m.preferences_correct?'Match':'Mismatch','Item preference pairs · this turn'))}
+function renderMetrics(m){lastMetrics=m;$('metrics').replaceChildren(...[[m.turns??0,'User turns'],[m.extraction_ms===undefined?'—':(m.extraction_ms/1000).toFixed(2)+' s','Extraction latency'],[m.attempts?Math.round(100*m.valid_outputs/m.attempts)+'%':'—','Native-valid turns / attempts'],[m.attributes??0,'Active attributes'],[m.item_preferences??0,'Item preferences'],[m.matching_items??'—','Matching catalog items'],[m.targets??0,'Items of interest'],[m.selected??0,'Selected items']].map(x=>metric(...x)));if(m.value_precision!==undefined){for(const [value,label] of [[m.value_precision,'Value precision · this turn'],[m.value_recall,'Value recall · this turn']])$('metrics').append(metric(value===null?'—':Math.round(value*100)+'%',label));$('metrics').append(metric(m.preferences_correct?'Match':'Mismatch','Item preference pairs · this turn'))}
 $('changes').textContent=m.changed_attributes?.length?'Updated: '+m.changed_attributes.join(', '):'No attribute changes.'}
 function group(title,value){const e=el('div',undefined,'profile-group');e.append(el('strong',title));if(value!==undefined)e.append(el('div',value,'profile-value'));$('profile').append(e);return e}
 // Normalize values as the replay metrics do: capitalization and array order do not matter.
@@ -38,14 +40,39 @@ function assessValues(actual,expected){
  if([...got].some(v=>!want.has(v)))return {status:'incomplete',label:'Extra values'};
  return {status:'correct',label:'Correct'};
 }
-function feedbackRow(parent,text,assessment,expected){
- const row=el('div',undefined,'extraction-value '+assessment.status);
- row.append(el('span',assessment.label,'feedback-label'),el('span',text));
- if(assessment.status!=='correct')row.append(el('span','Expected: '+expected,'feedback-detail'));
- parent.append(row);
+function feedbackRow(parent,text,assessment,expected,info=null){
+ const row=el('details',undefined,'extraction-value '+assessment.status),summary=el('summary');
+ summary.append(el('span',text.length>150?text.slice(0,147)+'…':text),el('span',' · '+assessment.label,'feedback-label'));
+ const body=el('div',undefined,'extraction-full-info');body.append(el('p',text));
+ if(assessment.status!=='correct'&&expected!==undefined)body.append(el('p','Expected: '+expected,'feedback-detail'));
+ if(info)body.append(el('pre',JSON.stringify(info,null,2)));
+ row.append(summary,body);parent.append(row);
 }
 function claimText(c){return c.attribute+' '+c.operator+' '+JSON.stringify(c.value)+' ('+c.strength+')'}
-function renderProfile(p,reference=null,verification=null){
+function renderFeatureProfile(p,reference,featureScore){
+ $('profile').replaceChildren();$('extractionLegend').hidden=false;
+ $('extractionLegend').children[2].textContent='Extra · warning';
+ const claims=(p||{}).claims||[],targets=reference.claims||[];
+ if(p)group('Current intent',p.intent);
+ const parent=group('Target features');
+ const attributes=[...new Set([...targets,...claims].map(c=>c.attribute.toLowerCase()))].sort();
+ for(const attribute of attributes){
+  const actual=claims.filter(c=>c.attribute.toLowerCase()===attribute),expected=targets.filter(c=>c.attribute.toLowerCase()===attribute);
+  const error=featureScore.errors.find(e=>e.attribute===attribute),warning=featureScore.warnings.find(w=>w.attribute===attribute);
+  const assessment=error?{status:'wrong',label:error.type==='missing'?'Error · missing':'Error · changed'}:warning?{status:'incomplete',label:'Warning · extra'}:{status:'correct',label:'Correct'};
+  const title=attribute+' · '+(actual.length?actual.map(c=>c.operator+' '+JSON.stringify(c.value)).join('; '):'missing');
+  feedbackRow(parent,title,assessment,expected.map(claimText).join('; ')||'Not in target',
+   {expected,extracted:actual,errors:error?[error]:[],warnings:warning?[warning]:[]});
+ }
+ const details=group('Other state · separate diagnostics');
+ for(const key of ['active_task_id','satisfied','target_products','selected_products','preferences','search_request']){
+  feedbackRow(details,key,{status:'neutral',label:'Not included in feature scoring'},undefined,{extracted:p?.[key]??null,reference:reference[key]});
+ }
+ $('raw').textContent=JSON.stringify(p,null,2);
+}
+
+function renderProfile(p,reference=null,verification=null,featureScore=null){
+ if(featureScore&&reference){renderFeatureProfile(p,reference,featureScore);return}
  $('profile').replaceChildren();$('extractionLegend').hidden=!reference;
  $('referenceWarning').hidden=!reference||Boolean(verification?.accepted);
  if(!p){
@@ -60,7 +87,7 @@ function renderProfile(p,reference=null,verification=null){
   scopeParents[scope]=parent;
   const claims=p.claims.filter(c=>c.scope===scope);
   for(const c of claims){
-   if(!reference){parent.append(el('div',claimText(c),'profile-value'));continue}
+   if(!reference){feedbackRow(parent,claimText(c),{status:'neutral',label:'Extracted claim'},undefined,{extracted:c});continue}
    const candidates=reference.claims.filter(e=>e.attribute===c.attribute);
    // Match values across scopes first; report scope/operator/strength errors separately.
    const exactScope=candidates.filter(e=>e.scope===c.scope&&e.task_id===c.task_id);
@@ -72,7 +99,7 @@ function renderProfile(p,reference=null,verification=null){
     assessed.add(reference.claims.indexOf(match.expected));
     if(assessment.status==='correct'&&['scope','task_id','operator','strength'].some(k=>c[k]!==match.expected[k]))assessment={status:'incomplete',label:'Scope / requirement differences'};
    }
-   feedbackRow(parent,claimText(c),assessment,match?claimText(match.expected)+' · '+match.expected.scope:'No claim for this attribute');
+   feedbackRow(parent,claimText(c),assessment,match?claimText(match.expected)+' · '+match.expected.scope:'No claim for this attribute',{extracted:c,reference:match?.expected||null});
   }
   if(!parent.querySelector('.extraction-value,.profile-value'))parent.append(el('div','None established','profile-value'));
  }
@@ -84,19 +111,19 @@ function renderProfile(p,reference=null,verification=null){
   const strings=[].concat(c.value).filter(v=>typeof v==='string').map(valueKey);
   const elsewhere=p.claims.filter(a=>a.attribute!==c.attribute&&[].concat(a.value).some(v=>typeof v==='string'&&strings.includes(valueKey(v)))).map(a=>a.attribute);
   const assessment=otherScope?{status:'incomplete',label:'Missing for this scope'}:elsewhere.length?{status:'incomplete',label:'Possible field mismatch · value appears under '+[...new Set(elsewhere)].join(', ')}:{status:'wrong',label:'Missing entirely'};
-  feedbackRow(parent,c.attribute+' · no extracted value',assessment,claimText(c));
+  feedbackRow(parent,c.attribute+' · no extracted value',assessment,claimText(c),{extracted:null,reference:c});
  });
  for(const [key,title,format] of [
   ['target_products','Items of interest',x=>x],['selected_products','Selected items',x=>x],
   ['preferences','Relative item preferences',x=>x.preferred+' > '+x.over]]){
   const actual=p[key].map(format),expected=reference?.[key].map(format);
   const parent=group(title);
-  if(reference)feedbackRow(parent,actual.join(', ')||'None',assessValues(actual,expected),expected.join(', ')||'None');
+  if(reference)feedbackRow(parent,actual.join(', ')||'None',assessValues(actual,expected),expected.join(', ')||'None',{extracted:p[key],reference:reference[key]});
   else parent.append(el('div',actual.join(', ')||'None established','profile-value'));
  }
  const outcome=x=>x==='unk'?'Not established':x?'Satisfied':'Not satisfied';
  const parent=group('Outcome');
- if(reference)feedbackRow(parent,outcome(p.satisfied),assessValues([p.satisfied],[reference.satisfied]),outcome(reference.satisfied));
+ if(reference)feedbackRow(parent,outcome(p.satisfied),assessValues([p.satisfied],[reference.satisfied]),outcome(reference.satisfied),{extracted:p.satisfied,reference:reference.satisfied});
  else parent.append(el('div',outcome(p.satisfied),'profile-value'));
  $('raw').textContent=JSON.stringify(p,null,2);
 }
@@ -117,13 +144,24 @@ function busyControls(value){
 }
 function appendMessage(role,text){
  const line=el('div',undefined,'message '+role);line.append(el('span',role==='user'?'You':'Catalog assistant','role'));
- const split=role==='assistant'?text.search(/\n1\. /):-1;
- line.append(el('div',split<0?text:text.slice(0,split),'message-copy'));
- if(split>=0){
-  const details=el('details',undefined,'message-products'),rows=text.slice(split+1).split(/\n(?=\d+\. )/);
-  details.append(el('summary',rows.length+' catalog options · view details'));
-  for(const row of rows){const card=el('div',undefined,'catalog-option'),parts=row.split(': ');card.append(el('strong',parts.shift()),el('p',parts.join(': ')));details.append(card)}
-  line.append(details);
+ if(role!=='assistant')line.append(el('div',text,'message-copy'));
+ else{
+  let plain=[],list=null;
+  const flush=()=>{if(plain.some(s=>s.trim()))line.append(el('div',plain.join('\n'),'message-copy'));plain=[]};
+  for(const row of text.split('\n')){
+   const item=row.match(/^(?:\d+\.\s*)?(.+?)\s+\[([A-Za-z0-9_-]+)\](?::\s*(.*))?$/);
+   const numbered=!item&&row.match(/^\d+\.\s+(.+?):\s+(.+)$/);
+   if(item||numbered){
+    flush();if(!list){list=el('ul',undefined,'message-products');line.append(list)}
+    const li=el('li',undefined,'catalog-option'),details=el('details');
+    details.append(el('summary',item?item[1]+' ['+item[2]+']':numbered[1]));
+    if(item)details.append(el('div','Catalog ID: '+item[2],'item-id'));
+    const info=item?item[3]:numbered[2];
+    if(info)details.append(el('div',info.replace(/;\s*/g,'\n'),'catalog-details'));
+    li.append(details);list.append(li);
+   }else if(row.trim()||!list){list=null;plain.push(row)}
+  }
+  flush();
  }
  $('conversation').append(line);return line;
 }
@@ -145,11 +183,12 @@ function renderReplayResult(data){
  $('validationMessage').textContent=data.score.valid?'State-validity checks passed.':('Validation failed: '+(data.score.validation_issue||data.score.error_type||'Invalid structured state'));
  $('validationMessage').className='extraction-value '+(data.score.valid?'correct':'wrong');
  $('validationRaw').textContent=JSON.stringify({score:data.score,structured_fields_correct:data.structured_fields_correct||null},null,2);
- renderProfile(data.profile,data.reference_profile,data.verification);renderMetrics(data.metrics);
+ renderProfile(data.profile,data.reference_profile,data.verification,data.feature_score);renderMetrics(data.metrics);
  $('extractorPrompt').textContent=data.extractor_prompt;
  $('referenceDetails').hidden=false;$('referenceRaw').textContent=JSON.stringify(data.reference_profile,null,2);
  $('referenceAudit').textContent=data.verification?.accepted?'Reference label supported by the model audit.':'Reference label flagged for review by the model audit.';
- $('profileTurn').textContent='Profile after turn '+(replayIndex+1)+' · '+(data.score.valid?'output valid':'validation failed');
+ $('profileTurn').textContent='Profile after turn '+(replayIndex+1)+' · '+(data.feature_score?(data.feature_score.accepted?'feature check passed':'feature errors'):(data.score.valid?'output valid':'validation failed'));
+ if(data.feature_score)$('validationMessage').textContent='Separate native-validity diagnostic: '+(data.score.valid?'passed':(data.score.validation_issue||data.score.error_type||'invalid'))+'. This does not erase correctly extracted feature values.';
  $('extractionReady').hidden=true;
 }
 function showReplayTurn(){

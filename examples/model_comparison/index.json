@@ -258,5 +258,104 @@
         "strict_exact_state_rate_valid": 0.19230769230769232
       }
     }
+  },
+  "feature_policy": {
+    "id": "exact-features-lowercase-v1",
+    "matching": "Exact feature, operator and scalar values; strings lowercase only; array values are unordered sets.",
+    "errors": "Missing or changed target features/values. No aliases or cross-feature equivalence.",
+    "warnings": "All extra features/values; warnings never block acceptance.",
+    "diagnostics": "Scope, strength, evidence, item/task state and native validity are separate diagnostics, not feature-value gates."
+  },
+  "feature_summary": {
+    "luna": {
+      "teacher_forced": {
+        "policy": "exact-features-lowercase-v1",
+        "turns": 46,
+        "passed_turns": 43,
+        "error_turns": 3,
+        "warning_turns": 3,
+        "errors": 3,
+        "warnings": 3,
+        "tp": 240,
+        "fp": 3,
+        "fn": 3,
+        "precision": 0.9876543209876543,
+        "recall": 0.9876543209876543
+      },
+      "rollout": {
+        "policy": "exact-features-lowercase-v1",
+        "turns": 46,
+        "passed_turns": 41,
+        "error_turns": 5,
+        "warning_turns": 9,
+        "errors": 5,
+        "warnings": 9,
+        "tp": 238,
+        "fp": 9,
+        "fn": 5,
+        "precision": 0.9635627530364372,
+        "recall": 0.9794238683127572
+      }
+    },
+    "baseline": {
+      "teacher_forced": {
+        "policy": "exact-features-lowercase-v1",
+        "turns": 46,
+        "passed_turns": 24,
+        "error_turns": 22,
+        "warning_turns": 5,
+        "errors": 40,
+        "warnings": 5,
+        "tp": 203,
+        "fp": 10,
+        "fn": 40,
+        "precision": 0.9530516431924883,
+        "recall": 0.8353909465020576
+      },
+      "rollout": {
+        "policy": "exact-features-lowercase-v1",
+        "turns": 46,
+        "passed_turns": 18,
+        "error_turns": 28,
+        "warning_turns": 13,
+        "errors": 47,
+        "warnings": 31,
+        "tp": 196,
+        "fp": 48,
+        "fn": 47,
+        "precision": 0.8032786885245902,
+        "recall": 0.8065843621399177
+      }
+    },
+    "lora": {
+      "teacher_forced": {
+        "policy": "exact-features-lowercase-v1",
+        "turns": 46,
+        "passed_turns": 31,
+        "error_turns": 15,
+        "warning_turns": 1,
+        "errors": 21,
+        "warnings": 1,
+        "tp": 222,
+        "fp": 3,
+        "fn": 21,
+        "precision": 0.9866666666666667,
+        "recall": 0.9135802469135802
+      },
+      "rollout": {
+        "policy": "exact-features-lowercase-v1",
+        "turns": 46,
+        "passed_turns": 22,
+        "error_turns": 24,
+        "warning_turns": 3,
+        "errors": 39,
+        "warnings": 4,
+        "tp": 204,
+        "fp": 6,
+        "fn": 39,
+        "precision": 0.9714285714285714,
+        "recall": 0.8395061728395061
+      }
+    }
   }
 }

@@ -5409,6 +5409,35 @@
               "item_preferences": 0,
               "preferences_correct": true,
               "attempts": 1,
+              "valid_outputs": 1,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 6,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 1,
+              "total_turns": 6,
+              "extraction_ms": 8872,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 6,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 1,
               "valid_outputs": 1
             }
           },
@@ -6048,6 +6077,35 @@
             },
             "input_sha256": "sha256:d78cc049d007d1152544972c89bb40ed1a78db263a887dfaded26ac9cefc63a0",
             "metrics": {
+              "turns": 2,
+              "total_turns": 6,
+              "extraction_ms": 7733,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 7,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 2,
+              "valid_outputs": 2,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 7,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 2,
               "total_turns": 6,
               "extraction_ms": 7733,
@@ -6752,6 +6810,35 @@
             },
             "input_sha256": "sha256:466a77fae94694c34027fcbd2b7adc05d50b8421db9d0e26dd9704c57260f6fb",
             "metrics": {
+              "turns": 3,
+              "total_turns": 6,
+              "extraction_ms": 10038,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 8,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 3,
+              "valid_outputs": 3,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 8,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 3,
               "total_turns": 6,
               "extraction_ms": 10038,
@@ -7632,6 +7719,35 @@
               "item_preferences": 0,
               "preferences_correct": true,
               "attempts": 4,
+              "valid_outputs": 4,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 9,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 4,
+              "total_turns": 6,
+              "extraction_ms": 10654,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 9,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 4,
               "valid_outputs": 4
             }
           },
@@ -8499,6 +8615,35 @@
               "item_preferences": 0,
               "preferences_correct": true,
               "attempts": 5,
+              "valid_outputs": 5,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 5,
+              "total_turns": 6,
+              "extraction_ms": 11114,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 10,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 5,
               "valid_outputs": 5
             }
           },
@@ -8995,6 +9140,35 @@
               "item_preferences": 0,
               "preferences_correct": true,
               "attempts": 6,
+              "valid_outputs": 6,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 2,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 6,
+              "total_turns": 6,
+              "extraction_ms": 4062,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 2,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 6,
               "valid_outputs": 6
             }
           }
@@ -9129,7 +9303,21 @@
             },
             "wall_seconds": 4.034
           }
-        ]
+        ],
+        "feature_summary": {
+          "policy": "exact-features-lowercase-v1",
+          "turns": 6,
+          "passed_turns": 6,
+          "error_turns": 0,
+          "warning_turns": 0,
+          "errors": 0,
+          "warnings": 0,
+          "tp": 42,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0
+        }
       },
       "rollout": {
         "sample_id": "sft-jobs-3",
@@ -9622,6 +9810,35 @@
             },
             "input_sha256": "sha256:1cb5dd3928c84bbf9857a33de70506d2dbcf3168c0f3a34b17224c3fcafa5d79",
             "metrics": {
+              "turns": 1,
+              "total_turns": 6,
+              "extraction_ms": 11066,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 6,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 1,
+              "valid_outputs": 1,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 6,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 1,
               "total_turns": 6,
               "extraction_ms": 11066,
@@ -10272,6 +10489,35 @@
             },
             "input_sha256": "sha256:aa81f6af94a5eb49c65b1491b942e34c6fe57e155f0e6f46018dd2879020d474",
             "metrics": {
+              "turns": 2,
+              "total_turns": 6,
+              "extraction_ms": 7683,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 7,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 2,
+              "valid_outputs": 2,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 7,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 2,
               "total_turns": 6,
               "extraction_ms": 7683,
@@ -10976,6 +11222,35 @@
             },
             "input_sha256": "sha256:a3393c7c3dbd273135c1db2cfed778e9e7b4bf012f6a69db907bf8e8198d1559",
             "metrics": {
+              "turns": 3,
+              "total_turns": 6,
+              "extraction_ms": 11462,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 8,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 3,
+              "valid_outputs": 3,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 8,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 3,
               "total_turns": 6,
               "extraction_ms": 11462,
@@ -11855,6 +12130,35 @@
               "item_preferences": 0,
               "preferences_correct": true,
               "attempts": 4,
+              "valid_outputs": 4,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 9,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 4,
+              "total_turns": 6,
+              "extraction_ms": 9127,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 9,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 4,
               "valid_outputs": 4
             }
           },
@@ -12720,6 +13024,35 @@
               "item_preferences": 0,
               "preferences_correct": true,
               "attempts": 5,
+              "valid_outputs": 5,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 5,
+              "total_turns": 6,
+              "extraction_ms": 12872,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 10,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 5,
               "valid_outputs": 5
             }
           },
@@ -13202,6 +13535,55 @@
               "item_preferences": 0,
               "preferences_correct": true,
               "attempts": 6,
+              "valid_outputs": 6,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 1,
+              "fp": 0,
+              "fn": 1,
+              "precision": 1.0,
+              "recall": 0.5,
+              "errors": [
+                {
+                  "type": "missing",
+                  "attribute": "public_holidays_off",
+                  "expected": [
+                    {
+                      "attribute": "public_holidays_off",
+                      "operator": "eq",
+                      "value": "yes"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "public_holidays_off",
+                      "operator": "eq",
+                      "value": "yes"
+                    }
+                  ]
+                }
+              ],
+              "warnings": [],
+              "error_count": 1,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 6,
+              "total_turns": 6,
+              "extraction_ms": 4033,
+              "value_precision": 1.0,
+              "value_recall": 0.5,
+              "attributes": 1,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 6,
               "valid_outputs": 6
             }
           }
@@ -13336,7 +13718,21 @@
             },
             "wall_seconds": 4.019
           }
-        ]
+        ],
+        "feature_summary": {
+          "policy": "exact-features-lowercase-v1",
+          "turns": 6,
+          "passed_turns": 5,
+          "error_turns": 1,
+          "warning_turns": 0,
+          "errors": 1,
+          "warnings": 0,
+          "tp": 41,
+          "fp": 0,
+          "fn": 1,
+          "precision": 1.0,
+          "recall": 0.9761904761904762
+        }
       }
     },
     "baseline": {
@@ -13830,6 +14226,35 @@
             },
             "input_sha256": "sha256:1cb5dd3928c84bbf9857a33de70506d2dbcf3168c0f3a34b17224c3fcafa5d79",
             "metrics": {
+              "turns": 1,
+              "total_turns": 6,
+              "extraction_ms": 36316,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 6,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 1,
+              "valid_outputs": 1,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 6,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 1,
               "total_turns": 6,
               "extraction_ms": 36316,
@@ -14487,6 +14912,35 @@
             },
             "input_sha256": "sha256:d78cc049d007d1152544972c89bb40ed1a78db263a887dfaded26ac9cefc63a0",
             "metrics": {
+              "turns": 2,
+              "total_turns": 6,
+              "extraction_ms": 47420,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 7,
+              "targets": 1,
+              "selected": 0,
+              "item_preferences": 1,
+              "preferences_correct": false,
+              "attempts": 2,
+              "valid_outputs": 2,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 7,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 2,
               "total_turns": 6,
               "extraction_ms": 47420,
@@ -15189,6 +15643,35 @@
             },
             "input_sha256": "sha256:466a77fae94694c34027fcbd2b7adc05d50b8421db9d0e26dd9704c57260f6fb",
             "metrics": {
+              "turns": 3,
+              "total_turns": 6,
+              "extraction_ms": 48939,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 8,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 3,
+              "valid_outputs": 3,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 8,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 3,
               "total_turns": 6,
               "extraction_ms": 48939,
@@ -16040,6 +16523,55 @@
             },
             "input_sha256": "sha256:44fbfab4d2e889c4c984c789c9ebdf1c520b18ae1310f921436d7a9fa5bd3e88",
             "metrics": {
+              "turns": 4,
+              "total_turns": 6,
+              "extraction_ms": 49988,
+              "value_precision": 1.0,
+              "value_recall": 0.8888888888888888,
+              "attributes": 8,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 1,
+              "preferences_correct": false,
+              "attempts": 4,
+              "valid_outputs": 3,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 8,
+              "fp": 0,
+              "fn": 1,
+              "precision": 1.0,
+              "recall": 0.8888888888888888,
+              "errors": [
+                {
+                  "type": "missing",
+                  "attribute": "days_per_week",
+                  "expected": [
+                    {
+                      "attribute": "days_per_week",
+                      "operator": "lte",
+                      "value": 5
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "days_per_week",
+                      "operator": "lte",
+                      "value": 5
+                    }
+                  ]
+                }
+              ],
+              "warnings": [],
+              "error_count": 1,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 4,
               "total_turns": 6,
               "extraction_ms": 49988,
@@ -16923,6 +17455,35 @@
               "item_preferences": 1,
               "preferences_correct": false,
               "attempts": 5,
+              "valid_outputs": 4,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 5,
+              "total_turns": 6,
+              "extraction_ms": 63199,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 10,
+              "targets": 1,
+              "selected": 0,
+              "item_preferences": 1,
+              "preferences_correct": false,
+              "attempts": 5,
               "valid_outputs": 4
             }
           },
@@ -17390,6 +17951,74 @@
               "item_preferences": 0,
               "preferences_correct": true,
               "attempts": 6,
+              "valid_outputs": 5,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 0,
+              "fp": 0,
+              "fn": 2,
+              "precision": null,
+              "recall": 0.0,
+              "errors": [
+                {
+                  "type": "missing",
+                  "attribute": "public_holidays_off",
+                  "expected": [
+                    {
+                      "attribute": "public_holidays_off",
+                      "operator": "eq",
+                      "value": "yes"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "public_holidays_off",
+                      "operator": "eq",
+                      "value": "yes"
+                    }
+                  ]
+                },
+                {
+                  "type": "missing",
+                  "attribute": "work_arrangement",
+                  "expected": [
+                    {
+                      "attribute": "work_arrangement",
+                      "operator": "eq",
+                      "value": "on_site"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "work_arrangement",
+                      "operator": "eq",
+                      "value": "on_site"
+                    }
+                  ]
+                }
+              ],
+              "warnings": [],
+              "error_count": 2,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 6,
+              "total_turns": 6,
+              "extraction_ms": 2518,
+              "value_precision": null,
+              "value_recall": 0.0,
+              "attributes": 0,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 6,
               "valid_outputs": 5
             }
           }
@@ -17512,7 +18141,21 @@
             "finish_reason": "stop",
             "wall_seconds": 2.509
           }
-        ]
+        ],
+        "feature_summary": {
+          "policy": "exact-features-lowercase-v1",
+          "turns": 6,
+          "passed_turns": 4,
+          "error_turns": 2,
+          "warning_turns": 0,
+          "errors": 3,
+          "warnings": 0,
+          "tp": 39,
+          "fp": 0,
+          "fn": 3,
+          "precision": 1.0,
+          "recall": 0.9285714285714286
+        }
       },
       "rollout": {
         "sample_id": "sft-jobs-3",
@@ -18004,6 +18647,35 @@
             },
             "input_sha256": "sha256:1cb5dd3928c84bbf9857a33de70506d2dbcf3168c0f3a34b17224c3fcafa5d79",
             "metrics": {
+              "turns": 1,
+              "total_turns": 6,
+              "extraction_ms": 36083,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 6,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 1,
+              "valid_outputs": 1,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 6,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 1,
               "total_turns": 6,
               "extraction_ms": 36083,
@@ -18652,6 +19324,35 @@
             },
             "input_sha256": "sha256:69dc140a16e6bc93fdda5b2060b1f864ca3ea84b11290b0dc15fc6eeb472094a",
             "metrics": {
+              "turns": 2,
+              "total_turns": 6,
+              "extraction_ms": 38834,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 7,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 2,
+              "valid_outputs": 2,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 7,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 2,
               "total_turns": 6,
               "extraction_ms": 38834,
@@ -19352,6 +20053,35 @@
             },
             "input_sha256": "sha256:31942dc2d86120fcb8a272f0ebb089d318a1c4972f15978e6985ed8a0a05ad4a",
             "metrics": {
+              "turns": 3,
+              "total_turns": 6,
+              "extraction_ms": 43860,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 8,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 3,
+              "valid_outputs": 3,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 8,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 3,
               "total_turns": 6,
               "extraction_ms": 43860,
@@ -20225,6 +20955,35 @@
               "item_preferences": 0,
               "preferences_correct": true,
               "attempts": 4,
+              "valid_outputs": 4,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 9,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 4,
+              "total_turns": 6,
+              "extraction_ms": 48160,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 9,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 4,
               "valid_outputs": 4
             }
           },
@@ -21084,6 +21843,35 @@
               "item_preferences": 0,
               "preferences_correct": true,
               "attempts": 5,
+              "valid_outputs": 5,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 5,
+              "total_turns": 6,
+              "extraction_ms": 53821,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 10,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 5,
               "valid_outputs": 5
             }
           },
@@ -21548,6 +22336,74 @@
               "item_preferences": 0,
               "preferences_correct": true,
               "attempts": 6,
+              "valid_outputs": 6,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 0,
+              "fp": 0,
+              "fn": 2,
+              "precision": null,
+              "recall": 0.0,
+              "errors": [
+                {
+                  "type": "missing",
+                  "attribute": "public_holidays_off",
+                  "expected": [
+                    {
+                      "attribute": "public_holidays_off",
+                      "operator": "eq",
+                      "value": "yes"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "public_holidays_off",
+                      "operator": "eq",
+                      "value": "yes"
+                    }
+                  ]
+                },
+                {
+                  "type": "missing",
+                  "attribute": "work_arrangement",
+                  "expected": [
+                    {
+                      "attribute": "work_arrangement",
+                      "operator": "eq",
+                      "value": "on_site"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "work_arrangement",
+                      "operator": "eq",
+                      "value": "on_site"
+                    }
+                  ]
+                }
+              ],
+              "warnings": [],
+              "error_count": 2,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 6,
+              "total_turns": 6,
+              "extraction_ms": 2338,
+              "value_precision": null,
+              "value_recall": 0.0,
+              "attributes": 0,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 6,
               "valid_outputs": 6
             }
           }
@@ -21670,7 +22526,21 @@
             "finish_reason": "stop",
             "wall_seconds": 2.328
           }
-        ]
+        ],
+        "feature_summary": {
+          "policy": "exact-features-lowercase-v1",
+          "turns": 6,
+          "passed_turns": 5,
+          "error_turns": 1,
+          "warning_turns": 0,
+          "errors": 2,
+          "warnings": 0,
+          "tp": 40,
+          "fp": 0,
+          "fn": 2,
+          "precision": 1.0,
+          "recall": 0.9523809523809523
+        }
       }
     },
     "lora": {
@@ -22141,6 +23011,80 @@
             },
             "input_sha256": "sha256:1cb5dd3928c84bbf9857a33de70506d2dbcf3168c0f3a34b17224c3fcafa5d79",
             "metrics": {
+              "turns": 1,
+              "total_turns": 6,
+              "extraction_ms": 24019,
+              "value_precision": 0.8,
+              "value_recall": 0.6666666666666666,
+              "attributes": 5,
+              "targets": 2,
+              "selected": 0,
+              "item_preferences": 1,
+              "preferences_correct": false,
+              "attempts": 1,
+              "valid_outputs": 0,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 4,
+              "fp": 1,
+              "fn": 2,
+              "precision": 0.8,
+              "recall": 0.6666666666666666,
+              "errors": [
+                {
+                  "type": "changed",
+                  "attribute": "location_locality",
+                  "expected": [
+                    {
+                      "attribute": "location_locality",
+                      "operator": "eq",
+                      "value": "kyoto, shimogyo ward"
+                    }
+                  ],
+                  "extracted": [
+                    {
+                      "attribute": "location_locality",
+                      "operator": "eq",
+                      "value": "tokyo, chiyoda ward"
+                    }
+                  ],
+                  "missing": [
+                    {
+                      "attribute": "location_locality",
+                      "operator": "eq",
+                      "value": "kyoto, shimogyo ward"
+                    }
+                  ]
+                },
+                {
+                  "type": "missing",
+                  "attribute": "location_region",
+                  "expected": [
+                    {
+                      "attribute": "location_region",
+                      "operator": "eq",
+                      "value": "kyoto"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "location_region",
+                      "operator": "eq",
+                      "value": "kyoto"
+                    }
+                  ]
+                }
+              ],
+              "warnings": [],
+              "error_count": 2,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 1,
               "total_turns": 6,
               "extraction_ms": 24019,
@@ -22798,6 +23742,35 @@
             },
             "input_sha256": "sha256:d78cc049d007d1152544972c89bb40ed1a78db263a887dfaded26ac9cefc63a0",
             "metrics": {
+              "turns": 2,
+              "total_turns": 6,
+              "extraction_ms": 30462,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 7,
+              "targets": 1,
+              "selected": 0,
+              "item_preferences": 1,
+              "preferences_correct": false,
+              "attempts": 2,
+              "valid_outputs": 1,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 7,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 2,
               "total_turns": 6,
               "extraction_ms": 30462,
@@ -23489,6 +24462,55 @@
             },
             "input_sha256": "sha256:466a77fae94694c34027fcbd2b7adc05d50b8421db9d0e26dd9704c57260f6fb",
             "metrics": {
+              "turns": 3,
+              "total_turns": 6,
+              "extraction_ms": 30480,
+              "value_precision": 1.0,
+              "value_recall": 0.875,
+              "attributes": 7,
+              "targets": 1,
+              "selected": 0,
+              "item_preferences": 1,
+              "preferences_correct": false,
+              "attempts": 3,
+              "valid_outputs": 2,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 7,
+              "fp": 0,
+              "fn": 1,
+              "precision": 1.0,
+              "recall": 0.875,
+              "errors": [
+                {
+                  "type": "missing",
+                  "attribute": "work_arrangement",
+                  "expected": [
+                    {
+                      "attribute": "work_arrangement",
+                      "operator": "eq",
+                      "value": "on_site"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "work_arrangement",
+                      "operator": "eq",
+                      "value": "on_site"
+                    }
+                  ]
+                }
+              ],
+              "warnings": [],
+              "error_count": 1,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 3,
               "total_turns": 6,
               "extraction_ms": 30480,
@@ -24356,6 +25378,35 @@
             },
             "input_sha256": "sha256:44fbfab4d2e889c4c984c789c9ebdf1c520b18ae1310f921436d7a9fa5bd3e88",
             "metrics": {
+              "turns": 4,
+              "total_turns": 6,
+              "extraction_ms": 35812,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 9,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 4,
+              "valid_outputs": 3,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 9,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 4,
               "total_turns": 6,
               "extraction_ms": 35812,
@@ -25239,6 +26290,35 @@
               "item_preferences": 1,
               "preferences_correct": false,
               "attempts": 5,
+              "valid_outputs": 4,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 10,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 5,
+              "total_turns": 6,
+              "extraction_ms": 39972,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 10,
+              "targets": 1,
+              "selected": 0,
+              "item_preferences": 1,
+              "preferences_correct": false,
+              "attempts": 5,
               "valid_outputs": 4
             }
           },
@@ -25742,6 +26822,35 @@
               "item_preferences": 1,
               "preferences_correct": false,
               "attempts": 6,
+              "valid_outputs": 5,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 2,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 6,
+              "total_turns": 6,
+              "extraction_ms": 9118,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 2,
+              "targets": 1,
+              "selected": 0,
+              "item_preferences": 1,
+              "preferences_correct": false,
+              "attempts": 6,
               "valid_outputs": 5
             }
           }
@@ -25864,7 +26973,21 @@
             "finish_reason": "stop",
             "wall_seconds": 9.109
           }
-        ]
+        ],
+        "feature_summary": {
+          "policy": "exact-features-lowercase-v1",
+          "turns": 6,
+          "passed_turns": 4,
+          "error_turns": 2,
+          "warning_turns": 0,
+          "errors": 3,
+          "warnings": 0,
+          "tp": 39,
+          "fp": 1,
+          "fn": 3,
+          "precision": 0.975,
+          "recall": 0.9285714285714286
+        }
       },
       "rollout": {
         "sample_id": "sft-jobs-3",
@@ -26333,6 +27456,80 @@
             },
             "input_sha256": "sha256:1cb5dd3928c84bbf9857a33de70506d2dbcf3168c0f3a34b17224c3fcafa5d79",
             "metrics": {
+              "turns": 1,
+              "total_turns": 6,
+              "extraction_ms": 23265,
+              "value_precision": 0.8,
+              "value_recall": 0.6666666666666666,
+              "attributes": 5,
+              "targets": 2,
+              "selected": 0,
+              "item_preferences": 1,
+              "preferences_correct": false,
+              "attempts": 1,
+              "valid_outputs": 0,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 4,
+              "fp": 1,
+              "fn": 2,
+              "precision": 0.8,
+              "recall": 0.6666666666666666,
+              "errors": [
+                {
+                  "type": "changed",
+                  "attribute": "location_locality",
+                  "expected": [
+                    {
+                      "attribute": "location_locality",
+                      "operator": "eq",
+                      "value": "kyoto, shimogyo ward"
+                    }
+                  ],
+                  "extracted": [
+                    {
+                      "attribute": "location_locality",
+                      "operator": "eq",
+                      "value": "tokyo, chiyoda ward"
+                    }
+                  ],
+                  "missing": [
+                    {
+                      "attribute": "location_locality",
+                      "operator": "eq",
+                      "value": "kyoto, shimogyo ward"
+                    }
+                  ]
+                },
+                {
+                  "type": "missing",
+                  "attribute": "location_region",
+                  "expected": [
+                    {
+                      "attribute": "location_region",
+                      "operator": "eq",
+                      "value": "kyoto"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "location_region",
+                      "operator": "eq",
+                      "value": "kyoto"
+                    }
+                  ]
+                }
+              ],
+              "warnings": [],
+              "error_count": 2,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 1,
               "total_turns": 6,
               "extraction_ms": 23265,
@@ -26818,6 +28015,55 @@
             },
             "input_sha256": "sha256:ba7a2719fceb973b3f76fb95bc22e959c740223e15d1398671a0deeb89dd4778",
             "metrics": {
+              "turns": 2,
+              "total_turns": 6,
+              "extraction_ms": 25671,
+              "value_precision": 1.0,
+              "value_recall": 0.8571428571428571,
+              "attributes": 6,
+              "targets": 1,
+              "selected": 0,
+              "item_preferences": 1,
+              "preferences_correct": false,
+              "attempts": 2,
+              "valid_outputs": 1,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 6,
+              "fp": 0,
+              "fn": 1,
+              "precision": 1.0,
+              "recall": 0.8571428571428571,
+              "errors": [
+                {
+                  "type": "missing",
+                  "attribute": "location_region",
+                  "expected": [
+                    {
+                      "attribute": "location_region",
+                      "operator": "eq",
+                      "value": "kyoto"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "location_region",
+                      "operator": "eq",
+                      "value": "kyoto"
+                    }
+                  ]
+                }
+              ],
+              "warnings": [],
+              "error_count": 1,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 2,
               "total_turns": 6,
               "extraction_ms": 25671,
@@ -27494,6 +28740,55 @@
             },
             "input_sha256": "sha256:7f46717e89f7679d26e9ec2c3b4091761b6c10908d4e5c93624132dd5c6abcfa",
             "metrics": {
+              "turns": 3,
+              "total_turns": 6,
+              "extraction_ms": 29234,
+              "value_precision": 1.0,
+              "value_recall": 0.875,
+              "attributes": 7,
+              "targets": 1,
+              "selected": 0,
+              "item_preferences": 1,
+              "preferences_correct": false,
+              "attempts": 3,
+              "valid_outputs": 2,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 7,
+              "fp": 0,
+              "fn": 1,
+              "precision": 1.0,
+              "recall": 0.875,
+              "errors": [
+                {
+                  "type": "missing",
+                  "attribute": "location_region",
+                  "expected": [
+                    {
+                      "attribute": "location_region",
+                      "operator": "eq",
+                      "value": "kyoto"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "location_region",
+                      "operator": "eq",
+                      "value": "kyoto"
+                    }
+                  ]
+                }
+              ],
+              "warnings": [],
+              "error_count": 1,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 3,
               "total_turns": 6,
               "extraction_ms": 29234,
@@ -28345,6 +29640,55 @@
               "item_preferences": 1,
               "preferences_correct": false,
               "attempts": 4,
+              "valid_outputs": 3,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 8,
+              "fp": 0,
+              "fn": 1,
+              "precision": 1.0,
+              "recall": 0.8888888888888888,
+              "errors": [
+                {
+                  "type": "missing",
+                  "attribute": "location_region",
+                  "expected": [
+                    {
+                      "attribute": "location_region",
+                      "operator": "eq",
+                      "value": "kyoto"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "location_region",
+                      "operator": "eq",
+                      "value": "kyoto"
+                    }
+                  ]
+                }
+              ],
+              "warnings": [],
+              "error_count": 1,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 4,
+              "total_turns": 6,
+              "extraction_ms": 31936,
+              "value_precision": 1.0,
+              "value_recall": 0.8888888888888888,
+              "attributes": 8,
+              "targets": 1,
+              "selected": 0,
+              "item_preferences": 1,
+              "preferences_correct": false,
+              "attempts": 4,
               "valid_outputs": 3
             }
           },
@@ -29183,6 +30527,55 @@
               "item_preferences": 1,
               "preferences_correct": false,
               "attempts": 5,
+              "valid_outputs": 4,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 9,
+              "fp": 0,
+              "fn": 1,
+              "precision": 1.0,
+              "recall": 0.9,
+              "errors": [
+                {
+                  "type": "missing",
+                  "attribute": "location_region",
+                  "expected": [
+                    {
+                      "attribute": "location_region",
+                      "operator": "eq",
+                      "value": "kyoto"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "location_region",
+                      "operator": "eq",
+                      "value": "kyoto"
+                    }
+                  ]
+                }
+              ],
+              "warnings": [],
+              "error_count": 1,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 5,
+              "total_turns": 6,
+              "extraction_ms": 35628,
+              "value_precision": 1.0,
+              "value_recall": 0.9,
+              "attributes": 9,
+              "targets": 1,
+              "selected": 0,
+              "item_preferences": 1,
+              "preferences_correct": false,
+              "attempts": 5,
               "valid_outputs": 4
             }
           },
@@ -29670,6 +31063,35 @@
               "item_preferences": 1,
               "preferences_correct": false,
               "attempts": 6,
+              "valid_outputs": 5,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 2,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 6,
+              "total_turns": 6,
+              "extraction_ms": 8573,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 2,
+              "targets": 1,
+              "selected": 0,
+              "item_preferences": 1,
+              "preferences_correct": false,
+              "attempts": 6,
               "valid_outputs": 5
             }
           }
@@ -29792,7 +31214,21 @@
             "finish_reason": "stop",
             "wall_seconds": 8.555
           }
-        ]
+        ],
+        "feature_summary": {
+          "policy": "exact-features-lowercase-v1",
+          "turns": 6,
+          "passed_turns": 1,
+          "error_turns": 5,
+          "warning_turns": 0,
+          "errors": 6,
+          "warnings": 0,
+          "tp": 36,
+          "fp": 1,
+          "fn": 6,
+          "precision": 0.972972972972973,
+          "recall": 0.8571428571428571
+        }
       }
     }
   }

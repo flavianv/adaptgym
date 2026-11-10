@@ -1,68 +1,62 @@
-# Qwen 4B intent extraction: zero-shot and LoRA SFT
+# Ten-conversation extraction report: exact target features
 
-Completed 10 November 2026. All evaluations finished successfully.
+Rescored 10 November 2026. Same five shoe and five job conversations, same saved model outputs. No model or generation calls were made for this re-evaluation.
 
-## Experiment
+## Acceptance rule
 
-- Base model: `Qwen/Qwen3.5-4B`, revision `851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a`.
-- Data: 1,000 synthetic conversations, balanced between shoes and jobs; 800 train / 100 validation / 100 test. Turn-expanded rows: 4,082 / 507 / 522.
-- Training: one epoch, 256 optimizer steps; ordinary LoRA rank 16, alpha 32, dropout 0.05; learning rate 0.0001, gradient accumulation 16, microbatch 1, BF16, completion-only loss and gradient checkpointing. 32,464,896 trainable parameters.
-- Checkpoint selection uses validation loss only. The selected checkpoint is step 256. Test results were not used for checkpoint selection.
-- Base and tuned models use the same frozen system prompt, output schema, tokenizer/chat template, serving configuration, temperature 0, seed schedule starting at 7, 4,096 output-token cap and no thinking.
-- All 522 test turns are evaluated twice: with supplied previous correct state, and in rollout with each model carrying its own previous valid prediction. Teacher-forced request hashes match before and after training.
-- No input truncation. Longest training sequence: 22,385 tokens. The full forward/backward smoke passed with finite gradients and 20.93 GiB peak allocated GPU memory.
+- Match the target feature name, constraint operator and values exactly after lowercasing strings. Do not trim whitespace, substitute synonyms, infer equivalence across features or convert strings into numbers.
+- Numeric bounds retain their operators: `price <= 100` does not match `price = 100`. Array values are unordered sets; duplicate values do not add credit.
+- A missing target feature is an error. A present target feature with a missing/changed value or operator is an error.
+- Additional features or values are warnings only. They never block acceptance. A replacement already classified as a changed target is not counted again as an extra warning.
+- A turn passes when it has no errors, including turns that have warnings.
+- Scope, strength, evidence, task/item state, natural-language intent and native output-validity checks remain separate diagnostics. They do not erase correctly extracted feature values or gate this feature/value check.
 
-## Full test results: 100 conversations, 522 turns per mode
+## Results on the same ten conversations
 
-| Mode | Model | Valid outputs | Value precision* | Value recall | Complete value coverage | Exact structured state |
-| --- | --- | ---: | ---: | ---: | ---: | ---: |
-| Supplied previous state | Qwen 4B zero-shot | 313/522 (60.0%) | 98.3% | 44.2% | 29.9% | 12.3% |
-| Supplied previous state | Qwen 4B LoRA | 379/522 (72.6%) | 99.6% | 66.1% | 52.5% | 27.2% |
-| Own previous prediction | Qwen 4B zero-shot | 239/522 (45.8%) | 84.9% | 34.9% | 22.8% | 4.4% |
-| Own previous prediction | Qwen 4B LoRA | 341/522 (65.3%) | 98.0% | 53.3% | 30.7% | 13.2% |
+46 user turns. The player uses rollout: each model receives its own previous valid prediction. These existing input chains are unchanged; only scoring and display were revised.
 
-*Precision counts value atoms from state-valid outputs. Invalid outputs contribute all expected values as misses to recall and fail complete coverage / exact state; their predicted atoms are excluded from precision. Precision therefore needs to be read together with validity and recall.
+| Model | Passed turns | Error turns | Warning turns | Precision | Recall |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Luna | 41/46 | 5 | 9 | 96.4% | 97.9% |
+| Qwen 4B zero-shot | 18/46 | 28 | 13 | 80.3% | 80.7% |
+| Qwen 4B fine-tuned | 22/46 | 24 | 3 | 97.1% | 84.0% |
 
-LoRA improves recall by 21.9 percentage points with supplied state and by 18.4 points in rollout. Exact structured-state agreement rises from 12.3% to 27.2% and from 4.4% to 13.2%, respectively. This is an uplift, but remaining state errors and invalid outputs are substantial.
+Precision = matched target atoms / extracted atoms. Recall = matched target atoms / target atoms. Extra atoms reduce precision but do not make a turn fail. Error and warning counts are feature-level occurrences; precision and recall count individual operator/value atoms. Every available feature is scored even when a separate state-validity check fails; there is no blanket zeroing.
 
-## Ten precomputed comparison conversations
+### Supplied previous correct state
 
-Five shoes and five jobs were sampled from the held-out test set using seed `20261110`, independently of model outcomes. They contain 46 user turns. The same exact conversations are shown for all three extractors; the Qwen outputs are reused from the full frozen test run. Luna was newly evaluated on these ten only, with the same logical extraction prompt and schema, in both context modes. Luna uses OpenAI Responses with provider-default decoding; its provider, sampling controls and runtime differ from Qwen.
+| Model | Passed turns | Error turns | Warning turns | Precision | Recall |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Luna | 43/46 | 3 | 3 | 98.8% | 98.8% |
+| Qwen 4B zero-shot | 24/46 | 22 | 5 | 95.3% | 83.5% |
+| Qwen 4B fine-tuned | 31/46 | 15 | 1 | 98.7% | 91.4% |
 
-| Context mode | Model | Valid outputs | Value precision* | Value recall | Exact structured state |
-| --- | --- | ---: | ---: | ---: | ---: |
-| Supplied previous state | Luna | 46/46 | 98.8% | 98.8% | 89.1% |
-| Supplied previous state | Qwen 4B zero-shot | 24/46 | 96.1% | 30.5% | 8.7% |
-| Supplied previous state | Qwen 4B LoRA | 28/46 | 100.0% | 54.3% | 23.9% |
-| Own previous prediction | Luna | 46/46 | 96.4% | 97.9% | 65.2% |
-| Own previous prediction | Qwen 4B zero-shot | 21/46 | 83.3% | 39.1% | 2.2% |
-| Own previous prediction | Qwen 4B LoRA | 26/46 | 98.1% | 42.0% | 10.9% |
+## Luna: per-conversation outcomes in the player
 
-The ten-case subset is for trace inspection. It is too small to replace the full test comparison; Luna has not been evaluated on all 100 test conversations.
+| Conversation | Turns | Passed | Error turns | Warning turns |
+| --- | ---: | ---: | ---: | ---: |
+| sft-shoes-1 | 3 | 2 | 1 | 0 |
+| sft-shoes-2 | 4 | 4 | 0 | 0 |
+| sft-shoes-3 | 4 | 4 | 0 | 0 |
+| sft-shoes-4 | 4 | 4 | 0 | 3 |
+| sft-shoes-5 | 5 | 2 | 3 | 3 |
+| sft-jobs-1 | 7 | 7 | 0 | 0 |
+| sft-jobs-2 | 5 | 5 | 0 | 0 |
+| sft-jobs-3 | 6 | 5 | 1 | 0 |
+| sft-jobs-4 | 3 | 3 | 0 | 0 |
+| sft-jobs-5 | 5 | 5 | 0 | 3 |
 
-| Saved conversation | Vertical | User turns |
-| --- | --- | ---: |
-| sft-shoes-1 | footwear | 3 |
-| sft-shoes-2 | footwear | 4 |
-| sft-shoes-3 | footwear | 4 |
-| sft-shoes-4 | footwear | 4 |
-| sft-shoes-5 | footwear | 5 |
-| sft-jobs-1 | job_search | 7 |
-| sft-jobs-2 | job_search | 5 |
-| sft-jobs-3 | job_search | 6 |
-| sft-jobs-4 | job_search | 3 |
-| sft-jobs-5 | job_search | 5 |
+The feature `sport = basketball` does not satisfy a target `primary_use = Basketball`: the latter remains missing, and sport is an extra-feature warning if absent from the target. A supported extra category such as `Trail running shoes` is still an extra warning, and passes when all target values are present. No semantic reinterpretation is used.
 
-## Using the conversation demo
+## Experiment and sampling
 
-Open **Live chat**, then choose **Play pre-extracted**. Choose a shoes or jobs conversation, then enable **Compare side by side**. The left and right dropdowns independently select Luna, Qwen 4B zero-shot or Qwen 4B fine-tuned. Play, pause, previous and next keep both panels on the same turn. The player uses rollout traces: each model receives its own prior valid prediction. Saved playback makes no model calls. Live extraction remains Luna-only.
+- The ten conversations were sampled from held-out test data with seed 20261110, five per vertical, independently of model outcomes. They are for inspection, not a replacement for the full test set.
+- Qwen base model: Qwen/Qwen3.5-4B, revision `851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a`. Fine-tuning used 800 training and 100 validation conversations, one epoch, 256 optimizer steps; LoRA rank 16, alpha 32, dropout 0.05, learning rate 0.0001, accumulation 16, BF16, completion-only loss and gradient checkpointing. Checkpoint 256 was selected on validation loss.
+- Qwen zero-shot and fine-tuned outputs retain the same extraction prompt, schema, tokenizer and serving configuration; temperature 0, a seed schedule starting at 7, 4096 output tokens, thinking disabled. Supplied-state input hashes match.
+- Luna was evaluated on these ten only, using the same logical extraction prompt and schema. Its OpenAI Responses API uses provider-default decoding; provider/runtime/sampling controls differ from Qwen.
+- The previous full-100 test figures used the older validity-gated scorer. They must not be compared directly with the newly rescored figures in this report. This revision rescored the ten saved comparison conversations only.
+- Targets remain procedural labels from automated data generation. This score measures exact target feature fidelity, not an independent assessment of meaning.
 
-Each bundle contains the original demo sample shape (`plan`, `result.conversation`, reference checkpoints), and three models with native saved replay records (`completed`, `checkpoints`, `profile`, `reference_profile`, `score`, `metrics`, evidence and prompt). Both supplied-state and rollout results are retained in the downloadable JSON.
+## Player
 
-## Limits and interpretation
-
-- Reference labels come from procedural states and an automated generation gate, not a complete human audit. The gate permits invented additions when intended meaning is preserved. Some extra extracted values can therefore be grounded in text but absent from the reference.
-- Value metrics match case-insensitive attribute/value atoms; arrays are sets. They do not establish correctness of operators, scope, strength, evidence, task status, selections or search constraints. Exact structured state adds these deterministic checks, while free-text intent and evidence semantics are not independently judged here.
-- Invalidity often comes from item comparisons or selections without displayed-item/user evidence, inconsistent shortlists, or task/scope metadata. These are retained in the traces rather than removed.
-- Training loss is not an extraction accuracy metric. The final reported training runtime covers the last resumed segment, not necessarily the entire epoch; the completion claim rests on step 256, epoch 1 and the saved checkpoint.
-- Identical teacher-forced inputs support the base-versus-SFT comparison. Rollout inputs intentionally diverge as model predictions differ.
+Choose **Play pre-extracted**, select a shoes or jobs conversation, and enable **Compare side by side**. Select the two models independently. Full-trace pass/error/warning counts and precision/recall appear at the top of each extractor panel; links jump to error or warning turns. Each extracted feature has a compact title with its expected/extracted values and evidence collapsed underneath. Assistant product and job listings are also collapsed individually. Playback and model switching make no API calls. Live extraction remains Luna-only.

@@ -3226,6 +3226,35 @@
               "item_preferences": 0,
               "preferences_correct": true,
               "attempts": 1,
+              "valid_outputs": 1,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 1,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 1,
+              "total_turns": 4,
+              "extraction_ms": 7498,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 1,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 1,
               "valid_outputs": 1
             }
           },
@@ -3611,6 +3640,35 @@
             },
             "input_sha256": "sha256:bdcb2a4478775dffc780700c78b54e6085d9b0a0820d2b03d09d55e1ab7bb8dc",
             "metrics": {
+              "turns": 2,
+              "total_turns": 4,
+              "extraction_ms": 6076,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 4,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 2,
+              "valid_outputs": 2,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 4,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 2,
               "total_turns": 4,
               "extraction_ms": 6076,
@@ -4240,6 +4298,35 @@
               "item_preferences": 0,
               "preferences_correct": true,
               "attempts": 3,
+              "valid_outputs": 3,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 7,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 3,
+              "total_turns": 4,
+              "extraction_ms": 9547,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 7,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 3,
               "valid_outputs": 3
             }
           },
@@ -4618,6 +4705,35 @@
               "item_preferences": 0,
               "preferences_correct": true,
               "attempts": 4,
+              "valid_outputs": 4,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 1,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 4,
+              "total_turns": 4,
+              "extraction_ms": 3846,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 1,
+              "targets": 1,
+              "selected": 1,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 4,
               "valid_outputs": 4
             }
           }
@@ -4718,7 +4834,21 @@
             },
             "wall_seconds": 3.838
           }
-        ]
+        ],
+        "feature_summary": {
+          "policy": "exact-features-lowercase-v1",
+          "turns": 4,
+          "passed_turns": 4,
+          "error_turns": 0,
+          "warning_turns": 0,
+          "errors": 0,
+          "warnings": 0,
+          "tp": 13,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0
+        }
       },
       "rollout": {
         "sample_id": "sft-shoes-3",
@@ -4979,6 +5109,35 @@
             },
             "input_sha256": "sha256:e0b85d9381e14389409ec4017d709625c1e122b7b3522a7b38583396829adb1c",
             "metrics": {
+              "turns": 1,
+              "total_turns": 4,
+              "extraction_ms": 4030,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 1,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 1,
+              "valid_outputs": 1,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 1,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 1,
               "total_turns": 4,
               "extraction_ms": 4030,
@@ -5375,6 +5534,35 @@
             },
             "input_sha256": "sha256:7dbd45b0f61e47c1839110a06767926787be5070e034ebeebe6d7c018049e3e0",
             "metrics": {
+              "turns": 2,
+              "total_turns": 4,
+              "extraction_ms": 7431,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 4,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 2,
+              "valid_outputs": 2,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 4,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 2,
               "total_turns": 4,
               "extraction_ms": 7431,
@@ -6004,6 +6192,35 @@
               "item_preferences": 0,
               "preferences_correct": true,
               "attempts": 3,
+              "valid_outputs": 3,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 7,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 3,
+              "total_turns": 4,
+              "extraction_ms": 8196,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 7,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 3,
               "valid_outputs": 3
             }
           },
@@ -6380,6 +6597,35 @@
               "item_preferences": 0,
               "preferences_correct": true,
               "attempts": 4,
+              "valid_outputs": 4,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 1,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 4,
+              "total_turns": 4,
+              "extraction_ms": 3690,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 1,
+              "targets": 1,
+              "selected": 1,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 4,
               "valid_outputs": 4
             }
           }
@@ -6480,7 +6726,21 @@
             },
             "wall_seconds": 3.682
           }
-        ]
+        ],
+        "feature_summary": {
+          "policy": "exact-features-lowercase-v1",
+          "turns": 4,
+          "passed_turns": 4,
+          "error_turns": 0,
+          "warning_turns": 0,
+          "errors": 0,
+          "warnings": 0,
+          "tp": 13,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1.0,
+          "recall": 1.0
+        }
       }
     },
     "baseline": {
@@ -6714,6 +6974,35 @@
             },
             "input_sha256": "sha256:e0b85d9381e14389409ec4017d709625c1e122b7b3522a7b38583396829adb1c",
             "metrics": {
+              "turns": 1,
+              "total_turns": 4,
+              "extraction_ms": 7946,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 1,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": false,
+              "attempts": 1,
+              "valid_outputs": 0,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 1,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 1,
               "total_turns": 4,
               "extraction_ms": 7946,
@@ -7102,6 +7391,61 @@
             },
             "input_sha256": "sha256:bdcb2a4478775dffc780700c78b54e6085d9b0a0820d2b03d09d55e1ab7bb8dc",
             "metrics": {
+              "turns": 2,
+              "total_turns": 4,
+              "extraction_ms": 22737,
+              "value_precision": 0.75,
+              "value_recall": 0.75,
+              "attributes": 4,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 1,
+              "preferences_correct": false,
+              "attempts": 2,
+              "valid_outputs": 0,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 3,
+              "fp": 1,
+              "fn": 1,
+              "precision": 0.75,
+              "recall": 0.75,
+              "errors": [
+                {
+                  "type": "changed",
+                  "attribute": "brand",
+                  "expected": [
+                    {
+                      "attribute": "brand",
+                      "operator": "eq",
+                      "value": "asics"
+                    }
+                  ],
+                  "extracted": [
+                    {
+                      "attribute": "brand",
+                      "operator": "in",
+                      "value": "asics"
+                    }
+                  ],
+                  "missing": [
+                    {
+                      "attribute": "brand",
+                      "operator": "eq",
+                      "value": "asics"
+                    }
+                  ]
+                }
+              ],
+              "warnings": [],
+              "error_count": 1,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 2,
               "total_turns": 4,
               "extraction_ms": 22737,
@@ -7730,6 +8074,35 @@
               "item_preferences": 0,
               "preferences_correct": true,
               "attempts": 3,
+              "valid_outputs": 1,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 7,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 3,
+              "total_turns": 4,
+              "extraction_ms": 35288,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 7,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 3,
               "valid_outputs": 1
             }
           },
@@ -8094,6 +8467,55 @@
               "item_preferences": 0,
               "preferences_correct": true,
               "attempts": 4,
+              "valid_outputs": 2,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 0,
+              "fp": 0,
+              "fn": 1,
+              "precision": null,
+              "recall": 0.0,
+              "errors": [
+                {
+                  "type": "missing",
+                  "attribute": "brand",
+                  "expected": [
+                    {
+                      "attribute": "brand",
+                      "operator": "eq",
+                      "value": "asics"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "brand",
+                      "operator": "eq",
+                      "value": "asics"
+                    }
+                  ]
+                }
+              ],
+              "warnings": [],
+              "error_count": 1,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 4,
+              "total_turns": 4,
+              "extraction_ms": 3893,
+              "value_precision": null,
+              "value_recall": 0.0,
+              "attributes": 0,
+              "targets": 1,
+              "selected": 1,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 4,
               "valid_outputs": 2
             }
           }
@@ -8186,7 +8608,21 @@
             "finish_reason": "stop",
             "wall_seconds": 3.885
           }
-        ]
+        ],
+        "feature_summary": {
+          "policy": "exact-features-lowercase-v1",
+          "turns": 4,
+          "passed_turns": 2,
+          "error_turns": 2,
+          "warning_turns": 0,
+          "errors": 2,
+          "warnings": 0,
+          "tp": 11,
+          "fp": 1,
+          "fn": 2,
+          "precision": 0.9166666666666666,
+          "recall": 0.8461538461538461
+        }
       },
       "rollout": {
         "sample_id": "sft-shoes-3",
@@ -8418,6 +8854,35 @@
             },
             "input_sha256": "sha256:e0b85d9381e14389409ec4017d709625c1e122b7b3522a7b38583396829adb1c",
             "metrics": {
+              "turns": 1,
+              "total_turns": 4,
+              "extraction_ms": 7880,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 1,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": false,
+              "attempts": 1,
+              "valid_outputs": 0,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 1,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 1,
               "total_turns": 4,
               "extraction_ms": 7880,
@@ -8765,6 +9230,92 @@
             },
             "input_sha256": "sha256:5edf7d2f6a04f1975de2674d32bbefb7e98dc09325b46fe68b911c882ee9bd1c",
             "metrics": {
+              "turns": 2,
+              "total_turns": 4,
+              "extraction_ms": 23976,
+              "value_precision": 0.5,
+              "value_recall": 0.5,
+              "attributes": 4,
+              "targets": 1,
+              "selected": 0,
+              "item_preferences": 1,
+              "preferences_correct": false,
+              "attempts": 2,
+              "valid_outputs": 0,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 2,
+              "fp": 2,
+              "fn": 2,
+              "precision": 0.5,
+              "recall": 0.5,
+              "errors": [
+                {
+                  "type": "changed",
+                  "attribute": "brand",
+                  "expected": [
+                    {
+                      "attribute": "brand",
+                      "operator": "eq",
+                      "value": "asics"
+                    }
+                  ],
+                  "extracted": [
+                    {
+                      "attribute": "brand",
+                      "operator": "in",
+                      "value": "asics"
+                    }
+                  ],
+                  "missing": [
+                    {
+                      "attribute": "brand",
+                      "operator": "eq",
+                      "value": "asics"
+                    }
+                  ]
+                },
+                {
+                  "type": "missing",
+                  "attribute": "sport",
+                  "expected": [
+                    {
+                      "attribute": "sport",
+                      "operator": "eq",
+                      "value": "road_running"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "sport",
+                      "operator": "eq",
+                      "value": "road_running"
+                    }
+                  ]
+                }
+              ],
+              "warnings": [
+                {
+                  "type": "invented",
+                  "attribute": "category",
+                  "values": [
+                    {
+                      "attribute": "category",
+                      "operator": "eq",
+                      "value": "road running"
+                    }
+                  ]
+                }
+              ],
+              "error_count": 2,
+              "warning_count": 1
+            },
+            "original_metrics": {
               "turns": 2,
               "total_turns": 4,
               "extraction_ms": 23976,
@@ -9276,6 +9827,61 @@
               "turns": 3,
               "total_turns": 4,
               "extraction_ms": 39608,
+              "value_precision": 0.8571428571428571,
+              "value_recall": 0.8571428571428571,
+              "attributes": 7,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": false,
+              "attempts": 3,
+              "valid_outputs": 0,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 6,
+              "fp": 1,
+              "fn": 1,
+              "precision": 0.8571428571428571,
+              "recall": 0.8571428571428571,
+              "errors": [
+                {
+                  "type": "changed",
+                  "attribute": "brand",
+                  "expected": [
+                    {
+                      "attribute": "brand",
+                      "operator": "eq",
+                      "value": "asics"
+                    }
+                  ],
+                  "extracted": [
+                    {
+                      "attribute": "brand",
+                      "operator": "in",
+                      "value": "asics"
+                    }
+                  ],
+                  "missing": [
+                    {
+                      "attribute": "brand",
+                      "operator": "eq",
+                      "value": "asics"
+                    }
+                  ]
+                }
+              ],
+              "warnings": [],
+              "error_count": 1,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 3,
+              "total_turns": 4,
+              "extraction_ms": 39608,
               "value_precision": null,
               "value_recall": 0.0,
               "attributes": 7,
@@ -9615,6 +10221,102 @@
               "item_preferences": 0,
               "preferences_correct": true,
               "attempts": 4,
+              "valid_outputs": 1,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 1,
+              "fp": 6,
+              "fn": 0,
+              "precision": 0.14285714285714285,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [
+                {
+                  "type": "invented",
+                  "attribute": "colour",
+                  "values": [
+                    {
+                      "attribute": "colour",
+                      "operator": "eq",
+                      "value": "black"
+                    }
+                  ]
+                },
+                {
+                  "type": "invented",
+                  "attribute": "cushioning",
+                  "values": [
+                    {
+                      "attribute": "cushioning",
+                      "operator": "eq",
+                      "value": "very_high"
+                    }
+                  ]
+                },
+                {
+                  "type": "invented",
+                  "attribute": "key_characteristics",
+                  "values": [
+                    {
+                      "attribute": "key_characteristics",
+                      "operator": "eq",
+                      "value": "plush, comfortable"
+                    }
+                  ]
+                },
+                {
+                  "type": "invented",
+                  "attribute": "primary_use",
+                  "values": [
+                    {
+                      "attribute": "primary_use",
+                      "operator": "eq",
+                      "value": "long-distance running"
+                    }
+                  ]
+                },
+                {
+                  "type": "invented",
+                  "attribute": "sport",
+                  "values": [
+                    {
+                      "attribute": "sport",
+                      "operator": "eq",
+                      "value": "road_running"
+                    }
+                  ]
+                },
+                {
+                  "type": "invented",
+                  "attribute": "surface",
+                  "values": [
+                    {
+                      "attribute": "surface",
+                      "operator": "eq",
+                      "value": "road"
+                    }
+                  ]
+                }
+              ],
+              "error_count": 0,
+              "warning_count": 6
+            },
+            "original_metrics": {
+              "turns": 4,
+              "total_turns": 4,
+              "extraction_ms": 31773,
+              "value_precision": 0.14285714285714285,
+              "value_recall": 1.0,
+              "attributes": 7,
+              "targets": 1,
+              "selected": 1,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 4,
               "valid_outputs": 1
             }
           }
@@ -9707,7 +10409,21 @@
             "finish_reason": "stop",
             "wall_seconds": 31.765
           }
-        ]
+        ],
+        "feature_summary": {
+          "policy": "exact-features-lowercase-v1",
+          "turns": 4,
+          "passed_turns": 2,
+          "error_turns": 2,
+          "warning_turns": 2,
+          "errors": 3,
+          "warnings": 7,
+          "tp": 10,
+          "fp": 9,
+          "fn": 3,
+          "precision": 0.5263157894736842,
+          "recall": 0.7692307692307693
+        }
       }
     },
     "lora": {
@@ -9970,6 +10686,35 @@
             },
             "input_sha256": "sha256:e0b85d9381e14389409ec4017d709625c1e122b7b3522a7b38583396829adb1c",
             "metrics": {
+              "turns": 1,
+              "total_turns": 4,
+              "extraction_ms": 4468,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 1,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 1,
+              "valid_outputs": 1,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 1,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 1,
               "total_turns": 4,
               "extraction_ms": 4468,
@@ -10374,6 +11119,35 @@
             },
             "input_sha256": "sha256:bdcb2a4478775dffc780700c78b54e6085d9b0a0820d2b03d09d55e1ab7bb8dc",
             "metrics": {
+              "turns": 2,
+              "total_turns": 4,
+              "extraction_ms": 14747,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 4,
+              "targets": 2,
+              "selected": 0,
+              "item_preferences": 1,
+              "preferences_correct": false,
+              "attempts": 2,
+              "valid_outputs": 2,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 4,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 2,
               "total_turns": 4,
               "extraction_ms": 14747,
@@ -10953,6 +11727,93 @@
               "item_preferences": 1,
               "preferences_correct": false,
               "attempts": 3,
+              "valid_outputs": 3,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 4,
+              "fp": 0,
+              "fn": 3,
+              "precision": 1.0,
+              "recall": 0.5714285714285714,
+              "errors": [
+                {
+                  "type": "missing",
+                  "attribute": "cushioning",
+                  "expected": [
+                    {
+                      "attribute": "cushioning",
+                      "operator": "eq",
+                      "value": "very_high"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "cushioning",
+                      "operator": "eq",
+                      "value": "very_high"
+                    }
+                  ]
+                },
+                {
+                  "type": "missing",
+                  "attribute": "key_characteristics",
+                  "expected": [
+                    {
+                      "attribute": "key_characteristics",
+                      "operator": "eq",
+                      "value": "plush, comfortable"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "key_characteristics",
+                      "operator": "eq",
+                      "value": "plush, comfortable"
+                    }
+                  ]
+                },
+                {
+                  "type": "missing",
+                  "attribute": "primary_use",
+                  "expected": [
+                    {
+                      "attribute": "primary_use",
+                      "operator": "eq",
+                      "value": "long-distance running"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "primary_use",
+                      "operator": "eq",
+                      "value": "long-distance running"
+                    }
+                  ]
+                }
+              ],
+              "warnings": [],
+              "error_count": 3,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 3,
+              "total_turns": 4,
+              "extraction_ms": 14224,
+              "value_precision": 1.0,
+              "value_recall": 0.5714285714285714,
+              "attributes": 4,
+              "targets": 1,
+              "selected": 0,
+              "item_preferences": 1,
+              "preferences_correct": false,
+              "attempts": 3,
               "valid_outputs": 3
             }
           },
@@ -11336,6 +12197,35 @@
               "item_preferences": 1,
               "preferences_correct": false,
               "attempts": 4,
+              "valid_outputs": 4,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 1,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 4,
+              "total_turns": 4,
+              "extraction_ms": 5125,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 1,
+              "targets": 1,
+              "selected": 1,
+              "item_preferences": 1,
+              "preferences_correct": false,
+              "attempts": 4,
               "valid_outputs": 4
             }
           }
@@ -11428,7 +12318,21 @@
             "finish_reason": "stop",
             "wall_seconds": 5.12
           }
-        ]
+        ],
+        "feature_summary": {
+          "policy": "exact-features-lowercase-v1",
+          "turns": 4,
+          "passed_turns": 3,
+          "error_turns": 1,
+          "warning_turns": 0,
+          "errors": 3,
+          "warnings": 0,
+          "tp": 10,
+          "fp": 0,
+          "fn": 3,
+          "precision": 1.0,
+          "recall": 0.7692307692307693
+        }
       },
       "rollout": {
         "sample_id": "sft-shoes-3",
@@ -11689,6 +12593,35 @@
             },
             "input_sha256": "sha256:e0b85d9381e14389409ec4017d709625c1e122b7b3522a7b38583396829adb1c",
             "metrics": {
+              "turns": 1,
+              "total_turns": 4,
+              "extraction_ms": 4382,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 1,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 1,
+              "valid_outputs": 1,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 1,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 1,
               "total_turns": 4,
               "extraction_ms": 4382,
@@ -12066,6 +12999,55 @@
             },
             "input_sha256": "sha256:bdcb2a4478775dffc780700c78b54e6085d9b0a0820d2b03d09d55e1ab7bb8dc",
             "metrics": {
+              "turns": 2,
+              "total_turns": 4,
+              "extraction_ms": 10367,
+              "value_precision": 1.0,
+              "value_recall": 0.75,
+              "attributes": 3,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 2,
+              "valid_outputs": 2,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 3,
+              "fp": 0,
+              "fn": 1,
+              "precision": 1.0,
+              "recall": 0.75,
+              "errors": [
+                {
+                  "type": "missing",
+                  "attribute": "brand",
+                  "expected": [
+                    {
+                      "attribute": "brand",
+                      "operator": "eq",
+                      "value": "asics"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "brand",
+                      "operator": "eq",
+                      "value": "asics"
+                    }
+                  ]
+                }
+              ],
+              "warnings": [],
+              "error_count": 1,
+              "warning_count": 0
+            },
+            "original_metrics": {
               "turns": 2,
               "total_turns": 4,
               "extraction_ms": 10367,
@@ -12654,6 +13636,55 @@
               "item_preferences": 0,
               "preferences_correct": true,
               "attempts": 3,
+              "valid_outputs": 3,
+              "feature_pass": false
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": false,
+              "output_present": true,
+              "tp": 6,
+              "fp": 0,
+              "fn": 1,
+              "precision": 1.0,
+              "recall": 0.8571428571428571,
+              "errors": [
+                {
+                  "type": "missing",
+                  "attribute": "brand",
+                  "expected": [
+                    {
+                      "attribute": "brand",
+                      "operator": "eq",
+                      "value": "asics"
+                    }
+                  ],
+                  "extracted": [],
+                  "missing": [
+                    {
+                      "attribute": "brand",
+                      "operator": "eq",
+                      "value": "asics"
+                    }
+                  ]
+                }
+              ],
+              "warnings": [],
+              "error_count": 1,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 3,
+              "total_turns": 4,
+              "extraction_ms": 20793,
+              "value_precision": 1.0,
+              "value_recall": 0.8571428571428571,
+              "attributes": 6,
+              "targets": 0,
+              "selected": 0,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 3,
               "valid_outputs": 3
             }
           },
@@ -13008,6 +14039,35 @@
               "item_preferences": 0,
               "preferences_correct": true,
               "attempts": 4,
+              "valid_outputs": 4,
+              "feature_pass": true
+            },
+            "feature_score": {
+              "policy": "exact-features-lowercase-v1",
+              "accepted": true,
+              "output_present": true,
+              "tp": 1,
+              "fp": 0,
+              "fn": 0,
+              "precision": 1.0,
+              "recall": 1.0,
+              "errors": [],
+              "warnings": [],
+              "error_count": 0,
+              "warning_count": 0
+            },
+            "original_metrics": {
+              "turns": 4,
+              "total_turns": 4,
+              "extraction_ms": 4505,
+              "value_precision": 1.0,
+              "value_recall": 1.0,
+              "attributes": 1,
+              "targets": 1,
+              "selected": 1,
+              "item_preferences": 0,
+              "preferences_correct": true,
+              "attempts": 4,
               "valid_outputs": 4
             }
           }
@@ -13100,7 +14160,21 @@
             "finish_reason": "stop",
             "wall_seconds": 4.5
           }
-        ]
+        ],
+        "feature_summary": {
+          "policy": "exact-features-lowercase-v1",
+          "turns": 4,
+          "passed_turns": 2,
+          "error_turns": 2,
+          "warning_turns": 0,
+          "errors": 2,
+          "warnings": 0,
+          "tp": 11,
+          "fp": 0,
+          "fn": 2,
+          "precision": 1.0,
+          "recall": 0.8461538461538461
+        }
       }
     }
   }

@@ -98,5 +98,7 @@ def main():
         save(a.output/(alias+'.json'),public_fingerprints(bundle));index.append({'id':alias,'vertical':vertical,'file':alias+'.json','label':('Shoes' if vertical=='footwear' else 'Jobs')+' '+str(counts[vertical])+' · '+str(len(rows[sid]))+' turns','turns':len(rows[sid])})
     save(a.output/'index.json',{'selection':{'method':'seeded random; five per vertical; test only','seed':20261110},'models':[{'id':k,'label':v} for k,v in [('luna','Luna'),('baseline','Qwen 4B zero-shot'),('lora','Qwen 4B fine-tuned')]],'cases':index,
          'summary':{key:{mode:summarize(items) for mode,items in modes.items()} for key,modes in totals.items()}})
+    from rescore_comparison import rescore_directory
+    rescore_directory(a.output)
     print('COMPARISON_BUNDLE_COMPLETE',flush=True)
 if __name__=='__main__':main()
