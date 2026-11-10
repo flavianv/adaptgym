@@ -10,7 +10,7 @@ function stopPlayback(){if(playTimer)clearInterval(playTimer);playTimer=null;if(
 function configureModels(){
  const saved=$('mode').value==='saved',compare=saved&&$('compareModels').checked;
  if(saved)$('startExtraction').textContent=playTimer?'Pause':'Play';
- $('savedModelControls').hidden=!saved;$('previousTurn').hidden=!saved;
+ $('turnSeek').hidden=!saved;$('savedModelControls').hidden=!saved;$('previousTurn').hidden=!saved;
  $('rightModelLabel').hidden=!compare;rightPanel.hidden=!compare;
  document.querySelector('.layout').classList.toggle('comparing',compare);
  $('leftModelLabel').firstChild.textContent=compare?'Left model ':'Model ';
@@ -24,6 +24,7 @@ busyControls=function(value){
  if($('mode').value==='saved'){
   $('startExtraction').disabled=value||!replayData||!replayResults.length;
   $('previousTurn').disabled=value||!replayData||replayIndex===0;
+  $('turnSeek').disabled=value||!replayResults.length;
  }
  for(const id of ['leftModel','rightModel','compareModels'])$(id).disabled=value;
 };
@@ -84,6 +85,7 @@ function showSavedTurn(){
   }finally{profileScope=null;renderMetrics=metricRenderer}
  }
  document.querySelector('.metrics-section h2').textContent='Operational metrics · '+savedLabels[$('leftModel').value];
+ $('turnSeek').max=replayResults.length;$('turnSeek').value=turn;
  $('replayProgress').textContent='Turn '+turn+' / '+replayResults.length+' · pre-extracted';
  $('status').textContent='Saved model predictions · no API calls · each model carries its own previous valid prediction.';
  busyControls(false);
@@ -106,6 +108,7 @@ $('startExtraction').onclick=()=>{
  showSavedTurn();$('startExtraction').textContent='Pause';
  playTimer=setInterval(()=>{if(replayIndex>=replayResults.length-1){stopPlayback();return}replayIndex++;showSavedTurn();if(replayIndex>=replayResults.length-1)stopPlayback()},2500);
 };
+$('turnSeek').oninput=()=>{stopPlayback();replayIndex=Number($('turnSeek').value)-1;showSavedTurn()};
 $('previousTurn').onclick=()=>{stopPlayback();if(replayIndex>0){replayIndex--;showSavedTurn()}};
 $('nextTurn').onclick=()=>{stopPlayback();if(!busy&&replayResults.length>replayIndex+1){replayIndex++;if($('mode').value==='saved')showSavedTurn();else showReplayTurn()}};
 $('replaySample').onchange=()=>loadReplay();
