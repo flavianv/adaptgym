@@ -1,4 +1,4 @@
-# Ten-conversation extraction report: exact target features
+# Saved extraction report: exact target features
 
 Rescored 10 November 2026. Same five shoe and five job conversations, same saved model outputs. No model or generation calls were made for this re-evaluation.
 
@@ -66,3 +66,13 @@ Choose **Play pre-extracted**, select a shoes or jobs conversation, and enable *
 Generic activity names now have one canonical field: `sport`. The duplicate `primary_use` values Road running, Trail running, Basketball, Football, Tennis, Volleyball, Sprinting, Lifestyle and Hiking have been removed. Specific uses such as Marathon racing, Easy runs, Technical trail running and Weightlifting remain in `primary_use`. Catalogs no longer repeat generic activities in both fields.
 
 The ten saved traces above were extracted with schema v1. Their raw outputs, target labels and scores retain that version for reproducibility; they have not been rerun with v2, and no score-time alias was introduced. The player labels historical shoe traces accordingly. New live conversations and newly generated footwear scenarios use v2. Re-extraction of historical saved conversations retains their original embedded schema.
+
+## Five additional job conversations
+
+Added Jobs 6–10 from the same held-out test pool, excluding all original examples, sampled with seed 20261111. All three models use the original extraction prompt and embedded job schema. Qwen zero-shot and LoRA predictions come from the frozen test run; Luna was newly evaluated on these five in both rollout and supplied-correct-state modes. Original ten traces are unchanged. No pending footwear schema changes are included.
+
+| Model | Passed turns | Error turns | Precision | Recall |
+| --- | ---: | ---: | ---: | ---: |
+| Luna | 28/30 | 2 | 98.9% | 98.4% |
+| Qwen 4B zero-shot | 19/30 | 11 | 87.0% | 82.8% |
+| Qwen 4B fine-tuned | 19/30 | 11 | 98.2% | 89.2% |
