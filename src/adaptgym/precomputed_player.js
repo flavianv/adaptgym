@@ -16,7 +16,7 @@ function configureModels(){
  $('leftModelLabel').firstChild.textContent=compare?'Left model ':'Model ';
  for(const row of document.querySelectorAll('.comparison-turn-metrics,.trace-summary'))row.hidden=!saved;
  for(const label of document.querySelectorAll('#extractorLabel,#right-extractorLabel'))label.classList.toggle('current-turn',saved);
- if(!saved){$('extractorPrompt').textContent='Simple intent extraction · Luna';$('extractorTitle').textContent='Luna extractor';$('extractorLabel').textContent='02 / LIVE EXTRACTION'}
+ if(!saved){document.querySelector('.metrics-section h2').textContent='This conversation';$('extractorPrompt').textContent='Simple intent extraction · Luna';$('extractorTitle').textContent='Luna extractor';$('extractorLabel').textContent='02 / LIVE EXTRACTION'}
 }
 reset=function(){stopPlayback();originalReset();rightEvaluation=null;configureModels()};
 busyControls=function(value){
@@ -83,6 +83,7 @@ function showSavedTurn(){
    $('extractorTitle').textContent=savedLabels[document.getElementById('rightModel').value];$('extractorLabel').textContent='Turn '+turn+' of '+replayResults.length;
   }finally{profileScope=null;renderMetrics=metricRenderer}
  }
+ document.querySelector('.metrics-section h2').textContent='Operational metrics · '+savedLabels[$('leftModel').value];
  $('replayProgress').textContent='Turn '+turn+' / '+replayResults.length+' · pre-extracted';
  $('status').textContent='Saved model predictions · no API calls · each model carries its own previous valid prediction.';
  busyControls(false);
