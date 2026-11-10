@@ -122,4 +122,4 @@ $('mode').onchange=async()=>{reset();const replay=$('mode').value!=='chat';$('re
  if(replay)try{await refreshReplaySamples()}catch(error){$('status').textContent=error.message}
 };
 configureModels();
-if(new URLSearchParams(location.search).get('mode')==='saved'){$('mode').value='saved';$('mode').onchange()}
+if(!new URLSearchParams(location.search).has('mode')||new URLSearchParams(location.search).get('mode')==='saved'){$('mode').value='saved';$('mode').onchange()}

@@ -264,13 +264,15 @@ def test_unknown_live_state_mode_rejected_without_api_calls(server_factory, monk
 def test_every_page_has_shared_top_navigation_and_current_page(server_factory):
     import re
     base = server_factory()
-    for path in ('/', '/lab', '/about', '/flows'):
+    for path in ('/', '/lab', '/about', '/live', '/flows'):
         status, _, body = request(base, path)
         assert status == 200
         navigation = re.search(rb'<nav[^>]+aria-label="Main navigation"[^>]*>(.*?)</nav>', body).group(1)
-        for href in (b'/', b'/about', b'/flows', b'https://github.com/flavianv/adaptgym'):
+        for href in (b'/', b'/about', b'/live', b'https://github.com/flavianv/adaptgym'):
             assert b'href="' + href + b'"' in navigation
-        active_path = '/' if path == '/lab' else path
+        assert b'href="/flows"' not in navigation
+        assert b'Evaluate extractors' in navigation and b'Create multi-turn sessions' in navigation
+        active_path = '/' if path == '/lab' else '/about' if path == '/flows' else path
         assert b'href="' + active_path.encode() + b'" aria-current="page"' in navigation
 
 
@@ -326,10 +328,10 @@ def test_precomputed_models_share_complete_demo_traces(server_factory, monkeypat
     monkeypatch.setattr(demo.ResponsesClient,'json',forbidden)
     base=server_factory()
     status,_,body=request(base,'/api/comparison');assert status==200
-    index=json.loads(body);assert len(index['cases'])==10
+    index=json.loads(body);assert len(index['cases'])==15
     assert {m['id'] for m in index['models']}=={'luna','baseline','lora'}
     assert sum(e['vertical']=='footwear' for e in index['cases'])==5
-    assert sum(e['vertical']=='job_search' for e in index['cases'])==5
+    assert sum(e['vertical']=='job_search' for e in index['cases'])==10
     for entry in index['cases']:
         status,_,body=request(base,'/api/comparison?id='+entry['id']);assert status==200
         bundle=json.loads(body);assert bundle['sample']['plan']['exchanges']
