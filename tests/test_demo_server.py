@@ -243,6 +243,9 @@ def test_intro_lab_flows_and_allowlisted_figures_are_available(server_factory):
     assert b'id="vertical"' in request(base, '/?vertical=job_search')[2]
     status, _, body = request(base, '/flows')
     assert status == 200
+    assert b'Controlled conversations.' in body and b'One correct reply is not enough.' in body
+    assert b'id="training-flows"' in body
+    assert body == request(base, '/about')[2]
     figures = re.findall(rb'<img[^>]+src="([^"]+)"', body)
     assert len(figures) == 4
     for figure in figures:

@@ -200,7 +200,7 @@ def create_server(port=8768, directory=FIXTURES, *, host='127.0.0.1'):
                 return self.send_json(200, status_snapshot())
             pages = {'/': 'viewer.html', '/about': 'introduction.html',
                      '/about/': 'introduction.html', '/lab': 'viewer.html',
-                     '/lab/': 'viewer.html', '/live': 'live_chat.html', '/live/': 'live_chat.html', '/flows': 'flows.html', '/flows/': 'flows.html'}
+                     '/lab/': 'viewer.html', '/live': 'live_chat.html', '/live/': 'live_chat.html', '/flows': 'introduction.html', '/flows/': 'introduction.html'}
             figures = {'adaptgym-evaluation-flow.svg', 'adaptgym-sft-training-flow.svg',
                        'adaptgym-rlvr-extraction-training-flow.svg',
                        'adaptgym-rlvr-end-to-end-training-flow.svg'}
