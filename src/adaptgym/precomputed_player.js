@@ -15,6 +15,7 @@ function configureModels(){
  document.querySelector('.layout').classList.toggle('comparing',compare);
  $('leftModelLabel').firstChild.textContent=compare?'Left model ':'Model ';
  for(const row of document.querySelectorAll('.comparison-turn-metrics,.trace-summary'))row.hidden=!saved;
+ for(const label of document.querySelectorAll('#extractorLabel,#right-extractorLabel'))label.classList.toggle('current-turn',saved);
  if(!saved){$('extractorPrompt').textContent='Simple intent extraction · Luna';$('extractorTitle').textContent='Luna extractor';$('extractorLabel').textContent='02 / LIVE EXTRACTION'}
 }
 reset=function(){stopPlayback();originalReset();rightEvaluation=null;configureModels()};
@@ -43,7 +44,7 @@ function panelMetrics(cp,scope){
  if(!row){row=el('p',undefined,'comparison-turn-metrics');target.querySelector('.panel-body').prepend(row)}
  const format=n=>n===null||n===undefined?'—':(100*n).toFixed(1)+'%';
  const f=cp.feature_score;
- row.textContent='This turn · '+(f.accepted?'PASS':'FAIL')+' · Errors '+f.error_count+' · Warnings '+f.warning_count+' · Precision '+format(f.precision)+' · Recall '+format(f.recall);
+ row.textContent='Turn '+cp.turn+' · '+(f.accepted?'PASS':'FAIL')+' · Errors '+f.error_count+' · Warnings '+f.warning_count+' · Precision '+format(f.precision)+' · Recall '+format(f.recall);
 }
 function renderTraceSummary(evaluation,scope){
  const target=scope||document.querySelector('.layout>aside'),body=target.querySelector('.panel-body');
@@ -74,12 +75,12 @@ function showSavedTurn(){
  }
  if(current)$('conversation').scrollTop=Math.max(0,current.offsetTop-$('conversation').offsetTop-12);
  renderReplayResult(replayResults[replayIndex]);panelMetrics(replayResults[replayIndex]);renderTraceSummary(replayEvaluation);
- $('extractorTitle').textContent=savedLabels[$('leftModel').value];$('extractorLabel').textContent='SAVED EXTRACTION';
+ $('extractorTitle').textContent=savedLabels[$('leftModel').value];$('extractorLabel').textContent='Turn '+turn+' of '+replayResults.length;
  if($('compareModels').checked&&rightEvaluation){
   const metricRenderer=renderMetrics;profileScope=rightPanel;
   try{
    renderMetrics=()=>{};const cp=readyCheckpoint(rightEvaluation,replayIndex);renderReplayResult(cp);panelMetrics(cp,rightPanel);renderTraceSummary(rightEvaluation,rightPanel);
-   $('extractorTitle').textContent=savedLabels[document.getElementById('rightModel').value];$('extractorLabel').textContent='SAVED EXTRACTION';
+   $('extractorTitle').textContent=savedLabels[document.getElementById('rightModel').value];$('extractorLabel').textContent='Turn '+turn+' of '+replayResults.length;
   }finally{profileScope=null;renderMetrics=metricRenderer}
  }
  $('replayProgress').textContent='Turn '+turn+' / '+replayResults.length+' · pre-extracted';
