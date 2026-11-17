@@ -8,9 +8,9 @@
 <link rel="stylesheet" href="/assets/site-header.css">
 <style>
 /* Layout: stats row, environment switch, a macro diagram of the machine beside a step-through simulator, then the guard table and coverage matrix. */
-:root{--bg:#f7f6f2;--panel:#fffefa;--fg:#262924;--muted:#62685e;--line:#daddd2;--q-bg:#fffefa;--q-line:#9aa093;
---node:#fffefa;--node-line:#9aa093;--cur:#f4dfa6;--hl:#f4dfa6;--cur-line:#ba4928;--user:#3d6250;--user-bg:#e4ece6;
---asst:#ba4928;--asst-bg:#f6e4dc;--warn:#8a5a00;--warn-bg:#f6ecd2;--off:#8d9388;--edge:#6d7367;--hit:#dde9e0;
+:root{--bg:#f7f6f2;--panel:#fffefa;--fg:#262924;--muted:#62685e;--line:#daddd2;--q-bg:#ffffff;--q-line:#5a7068;
+--node:#ffffff;--node-line:#5a7068;--cur:#ffe27a;--hl:#ffe27a;--cur-line:#e0481c;--user:#2f6bff;--user-bg:#dce8ff;--user-text:#1d47b8;
+--asst:#f26a2e;--asst-bg:#ffe4d3;--asst-text:#b4430f;--warn:#e0a800;--warn-bg:#fff3c2;--warn-text:#856000;--off:#8d9388;--edge:#5a7068;--hit:#dce8ff;--dg-bg:#e9f7f2;--dg-line:#b9cdc5;
 --font-body:system-ui,-apple-system,sans-serif;--font-head:system-ui,-apple-system,sans-serif;
 --font-mono:ui-monospace,SFMono-Regular,Consolas,monospace}
 
@@ -35,14 +35,14 @@ button:focus-visible, .edge:focus-visible { outline: 2px solid var(--asst); outl
 .card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px; min-width: 0; }
 .note { color: var(--muted); font-size: 13px; }
 svg { width: 100%; height: auto; display: block; }
-#graph { min-width: 760px; }
+#graph { min-width: 760px; background: var(--dg-bg); border-radius: 10px; }
 svg text { font-family: var(--font-body); fill: var(--fg); }
 .node rect { fill: var(--node); stroke: var(--node-line); stroke-width: 1.5; rx: 9; }
 .node .t { font-weight: 600; font-size: 14px; } .node .s { font-size: 11px; fill: var(--muted); }
 .node.current rect { fill: var(--cur); stroke: var(--cur-line); stroke-width: 2.5; }
 .node.off { opacity: .35; }
 .edge path { fill: none; stroke: var(--edge); stroke-width: 1.5; marker-end: url(#arrow); }
-.edge text { font-size: 10.5px; font-family: var(--font-mono); fill: var(--muted); paint-order: stroke; stroke: var(--panel); stroke-width: 4px; }
+.edge text { font-size: 10.5px; font-family: var(--font-mono); fill: var(--muted); paint-order: stroke; stroke: var(--dg-bg); stroke-width: 4px; }
 .edge { cursor: pointer; } .edge:hover path, .edge.sel path, .edge.fresh path { stroke: var(--cur-line); stroke-width: 2.5; }
 .edge:hover text, .edge.sel text { fill: var(--fg); }
 #arrow path { fill: var(--edge); stroke: none; }
@@ -58,7 +58,7 @@ svg text { font-family: var(--font-body); fill: var(--fg); }
 .btn.picked { box-shadow: 0 0 0 3px var(--cur); }
 .trail { display: flex; flex-wrap: wrap; gap: 5px; margin: 10px 0 0; padding: 0; list-style: none; }
 .trail li { font-family: var(--font-mono); font-size: 11.5px; border: 1px solid var(--line); border-radius: 6px; padding: 2px 7px; background: var(--bg); }
-.trail li i { font-style: normal; color: var(--asst); }
+.trail li i { font-style: normal; color: var(--asst-text); }
 .row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
 .mini { font: inherit; font-size: 12.5px; color: var(--fg); background: none; border: 1px solid var(--line); border-radius: 6px; padding: 4px 10px; cursor: pointer; }
 .done { background: var(--warn-bg); border: 1px solid var(--warn); border-radius: 8px; padding: 8px 10px; font-size: 13px; margin-top: 10px; }
@@ -99,7 +99,7 @@ footer.site-foot a{color:inherit;text-underline-offset:4px}
 <nav class="flow-nav" aria-label="On this page"><a href="#what">What it is</a><a href="#explore">Explore it</a><a href="#guards">What each turn needs</a><a href="#transitions">Every transition</a><a class="primary" href="/turns"><b>Decision trees ↗</b><span>See how each user turn and assistant reply is chosen, as trees you can trace</span></a></nav>
 <section id="what"><p class="tag">Stage 1 · The idea</p><h2>What is a finite-state machine?</h2><div>
 <p>A fixed list of states, a rule for which input is allowed in each state, and what each input outputs and leads to. A turnstile is the classic case: a coin unlocks it, a push locks it again, and anything else changes nothing.</p>
-<svg viewBox="0 0 680 170" role="img" aria-label="A turnstile as a finite-state machine with two states, locked and unlocked" style="max-width:640px;margin:10px 0 4px"><defs><marker id="tarrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#6d7367" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs><rect x="90" y="60" width="140" height="52" rx="8" fill="#fffefa" stroke="#9aa093" stroke-width="1.5"/><text x="160" y="90" text-anchor="middle" font-size="14" font-weight="650">Locked</text><rect x="450" y="60" width="140" height="52" rx="8" fill="#e4ece6" stroke="#3d6250" stroke-width="1.5"/><text x="520" y="90" text-anchor="middle" font-size="14" font-weight="650">Unlocked</text><circle cx="40" cy="86" r="5" fill="#262924"/><line x1="48" y1="86" x2="88" y2="86" stroke="#6d7367" stroke-width="1.5" marker-end="url(#tarrow)"/><line x1="232" y1="76" x2="448" y2="76" stroke="#6d7367" stroke-width="1.5" marker-end="url(#tarrow)"/><text x="340" y="68" text-anchor="middle" font-size="12" font-family="ui-monospace,monospace" fill="#62685e">coin</text><line x1="448" y1="98" x2="232" y2="98" stroke="#6d7367" stroke-width="1.5" marker-end="url(#tarrow)"/><text x="340" y="120" text-anchor="middle" font-size="12" font-family="ui-monospace,monospace" fill="#62685e">push</text><path d="M126 58 C126 20 194 20 194 58" fill="none" stroke="#6d7367" stroke-width="1.5" marker-end="url(#tarrow)"/><text x="160" y="22" text-anchor="middle" font-size="12" font-family="ui-monospace,monospace" fill="#62685e">push: stays locked</text><path d="M486 58 C486 20 554 20 554 58" fill="none" stroke="#6d7367" stroke-width="1.5" marker-end="url(#tarrow)"/><text x="520" y="22" text-anchor="middle" font-size="12" font-family="ui-monospace,monospace" fill="#62685e">coin: stays unlocked</text></svg>
+<svg viewBox="0 0 680 170" role="img" aria-label="A turnstile as a finite-state machine with two states, locked and unlocked" style="max-width:640px;margin:10px 0 4px"><defs><marker id="tarrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#5a7068" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs><rect x="90" y="60" width="140" height="52" rx="8" fill="#ffe4d3" stroke="#f26a2e" stroke-width="1.5"/><text x="160" y="90" text-anchor="middle" font-size="14" font-weight="650">Locked</text><rect x="450" y="60" width="140" height="52" rx="8" fill="#dce8ff" stroke="#2f6bff" stroke-width="1.5"/><text x="520" y="90" text-anchor="middle" font-size="14" font-weight="650">Unlocked</text><circle cx="40" cy="86" r="5" fill="#262924"/><line x1="48" y1="86" x2="88" y2="86" stroke="#5a7068" stroke-width="1.5" marker-end="url(#tarrow)"/><line x1="232" y1="76" x2="448" y2="76" stroke="#5a7068" stroke-width="1.5" marker-end="url(#tarrow)"/><text x="340" y="68" text-anchor="middle" font-size="12" font-family="ui-monospace,monospace" fill="#62685e">coin</text><line x1="448" y1="98" x2="232" y2="98" stroke="#5a7068" stroke-width="1.5" marker-end="url(#tarrow)"/><text x="340" y="120" text-anchor="middle" font-size="12" font-family="ui-monospace,monospace" fill="#62685e">push</text><path d="M126 58 C126 20 194 20 194 58" fill="none" stroke="#5a7068" stroke-width="1.5" marker-end="url(#tarrow)"/><text x="160" y="22" text-anchor="middle" font-size="12" font-family="ui-monospace,monospace" fill="#62685e">push: stays locked</text><path d="M486 58 C486 20 554 20 554 58" fill="none" stroke="#5a7068" stroke-width="1.5" marker-end="url(#tarrow)"/><text x="520" y="22" text-anchor="middle" font-size="12" font-family="ui-monospace,monospace" fill="#62685e">coin: stays unlocked</text></svg>
 <p>Ours works the same way. The state summarises a dialogue (which phase it is in, what the last reply demands, whether a wrong item was shown, what is listed, endorsed or selected). The input is a user turn and the output is the assistant's reply.</p>
 <h3 style="margin:14px 0 4px;font-size:15px">What it gives us</h3>
 <p><b>Consistency.</b> The rules are a short table; the planner is a long procedure. Every generated plan is run through the table, so a plan that breaks a rule is rejected: after a question only an answer is allowed, after a wrong item only a rejection, a comparison only in dialogues that end successfully.</p>

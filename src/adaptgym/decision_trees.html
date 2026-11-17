@@ -8,9 +8,9 @@
 <link rel="stylesheet" href="/assets/site-header.css">
 <style>
 /* Layout: one column, three tabs. Questions are outlined boxes, outcomes are filled; the assistant tab is a ladder where the first matching rung wins. */
-:root{--bg:#f7f6f2;--panel:#fffefa;--fg:#262924;--muted:#62685e;--line:#daddd2;--q-bg:#fffefa;--q-line:#9aa093;
---node:#fffefa;--node-line:#9aa093;--cur:#f4dfa6;--hl:#f4dfa6;--cur-line:#ba4928;--user:#3d6250;--user-bg:#e4ece6;
---asst:#ba4928;--asst-bg:#f6e4dc;--warn:#8a5a00;--warn-bg:#f6ecd2;--off:#8d9388;--edge:#6d7367;--hit:#dde9e0;
+:root{--bg:#f7f6f2;--panel:#fffefa;--fg:#262924;--muted:#62685e;--line:#daddd2;--q-bg:#ffffff;--q-line:#5a7068;
+--node:#ffffff;--node-line:#5a7068;--cur:#ffe27a;--hl:#ffe27a;--cur-line:#e0481c;--user:#2f6bff;--user-bg:#dce8ff;--user-text:#1d47b8;
+--asst:#f26a2e;--asst-bg:#ffe4d3;--asst-text:#b4430f;--warn:#e0a800;--warn-bg:#fff3c2;--warn-text:#856000;--off:#8d9388;--edge:#5a7068;--hit:#dce8ff;--dg-bg:#e9f7f2;--dg-line:#b9cdc5;
 --font-body:system-ui,-apple-system,sans-serif;--font-head:system-ui,-apple-system,sans-serif;
 --font-mono:ui-monospace,SFMono-Regular,Consolas,monospace}
 
@@ -34,6 +34,8 @@ code, .mono { font-family: var(--font-mono); font-size: 0.86em; }
 }
 .tab[aria-selected="true"] { color: var(--fg); border-bottom-color: var(--fg); }
 .tab:focus-visible, .leaf:focus-visible, .toggle:focus-visible { outline: 2px solid var(--asst); outline-offset: 2px; }
+#tree-user, #ladder, #links { background: var(--dg-bg); border-radius: 12px; padding: 14px 16px 18px; --line: var(--dg-line); }
+#tree-user .edge, #ladder .edge { background: #fff; }
 .panel[hidden] { display: none; }
 .note { color: var(--muted); font-size: 13px; margin-block: 10px 14px; }
 .legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: 12.5px; color: var(--muted); margin-bottom: 14px; }
@@ -63,7 +65,7 @@ code, .mono { font-family: var(--font-mono); font-size: 0.86em; }
 .leaf.a { background: var(--asst-bg); border-color: var(--asst); }
 .leaf.w { background: var(--warn-bg); border-color: var(--warn); }
 .leaf b { font-family: var(--font-mono); font-size: 12.5px; font-weight: 500; display: block; }
-.leaf.u b { color: var(--user); } .leaf.a b { color: var(--asst); } .leaf.w b { color: var(--warn); }
+.leaf.u b { color: var(--user-text); } .leaf.a b { color: var(--asst-text); } .leaf.w b { color: var(--warn-text); }
 .leaf span { display: block; font-size: 13.5px; }
 .ex {
   margin: 6px 0 2px; padding: 8px 10px; background: var(--panel); border: 1px dashed var(--line); border-radius: 8px;
@@ -71,7 +73,7 @@ code, .mono { font-family: var(--font-mono); font-size: 0.86em; }
 }
 .ex q { color: var(--fg); quotes: none; font-style: normal; }
 .ex .tag { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; display: block; margin-bottom: 2px; }
-.onpath > .q, .onpath > .row > .q { background: var(--hl); border-color: var(--warn); }
+.onpath > .q, .onpath > .row > .q { background: var(--hl); border-color: var(--cur-line); }
 .onpath > .row > .leaf, .onpath > .body > .leaf { box-shadow: 0 0 0 3px var(--hl); }
 .rung > .ex { grid-column: 2; }
 .then { margin-top: 14px; padding-top: 4px; }
