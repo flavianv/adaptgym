@@ -1,0 +1,323 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="The turn structure of the dialogue simulator as a finite-state machine: a macro diagram, a step-through simulator, the guards and every transition.">
+<title>AdaptGym · The Simulator as a Finite State Machine</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="stylesheet" href="/assets/site-header.css">
+<style>
+/* Layout: stats row, environment switch, a macro diagram of the machine beside a step-through simulator, then the guard table and coverage matrix. */
+:root{--bg:#f7f6f2;--panel:#fffefa;--fg:#262924;--muted:#62685e;--line:#daddd2;--q-bg:#fffefa;--q-line:#9aa093;
+--node:#fffefa;--node-line:#9aa093;--cur:#f4dfa6;--hl:#f4dfa6;--cur-line:#ba4928;--user:#3d6250;--user-bg:#e4ece6;
+--asst:#ba4928;--asst-bg:#f6e4dc;--warn:#8a5a00;--warn-bg:#f6ecd2;--off:#8d9388;--edge:#6d7367;--hit:#dde9e0;
+--font-body:system-ui,-apple-system,sans-serif;--font-head:system-ui,-apple-system,sans-serif;
+--font-mono:ui-monospace,SFMono-Regular,Consolas,monospace}
+
+* { box-sizing: border-box; }
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.6 system-ui,-apple-system,sans-serif}
+.wrap{width:calc(100% - 76px);max-width:1084px;margin:0 auto;padding:28px 0 56px;display:flex;flex-direction:column;gap:22px}
+h1 { font-family: var(--font-head); font-size: 30px; line-height: 1.15; margin: 0; text-wrap: balance; }
+h2 { font-family: var(--font-head); font-size: 19px; margin: 0 0 6px; text-wrap: balance; }
+p { margin: 0; max-width: 72ch; } .lede { color: var(--muted); }
+code, .mono { font-family: var(--font-mono); font-size: 0.86em; }
+.stats { display: flex; flex-wrap: wrap; gap: 8px; }
+.stat { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; min-width: 0; flex: 1 1 150px; }
+.stat b { display: block; font-family: var(--font-head); font-size: 22px; line-height: 1.1; }
+.stat span { color: var(--muted); font-size: 12.5px; }
+.seg { display: inline-flex; flex-wrap: wrap; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: var(--panel); }
+.seg button { font: inherit; font-weight: 500; color: var(--muted); background: none; border: 0; padding: 8px 14px; cursor: pointer; border-right: 1px solid var(--line); }
+.seg button:last-child { border-right: 0; }
+.seg button[aria-pressed="true"] { background: var(--fg); color: var(--bg); }
+button:focus-visible, .edge:focus-visible { outline: 2px solid var(--asst); outline-offset: 2px; }
+.cols { display: grid; grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+@media (max-width: 860px) { .cols { grid-template-columns: minmax(0, 1fr); } }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px; min-width: 0; }
+.note { color: var(--muted); font-size: 13px; }
+svg { width: 100%; height: auto; display: block; }
+#graph { min-width: 760px; }
+svg text { font-family: var(--font-body); fill: var(--fg); }
+.node rect { fill: var(--node); stroke: var(--node-line); stroke-width: 1.5; rx: 9; }
+.node .t { font-weight: 600; font-size: 14px; } .node .s { font-size: 11px; fill: var(--muted); }
+.node.current rect { fill: var(--cur); stroke: var(--cur-line); stroke-width: 2.5; }
+.node.off { opacity: .35; }
+.edge path { fill: none; stroke: var(--edge); stroke-width: 1.5; marker-end: url(#arrow); }
+.edge text { font-size: 10.5px; font-family: var(--font-mono); fill: var(--muted); paint-order: stroke; stroke: var(--panel); stroke-width: 4px; }
+.edge { cursor: pointer; } .edge:hover path, .edge.sel path, .edge.fresh path { stroke: var(--cur-line); stroke-width: 2.5; }
+.edge:hover text, .edge.sel text { fill: var(--fg); }
+#arrow path { fill: var(--edge); stroke: none; }
+.detail { margin-top: 10px; font-size: 13px; min-height: 3.2em; }
+.detail code { background: var(--bg); border: 1px solid var(--line); border-radius: 4px; padding: 0 5px; }
+.fields { display: grid; grid-template-columns: auto 1fr; gap: 2px 12px; font-size: 13px; margin: 0 0 12px; }
+.fields dt { color: var(--muted); } .fields dd { margin: 0; font-family: var(--font-mono); font-size: 12.5px; }
+.grp { margin-bottom: 10px; } .grp h3 { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 0 0 4px; }
+.btns { display: flex; flex-wrap: wrap; gap: 6px; }
+.btn { font: inherit; font-family: var(--font-mono); font-size: 12.5px; cursor: pointer; border-radius: 7px; padding: 5px 9px; border: 1.5px solid var(--user); background: var(--user-bg); color: var(--fg); }
+.btn.r { border-color: var(--asst); background: var(--asst-bg); text-align: left; }
+.btn[disabled] { cursor: not-allowed; border-color: var(--line); background: none; color: var(--off); }
+.btn.picked { box-shadow: 0 0 0 3px var(--cur); }
+.trail { display: flex; flex-wrap: wrap; gap: 5px; margin: 10px 0 0; padding: 0; list-style: none; }
+.trail li { font-family: var(--font-mono); font-size: 11.5px; border: 1px solid var(--line); border-radius: 6px; padding: 2px 7px; background: var(--bg); }
+.trail li i { font-style: normal; color: var(--asst); }
+.row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+.mini { font: inherit; font-size: 12.5px; color: var(--fg); background: none; border: 1px solid var(--line); border-radius: 6px; padding: 4px 10px; cursor: pointer; }
+.done { background: var(--warn-bg); border: 1px solid var(--warn); border-radius: 8px; padding: 8px 10px; font-size: 13px; margin-top: 10px; }
+.scroll { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 13px; }
+th, td { border-bottom: 1px solid var(--line); padding: 6px 8px; text-align: left; vertical-align: top; }
+th { font-weight: 600; color: var(--muted); font-size: 12px; white-space: nowrap; }
+td.sym { font-family: var(--font-mono); font-size: 12px; white-space: nowrap; }
+.chip { display: inline-block; font-family: var(--font-mono); font-size: 11px; border-radius: 5px; padding: 0 6px; margin: 1px 3px 1px 0; background: var(--hit); border: 1px solid var(--user); }
+.chip.flag { background: var(--warn-bg); border-color: var(--warn); }
+.matrix td { text-align: center; min-width: 76px; } .matrix td.sym { text-align: left; }
+
+@media(max-width:760px){.wrap{width:calc(100% - 44px)}}
+.xsubnav{display:flex;gap:6px;flex-wrap:wrap}.xsubnav a{font:13px/1.5 system-ui,sans-serif;color:var(--muted);text-decoration:none;padding:6px 12px;border:1px solid var(--line);border-radius:5px;background:var(--panel)}.xsubnav a:hover{background:#ecefe7;color:var(--fg)}.xsubnav a[aria-current=page]{background:#ecefe7;color:#263e2f;font-weight:650}
+h1,h2{font-weight:650}h1{letter-spacing:-.5px}
+
+.wrap{width:calc(100% - 76px);max-width:1084px;margin:0 auto;padding:0;display:block}
+.wrap h1{font:clamp(35px,5vw,56px)/1.12 Georgia,serif;letter-spacing:-1.5px;margin:40px 0 18px;font-weight:400}
+.wrap h2{font:28px/1.25 Georgia,serif;letter-spacing:0;margin:0 0 12px;font-weight:400}
+.wrap .card h2{font-size:21px}
+.lead{color:#5a655a;max-width:820px;font-size:17px;margin:0}
+.flow-nav{display:flex;flex-wrap:wrap;gap:10px;padding:20px 0 32px}.flow-nav a{padding:8px 14px;border:1px solid var(--line);border-radius:30px;text-decoration:none;font-size:13px;color:var(--fg)}.flow-nav a:hover{background:#ecefe7}.flow-nav a.primary{background:#ba4928;border-color:#ba4928;color:#fffefa;border-radius:4px;padding:10px 18px;display:inline-flex;flex-direction:column;gap:2px;line-height:1.4}.flow-nav a.primary b{font-weight:650;font-size:14px}.flow-nav a.primary span{font-size:12px;opacity:.92}.flow-nav a.primary:hover{background:#a03f21;border-color:#a03f21}.flow-nav a:focus-visible{outline:2px solid #ba4928;outline-offset:3px}
+.wrap>section{border-top:1px solid var(--line);padding:35px 0;scroll-margin-top:20px}
+.tag{font:11px ui-monospace,monospace;letter-spacing:1px;text-transform:uppercase;color:#ba4928;margin:0 0 6px}
+.wrap>section>.note{max-width:860px}
+.card,.step,.stat,.formula{background:#fffefa}
+html{scroll-behavior:smooth}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+footer.site-foot{width:calc(100% - 76px);max-width:1084px;margin:0 auto;padding:25px 0 40px;border-top:1px solid var(--line);font-size:13px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+footer.site-foot a{color:inherit;text-underline-offset:4px}
+@media(max-width:760px){.wrap,footer.site-foot{width:calc(100% - 44px)}}
+</style>
+</head>
+<body><header class="site-header"><a class="site-brand" href="/" aria-label="AdaptGym home"><span aria-hidden="true">a·</span>AdaptGym</a><nav class="site-nav" aria-label="Main navigation"><a href="/about">Overview</a><a href="/live">Evaluate extractors</a><a href="/">Create multi-turn sessions</a><a href="/turns" aria-current="page">Dialogue design</a><a href="https://github.com/flavianv/adaptgym" target="_blank" rel="noopener noreferrer">GitHub ↗</a></nav></header>
+<main class="wrap">
+<h1>The Simulator as a Finite State Machine</h1>
+<p class="lead">The shape of every dialogue the simulator generates as a finite-state machine: what the user may say next, and which replies each turn can draw. This page is built from the machine's own code, so it cannot drift from it.</p>
+<nav class="flow-nav" aria-label="On this page"><a href="#what">What it is</a><a href="#explore">Explore it</a><a href="#guards">What each turn needs</a><a href="#transitions">Every transition</a><a class="primary" href="/turns"><b>Decision trees ↗</b><span>See how each user turn and assistant reply is chosen, as trees you can trace</span></a></nav>
+<section id="what"><p class="tag">Stage 1 · The idea</p><h2>What is a finite-state machine?</h2><div>
+<p>A fixed list of states, a rule for which input is allowed in each state, and what each input outputs and leads to. A turnstile is the classic case: a coin unlocks it, a push locks it again, and anything else changes nothing.</p>
+<svg viewBox="0 0 680 170" role="img" aria-label="A turnstile as a finite-state machine with two states, locked and unlocked" style="max-width:640px;margin:10px 0 4px"><defs><marker id="tarrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#6d7367" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs><rect x="90" y="60" width="140" height="52" rx="8" fill="#fffefa" stroke="#9aa093" stroke-width="1.5"/><text x="160" y="90" text-anchor="middle" font-size="14" font-weight="650">Locked</text><rect x="450" y="60" width="140" height="52" rx="8" fill="#e4ece6" stroke="#3d6250" stroke-width="1.5"/><text x="520" y="90" text-anchor="middle" font-size="14" font-weight="650">Unlocked</text><circle cx="40" cy="86" r="5" fill="#262924"/><line x1="48" y1="86" x2="88" y2="86" stroke="#6d7367" stroke-width="1.5" marker-end="url(#tarrow)"/><line x1="232" y1="76" x2="448" y2="76" stroke="#6d7367" stroke-width="1.5" marker-end="url(#tarrow)"/><text x="340" y="68" text-anchor="middle" font-size="12" font-family="ui-monospace,monospace" fill="#62685e">coin</text><line x1="448" y1="98" x2="232" y2="98" stroke="#6d7367" stroke-width="1.5" marker-end="url(#tarrow)"/><text x="340" y="120" text-anchor="middle" font-size="12" font-family="ui-monospace,monospace" fill="#62685e">push</text><path d="M126 58 C126 20 194 20 194 58" fill="none" stroke="#6d7367" stroke-width="1.5" marker-end="url(#tarrow)"/><text x="160" y="22" text-anchor="middle" font-size="12" font-family="ui-monospace,monospace" fill="#62685e">push: stays locked</text><path d="M486 58 C486 20 554 20 554 58" fill="none" stroke="#6d7367" stroke-width="1.5" marker-end="url(#tarrow)"/><text x="520" y="22" text-anchor="middle" font-size="12" font-family="ui-monospace,monospace" fill="#62685e">coin: stays unlocked</text></svg>
+<p>Ours works the same way. The state summarises a dialogue (which phase it is in, what the last reply demands, whether a wrong item was shown, what is listed, endorsed or selected). The input is a user turn and the output is the assistant's reply.</p>
+<h3 style="margin:14px 0 4px;font-size:15px">What it gives us</h3>
+<p><b>Consistency.</b> The rules are a short table; the planner is a long procedure. Every generated plan is run through the table, so a plan that breaks a rule is rejected: after a question only an answer is allowed, after a wrong item only a rejection, a comparison only in dialogues that end successfully.</p>
+<p><b>Coverage.</b> The table lists all the turn and reply combinations that can occur. A test builds many plans and fails if one never appears, so an untested or unreachable branch cannot hide, and every state can still reach Done. This is transition coverage, not path coverage.</p>
+<p class="note" style="margin-top:6px">Not covered: the catalog (whether a partial item exists is the planner's call) and the wording a shopper model writes.</p></div></section>
+<section id="explore"><p class="tag">Stage 2 · Explore</p><h2>Pick an ending, then walk through a dialogue.</h2><section class="stats" id="stats" aria-label="Machine facts" style="border:0;padding:0 0 18px"></section>
+<div>
+    
+    <p class="note" style="margin-bottom:8px">The ending changes what is possible: a dialogue that ends unsuccessfully has no product actions, and "no match" replies only exist there.</p>
+    <div class="seg" id="envs" role="group" aria-label="Ending"></div>
+  </div>
+
+  <div class="cols">
+    <section class="card" aria-labelledby="dg">
+      <h2 id="dg">Macro view</h2>
+      <p class="note">Each box groups the machine's concrete states by what the next user turn is forced or free to be. Click an arrow to see which turns and replies it carries.</p>
+      <div class="scroll"><svg id="graph" viewBox="0 0 980 440" role="img" aria-label="Macro state diagram of the simulator state machine">
+        <defs><marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z"/></marker></defs>
+        <g id="edges"></g><g id="nodes"></g>
+      </svg></div>
+      <div class="detail" id="detail" aria-live="polite">Click an arrow.</div>
+    </section>
+
+    <section class="card" aria-labelledby="sim">
+      <h2 id="sim">Step through it</h2>
+      <p class="note" style="margin-bottom:10px">Only turns the machine allows are enabled. Pick a user turn, then pick a reply it can draw.</p>
+      <dl class="fields" id="fields"></dl>
+      <div id="controls"></div>
+      <ol class="trail" id="trail" aria-label="Dialogue so far"></ol>
+      <div class="row"><button class="mini" id="undo">Undo</button><button class="mini" id="reset">Start over</button></div>
+    </section>
+  </div>
+
+  </section>
+<section id="guards"><p class="tag">Stage 3 · Rules</p><h2>What each user turn needs.</h2><div class="card">
+    
+    <div class="scroll"><table>
+      <thead><tr><th>Turn</th><th>What the user says</th><th>Allowed when</th></tr></thead>
+      <tbody id="guards"></tbody>
+    </table></div>
+  </div></section>
+<section id="transitions"><p class="tag">Stage 4 · Coverage</p><h2>Every transition, user turn by reply.</h2><div class="card">
+    
+    <p class="note" style="margin-bottom:8px">All of these are exercised by at least one generated plan; a test fails if one is not. Orange chips are replies carrying a flag: a planned wrong item (<code>deliberate</code>) or a recorded hidden violation (<code>hidden</code>).</p>
+    <div class="scroll"><table class="matrix"><thead id="mhead"></thead><tbody id="mbody"></tbody></table></div>
+  </div><p class="note" style="margin-top:12px">Not modelled: the catalog (whether a partial item exists is the planner's call) and the shopper model's wording, which the live runs check.</p></section>
+</main>
+<footer class="site-foot"><span>AdaptGym · Evidence → intent → evaluation</span><a href="/lab">Open the session laboratory ↗</a></footer>
+<script>
+const D = /*DATA*/null;
+const S = D.symbols, F = D.stateFields, R = D.replies;
+const GUARDS = {
+  OPENER: ['"Start this search" plus the first needs', 'only as the first turn'],
+  ADD: ['Adds new needs', 'while disclosing and the last reply demanded nothing'],
+  REACT: ['Reacts to results by adding needs', 'a wrong item was already shown earlier, and the last reply demanded nothing'],
+  ANSWER: ['Answers the assistant\'s question with values', 'the last reply asked a question'],
+  REJECT: ['Rejects an item that breaks a known hard need', 'the last reply held a deliberate wrong item'],
+  REVEAL: ['Dislikes a value seen on a displayed item ("ne")', 'the last reply listed items and recorded a hidden violation'],
+  PREFER: ['Prefers one of two displayed items', 'positive ending, and two items were displayed'],
+  INTEREST: ['Says some displayed items interest them', 'positive ending, and items were displayed'],
+  WITHDRAW: ['Removes an endorsed item that is not the target', 'positive ending, and two items are endorsed'],
+  SELECT: ['Selects the target without finishing', 'positive ending, and nothing selected yet'],
+  CLOSE_NO: ['No item meets the unchanged needs; closes', 'negative ending, still disclosing, no demand pending'],
+  CHOOSE: ['Chooses a full match and closes', 'positive ending with a full match, nothing selected'],
+  CHOOSE_BEST: ['Chooses the best partial match and closes', 'positive ending with a partial match, nothing selected'],
+  CONFIRM: ['Confirms the already selected item and closes', 'positive ending and an item is selected'],
+  RECONSIDER: ['"I reconsidered it" and closes', 'never: the planner withdraws an alternative, not the item it keeps']
+};
+const MACROS = {
+  START: ['Start', 'before the opener', 70, 220], FREE: ['Free turn', 'disclose, act or close', 380, 220],
+  ASKED: ['Question asked', 'user must answer', 230, 70], WRONG: ['Wrong item shown', 'user must reject it', 230, 370],
+  COMPARED: ['Two items compared', 'user must state a preference', 680, 70], ACTING: ['Shortlisting', 'product actions, then close', 700, 330],
+  DONE: ['Done', 'dialogue closed', 910, 220]
+};
+function macro(st) {
+  const [phase, forced] = st;
+  if (phase === 'start') return 'START'; if (phase === 'done') return 'DONE';
+  if (forced === 'ANSWER') return 'ASKED'; if (forced === 'REJECT') return 'WRONG'; if (forced === 'PREFER') return 'COMPARED';
+  return phase === 'acting' ? 'ACTING' : 'FREE';
+}
+const el = (t, c, h) => { const e = document.createElement(t); if (c) e.className = c; if (h != null) e.innerHTML = h; return e; };
+const svgEl = (t, a = {}) => { const e = document.createElementNS('http://www.w3.org/2000/svg', t); for (const k in a) e.setAttribute(k, a[k]); return e; };
+const esc = s => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
+const replyText = r => { const [kind, del, hid, n] = R[r]; return kind + (del ? ' · wrong item' : '') + (hid ? ' · hidden violation' : '') + (n ? ` · ${n}${n === 2 ? '+' : ''} item${n === 1 ? '' : 's'}` : ''); };
+
+let envKey = Object.keys(D.envs).find(k => k === 'positive-full');
+let cur, trail, pending, lastEdge;
+const env = () => D.envs[envKey];
+
+function reset() { cur = 0; trail = []; pending = null; lastEdge = null; render(); }
+
+function stats() {
+  const e = env(), box = document.getElementById('stats'); box.innerHTML = '';
+  [[D.cells.length, 'transitions (turn × reply)'], [e.states.length, 'reachable states here'], [e.deadEnds, 'dead ends'], [e.paths6.toLocaleString(), 'accepted paths of up to 6 turns']]
+    .forEach(([n, l]) => box.append(el('div', 'stat', `<b>${n}</b><span>${l}</span>`)));
+}
+
+function drawGraph() {
+  const e = env(), edges = {}, used = new Set();
+  e.states.forEach((st, i) => e.trans[i].forEach(([sym, rep, nxt]) => {
+    const a = macro(st), b = macro(e.states[nxt]), k = a + '>' + b;
+    (edges[k] = edges[k] || { a, b, syms: {} }); (edges[k].syms[S[sym]] = edges[k].syms[S[sym]] || new Set()).add(R[rep][0]);
+    used.add(a); used.add(b);
+  }));
+  const gE = document.getElementById('edges'), gN = document.getElementById('nodes'); gE.innerHTML = ''; gN.innerHTML = '';
+  const W = 150, H = 56;
+  const clip = (cx, cy, dx, dy) => { const t = Math.min(dx ? (W / 2) / Math.abs(dx) : 1e9, dy ? (H / 2) / Math.abs(dy) : 1e9); return [cx + dx * t, cy + dy * t]; };
+  Object.entries(edges).forEach(([k, ed]) => {
+    const [, , ax, ay] = MACROS[ed.a], [, , bx, by] = MACROS[ed.b];
+    const syms = Object.keys(ed.syms), label = syms.length > 2 ? syms.slice(0, 2).join(' · ') + ` +${syms.length - 2}` : syms.join(' · ');
+    const g = svgEl('g', { class: 'edge', tabindex: 0, 'data-k': k, role: 'button', 'aria-label': `${ed.a} to ${ed.b}: ${syms.join(', ')}` });
+    let d, tx, ty;
+    if (ed.a === ed.b) {
+      const down = ed.a === 'ACTING', sgn = down ? 1 : -1, y0 = ay + sgn * H / 2;
+      d = `M${ax - 22},${y0} C${ax - 50},${y0 + sgn * 62} ${ax + 50},${y0 + sgn * 62} ${ax + 22},${y0}`; tx = ax; ty = y0 + sgn * 56;
+    } else {
+      let dx = bx - ax, dy = by - ay; const len = Math.hypot(dx, dy), nx = -dy / len, ny = dx / len;
+      const both = edges[ed.b + '>' + ed.a] ? 11 : 0;
+      const [sx, sy] = clip(ax, ay, dx, dy), [ex, ey] = clip(bx, by, -dx, -dy);
+      d = `M${sx + nx * both},${sy + ny * both} L${ex + nx * both},${ey + ny * both}`;
+      tx = (sx + ex) / 2 + nx * (both ? 20 : 12); ty = (sy + ey) / 2 + ny * (both ? 20 : 12);
+    }
+    g.append(svgEl('path', { d }));
+    const t = svgEl('text', { x: tx, y: ty, 'text-anchor': 'middle' }); t.textContent = label; g.append(t);
+    g.addEventListener('click', () => showEdge(k, edges)); g.addEventListener('keydown', ev => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); showEdge(k, edges); } });
+    gE.append(g);
+  });
+  Object.entries(MACROS).forEach(([name, [title, sub, x, y]]) => {
+    const g = svgEl('g', { class: 'node' + (used.has(name) ? '' : ' off'), 'data-n': name });
+    g.append(svgEl('rect', { x: x - W / 2, y: y - H / 2, width: W, height: H }));
+    const t1 = svgEl('text', { x, y: y - 4, 'text-anchor': 'middle', class: 't' }); t1.textContent = title;
+    const t2 = svgEl('text', { x, y: y + 14, 'text-anchor': 'middle', class: 's' }); t2.textContent = sub;
+    g.append(t1, t2); gN.append(g);
+  });
+  drawGraph.edges = edges;
+}
+
+function showEdge(k, edges) {
+  document.querySelectorAll('.edge.sel').forEach(n => n.classList.remove('sel'));
+  document.querySelector(`.edge[data-k="${k}"]`).classList.add('sel');
+  const ed = edges[k], box = document.getElementById('detail');
+  box.innerHTML = `<b>${MACROS[ed.a][0]} → ${MACROS[ed.b][0]}</b><br>` +
+    Object.entries(ed.syms).map(([sym, kinds]) => `<code>${sym}</code> answered by ${[...kinds].map(x => `<code>${x}</code>`).join(' ')}`).join('<br>');
+}
+
+function render() {
+  const e = env(), st = e.states[cur], here = macro(st);
+  document.querySelectorAll('#nodes .node').forEach(n => n.classList.toggle('current', n.dataset.n === here));
+  document.querySelectorAll('.edge.fresh').forEach(n => n.classList.remove('fresh'));
+  if (lastEdge) document.querySelector(`.edge[data-k="${lastEdge}"]`)?.classList.add('fresh');
+  const f = document.getElementById('fields'); f.innerHTML = '';
+  F.forEach((name, i) => { f.append(el('dt', '', name)); f.append(el('dd', '', esc(st[i] === null ? '—' : st[i]))); });
+  const box = document.getElementById('controls'); box.innerHTML = '';
+  const out = e.trans[cur];
+  if (st[0] === 'done') {
+    box.append(el('div', 'done', `Dialogue complete after ${trail.length} turns.`));
+  } else if (pending === null) {
+    const allowed = new Set(out.map(t => t[0]));
+    [['Start', ['OPENER']], ['Disclose', D.disclosure], ['Product actions', D.actions], ['Close', D.closes]].forEach(([title, group]) => {
+      const present = group.filter(s => allowed.has(S.indexOf(s)) || title !== 'Start' || st[0] === 'start');
+      if (!present.length) return;
+      const g = el('div', 'grp', `<h3>${title}</h3>`), b = el('div', 'btns');
+      group.forEach(s => {
+        const btn = el('button', 'btn', s); btn.type = 'button';
+        const ok = allowed.has(S.indexOf(s)); btn.disabled = !ok; btn.title = ok ? GUARDS[s][0] : 'Needs: ' + GUARDS[s][1];
+        btn.addEventListener('click', () => { pending = S.indexOf(s); render(); }); b.append(btn);
+      });
+      g.append(b); box.append(g);
+    });
+  } else {
+    const g = el('div', 'grp', `<h3>${S[pending]} — pick the assistant's reply</h3>`), b = el('div', 'btns');
+    out.filter(t => t[0] === pending).forEach(([, rep, nxt]) => {
+      const btn = el('button', 'btn r', esc(replyText(rep))); btn.type = 'button';
+      btn.addEventListener('click', () => {
+        lastEdge = macro(st) + '>' + macro(e.states[nxt]);
+        trail.push({ from: cur, sym: pending, rep }); cur = nxt; pending = null; render();
+      }); b.append(btn);
+    });
+    g.append(b); box.append(g);
+    const back = el('button', 'mini', 'Choose another turn'); back.type = 'button'; back.style.marginTop = '8px';
+    back.addEventListener('click', () => { pending = null; render(); }); box.append(back);
+  }
+  const tr = document.getElementById('trail'); tr.innerHTML = '';
+  trail.forEach(t => tr.append(el('li', '', `${S[t.sym]} <i>→ ${esc(R[t.rep][0])}${R[t.rep][1] ? '*' : ''}${R[t.rep][2] ? '†' : ''}</i>`)));
+  if (trail.length) tr.append(el('li', '', '* wrong item · † hidden violation'));
+}
+
+function buildEnvs() {
+  const box = document.getElementById('envs'); box.innerHTML = '';
+  Object.entries(D.envs).forEach(([k, v]) => {
+    const b = el('button', '', v.label); b.type = 'button'; b.setAttribute('aria-pressed', k === envKey);
+    b.addEventListener('click', () => { envKey = k; [...box.children].forEach(c => c.setAttribute('aria-pressed', c === b)); stats(); drawGraph(); reset(); });
+    box.append(b);
+  });
+}
+
+function tables() {
+  const g = document.getElementById('guards');
+  S.forEach(s => g.append(el('tr', '', `<td class="sym">${s}</td><td>${esc(GUARDS[s][0])}</td><td>${esc(GUARDS[s][1])}</td>`)));
+  const kinds = ['recommend', 'scripted_results', 'ask_attribute', 'no_match', 'compare', 'preference_update', 'shortlist_update', 'confirm_selection', 'acknowledge'];
+  const head = document.getElementById('mhead'); head.innerHTML = '<tr><th>Turn</th>' + kinds.map(k => `<th>${k}</th>`).join('') + '</tr>';
+  const body = document.getElementById('mbody');
+  S.forEach(s => {
+    const cells = D.cells.filter(c => c[0] === s);
+    if (!cells.length) { body.append(el('tr', '', `<td class="sym">${s}</td><td colspan="${kinds.length}" class="note">never produced (dead branch)</td>`)); return; }
+    body.append(el('tr', '', `<td class="sym">${s}</td>` + kinds.map(k => {
+      const here = cells.filter(c => c[1] === k);
+      return '<td>' + here.map(c => `<span class="chip${c[2] ? ' flag' : ''}">${c[2] || 'plain'}</span>`).join('') + '</td>';
+    }).join('')));
+  });
+}
+
+buildEnvs(); stats(); drawGraph(); tables(); reset();
+document.getElementById('reset').addEventListener('click', reset);
+document.getElementById('undo').addEventListener('click', () => {
+  if (pending !== null) { pending = null; render(); return; }
+  const last = trail.pop(); if (last) { cur = last.from; lastEdge = null; render(); }
+});
+</script>
+</body>
+</html>

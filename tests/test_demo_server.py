@@ -267,15 +267,16 @@ def test_unknown_live_state_mode_rejected_without_api_calls(server_factory, monk
 def test_every_page_has_shared_top_navigation_and_current_page(server_factory):
     import re
     base = server_factory()
-    for path in ('/', '/lab', '/about', '/live', '/flows'):
+    for path in ('/', '/lab', '/about', '/live', '/flows', '/turns', '/machine'):
         status, _, body = request(base, path)
         assert status == 200
         navigation = re.search(rb'<nav[^>]+aria-label="Main navigation"[^>]*>(.*?)</nav>', body).group(1)
-        for href in (b'/', b'/about', b'/live', b'https://github.com/flavianv/adaptgym'):
+        for href in (b'/', b'/about', b'/live', b'/turns', b'https://github.com/flavianv/adaptgym'):
             assert b'href="' + href + b'"' in navigation
         assert b'href="/flows"' not in navigation
         assert b'Evaluate extractors' in navigation and b'Create multi-turn sessions' in navigation
-        active_path = '/' if path == '/lab' else '/about' if path == '/flows' else path
+        # both dialogue design pages sit under the same navigation entry
+        active_path = {'/lab': '/', '/flows': '/about', '/machine': '/turns'}.get(path, path)
         assert b'href="' + active_path.encode() + b'" aria-current="page"' in navigation
 
 
@@ -284,7 +285,7 @@ def test_shared_header_stylesheet_is_served(server_factory):
     status, headers, css = request(base, '/assets/site-header.css')
     assert status == 200 and headers['Content-Type'].startswith('text/css')
     assert b'.site-header .site-brand' in css
-    for path in ('/', '/about', '/flows'):
+    for path in ('/', '/about', '/flows', '/turns', '/machine'):
         body = request(base, path)[2]
         assert b'href="/assets/site-header.css"' in body
         assert b'<header class="site-header"><a class="site-brand"' in body
@@ -370,3 +371,28 @@ def test_saved_feature_verdicts_and_headers_use_exact_feature_policy(server_fact
             assert run['feature_summary']['passed_turns']==sum(c['feature_score']['accepted'] for c in run['checkpoints'])
     _,_,body=request(base,'/assets/precomputed-player.js')
     assert b'Inspect error turns' in body and b'Inspect warning turns' in body
+
+
+def test_dialogue_design_pages_are_served_self_contained_and_linked_to_each_other(server_factory):
+    base = server_factory()
+    for path in ('/turns', '/turns/', '/machine', '/machine/'):
+        status, headers, body = request(base, path)
+        assert status == 200 and headers['Content-Type'].startswith('text/html')
+        assert b'<script src' not in body and b'googleapis' not in body          # nothing is loaded from elsewhere
+        if path.startswith('/turns'):
+            assert b'href="/machine"' in body                                      # the trees page points at the machine
+        else:
+            assert body.count(b'href="/turns"') >= 2                               # header entry plus the in-page link
+        assert b'/*DATA*/' not in body
+
+
+def test_the_machine_page_data_is_the_machines_own(server_factory):
+    import json
+    import re
+    from adaptgym.machine_page import machine_data
+    base = server_factory()
+    body = request(base, '/machine')[2].decode()
+    embedded = json.loads(re.search(r'const D = (\{.*?\});\nconst S', body, re.S).group(1))
+    assert embedded == json.loads(json.dumps(machine_data()))
+    assert len(embedded['cells']) == 63 and embedded['envs']['positive-full']['deadEnds'] == 0
+

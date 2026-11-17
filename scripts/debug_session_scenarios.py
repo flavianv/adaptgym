@@ -200,7 +200,9 @@ def create_server(port=8768, directory=FIXTURES, *, host='127.0.0.1'):
                 return self.send_json(200, status_snapshot())
             pages = {'/': 'viewer.html', '/about': 'introduction.html',
                      '/about/': 'introduction.html', '/lab': 'viewer.html',
-                     '/lab/': 'viewer.html', '/live': 'live_chat.html', '/live/': 'live_chat.html', '/flows': 'introduction.html', '/flows/': 'introduction.html'}
+                     '/lab/': 'viewer.html', '/live': 'live_chat.html', '/live/': 'live_chat.html', '/flows': 'introduction.html', '/flows/': 'introduction.html',
+                     '/turns': 'decision_trees.html', '/turns/': 'decision_trees.html',
+                     '/machine': 'turn_machine.html', '/machine/': 'turn_machine.html'}
             figures = {'adaptgym-evaluation-flow.svg', 'adaptgym-sft-training-flow.svg',
                        'adaptgym-rlvr-extraction-training-flow.svg',
                        'adaptgym-rlvr-end-to-end-training-flow.svg'}
@@ -208,6 +210,10 @@ def create_server(port=8768, directory=FIXTURES, *, host='127.0.0.1'):
                 if path in pages:
                     page = 'viewer.html' if path == '/' and 'vertical' in parse_qs(request_url.query) else pages[path]
                     body = (ROOT / 'src/adaptgym' / page).read_bytes()
+                    if page == 'turn_machine.html':
+                        # the machine's states and transitions come from the code, so the page cannot drift from it
+                        from adaptgym.machine_page import machine_data
+                        body = body.replace(b'/*DATA*/null', json.dumps(machine_data(), separators=(',', ':')).encode())
                     content_type = 'text/html; charset=utf-8'
                 elif path == '/favicon.svg':
                     body=(ROOT/'src/adaptgym/favicon.svg').read_bytes()

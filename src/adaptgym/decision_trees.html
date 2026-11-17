@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="How each user turn and each assistant reply of a generated dialogue is chosen, as decision trees you can trace.">
+<title>AdaptGym · Turn decision trees</title>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="stylesheet" href="/assets/site-header.css">
+<style>
+/* Layout: one column, three tabs. Questions are outlined boxes, outcomes are filled; the assistant tab is a ladder where the first matching rung wins. */
+:root{--bg:#f7f6f2;--panel:#fffefa;--fg:#262924;--muted:#62685e;--line:#daddd2;--q-bg:#fffefa;--q-line:#9aa093;
+--node:#fffefa;--node-line:#9aa093;--cur:#f4dfa6;--hl:#f4dfa6;--cur-line:#ba4928;--user:#3d6250;--user-bg:#e4ece6;
+--asst:#ba4928;--asst-bg:#f6e4dc;--warn:#8a5a00;--warn-bg:#f6ecd2;--off:#8d9388;--edge:#6d7367;--hit:#dde9e0;
+--font-body:system-ui,-apple-system,sans-serif;--font-head:system-ui,-apple-system,sans-serif;
+--font-mono:ui-monospace,SFMono-Regular,Consolas,monospace}
+
+* { box-sizing: border-box; }
+body{margin:0;background:var(--bg);color:var(--fg);font:15px/1.6 system-ui,-apple-system,sans-serif}
+.wrap{width:calc(100% - 76px);max-width:1084px;margin:0 auto;padding:28px 0 56px;display:flex;flex-direction:column;gap:22px}
+h1 { font-family: var(--font-head); font-size: 30px; line-height: 1.15; margin: 0; text-wrap: balance; }
+h2 { font-family: var(--font-head); font-size: 19px; margin: 0 0 4px; text-wrap: balance; }
+p { margin: 0; max-width: 70ch; }
+.lede { color: var(--muted); }
+code, .mono { font-family: var(--font-mono); font-size: 0.86em; }
+.schedule { display: flex; flex-wrap: wrap; gap: 8px; align-items: stretch; }
+.step { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; min-width: 0; flex: 1 1 170px; }
+.step b { display: block; font-family: var(--font-head); font-size: 14px; }
+.step span { color: var(--muted); font-size: 13px; }
+.formula { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 10px 14px; font-family: var(--font-mono); font-size: 13px; overflow-x: auto; }
+.tabs { display: flex; gap: 6px; flex-wrap: wrap; border-bottom: 1px solid var(--line); }
+.tab {
+  font: inherit; font-weight: 500; background: none; color: var(--muted); border: 0; border-bottom: 3px solid transparent;
+  padding: 10px 14px; cursor: pointer; margin-bottom: -1px;
+}
+.tab[aria-selected="true"] { color: var(--fg); border-bottom-color: var(--fg); }
+.tab:focus-visible, .leaf:focus-visible, .toggle:focus-visible { outline: 2px solid var(--asst); outline-offset: 2px; }
+.panel[hidden] { display: none; }
+.note { color: var(--muted); font-size: 13px; margin-block: 10px 14px; }
+.legend { display: flex; gap: 14px; flex-wrap: wrap; font-size: 12.5px; color: var(--muted); margin-bottom: 14px; }
+.legend i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; vertical-align: -1px; margin-right: 5px; border: 1.5px solid var(--q-line); }
+.legend i.u { background: var(--user-bg); border-color: var(--user); }
+.legend i.a { background: var(--asst-bg); border-color: var(--asst); }
+.legend i.w { background: var(--warn-bg); border-color: var(--warn); }
+
+/* tree */
+.tree, .tree ul { list-style: none; margin: 0; padding: 0; }
+.tree ul { margin-left: 14px; padding-left: 18px; border-left: 1.5px solid var(--line); }
+.tree li { position: relative; padding-top: 8px; min-width: 0; }
+.tree ul > li::before { content: ""; position: absolute; left: -18px; top: 26px; width: 14px; border-top: 1.5px solid var(--line); }
+.q {
+  display: inline-block; max-width: 100%; background: var(--q-bg); border: 1.5px solid var(--q-line);
+  border-radius: 8px; padding: 6px 10px; font-weight: 500;
+}
+.q small { display: block; font-weight: 400; color: var(--muted); font-size: 12.5px; }
+.edge {
+  display: inline-block; font-family: var(--font-mono); font-size: 12px; color: var(--muted);
+  background: var(--bg); border: 1px solid var(--line); border-radius: 999px; padding: 1px 9px; margin-right: 8px; vertical-align: middle;
+}
+.leaf {
+  display: inline-block; max-width: 100%; text-align: left; font: inherit; color: var(--fg); cursor: pointer;
+  background: var(--user-bg); border: 1.5px solid var(--user); border-radius: 8px; padding: 6px 10px; vertical-align: middle;
+}
+.leaf.a { background: var(--asst-bg); border-color: var(--asst); }
+.leaf.w { background: var(--warn-bg); border-color: var(--warn); }
+.leaf b { font-family: var(--font-mono); font-size: 12.5px; font-weight: 500; display: block; }
+.leaf.u b { color: var(--user); } .leaf.a b { color: var(--asst); } .leaf.w b { color: var(--warn); }
+.leaf span { display: block; font-size: 13.5px; }
+.ex {
+  margin: 6px 0 2px; padding: 8px 10px; background: var(--panel); border: 1px dashed var(--line); border-radius: 8px;
+  font-size: 13px; color: var(--muted); max-width: 70ch; overflow-wrap: anywhere;
+}
+.ex q { color: var(--fg); quotes: none; font-style: normal; }
+.ex .tag { font-family: var(--font-mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; display: block; margin-bottom: 2px; }
+.onpath > .q, .onpath > .row > .q { background: var(--hl); border-color: var(--warn); }
+.onpath > .row > .leaf, .onpath > .body > .leaf { box-shadow: 0 0 0 3px var(--hl); }
+.rung > .ex { grid-column: 2; }
+.then { margin-top: 14px; padding-top: 4px; }
+
+/* ladder */
+.ladder { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.rung { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 0 10px; position: relative; padding-bottom: 12px; }
+.rung::before { content: ""; position: absolute; left: 16px; top: 28px; bottom: -2px; border-left: 1.5px solid var(--line); }
+.rung:last-child::before { display: none; }
+.rn { width: 32px; height: 32px; border-radius: 50%; border: 1.5px solid var(--q-line); background: var(--q-bg); display: grid; place-items: center; font-family: var(--font-mono); font-size: 13px; z-index: 1; }
+.rung .body { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; min-width: 0; padding-top: 2px; }
+.rung .cond { flex: 1 1 260px; min-width: 0; }
+.rung .cond .q { display: block; }
+.arrow { color: var(--muted); font-family: var(--font-mono); flex: 0 0 auto; }
+.rung .leaf { flex: 1 1 260px; }
+.rung .exrow { grid-column: 2; }
+.sub { grid-column: 2; margin-top: 8px; }
+.records { margin-top: 6px; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 10px 14px; font-size: 14px; }
+
+/* connections */
+.links { display: flex; flex-direction: column; gap: 10px; }
+.link { display: grid; grid-template-columns: minmax(0, 1fr) 40px minmax(0, 1fr); gap: 8px; align-items: center; }
+.link .arrow { text-align: center; font-size: 18px; }
+@media (max-width: 640px) {
+  .link { grid-template-columns: 1fr; }
+  .link .arrow { transform: rotate(90deg); }
+  h1 { font-size: 25px; }
+}
+.foot { color: var(--muted); font-size: 13px; }
+@media (prefers-reduced-motion: no-preference) { .leaf, .q { transition: background .15s, box-shadow .15s; } }
+
+@media(max-width:760px){.wrap{width:calc(100% - 44px)}}
+.xsubnav{display:flex;gap:6px;flex-wrap:wrap}.xsubnav a{font:13px/1.5 system-ui,sans-serif;color:var(--muted);text-decoration:none;padding:6px 12px;border:1px solid var(--line);border-radius:5px;background:var(--panel)}.xsubnav a:hover{background:#ecefe7;color:var(--fg)}.xsubnav a[aria-current=page]{background:#ecefe7;color:#263e2f;font-weight:650}
+h1,h2{font-weight:650}h1{letter-spacing:-.5px}
+
+.wrap{width:calc(100% - 76px);max-width:1084px;margin:0 auto;padding:0;display:block}
+.wrap h1{font:clamp(35px,5vw,56px)/1.12 Georgia,serif;letter-spacing:-1.5px;margin:40px 0 18px;font-weight:400}
+.wrap h2{font:28px/1.25 Georgia,serif;letter-spacing:0;margin:0 0 12px;font-weight:400}
+.wrap .card h2{font-size:21px}
+.lead{color:#5a655a;max-width:820px;font-size:17px;margin:0}
+.flow-nav{display:flex;flex-wrap:wrap;gap:10px;padding:20px 0 32px}.flow-nav a{padding:8px 14px;border:1px solid var(--line);border-radius:30px;text-decoration:none;font-size:13px;color:var(--fg)}.flow-nav a:hover{background:#ecefe7}.flow-nav a.primary{background:#ba4928;border-color:#ba4928;color:#fffefa;border-radius:4px;padding:10px 18px;display:inline-flex;flex-direction:column;gap:2px;line-height:1.4}.flow-nav a.primary b{font-weight:650;font-size:14px}.flow-nav a.primary span{font-size:12px;opacity:.92}.flow-nav a.primary:hover{background:#a03f21;border-color:#a03f21}.flow-nav a:focus-visible{outline:2px solid #ba4928;outline-offset:3px}
+.wrap>section{border-top:1px solid var(--line);padding:35px 0;scroll-margin-top:20px}
+.tag{font:11px ui-monospace,monospace;letter-spacing:1px;text-transform:uppercase;color:#ba4928;margin:0 0 6px}
+.wrap>section>.note{max-width:860px}
+.card,.step,.stat,.formula{background:#fffefa}
+html{scroll-behavior:smooth}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+footer.site-foot{width:calc(100% - 76px);max-width:1084px;margin:0 auto;padding:25px 0 40px;border-top:1px solid var(--line);font-size:13px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+footer.site-foot a{color:inherit;text-underline-offset:4px}
+@media(max-width:760px){.wrap,footer.site-foot{width:calc(100% - 44px)}}
+</style>
+</head>
+<body><header class="site-header"><a class="site-brand" href="/" aria-label="AdaptGym home"><span aria-hidden="true">a·</span>AdaptGym</a><nav class="site-nav" aria-label="Main navigation"><a href="/about">Overview</a><a href="/live">Evaluate extractors</a><a href="/">Create multi-turn sessions</a><a href="/turns" aria-current="page">Dialogue design</a><a href="https://github.com/flavianv/adaptgym" target="_blank" rel="noopener noreferrer">GitHub ↗</a></nav></header>
+<main class="wrap">
+<h1>How each turn of a dialogue<br>is generated.</h1>
+<p class="lead">A turn is a user message plus the assistant reply to it. Click an outcome to trace its path and see a real line from a generated plan. The same turn structure is written as a finite-state machine and checked against every plan.</p>
+<nav class="flow-nav" aria-label="On this page"><a href="#schedule">Schedule</a><a href="#user">User turn</a><a href="#assistant">Assistant reply</a><a href="#connect">How they connect</a><a class="primary" href="/machine"><b>The Simulator as a Finite State Machine ↗</b><span>Step through a dialogue state by state and see every turn and reply it allows</span></a></nav>
+<section id="schedule"><p class="tag">Before any text</p><h2>The schedule is fixed first.</h2><div class="schedule">
+      <div class="step"><b>Opener</b><span>1 turn. One hard group, plus any initial soft preferences.</span></div>
+      <div class="step"><b>Disclosure turns</b><span>One per slot. Each has a kind: assistant_free, reactive_context or reactive_non_context, or reveal_dislike when requested.</span></div>
+      <div class="step"><b>Product actions</b><span>Optional: prefer, express_interest, withdraw_interest, select.</span></div>
+      <div class="step"><b>Finisher</b><span>1 turn. Positive or negative.</span></div>
+    </div>
+    <div class="formula" style="margin-top:8px">slots = turns − 2 − len(product_actions) &nbsp;·&nbsp; 'mixed' uses each kind once while slots allow, draws the rest at random, then shuffles</div></section>
+<section id="user" class="panel"><p class="tag">Stage 1 · User turn</p><h2>What the user says, and why.</h2><p class="note">Read top to bottom. Each box asks a question about the plan; the labelled branch is the answer.</p><div class="legend"><span><i class=""></i>question</span><span><i class="u"></i>user text produced</span><span><i class="w"></i>note appended afterwards</span></div><div id="tree-user"></div></section>
+<section id="assistant" class="panel"><p class="tag">Stage 2 · Assistant reply</p><h2>What the assistant answers.</h2><p class="note">A ladder: the first rung whose condition holds decides the reply kind. The reply is built after the user's state is updated, and it looks ahead at what the next user turn must do.</p><div class="legend"><span><i class=""></i>condition</span><span><i class="a"></i>reply kind</span><span><i class="w"></i>rewrite applied afterwards</span></div><div id="ladder"></div></section>
+<section id="connect" class="panel"><p class="tag">Stage 3 · How they connect</p><h2>Each reply constrains the next turn.</h2><p class="note">What the assistant does in reply i constrains what the user can say in turn i+1.</p><div class="links" id="links"></div><p class="foot" style="margin-top:14px">Private needs never appear in any user turn. They only decide which item can be the target. Unknown values count as a miss for soft needs and as a failure for hard needs. A dislike uses the <code>ne</code> operator ("not X"), which exists only for categorical attributes and never matches an unknown value.</p></section>
+</main>
+<footer class="site-foot"><span>AdaptGym · Evidence → intent → evaluation</span><a href="/lab">Open the session laboratory ↗</a></footer>
+<script>
+const USER_TREE = {
+  q: 'Which turn is it?', hint: 'position in the schedule',
+  branches: [
+    { label: 'first', leaf: { kind: 'u', name: 'OPENER', desc: '"Start this <task>." + initial hard needs (task scope) + initial soft needs (durable, worded "generally / usually")',
+      ex: 'Start this search. For this search, require plate_size_class eq yes; seal_shape eq amber; lifespan_years gte 150 units. As general, ongoing soft preferences (word them with "generally" or "usually"; they are not mandatory), prefer base_edition eq foam; clasp_grade eq nickel.' } },
+    { label: 'disclosure slot', node: {
+      q: 'Which kind is scheduled for this slot?',
+      branches: [
+        { label: 'assistant_free', leaf: { kind: 'u', name: 'ADD', desc: '"Add these new needs, keeping earlier requirements." + the slot\'s batch of needs',
+          ex: 'Add these new needs, keeping earlier requirements. For this search, require width lte 225 units.' } },
+        { label: 'reactive_context', leaf: { kind: 'u', name: 'ANSWER', desc: 'Answer the assistant\'s question with values only, in the stated order. Operators, scopes and strengths are repeated so they are kept.',
+          ex: 'Answer the assistant question with these values in its stated order, without repeating attribute names: grained; oak; wide. Preserve the required comparison operators and units: eq ; eq ; eq . Keep earlier needs unchanged.' } },
+        { label: 'reactive_non_context', node: {
+          q: 'Did the previous reply contain a deliberate wrong item?',
+          branches: [
+            { label: 'yes', leaf: { kind: 'u', name: 'REJECT', desc: 'Reject the item because it breaks a known hard need, then add the batch',
+              ex: 'Reject the assistant item because it violates this unchanged task requirement: plate_size_class eq yes. …' } },
+            { label: 'no', leaf: { kind: 'u', name: 'REACT', desc: 'React to the results by adding needs. Never claim a violation of a known need. If nothing matched, say so without relaxing anything.',
+              ex: 'React to the assistant results by adding the following needs. Do not claim the results violate an already known requirement. …' } }
+          ] } },
+        { label: 'reveal_dislike', node: {
+          q: 'Which strength was drawn for the dislike?', hint: 'only when requested through middle_types; the mixed schedule never draws it',
+          branches: [
+            { label: 'hard', leaf: { kind: 'u', name: 'REVEAL-HARD', desc: 'Point at a displayed item by position, say you do not want its value, and require "attribute ne value" for this task. The attribute is on the card, used by no other need, and the witness item lacks the value.',
+              ex: 'React to the displayed product at position 2: say you do not want gender to be women. For this purchase, require gender ne women. Keep earlier requirements.' } },
+            { label: 'soft', leaf: { kind: 'u', name: 'REVEAL-SOFT', desc: 'Same, as a lasting optional preference worded "generally" or "usually".',
+              ex: 'React to the displayed product at position 2: say you would generally rather avoid gender being women. As a general, ongoing soft preference (word it with "generally" or "usually"; it is optional), avoid gender ne women. Keep earlier requirements.' } }
+          ] } }
+      ] } },
+    { label: 'product action', node: {
+      q: 'Which action?', hint: 'the target item is chosen here, from the displayed items',
+      branches: [
+        { label: 'prefer', leaf: { kind: 'u', name: 'PREFER', desc: 'Prefer the first or second displayed item. Say no decision is made yet.', ex: 'Say I prefer the first one; explicitly say you have not decided which to choose. Do not select or finish.' } },
+        { label: 'express_interest', leaf: { kind: 'u', name: 'INTEREST', desc: 'Endorse the target plus one other displayed item, by position', ex: 'Explicitly say the displayed options at positions 1, 2 interest you. Do not select one or end the task.' } },
+        { label: 'withdraw_interest', leaf: { kind: 'u', name: 'WITHDRAW', desc: 'Remove one endorsed item that is not the target. Requirements stay as they were.', ex: 'Ask to remove this particular listing [id] from your shortlist. Keep attribute requirements unchanged. …' } },
+        { label: 'select', leaf: { kind: 'u', name: 'SELECT', desc: 'Select the target, without finishing. Says so if it was withdrawn earlier.', ex: 'Explicitly select the displayed product [id]. Do not finish the task yet.' } }
+      ] } },
+    { label: 'last', node: {
+      q: 'Which ending?',
+      branches: [
+        { label: 'negative', leaf: { kind: 'u', name: 'CLOSE-NO', desc: 'No item meets the unchanged requirements. Dissatisfied, close, select nothing, relax nothing.', ex: 'Explicitly say no item meets your unchanged requirements, you are dissatisfied, and close this search unsuccessfully without selecting an item.' } },
+        { label: 'positive', node: {
+          q: 'Which item, and in what state?', hint: 'target = best displayed item that meets every hard need (fewest missed soft needs)',
+          branches: [
+            { label: 'already selected', leaf: { kind: 'u', name: 'CONFIRM', desc: 'Confirm it is the right one and close. No new selection.', ex: 'Confirm that the already selected item meets your needs, say you are satisfied, and explicitly close this search.' } },
+            { label: 'withdrawn earlier (never happens)', leaf: { kind: 'w', name: 'RECONSIDER (dead branch)', desc: 'The planner has wording for "I reconsidered it", but it only ever withdraws an alternative, never the item it keeps, so no plan reaches this. The state machine forbids it.', ex: '' } },
+            { label: 'misses a soft need', leaf: { kind: 'u', name: 'CHOOSE-BEST', desc: 'Choose it as the best of these even though not every preference fits. The plan is a partial success.', ex: 'Explicitly choose the displayed product [UNI1-00048], say it is the best of these for you even though it does not fit every preference, and you are satisfied, and close this search successfully.' } },
+            { label: 'meets everything', leaf: { kind: 'u', name: 'CHOOSE', desc: 'Choose it, say it meets your needs, close successfully.', ex: 'Explicitly choose the displayed product [id], say it meets your needs and you are satisfied, and close this search successfully.' } }
+          ] } }
+      ] } }
+  ]
+};
+
+const NOTE_TREE = {
+  q: 'Then, for every disclosure turn: what was the previous reply\'s result?', hint: 'compat_note, appended to the user text',
+  branches: [
+    { label: 'every item fails a hard need', leaf: { kind: 'w', name: 'NOTE-REJECT-ALL', desc: 'None meets the unchanged requirement; reject them. (Skipped when this turn already rejects the wrong item.)',
+      ex: 'None of the listed items meets this unchanged requirement (plate_size_class eq yes); reject them.' } },
+    { label: 'some item fails a hard need', leaf: { kind: 'w', name: 'NOTE-REJECT-ONE', desc: 'One listed item breaks a hard need; say so and do not choose it.',
+      ex: 'One of the listed items does not meet this unchanged requirement (plate_size_class eq yes); say so briefly and do not choose it.' } },
+    { label: 'partial: misses a soft need', leaf: { kind: 'w', name: 'NOTE-MISS', desc: 'Mention the missed preference, keep it optional, never say everything fits.',
+      ex: 'Some of the listed items miss this soft preference (clasp_grade eq nickel); mention that briefly, keep it optional, and do not say that everything fits.' } },
+    { label: 'full, empty or n/a', leaf: { kind: 'w', name: 'NOTE-NONE', desc: 'Nothing appended.', ex: '' } }
+  ]
+};
+
+const LADDER = [
+  { c: 'This is the finisher turn', k: 'acknowledge', d: 'Confirms the selection and closes (or closes without a suitable item).' },
+  { c: 'The user just selected an item', k: 'confirm_selection', d: 'Notes the selection and asks whether the task is complete.' },
+  { c: 'The user took a shortlist action (interest, withdraw, prefer)', k: 'shortlist_update', d: 'Echoes the shortlist. For "prefer" the next rewrite replaces it.', ex: 'I have updated your shortlist. No final choice has been made.' },
+  { c: 'The next user turn is reactive_context', k: 'ask_attribute', d: 'Asks for the undisclosed need group that splits the still-matching items most evenly.',
+    ex: 'What do you generally prefer for where you need to work? What do you need for experience required by the job, in months? Please answer in that order.' },
+  { c: 'The next turn is reactive_non_context and no wrong item has been shown yet', k: 'recommend (deliberate error)', d: 'Shows one item that breaks a known hard need, the one with the fewest violations. Marked deliberate.',
+    ex: 'Would this job listing work for you? Office administrator / Tokyo / remote …' }
+];
+
+const AFTER = [
+  { c: 'Product action was "prefer"', k: 'preference_update', d: 'Shows both items again and says some may not meet every requirement.' },
+  { c: 'Last disclosure turn and the first product action is "prefer"', k: 'compare', d: 'Shows the target next to the best other item. Order swapped by an independent seeded draw.' },
+  { c: 'The next user turn is a reveal_dislike', k: 'hidden_violations recorded', d: 'The reply stays a normal recommend. It is marked good for everything stated so far and bad for the need revealed next: it names the displayed item that has the disliked value.' }
+];
+
+const DEFAULT = {
+  q: 'Default: do any items meet the hard needs so far?',
+  branches: [
+    { label: 'none', leaf: { kind: 'a', name: 'no_match', desc: 'Says nothing matches all requirements.', ex: 'I could not find any options meeting all your requirements.' } },
+    { label: 'some', node: {
+      q: 'recommend: top 3 by soft score', hint: 'ties broken by a seeded order, so position is not biased',
+      branches: [
+        { label: 'result_mix set for this turn', leaf: { kind: 'a', name: 'scripted_results', desc: 'One item per requested class (full / partial / none), order shuffled by seed. A none item is a clear violation and is marked deliberate.',
+          ex: 'Here are some search options. …  [partial, none]' } },
+        { label: 'withhold_full is on', leaf: { kind: 'a', name: 'recommend (partial only)', desc: 'Items that meet the whole specification, private needs included, are removed first, so the user can only end up with a partial match.' } },
+        { label: 'neither', leaf: { kind: 'a', name: 'recommend', desc: 'The three best-ranked items.', ex: 'These options meet your requirements. …' } }
+      ] } }
+  ]
+};
+
+const PAIRS = [
+  { a: ['a', 'recommend with a hidden violation', 'a displayed item has a value the user has not yet said they dislike'], u: ['u', 'REVEAL', 'the next user turn dislikes that value, by position, as "ne" (hard or soft)'] },
+  { a: ['a', 'recommend with a none item', 'some listed items break a hard need'], u: ['w', 'NOTE-REJECT-ONE / ALL', 'the next user turn says so and does not choose it'] },
+  { a: ['a', 'recommend with partial items', 'every item meets the hard needs, one misses a soft need'], u: ['w', 'NOTE-MISS', 'the next user turn names the missed preference and never says everything fits'] },
+  { a: ['a', 'deliberate wrong item', 'planned because the next turn is reactive_non_context'], u: ['u', 'REJECT', 'the next user turn rejects it, citing the hard need it breaks'] },
+  { a: ['a', 'ask_attribute', 'planned because the next turn is reactive_context'], u: ['u', 'ANSWER', 'the next user turn answers with values, in order'] },
+  { a: ['a', 'every displayed item is partial (withhold_full)', 'the best partial item becomes the target'], u: ['u', 'CHOOSE-BEST', 'the ending says it is the best of these, not a perfect fit'] }
+];
+
+const records = 'Every reply then records item_classes (full / partial / none per item, against the needs stated so far) and one result_class: empty, n/a, full, partial or none.';
+
+function el(tag, cls, html) { const e = document.createElement(tag); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; }
+function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
+
+function leafButton(leaf, host) {
+  const b = el('button', 'leaf ' + (leaf.kind === 'u' ? 'u' : leaf.kind), `<b>${esc(leaf.name)}</b><span>${esc(leaf.desc)}</span>`);
+  b.type = 'button';
+  b.addEventListener('click', () => {
+    const root = b.closest('.panel');
+    const wasActive = b.dataset.active === '1';
+    root.querySelectorAll('.onpath').forEach(n => n.classList.remove('onpath'));
+    root.querySelectorAll('.ex[data-for]').forEach(n => n.remove());
+    root.querySelectorAll('.leaf').forEach(x => { x.dataset.active = '0'; });
+    if (wasActive) return;
+    b.dataset.active = '1';
+    for (let n = b.closest('li'); n; n = n.parentElement && n.parentElement.closest('li')) n.classList.add('onpath');
+    if (leaf.ex) {
+      const ex = el('div', 'ex', `<span class="tag">example from a generated plan</span><q>${esc(leaf.ex)}</q>`);
+      ex.dataset.for = leaf.name;
+      (b.closest('.body') || b.closest('.row') || b.parentElement).after(ex);
+    }
+  });
+  return b;
+}
+
+function renderNode(node) {
+  const li = el('li');
+  const row = el('div', 'row');
+  if (node.edge) row.append(el('span', 'edge', esc(node.edge)));
+  if (node.leaf) row.append(leafButton(node.leaf));
+  else {
+    row.append(el('div', 'q', esc(node.q) + (node.hint ? `<small>${esc(node.hint)}</small>` : '')));
+  }
+  li.append(row);
+  if (node.branches) {
+    const ul = el('ul');
+    node.branches.forEach(b => {
+      const child = b.leaf ? { leaf: b.leaf } : b.node;
+      ul.append(renderNode({ ...child, edge: b.label }));
+    });
+    li.append(ul);
+  }
+  return li;
+}
+
+function renderTree(root) {
+  const ul = el('ul', 'tree');
+  ul.append(renderNode(root));
+  return ul;
+}
+
+// user tab
+const userHost = document.getElementById('tree-user');
+const box = el('div', 'box');
+box.append(renderTree(USER_TREE));
+const then = el('div', 'then');
+then.append(renderTree(NOTE_TREE));
+box.append(then);
+userHost.append(box);
+
+// assistant tab
+const lad = el('ol', 'ladder');
+function rung(n, r, tone) {
+  const li = el('li', 'rung');
+  li.append(el('div', 'rn', n));
+  const body = el('div', 'body');
+  body.append(el('div', 'cond', `<div class="q">${esc(r.c)}</div>`));
+  body.append(el('span', 'arrow', '→'));
+  body.append(leafButton({ kind: tone, name: r.k, desc: r.d, ex: r.ex || '' }));
+  li.append(body);
+  return li;
+}
+LADDER.forEach((r, i) => lad.append(rung(i + 1, r, 'a')));
+const defRung = el('li', 'rung');
+defRung.append(el('div', 'rn', '6'));
+const dbody = el('div', 'sub');
+dbody.style.gridColumn = '2';
+dbody.append(renderTree(DEFAULT));
+defRung.append(dbody);
+lad.append(defRung);
+const after = el('li', 'rung');
+after.append(el('div', 'rn', '+'));
+const abody = el('div', 'sub');
+abody.append(el('div', 'note', 'Rewrites applied to the reply that came out of the ladder:'));
+const aol = el('ol', 'ladder');
+AFTER.forEach(r => { const x = rung('↻', r, 'w'); aol.append(x); });
+abody.append(aol);
+abody.append(el('div', 'records', esc(records)));
+after.append(abody);
+lad.append(after);
+document.getElementById('ladder').append(lad);
+
+// connections
+const linksHost = document.getElementById('links');
+PAIRS.forEach(p => {
+  const row = el('div', 'link');
+  const a = el('div', 'leaf a'); a.style.cursor = 'default'; a.innerHTML = `<b>${esc(p.a[1])}</b><span>${esc(p.a[2])}</span>`;
+  const u = el('div', 'leaf ' + p.u[0]); u.style.cursor = 'default'; u.innerHTML = `<b>${esc(p.u[1])}</b><span>${esc(p.u[2])}</span>`;
+  row.append(a, el('div', 'arrow', '→'), u);
+  linksHost.append(row);
+});
+
+// tabs
+const tabs = [...document.querySelectorAll('.tab')];
+tabs.forEach(t => t.addEventListener('click', () => {
+  tabs.forEach(x => {
+    const on = x === t;
+    x.setAttribute('aria-selected', on);
+    document.getElementById(x.getAttribute('aria-controls')).hidden = !on;
+  });
+}));
+tabs.forEach((t, i) => t.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+    const n = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+    n.focus(); n.click();
+  }
+}));
+</script>
+</body>
+</html>
