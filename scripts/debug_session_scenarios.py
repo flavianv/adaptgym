@@ -112,7 +112,9 @@ def comparison_bundle(sample_id):
     entry=next((e for e in comparison_index()['cases'] if e['id']==sample_id),None)
     if not entry or Path(entry['file']).name!=entry['file']:return None
     path=ROOT/'examples/model_comparison'/entry['file']
-    return json.loads(path.read_text()) if path.is_file() else None
+    if not path.is_file():return None
+    from adaptgym.player_diagnostics import annotate_bundle
+    return annotate_bundle(json.loads(path.read_text()))
 
 
 def create_server(port=8768, directory=FIXTURES, *, host='127.0.0.1'):

@@ -332,8 +332,8 @@ def test_precomputed_models_share_complete_demo_traces(server_factory, monkeypat
     monkeypatch.setattr(demo.ResponsesClient,'json',forbidden)
     base=server_factory()
     status,_,body=request(base,'/api/comparison');assert status==200
-    index=json.loads(body);assert len(index['cases'])==15
-    assert {m['id'] for m in index['models']}=={'luna','baseline','lora'}
+    index=json.loads(body);index['cases']=[c for c in index['cases'] if not c.get('cohort')];assert len(index['cases'])==15
+    assert {'luna','baseline','lora'} <= {m['id'] for m in index['models']}
     assert sum(e['vertical']=='footwear' for e in index['cases'])==5
     assert sum(e['vertical']=='job_search' for e in index['cases'])==10
     for entry in index['cases']:
@@ -396,3 +396,36 @@ def test_the_machine_page_data_is_the_machines_own(server_factory):
     assert embedded == json.loads(json.dumps(machine_data()))
     assert len(embedded['cells']) == 63 and embedded['envs']['positive-full']['deadEnds'] == 0
 
+
+
+def test_open_player_uses_frozen_counts_and_exposes_metadata_without_model_calls(server_factory, monkeypatch):
+    def forbidden(*args, **kwargs):
+        raise AssertionError('saved open playback called a model')
+    monkeypatch.setattr(demo.ResponsesClient, 'json', forbidden)
+    base = server_factory()
+    index = json.loads(request(base, '/api/comparison')[2])
+    cases = [c for c in index['cases'] if c.get('cohort') == 'synthetic_training_plan_pilot']
+    assert len(cases) == 6 and sum(c['turns'] for c in cases) == 32
+    from adaptgym.claim_metadata_metrics import score_error_diagnostics
+    from adaptgym.verticals import VerticalSchema
+    seen = set()
+    for entry in cases:
+        status, _, body = request(base, '/api/comparison?id=' + entry['id'])
+        assert status == 200
+        bundle = json.loads(body)
+        assert 'not held-out' in bundle['notice']
+        assert set(bundle['models']) == {'luna', 'zero_shot', 'v1', 'v2', 'v3', 'v4'}
+        vertical = VerticalSchema(bundle['sample']['plan']['vertical_schema'])
+        for model, contexts in bundle['models'].items():
+            assert set(contexts) == {'full_reextract', 'accumulated_full', 'recent_with_state'}
+            for context, trace in contexts.items():
+                assert len(trace['checkpoints']) == entry['turns']
+                assert trace['error_summary']['unavailable_turns'] == 0
+                for cp in trace['checkpoints']:
+                    users = cp['reference_user_message_ids']
+                    expected = score_error_diagnostics(cp['profile'], cp['reference_profile'], vertical, users)
+                    assert cp['error_diagnostics'] == expected
+                    if cp['error_diagnostics']['metadata']['scope_errors']: seen.add('scope')
+                    if cp['error_diagnostics']['metadata']['strength_errors']: seen.add('hardness')
+                    seen.update(cp['claim_kinds']['reference'])
+    assert {'scope', 'hardness', 'new_feature', 'new_value'} <= seen

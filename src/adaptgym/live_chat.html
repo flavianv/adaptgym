@@ -28,8 +28,8 @@ body:has(#replayControls:not([hidden])){padding-bottom:calc(104px + env(safe-are
 <main><section class="intro"><p class="eyebrow">THE ADAPTATION LABORATORY · EXTRACTOR EVALUATION</p><h1>A conversation. <em>An evolving profile.</em></h1><p class="lead">Refine a search, compare alternatives, change your mind. Watch the extractor follow.</p></section>
 <div class="controls"><label>Catalog <select id="catalog"><option value="job_search">Jobs</option><option value="footwear">Shoes</option></select></label><button id="reset">New chat</button><label>Mode <select id="mode"><option value="chat">Live conversation</option><option value="replay">Live extraction · Luna</option><option id="savedResultsMode" value="saved">Play pre-extracted</option></select></label><span id="modeNote" class="muted">Up to 20 turns per chat · each message makes two model calls: baseline extraction and assistant response.</span></div>
 <section id="replayControls" class="controls" aria-label="Conversation playback" hidden><label>Saved conversation <select id="replaySample"></select></label><button id="startExtraction" disabled>Start extraction</button><button id="previousTurn" aria-label="Previous turn" disabled>Previous</button><button id="nextTurn" aria-label="Next turn" disabled>Next</button><button id="resetPlayback" disabled>Reset</button><input id="turnSeek" type="range" min="1" max="1" value="1" aria-label="Conversation turn" hidden disabled><span id="replayProgress" class="muted"></span></section>
-<section id="savedModelControls" class="controls" hidden><label><input type="checkbox" id="compareModels"> Compare side by side</label><label id="leftModelLabel">Model <select id="leftModel"><option value="luna">Luna</option><option value="baseline">Qwen 4B zero-shot</option><option value="lora">Qwen 4B fine-tuned</option></select></label><label id="rightModelLabel" hidden>Right model <select id="rightModel"><option value="luna">Luna</option><option value="baseline">Qwen 4B zero-shot</option><option value="lora" selected>Qwen 4B fine-tuned</option></select></label><a class="muted" href="/reports/qwen4b-lora-report.md" download>Download experiment report (.md)</a></section><p id="status" role="status" aria-live="polite"></p><div class="layout"><section class="panel"><div class="panel-heading"><h2>Conversation</h2><span class="panel-index">01 / CATALOG ASSISTANT</span></div><div id="conversation"><p class="muted">Tell the assistant what you’re looking for. Then refine, compare, or change your mind.</p></div><form id="chat"><label for="message">Your message</label><textarea id="message" maxlength="2000" required placeholder="I’m looking for a part-time job in Tokyo…"></textarea><button id="send">Send message</button></form></section><aside class="panel"><div class="panel-heading"><h2 id="extractorTitle">Luna extractor</h2><span class="panel-index" id="extractorLabel">02 / LIVE EXTRACTION</span></div><div class="panel-body"><p id="profileTurn" class="muted">Not extracted yet</p><p id="extractionReady" class="muted" hidden></p><p id="extractorStatus" class="muted" role="status" aria-live="polite"></p><p id="referenceWarning" class="reference-warning" hidden>Scored against a reference label flagged for review.</p><div id="profile"><p class="muted">The baseline profile will appear after your first message.</p></div><details><summary>Structured profile &amp; evidence</summary><pre id="raw">{}</pre></details><details id="validationDetails" hidden><summary>Output validity &amp; checks</summary><p id="validationMessage" class="muted"></p><pre id="validationRaw">{}</pre></details><details id="referenceDetails" hidden><summary>Reference target · replay only</summary><p id="referenceAudit" class="muted"></p><pre id="referenceRaw">{}</pre></details><details><summary>Baseline prompt</summary><pre id="extractorPrompt">Simple intent extraction · Luna</pre></details></div></aside></div>
-<section class="metrics-section" aria-label="Live metrics"><div class="section-heading"><h2>This conversation</h2><span class="tag">EXTRACTION METRICS</span></div><p class="muted">Live chat shows operational metrics because it has no labeled ground truth. Replay also shows per-turn value precision and recall against the saved reference: capitalization is ignored and arrays are scored as value sets. Reference labels flagged by the audit remain marked for review.</p><div id="metrics" class="metrics"></div><p id="changes" class="muted"></p></section><details class="session-note"><summary>About this session</summary><p class="muted">Live conversation and live extraction use GPT-6 Luna. Play pre-extracted offers saved Luna, Qwen 4B zero-shot and Qwen 4B fine-tuned outputs, with synchronized model comparison. Saved experiment traces use the same full extraction prompt; Luna uses the OpenAI Responses API while Qwen uses the frozen local-serving configuration. Conversations stay in server memory for up to one hour. Start a new chat to reset the profile.</p></details></main>
+<section id="savedModelControls" class="controls" hidden><label><input type="checkbox" id="compareModels"> Compare side by side</label><label>Context <select id="savedContext"><option value="rollout">Full history + own profile</option></select></label><label id="leftModelLabel">Model <select id="leftModel"><option value="luna">Luna</option><option value="baseline">Qwen 4B zero-shot</option><option value="lora">Qwen 4B fine-tuned</option></select></label><label id="rightModelLabel" hidden>Right model <select id="rightModel"><option value="luna">Luna</option><option value="baseline">Qwen 4B zero-shot</option><option value="lora" selected>Qwen 4B fine-tuned</option></select></label><a class="muted" href="/reports/qwen4b-lora-report.md" download>Download experiment report (.md)</a></section><p id="status" role="status" aria-live="polite"></p><div class="layout"><section class="panel"><div class="panel-heading"><h2>Conversation</h2><span class="panel-index">01 / CATALOG ASSISTANT</span></div><div id="conversation"><p class="muted">Tell the assistant what you’re looking for. Then refine, compare, or change your mind.</p></div><form id="chat"><label for="message">Your message</label><textarea id="message" maxlength="2000" required placeholder="I’m looking for a part-time job in Tokyo…"></textarea><button id="send">Send message</button></form></section><aside class="panel"><div class="panel-heading"><h2 id="extractorTitle">Luna extractor</h2><span class="panel-index" id="extractorLabel">02 / LIVE EXTRACTION</span></div><div class="panel-body"><p id="profileTurn" class="muted">Not extracted yet</p><p id="extractionReady" class="muted" hidden></p><p id="extractorStatus" class="muted" role="status" aria-live="polite"></p><p id="referenceWarning" class="reference-warning" hidden>Scored against a reference label flagged for review.</p><div id="profile"><p class="muted">The baseline profile will appear after your first message.</p></div><details><summary>Structured profile &amp; evidence</summary><pre id="raw">{}</pre></details><details id="validationDetails" hidden><summary>Output validity &amp; checks</summary><p id="validationMessage" class="muted"></p><pre id="validationRaw">{}</pre></details><details id="referenceDetails" hidden><summary>Reference target · replay only</summary><p id="referenceAudit" class="muted"></p><pre id="referenceRaw">{}</pre></details><details><summary>Baseline prompt</summary><pre id="extractorPrompt">Simple intent extraction · Luna</pre></details></div></aside></div>
+<section class="metrics-section" aria-label="Live metrics"><div class="section-heading"><h2>This conversation</h2><span class="tag">EXTRACTION METRICS</span></div><p class="muted">Live chat shows operational metrics because it has no labeled ground truth. Saved playback also separates open-feature/value counts from scope and hardness errors; unaligned claims remain unassessed. Replay also shows per-turn value precision and recall against the saved reference: capitalization is ignored and arrays are scored as value sets. Reference labels flagged by the audit remain marked for review.</p><div id="metrics" class="metrics"></div><p id="changes" class="muted"></p></section><details class="session-note"><summary>About this session</summary><p class="muted">Live conversation and live extraction use GPT-6 Luna. Play pre-extracted offers saved Luna, Qwen 4B zero-shot and Qwen 4B fine-tuned outputs, with synchronized model comparison. Saved experiment traces use the same full extraction prompt; Luna uses the OpenAI Responses API while Qwen uses the frozen local-serving configuration. Conversations stay in server memory for up to one hour. Start a new chat to reset the profile.</p></details></main>
 <script>
 let profileScope=null;
 const $=id=>(profileScope?.querySelector('#right-'+id))||document.getElementById(id);let session=null,busy=false,replayData=null,replayEvaluation=null,replayIndex=0,revealedTurns=0,replayDone=false,replayResults=[],lastMetrics={};
@@ -59,29 +59,53 @@ function feedbackRow(parent,text,assessment,expected,info=null){
  row.append(summary,body);parent.append(row);
 }
 function claimText(c){return c.attribute+' '+c.operator+' '+JSON.stringify(c.value)+' ('+c.strength+')'}
-function renderFeatureProfile(p,reference,featureScore){
+function renderFeatureProfile(p,reference,featureScore,diagnostics=null,kinds=null){
  $('profile').replaceChildren();
- const claims=(p||{}).claims||[],targets=reference.claims||[];
+ const allClaims=Array.isArray(p?.claims)?p.claims:[],allTargets=reference.claims||[];
+ const typed=(items,side)=>items.filter((c,i)=>!kinds||kinds[side][i]==='in_schema');
+ const claims=typed(allClaims,'prediction'),targets=typed(allTargets,'reference');
  if(p)group('Current intent',p.intent);
- const parent=group('Target features');
+ const parent=group('Typed target features');
  const attributes=[...new Set([...targets,...claims].map(c=>c.attribute.toLowerCase()))].sort();
+ const typedScore=featureScore.typed||featureScore;
  for(const attribute of attributes){
   const actual=claims.filter(c=>c.attribute.toLowerCase()===attribute),expected=targets.filter(c=>c.attribute.toLowerCase()===attribute);
-  const error=featureScore.errors.find(e=>e.attribute===attribute),warning=featureScore.warnings.find(w=>w.attribute===attribute);
-  const assessment=error?{status:'wrong',label:error.type==='missing'?'Error · missing':'Error · changed'}:warning?{status:'incomplete',label:'Warning · extra'}:{status:'correct',label:'Correct'};
-  const title=attribute+' · '+(actual.length?actual.map(c=>c.operator+' '+JSON.stringify(c.value)).join('; '):'missing');
-  feedbackRow(parent,title,assessment,expected.map(claimText).join('; ')||'Not in target',
-   {expected,extracted:actual,errors:error?[error]:[],warnings:warning?[warning]:[]});
+  const error=typedScore.errors.find(e=>e.attribute===attribute),warning=typedScore.warnings.find(w=>w.attribute===attribute);
+  const assessment=error?{status:'wrong',label:error.type==='missing'?'Error · missing':'Error · changed'}:warning?{status:'incomplete',label:'Warning · extra'}:{status:'correct',label:'Content present'};
+  feedbackRow(parent,attribute+' · '+(actual.length?actual.map(c=>c.operator+' '+JSON.stringify(c.value)).join('; '):'missing'),assessment,
+   expected.map(claimText).join('; ')||'Not in target',{expected,extracted:actual,errors:error?[error]:[],warnings:warning?[warning]:[]});
+ }
+ if(diagnostics){
+  const counts=diagnostics.open_counts;
+  for(const [kind,title] of [['new_feature','Open features'],['new_value','Open values on existing features']]){
+   const g=group(title),bad=counts.penalty_by_kind[kind]>0;
+   feedbackRow(g,'Extracted '+counts.predicted[kind]+' · expected '+counts.expected[kind],
+    {status:bad?'wrong':'correct',label:bad?'Count mismatch':'Counts match'},undefined,counts);
+   g.append(el('p','Names and values below are shown for inspection; their wording is not matched. Equal counts do not establish meaning.','muted'));
+   for(const [side,items] of [['prediction',allClaims],['reference',allTargets]])items.forEach((c,i)=>{
+    if(kinds?.[side][i]===kind)feedbackRow(g,(side==='prediction'?'Extracted: ':'Reference: ')+claimText(c),
+     {status:'neutral',label:'Scope: '+c.scope+' · hardness: '+c.strength},undefined,{[side]:c});
+   });
+  }
+  const m=diagnostics.metadata,g=group('Scope & hardness · separate diagnostics');
+  g.append(el('p',m.matched_claims+' / '+m.expected_claims+' reference claims aligned · '+m.unassessed_reference_claims+' unassessed. Missing or ambiguous claims are not counted as correct.','muted'));
+  for(const match of m.matches){
+   const c=allClaims[match.prediction_index],expected=allTargets[match.reference_index],issues=[];
+   if(match.scope.error)issues.push('Scope: '+match.scope.predicted+' → '+match.scope.expected);
+   if(match.strength.error)issues.push('Hardness: '+match.strength.predicted+' → '+match.strength.expected);
+   feedbackRow(g,claimText(c),{status:issues.length?'wrong':'correct',label:issues.join(' · ')||'Scope & hardness correct'},
+    claimText(expected)+' · scope: '+expected.scope,{extracted:c,reference:expected,alignment:match.basis});
+  }
+  const matched=new Set(m.matches.map(v=>v.reference_index));
+  allTargets.forEach((c,i)=>{if(!matched.has(i))feedbackRow(g,claimText(c),{status:'neutral',label:'Unassessed · no unambiguous alignment'},undefined,{reference:c})});
  }
  const details=group('Other state · separate diagnostics');
- for(const key of ['active_task_id','satisfied','target_products','selected_products','preferences','search_request']){
-  feedbackRow(details,key,{status:'neutral',label:'Not included in feature scoring'},undefined,{extracted:p?.[key]??null,reference:reference[key]});
- }
+ for(const key of ['active_task_id','satisfied','target_products','selected_products','preferences','search_request'])feedbackRow(details,key,{status:'neutral',label:'Not included in feature scoring'},undefined,{extracted:p?.[key]??null,reference:reference[key]});
  $('raw').textContent=JSON.stringify(p,null,2);
 }
 
-function renderProfile(p,reference=null,verification=null,featureScore=null){
- if(featureScore&&reference){renderFeatureProfile(p,reference,featureScore);return}
+function renderProfile(p,reference=null,verification=null,featureScore=null,diagnostics=null,kinds=null){
+ if(featureScore&&reference){renderFeatureProfile(p,reference,featureScore,diagnostics,kinds);return}
  $('profile').replaceChildren();
  $('referenceWarning').hidden=!reference||Boolean(verification?.accepted);
  if(!p){
@@ -192,11 +216,11 @@ function renderReplayResult(data){
  $('validationMessage').textContent=data.score.valid?'State-validity checks passed.':('Validation failed: '+(data.score.validation_issue||data.score.error_type||'Invalid structured state'));
  $('validationMessage').className='extraction-value '+(data.score.valid?'correct':'wrong');
  $('validationRaw').textContent=JSON.stringify({score:data.score,structured_fields_correct:data.structured_fields_correct||null},null,2);
- renderProfile(data.profile,data.reference_profile,data.verification,data.feature_score);renderMetrics(data.feature_score?{...data.metrics,value_precision:data.feature_score.precision,value_recall:data.feature_score.recall}:data.metrics);
+ renderProfile(data.profile,data.reference_profile,data.verification,data.feature_score,data.error_diagnostics,data.claim_kinds);renderMetrics(data.feature_score?{...data.metrics,value_precision:data.feature_score.precision,value_recall:data.feature_score.recall}:data.metrics);
  $('extractorPrompt').textContent=data.extractor_prompt;
  $('referenceDetails').hidden=false;$('referenceRaw').textContent=JSON.stringify(data.reference_profile,null,2);
- $('referenceAudit').textContent=data.verification?.accepted?'Reference label supported by the model audit.':'Reference label flagged for review by the model audit.';
- $('profileTurn').textContent='Profile after turn '+(replayIndex+1)+' · '+(data.feature_score?(data.feature_score.accepted?'feature check passed':'feature errors'):(data.score.valid?'output valid':'validation failed'));
+ $('referenceAudit').textContent=data.verification?.note||(data.verification?.accepted?'Reference label supported by the model audit.':'Reference label flagged for review by the model audit.');
+ $('profileTurn').textContent='Profile after turn '+(replayIndex+1)+' · '+(data.feature_score?(data.feature_score.accepted?'content/count check passed':'content/count errors'):(data.score.valid?'output valid':'validation failed'));
  if(data.feature_score)$('validationMessage').textContent='Separate native-validity diagnostic: '+(data.score.valid?'passed':(data.score.validation_issue||data.score.error_type||'invalid'))+'. This does not erase correctly extracted feature values.';
  $('extractionReady').hidden=true;
 }

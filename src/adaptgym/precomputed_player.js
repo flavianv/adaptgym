@@ -1,5 +1,17 @@
 /* Saved playback only. Live chat and live replay continue to use the Luna API. */
-const savedLabels={luna:'Luna',baseline:'Qwen 4B zero-shot',lora:'Qwen 4B fine-tuned'};
+const savedLabels={luna:'Luna',baseline:'Qwen 4B zero-shot',lora:'Qwen 4B fine-tuned',zero_shot:'Qwen 4B zero-shot',v1:'Qwen 4B v1',v2:'Qwen 4B v2',v3:'Qwen 4B v3',v4:'Qwen 4B v4-294'};
+const contextLabels={rollout:'Full history + own profile',full_reextract:'Full history',accumulated_full:'Full history + own profile',recent_with_state:'Last 3 + own profile'};
+function savedRun(model){return savedBundle.models[model][$('savedContext').value]}
+function configureSavedSelections(){
+ for(const id of ['leftModel','rightModel']){
+  const old=$(id).value;$(id).replaceChildren();
+  for(const model of Object.keys(savedBundle.models)){const o=el('option',savedLabels[model]||model);o.value=model;$(id).append(o)}
+  $(id).value=savedBundle.models[old]?old:(id==='rightModel'&&savedBundle.models.v4?'v4':Object.keys(savedBundle.models)[0]);
+ }
+ const old=$('savedContext').value;$('savedContext').replaceChildren();
+ for(const context of Object.keys(savedBundle.models[$('leftModel').value]).filter(c=>c!=='teacher_forced')){const o=el('option',contextLabels[context]||context);o.value=context;$('savedContext').append(o)}
+ if([...$('savedContext').options].some(o=>o.value===old))$('savedContext').value=old;
+}
 let playTimer=null,rightEvaluation=null,savedBundle=null,liveSchemaVersions={};
 const originalReset=reset,originalBusy=busyControls,originalRefresh=refreshReplaySamples,originalLoad=loadReplay;
 const rightPanel=document.querySelector('.layout>aside').cloneNode(true);
@@ -32,7 +44,7 @@ busyControls=function(value){
   $('turnSeek').disabled=value||!replayResults.length;
   $('resetPlayback').disabled=value||!replayResults.length;
  }
- for(const id of ['leftModel','rightModel','compareModels'])$(id).disabled=value;
+ for(const id of ['leftModel','rightModel','compareModels','savedContext'])$(id).disabled=value;
 };
 refreshReplaySamples=async function(){
  if($('mode').value!=='saved')return originalRefresh();
@@ -52,7 +64,9 @@ function panelMetrics(cp,scope){
  const format=n=>n===null||n===undefined?'—':(100*n).toFixed(1)+'%';
  const f=cp.feature_score;
  row.className='comparison-turn-metrics '+(f.accepted?'turn-pass':'turn-fail');
- row.replaceChildren(el('strong','Turn '+cp.turn+' · '+(f.accepted?'PASS':'FAIL')+' · '+f.error_count+' error'+(f.error_count===1?'':'s')),el('span','Warnings '+f.warning_count+' · Precision '+format(f.precision)+' · Recall '+format(f.recall),'score-details'));
+ row.replaceChildren(el('strong','Turn '+cp.turn+' · Content '+(f.accepted?'PASS':'FAIL')+' · '+f.error_count+' content error'+(f.error_count===1?'':'s')),el('span','Warnings '+f.warning_count+' · Precision '+format(f.precision)+' · Recall '+format(f.recall),'score-details'));
+ const d=cp.error_diagnostics;
+ if(d){const m=d.metadata,c=d.open_counts;row.append(el('span','Scope errors '+m.scope_errors+'/'+m.matched_claims+' · Hardness errors '+m.strength_errors+'/'+m.matched_claims+' · Aligned '+m.matched_claims+'/'+m.expected_claims,'score-details'),el('span','New features '+c.predicted.new_feature+'/'+c.expected.new_feature+' · New values '+c.predicted.new_value+'/'+c.expected.new_value+' (extracted / expected)','score-details'))}
  if($('compareModels').checked&&rightEvaluation){
   const peer=(scope?replayEvaluation:rightEvaluation).checkpoints[replayIndex].feature_score;
   row.append(el('span',f.error_count<peer.error_count?'Fewer errors this turn':f.error_count>peer.error_count?'More errors this turn':'Same error count this turn','turn-comparison'));
@@ -63,7 +77,7 @@ function renderTraceSummary(evaluation,scope){
  let box=target.querySelector('.trace-summary');if(!box)box=el('section',undefined,'trace-summary');
  const s=evaluation.feature_summary,n=s.turns,bad=evaluation.checkpoints.filter(cp=>!cp.feature_score.accepted),warn=evaluation.checkpoints.filter(cp=>cp.feature_score.warning_count);
  box.replaceChildren();box.hidden=false;box.className='trace-summary'+(bad.length?' has-differences':'');
- box.append(el('h3','Whole trace · '+n+' turns'),el('p',bad.length?bad.length+' / '+n+' turns have feature errors':'All turns pass · every target feature/value is present'));
+ box.append(el('h3','Whole trace · '+n+' turns'),el('p',bad.length?bad.length+' / '+n+' turns have content/count errors':'All turns pass · typed targets present and applicable open counts match'));
  const fmt=x=>x===null||x===undefined?'—':(100*x).toFixed(1)+'%';
  box.append(el('p','Value precision '+fmt(s.precision)+' · Recall '+fmt(s.recall)),
   el('p','Passed '+s.passed_turns+'/'+n+' · Errors '+s.errors+' · Warnings '+s.warnings));
@@ -72,7 +86,14 @@ function renderTraceSummary(evaluation,scope){
   for(const cp of items){const button=el('button','Turn '+cp.turn);button.type='button';button.onclick=()=>{stopPlayback();replayIndex=cp.turn-1;showSavedTurn()};details.append(button)}
   box.append(details);
  }
- box.append(el('p','Exact feature, operator and value; strings lowercased. Missing/changed targets fail. Extras warn only. Other state diagnostics do not gate this check.','trace-note'));
+ const d=evaluation.error_summary;
+ if(d){
+  box.append(el('p','Scope error '+fmt(d.scope_err)+' · Hardness error '+fmt(d.strength_err)+' · Match coverage '+fmt(d.match_cov)),el('p','New-feature count error '+fmt(d.new_feat_err)+' · New-value count error '+fmt(d.new_val_err)));
+  const errors=evaluation.checkpoints.filter(cp=>{const q=cp.error_diagnostics;return q&&(q.metadata.scope_errors||q.metadata.strength_errors)});
+  if(errors.length){const details=el('details');details.append(el('summary','Inspect scope / hardness turns'));for(const cp of errors){const b=el('button','Turn '+cp.turn);b.onclick=()=>{stopPlayback();replayIndex=cp.turn-1;showSavedTurn()};details.append(b)}box.append(details)}
+ }
+ box.append(el('p','Typed content: exact attribute, operator and value; extras warn. Open content: counts only, with no name/value matching. Scope and hardness: separate diagnostics on aligned claims; missing or ambiguous claims remain unassessed.','trace-note'));
+ if(savedBundle.notice)box.append(el('p',savedBundle.notice,'trace-note'));
  const savedVersion=savedBundle?.sample.plan.vertical_schema['x-adaptgym'].version,currentVersion=liveSchemaVersions[evaluation.vertical];
  if(currentVersion&&savedVersion!==currentVersion)box.append(el('p','Historical extraction: '+evaluation.vertical+' schema v'+savedVersion+'. New conversations use v'+currentVersion+'. Scores retain the original target schema.','trace-note'));
  body.prepend(box);
@@ -98,7 +119,7 @@ function showSavedTurn(){
  document.querySelector('.metrics-section h2').textContent='Operational metrics · '+savedLabels[$('leftModel').value];
  $('turnSeek').max=replayResults.length;$('turnSeek').value=turn;
  $('replayProgress').textContent='Turn '+turn+' / '+replayResults.length+' · pre-extracted';
- $('status').textContent='Saved model predictions · no API calls · each model carries its own previous valid prediction.';
+ $('status').textContent='Saved model predictions · no API calls · '+(replayEvaluation.state_policy==='latest_prediction'?'each model carries its own latest prediction.':'each model carries its own previous valid prediction.');
  busyControls(false);
 }
 loadReplay=async function(){
@@ -107,7 +128,7 @@ loadReplay=async function(){
  try{
   const id=$('replaySample').value;
   if(!savedBundle||savedBundle.id!==id){const response=await fetch('/api/comparison?id='+encodeURIComponent(id));if(!response.ok)throw Error('Saved conversation unavailable');savedBundle=await response.json()}
-  replayData=savedBundle.sample;replayEvaluation=savedBundle.models[$('leftModel').value].rollout;rightEvaluation=savedBundle.models[$('rightModel').value].rollout;
+  configureSavedSelections();replayData=savedBundle.sample;replayEvaluation=savedRun($('leftModel').value);rightEvaluation=savedRun($('rightModel').value);
   replayResults=replayEvaluation.checkpoints.map((_,i)=>readyCheckpoint(replayEvaluation,i));showSavedTurn();
  }catch(error){$('status').textContent=error.message}
  finally{busyControls(false)}
@@ -124,8 +145,8 @@ $('turnSeek').oninput=()=>{stopPlayback();replayIndex=Number($('turnSeek').value
 $('previousTurn').onclick=()=>{stopPlayback();if(replayIndex>0){replayIndex--;showSavedTurn()}};
 $('nextTurn').onclick=()=>{stopPlayback();if(!busy&&replayResults.length>replayIndex+1){replayIndex++;if($('mode').value==='saved')showSavedTurn();else showReplayTurn()}};
 $('replaySample').onchange=()=>loadReplay();
-for(const id of ['leftModel','rightModel'])$(id).onchange=()=>{stopPlayback();if(savedBundle&&$('mode').value==='saved'){
- const turn=replayIndex;replayEvaluation=savedBundle.models[$('leftModel').value].rollout;rightEvaluation=savedBundle.models[$('rightModel').value].rollout;
+for(const id of ['leftModel','rightModel','savedContext'])$(id).onchange=()=>{stopPlayback();if(savedBundle&&$('mode').value==='saved'){
+ const turn=replayIndex;replayEvaluation=savedRun($('leftModel').value);rightEvaluation=savedRun($('rightModel').value);
  replayResults=replayEvaluation.checkpoints.map((_,i)=>readyCheckpoint(replayEvaluation,i));replayIndex=turn;showSavedTurn();
 }};
 $('compareModels').onchange=()=>{configureModels();if($('mode').value==='saved')showSavedTurn()};

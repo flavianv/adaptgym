@@ -1,13 +1,6 @@
 {
   "selection": {
-    "method": "seeded random; five per vertical; test only",
-    "seed": 20261110,
-    "additional_batches": [
-      {
-        "method": "seeded random; five additional jobs; excludes original ten; test only",
-        "seed": 20261111
-      }
-    ]
+    "method": "Legacy test examples plus a separately labeled synthetic training-plan open pilot; see legacy_selection and open_pilot."
   },
   "models": [
     {
@@ -21,9 +14,77 @@
     {
       "id": "lora",
       "label": "Qwen 4B fine-tuned"
+    },
+    {
+      "id": "zero_shot",
+      "label": "Qwen 4B zero-shot"
+    },
+    {
+      "id": "v1",
+      "label": "Qwen 4B v1"
+    },
+    {
+      "id": "v2",
+      "label": "Qwen 4B v2"
+    },
+    {
+      "id": "v3",
+      "label": "Qwen 4B v3"
+    },
+    {
+      "id": "v4",
+      "label": "Qwen 4B v4-294"
     }
   ],
   "cases": [
+    {
+      "id": "open-pilot-footwear-1",
+      "vertical": "footwear",
+      "file": "open-pilot-footwear-1.json",
+      "label": "Open pilot · Shoes 1 · 5 turns",
+      "turns": 5,
+      "cohort": "synthetic_training_plan_pilot"
+    },
+    {
+      "id": "open-pilot-footwear-2",
+      "vertical": "footwear",
+      "file": "open-pilot-footwear-2.json",
+      "label": "Open pilot · Shoes 2 · 6 turns",
+      "turns": 6,
+      "cohort": "synthetic_training_plan_pilot"
+    },
+    {
+      "id": "open-pilot-footwear-3",
+      "vertical": "footwear",
+      "file": "open-pilot-footwear-3.json",
+      "label": "Open pilot · Shoes 3 · 5 turns",
+      "turns": 5,
+      "cohort": "synthetic_training_plan_pilot"
+    },
+    {
+      "id": "open-pilot-job_search-1",
+      "vertical": "job_search",
+      "file": "open-pilot-job_search-1.json",
+      "label": "Open pilot · Jobs 1 · 5 turns",
+      "turns": 5,
+      "cohort": "synthetic_training_plan_pilot"
+    },
+    {
+      "id": "open-pilot-job_search-2",
+      "vertical": "job_search",
+      "file": "open-pilot-job_search-2.json",
+      "label": "Open pilot · Jobs 2 · 6 turns",
+      "turns": 6,
+      "cohort": "synthetic_training_plan_pilot"
+    },
+    {
+      "id": "open-pilot-job_search-3",
+      "vertical": "job_search",
+      "file": "open-pilot-job_search-3.json",
+      "label": "Open pilot · Jobs 3 · 5 turns",
+      "turns": 5,
+      "cohort": "synthetic_training_plan_pilot"
+    },
     {
       "id": "sft-shoes-1",
       "vertical": "footwear",
@@ -402,5 +463,28 @@
   "live_schema_versions": {
     "footwear": "2",
     "job_search": "1"
+  },
+  "open_pilot": {
+    "notice": "Synthetic 32-turn, six-conversation training-plan pilot; not held-out test evidence. Luna used provider sampling defaults; Qwen used temperature 0 / seed 7. Open content is scored by counts, not meaning. No model calls during playback.",
+    "conversations": 6,
+    "turns": 32,
+    "models": [
+      "luna",
+      "zero_shot",
+      "v1",
+      "v2",
+      "v3",
+      "v4"
+    ]
+  },
+  "legacy_selection": {
+    "method": "seeded random; five per vertical; test only",
+    "seed": 20261110,
+    "additional_batches": [
+      {
+        "method": "seeded random; five additional jobs; excludes original ten; test only",
+        "seed": 20261111
+      }
+    ]
   }
 }
